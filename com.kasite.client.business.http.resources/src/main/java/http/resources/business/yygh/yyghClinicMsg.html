@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>就诊信息</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="mt10 c-border-tb">
+    	<div class="visit-head">
+        	<img id = 'headImg' src="https://v1kstcdn.kasitesoft.com/common/images/d-male.png" alt="" />
+            <span class="c-f15 mlr10" id="doctorName"></span>
+            <span class="c-999" id="doctorTitle"></span>
+        </div>
+        <div class="bor-t-f2">
+        	<ul class="visit-mess c-f13">
+            	<li>
+                	<div class="vm-key c-999">就诊科室</div>
+                	<div class="vm-info" id="deptName"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">就诊时间</div>
+                	<div class="vm-info" id="cDate"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用</div>
+                	<div class="vm-info"><span class="c-ffac0b" id= "fee"></span></div>
+                </li>
+                <li id="feeInfoIsShow">
+                	<div class="vm-key c-999">费用明细</div>
+                	<div class="vm-info"><span class="c-ffac0b" id= "feeInfo"></span></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li class="c-arrow-r">
+            	<div class="c-list-key c-999 pr15">就诊人</div>
+            	<div class="c-list-info c-t-right">
+            		<label for="member_picker" class="list-text c-t-right"></label>
+					<input type="text" class="c-hide" id="member_picker" placeholder="请点击选择就诊人">
+            	</div>
+            </li>
+        	<li class="c-arrow-r">
+            	<div class="c-list-key c-999 pr15">预约号源</div>
+            	<div class="c-list-info c-t-right"><input type="text" class="list-text c-t-right" id="picker-source" placeholder="请点击选择号源"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="javascript:;" class="c-btn c-btn-blue disable" id="sureBtn">确认挂号</a>
+    </div>
+</div> 
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=20190118"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="../../common/js/memberpicker.js"></script>
+<script type="text/javascript" src="js/yyghClinicMsg.js?v=20190118"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/appConfig.js"></script>
+</body>
+</html>

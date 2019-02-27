@@ -1,0 +1,18 @@
+.pop-manage-form td { padding:5px 0;}
+.pop-manage-form td.t { text-align: left; padding:5px 10px;}
+
+.querybar { padding:15px 0;}
+.querybar label { line-height: 30px; color:#222;}
+
+.tb-manage .custom-checkbox label { height: 12px; padding:6px 0 6px 20px;}
+
+.sec { margin-bottom: 20px; background-color:#fff; -webkit-box-shadow: 0 0 2px rgba(0,0,0,.15); box-shadow: 0 0 2px rgba(0,0,0,.15);}
+.sec-header { padding:15px 20px; border-bottom:1px solid #e1e1e1; color:#222; font-size: 14px;}
+.sec-con { padding:20px;}
+
+.sec-header .custom-checkbox label { background-position: -480px 5px;}
+.sec-header .custom-checkbox label.checked { background-position:-480px -75px}
+.rule-sec .table-form td { padding:20px 0;}
+.rule-sec .table-form td.t { text-align: right; padding:20px 10px;}
+
+.breakword { word-wrap: break-word; word-break:break-all;}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>退费记录列表</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"></link>
+<style type="text/css">
+.vm-key2 {
+    box-flex: 0;
+    -webkit-box-flex: 0;
+    width: 6rem;
+}
+</style>
+</head>
+
+<body>
+	<div class="c-main pb15">
+		<div class="c-border-tb">
+		<div class="plr15 ptb5 c-t-center c-666 c-f13"></div>
+	        <div class="bor-t-f2">
+	        	<ul class="visit-mess c-f13">
+	            	<li>
+	                	<div class="vm-key c-999">退款状态</div>
+	                	<div class="vm-info" id="stateName"></div>
+	                </li>
+	            	<li>
+	                	<div class="vm-key c-999">到账金额</div>
+	                	<div class="vm-info" ><span class='c-ffac0b'id="refundAmount"></span></div>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+		<div class="mt10" id="listPart">
+			<ul class="order-list" id="orderList">
+				<!-- 加载列表内容 -->
+			</ul>
+			<div class="infinite-scroll" id="loading" style="display: none">
+	        	<div class="infinite-preloader"></div>
+	        	正在加载
+	        </div>
+	        <div class="nomess" id="noData" style="display: none">
+	        	<i class="nomess-tb"></i>
+	            <p class="mt10">暂无数据</p>
+	        </div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+	<script type="text/javascript" src="js/selfServiceRefundRecordInfo.js?v=201901152112"></script>
+</body>
+</html>

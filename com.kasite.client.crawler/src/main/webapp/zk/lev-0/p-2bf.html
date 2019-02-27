@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget-head">
+			<div class="widget-head-title">
+				<i class="fa fa-pie-chart"></i> 数据占比
+			</div>
+			
+			<div class="title-right-filter">
+			<form id="searchForm" name="searchForm" class="form-horizontal" action="/PMC/plugins/centralizemonitor/statistic/busirate" method="post">
+			<input name="selectValue" id="selectValue" value="" type="hidden">
+			<span class="filter">
+					<span class="pull-left" style="padding:7px 0;">数据筛选：</span>
+			         <div id="selector-container"><div class="selector" id="grade1" tempvalue="1" style="margin-right:4px"><span>上饶市</span><ul style="display: none;"><li tempvalue="-1all" onclick="iniSelectList(2,'-1all',$(this),1)">全部</li><li tempvalue="1" onclick="iniSelectList(2,1,$(this))" selected="selected" class="selected">上饶市</li></ul></div><div class="selector" id="grade2" tempvalue="5" style="margin-right:4px"><span>信州区</span><ul style="display: block;"><li tempvalue="1all" onclick="iniSelectList(3,'1all',$(this),1)">全部</li><li tempvalue="5" onclick="iniSelectList(3,5,$(this))" selected="selected" class="selected">信州区</li><li tempvalue="6" onclick="iniSelectList(3,6,$(this))">上饶县</li><li tempvalue="7" onclick="iniSelectList(3,7,$(this))">鄱阳县</li><li tempvalue="13" onclick="iniSelectList(3,13,$(this))">广丰县</li><li tempvalue="16" onclick="iniSelectList(3,16,$(this))">德兴市</li><li tempvalue="18" onclick="iniSelectList(3,18,$(this))">弋阳县</li><li tempvalue="21" onclick="iniSelectList(3,21,$(this))">万年县</li><li tempvalue="24" onclick="iniSelectList(3,24,$(this))">婺源县</li><li tempvalue="29" onclick="iniSelectList(3,29,$(this))">铅山县</li><li tempvalue="31" onclick="iniSelectList(3,31,$(this))">余干县</li><li tempvalue="34" onclick="iniSelectList(3,34,$(this))">横峰县</li><li tempvalue="36" onclick="iniSelectList(3,36,$(this))">玉山县</li></ul></div><div class="selector" id="grade3" tempvalue="5all" style="margin-right:4px"><span>全部</span><ul style="display: none;"><li tempvalue="5all" onclick="iniSelectList(4,'5all',$(this),1)" selected="selected">全部</li><li tempvalue="43" onclick="iniSelectList(4,43,$(this))">上饶市妇幼保健院</li><li tempvalue="8" onclick="iniSelectList(4,8,$(this))">上饶市第三人民医院</li><li tempvalue="12" onclick="iniSelectList(4,12,$(this))">上饶市第二人民医院</li></ul></div></div>
+					<input id="startdate" type="text" name="startdate" readonly="" value="2018-07-20" class="styled date-custom text hasDatepicker">
+					 - 
+				    <input id="enddate" type="text" name="enddate" readonly="" value="2018-07-20" class="styled date-custom text hasDatepicker">
+				
+			</span>
+			<button type="button" id="submit-form" class="btn btn-primary" onclick="submitForm();">查询</button>
+			</form>
+			</div>
+		</div>
+		
+		<div class="widget">
+			<div class="row-fluid">
+		   		<div class="">
+		   			<div id="chartdiv" style="width: 50%; height: 410px; float: left; overflow: hidden; text-align: left;" class="row-fluid"><div style="position: relative;"><div style="overflow: hidden; position: relative; text-align: left; width: 346px; height: 410px;"><svg version="1.1" style="position: absolute; width: 346px; height: 410px;"><g><path cs="100,100" d="M0.5,0.5 L345.5,0.5 L345.5,409.5 L0.5,409.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path></g><g></g><g></g><g></g><g></g><g></g><g><g><path cs="1000,1000" d=" M155.30070576408963,169.00221445542562 L153.70352882044824,25.01107227712805 A180,180,0,0,1,155.7000000000001,25 L155.70000000000002,169 A36,36,0,0,0,155.30070576408963,169.00221445542562 Z" fill="#76C5E6" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M139.6806873702669,172.76055796278612 L75.60343685133451,43.80278981393056 A180,180,0,0,1,153.70352882044824,25.01107227712805 L155.30070576408963,169.00221445542562 A36,36,0,0,0,139.6806873702669,172.76055796278612 Z" fill="#F09B4A" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M139.48098822457715,172.86055916745448 L74.60494112288576,44.30279583727233 A180,180,0,0,1,75.60343685133451,43.80278981393056 L139.6806873702669,172.76055796278612 A36,36,0,0,0,139.48098822457715,172.86055916745448 Z" fill="#B7DCB1" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g opacity="1"><path cs="1000,1000" d=" M119.71959215542115,206.1875400362808 L-24.20203922289417,210.93770018140404 A180,180,0,0,1,74.60494112288576,44.30279583727233 L139.48098822457715,172.86055916745448 A36,36,0,0,0,119.71959215542115,206.1875400362808 Z" fill="#3FB3B2" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M119.72332695338008,206.29576097202076 L-24.18336523309958,211.47880486010385 A180,180,0,0,1,-24.20203922289417,210.93770018140404 L119.71959215542115,206.1875400362808 A36,36,0,0,0,119.72332695338008,206.29576097202076 Z" fill="#138A6A" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M119.73148937778672,206.50540480261313 L-24.142553111066405,212.52702401306567 A180,180,0,0,1,-24.18336523309958,211.47880486010385 L119.72332695338008,206.29576097202076 A36,36,0,0,0,119.73148937778672,206.50540480261313 Z" fill="#E2AA99" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M121.57752480404093,216.47417476340493 L-14.912375979795314,262.37087381702463 A180,180,0,0,1,-24.142553111066405,212.52702401306567 L119.73148937778672,206.50540480261313 A36,36,0,0,0,121.57752480404093,216.47417476340493 Z" fill="#D4561B" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M122.44713946999534,218.79301513709234 L-10.56430265002328,273.9650756854617 A180,180,0,0,1,-14.912375979795314,262.37087381702463 L121.57752480404093,216.47417476340493 A36,36,0,0,0,122.44713946999534,218.79301513709234 Z" fill="#E3EF8D" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M122.64223484055756,219.25426822615438 L-9.588825797212166,276.27134113077193 A180,180,0,0,1,-10.56430265002328,273.9650756854617 L122.44713946999534,218.79301513709234 A36,36,0,0,0,122.64223484055756,219.25426822615438 Z" fill="#E4EC65" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M127.52696069238229,227.41160092834573 L14.834803461911463,317.0580046417287 A180,180,0,0,1,-9.588825797212166,276.27134113077193 L122.64223484055756,219.25426822615438 A36,36,0,0,0,127.52696069238229,227.41160092834573 Z" fill="#61BBA1" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M129.9101983067183,230.11744669788723 L26.750991533591645,330.58723348943613 A180,180,0,0,1,14.834803461911463,317.0580046417287 L127.52696069238229,227.41160092834573 A36,36,0,0,0,129.9101983067183,230.11744669788723 Z" fill="#00AA90" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M132.82801669349521,232.80058236129176 L41.34008346747605,344.00291180645877 A180,180,0,0,1,26.750991533591645,330.58723348943613 L129.9101983067183,230.11744669788723 A36,36,0,0,0,132.82801669349521,232.80058236129176 Z" fill="#BBB4D6" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g opacity="1"><path cs="1000,1000" d=" M135.41515266343828,234.74096448557756 L54.27576331719146,353.7048224278878 A180,180,0,0,1,41.34008346747605,344.00291180645877 L132.82801669349521,232.80058236129176 A36,36,0,0,0,135.41515266343828,234.74096448557756 Z" fill="#BA72A4" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M135.4319293903411,234.75240013447456 L54.359646951705514,353.7620006723728 A180,180,0,0,1,54.27576331719146,353.7048224278878 L135.41515266343828,234.74096448557756 A36,36,0,0,0,135.4319293903411,234.75240013447456 Z" fill="#901D78" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M137.92416081402357,236.30526379435742 L66.82080407011792,361.5263189717871 A180,180,0,0,1,54.359646951705514,353.7620006723728 L135.4319293903411,234.75240013447456 A36,36,0,0,0,137.92416081402357,236.30526379435742 Z" fill="#D7EDFB" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M143.93437190853547,239.02308033693217 L96.87185954267741,375.1154016846609 A180,180,0,0,1,66.82080407011792,361.5263189717871 L137.92416081402357,236.30526379435742 A36,36,0,0,0,143.93437190853547,239.02308033693217 Z" fill="#B5DFF8" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M147.86513979777678,240.1370881777591 L116.52569898888392,380.68544088879554 A180,180,0,0,1,96.87185954267741,375.1154016846609 L143.93437190853547,239.02308033693217 A36,36,0,0,0,147.86513979777678,240.1370881777591 Z" fill="#1EA839" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M155.7,169 L155.7,25 A180,180,0,0,1,157.15506925420985,25.00588128090004 L155.99101385084197,169.00117625618 A36,36,0,0,0,155.7,169 Z" fill="#EE9A13" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g><path cs="1000,1000" d=" M155.99101385084197,169.00117625618 L157.15506925420985,25.00588128090004 A180,180,0,0,1,163.4467806678819,25.166778960939126 L157.24935613357638,169.03335579218782 A36,36,0,0,0,155.99101385084197,169.00117625618 Z" fill="#F8C400" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g><g opacity="1"><path cs="1000,1000" d=" M157.24935613357638,169.03335579218782 L163.4467806678819,25.166778960939126 A180,180,0,1,1,116.52569898888392,380.68544088879554 L147.86513979777678,240.1370881777591 A36,36,0,1,0,157.24935613357638,169.03335579218782 Z" fill="#EFEE00" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0" fill-opacity="1"></path></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g><g></g></g><g></g><g></g><g></g></svg><a href="http://www.amcharts.com/javascript-charts/" title="JavaScript charts" style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 5px; top: 5px;"> </a></div></div></div>
+		   			
+					<div class="row-fluid" style="width:50%;height:410px;float:left;overflow-y:auto;">
+						<p style="padding:10px 0;font-size:14px;border-top:1px solid #DDD;">
+				        	上报成功数(条)：
+							<span style="font-size:14px;margin-right:30px;" class="blue">33422</span>
+				        	上报失败数(条)：
+							<span style="font-size:14px;" class="red">0</span>
+						</p>
+					    <table class="table table-bordered table-striped table-hover" id="content">
+							 <thead>
+					            <tr>
+					            	<th class="center"></th>
+					            	<th class="center">业务名称</th>
+		
+					            	<th class="center">上报总数</th>
+					            </tr>
+					         </thead>
+					         <tbody>
+				         		<tr>
+					         		<td>hdsd00_69</td>
+					         		<td>43</td>
+				         		</tr>
+				         	
+				         		<tr>
+					         		<td>hdsd00_68</td>
+					         		<td>186</td>
+				         		</tr>
+				         	
+				         		<tr>
+					         		<td>hdsd00_67</td>
+					         		<td>17649</td>
+				         		</tr>
+				         	
+				         		<tr>
+					         		<td>hdsd00_66</td>
+					         		<td>0</td>
+				         		</tr>
+					         </tbody>
+						</table>
+					    <ul class="eig_service_container"></ul>
+					</div>
+		    	</div>
+		    </div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/pie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var chart;
+		var chartData = [{"business":"hdsd00_69","value":43},{"business":"hdsd00_68","value":186},{"business":"hdsd00_67","value":17649},{"business":"hdsd00_66","value":0},{"business":"hdsa00_01","value":604},{"business":"hdsd00_14_02","value":0},{"business":"hdsb05_03","value":0},{"business":"hdsd00_04","value":976},{"business":"hdsd00_80","value":434},{"business":"hdsd00_81","value":0},{"business":"hdsd00_06","value":3},{"business":"hdsd00_08","value":0},{"business":"hdsd00_84","value":478},{"business":"hdsd00_85","value":586},{"business":"hdsd00_82","value":0},{"business":"hdsd00_83","value":533},{"business":"hdsd00_76","value":0},{"business":"hdsd00_75","value":1409},{"business":"hdsd00_78","value":0},{"business":"hdsd00_77","value":74},{"business":"hdsd00_03_01","value":366},{"business":"hdsd00_79","value":0},{"business":"hdsd00_17","value":0},{"business":"hdsb03_10","value":0},{"business":"hdsd00_15","value":1503},{"business":"hdsd00_16","value":31},{"business":"hdsd00_13","value":16},{"business":"hdsd00_14","value":0},{"business":"hdsd00_70","value":6045},{"business":"hdsd00_11","value":33},{"business":"hdsd00_71","value":2394},{"business":"hdsd00_72","value":0},{"business":"hdsd00_73","value":59},{"business":"hdsd00_74","value":0}];
+		var totalData = 33422;
+		function getSortFun(order, sortBy) {
+		    var ordAlpah = (order == 'asc') ? '>' : '<';
+		    var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+		    return sortFun;
+		}
+		AmCharts.ready(function () {
+			// PIE CHART
+			chart = new AmCharts.AmPieChart();
+			legend = new AmCharts.AmLegend();
+			
+			// title of the chart
+			//chart.addTitle("Visitors countries", 16);
+			
+			if(totalData > 0){
+			     var temp = chartData;
+			     //chart.dataProvider = temp.sort(getSortFun('asc', 'business'));
+				chart.dataProvider = chartData;
+				//add by wangn 50个业务
+				chart.colors=["#EE9A13","#F8C400","#EFEE00","#EFEE00","#1EA839","#68B92E","#9DCD17","#B5DFF8","#D7EDFB","#EDF6FD","#901D78","#96C6EA","#BA72A4","#BBB4D6","#D9C7DF","#00AA90","#00AA90","#61BBA1","#7CC5B1","#E4EC65","#E3EF8D","#E6EA00","#D5649A","#DCA89A","#D4561B","#E2AA99","#138A6A","#739C5A","#3FB3B2","#B7DCB1","#F09B4A","#59BBD8","#76C5E6","#B4DEEC","#95D0DE","#B6DEDE","#A1A6A2","#E46713","#EE9A13","#F8C400","#EFEE00","#1EA839","#68B92E","#9DCD17","#B5DFF8","#D7EDFB","#EDF6FD","#901D78","#96C6EA","#BA72A4","#BBB4D6","#D9C7DF","#00AA90","#61BBA1","#7CC5B1","#E4EC65","#E3EF8D","#EDF4CA","#E6EA00","#D5649A","#DCA89A","#D4561B","#D66543","#E2AA99","#138A6A","#418F68","#739C5A","#389688","#3FB3B2","#B7DCB1","#F09B4A","#59BBD8","#76C5E6","#B4DEEC","#95D0DE","#B6DEDE","#A1A6A2"];
+			    //add end
+				legend.valueText = "[[[value]]]";
+				chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+			}else{
+		    	chart.dataProvider = [{"business":"无数据", "value":"1"}];
+		    	chart.colors = ["#CCC"];
+		    	legend.valueText = "";
+		    	chart.balloonText = "";
+			}
+			//chart.colorField = "color";
+			//add by wangn 2015-11-20 饼图精度
+			chart.adjustPrecision = true;
+			chart.percentPrecision = 1;
+			//add end
+			chart.titleField = "business";
+			chart.valueField = "value";
+			chart.sequencedAnimation = true;
+			chart.startEffect = "elastic";
+			chart.innerRadius = "20%";
+			chart.pieX = "45%";
+			chart.pieY = "50%";
+			chart.labelText = "";
+			chart.startDuration = 2;
+			chart.radius = 180;
+			chart.labelRadius = 15;
+			chart.startEffect = "easeOutSine";
+			
+			// LEGEND
+			//legend.align = "right"
+			legend.position = "absolute";
+			legend.top = 20;
+			legend.left = 650;
+			legend.borderAlpha = 0;
+			legend.valueWidth = 0.2;
+			legend.horizontalGap = 0;
+			legend.width = 400;
+			//legend.labelWidth = 100;
+			legend.valueText = "";
+			
+			//chart.addLegend(legend);
+			
+			// WRITE                                 
+			chart.write("chartdiv");
+		});
+		
+		 $(document).ready(function(){
+		    //mod end
+		    
+		     	    var colorsContent=["#EE9A13","#F8C400","#EFEE00","#EFEE00","#1EA839","#68B92E","#9DCD17","#B5DFF8","#D7EDFB","#EDF6FD","#901D78","#96C6EA","#BA72A4","#BBB4D6","#D9C7DF","#00AA90","#00AA90","#61BBA1","#7CC5B1","#E4EC65","#E3EF8D","#E6EA00","#D5649A","#DCA89A","#D4561B","#E2AA99","#138A6A","#739C5A","#3FB3B2","#B7DCB1","#F09B4A","#59BBD8","#76C5E6","#B4DEEC","#95D0DE","#B6DEDE","#A1A6A2","#E46713","#EE9A13","#F8C400","#EFEE00","#1EA839","#68B92E","#9DCD17","#B5DFF8","#D7EDFB","#EDF6FD","#901D78","#96C6EA","#BA72A4","#BBB4D6","#D9C7DF","#00AA90","#61BBA1","#7CC5B1","#E4EC65","#E3EF8D","#EDF4CA","#E6EA00","#D5649A","#DCA89A","#D4561B","#D66543","#E2AA99","#138A6A","#418F68","#739C5A","#389688","#3FB3B2","#B7DCB1","#F09B4A","#59BBD8","#76C5E6","#B4DEEC","#95D0DE","#B6DEDE","#A1A6A2"];
+		    
+		    $( "#content >tbody" ).find("tr").each(function(i){
+		    	var color = colorsContent[i];
+		    	var colorStr = "<td style='width:40px;'><div style='background:"+color+";width:20px;height:10px;margin:5px auto;'></div></td>";
+		    	//alert($(this).html());
+		    	$(this).prepend(colorStr);
+		       // colorStr.after($("td",this));
+		    	// alert($(this).html());  	   
+		    	 });
+		 }); 
+		  function iniSelectList(grade,code,t_this,total) {
+			if(t_this) {
+				selectValue = t_this.attr("tempValue");
+			} else {
+				selectValue = -1;
+			}
+			if(!code) code = "-1";
+			$("div[id*=grade]").each(function(index, element) {
+				var selectId = $(this).attr("id");
+				selectId = selectId.substr(5,selectId.length);
+				if(selectId >= grade) {
+					$(this).remove();
+				}
+			});
+			if(code) {
+				$.ajax({
+					async : false,
+		            cache : false,
+		            type : 'POST',
+		            dataType : "json",
+		            data : "code=" + code+"&userType=-1",
+		            url : "/PMC/deviceManage/orgsearch",
+					error: function(data){
+						//alert('加载出错');
+					},
+					success: function(data1){
+						var data = eval("(" + data1 + ")");
+					    data = data.select;
+						if(data.length > 0 && total != 1) {
+							var selectorFrag = $('<div class="selector" id="grade'+grade+'" tempValue="'+selectValue+'all" style="margin-right:4px">');
+							grade++;
+							var optionHtml = '<span>全部</span>'
+							optionHtml += '<ul>'
+							optionHtml += '<li tempValue="'+selectValue+'all" onclick="iniSelectList('+grade+',\''+selectValue+'all\',$(this),1)">全部</li>';//选择全部时使用上一级Select选中的值
+							$.each(data, function(i, field){
+								//定义各个组件
+								var	areaCode = field.areaCode,
+									areaName = field.areaName;
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))">' + areaName + '</li>';
+							});
+							optionHtml += '</ul>';
+							selectorFrag.append(optionHtml);
+							selectorFrag.appendTo("#selector-container");
+						}
+					}
+				});
+			}
+		}
+		
+		
+		//var areaList = "110000,210000,210000";
+		
+		function getSelectList(areaList,i) {
+			areaListArray = areaList.split(",");
+			var areaLength = areaListArray.length;
+			var defaultAreaCode = areaListArray[i];
+			var grade = i + 1;
+			if(i > 0) {
+				j = i - 1;
+				var prevAreaCode = areaListArray[j];
+			}
+			i++;
+			$.ajax({
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : "code=" + defaultAreaCode+"&userType=-1",
+				url : "/PMC/deviceManage/orgsearch/echo",
+				error: function(data){
+					//alert('加载出错');
+				},
+				success: function(data1){
+					var data = eval("(" + data1 + ")");
+					    data = data.select;
+					if(data.length > 0) {
+						grade++;
+						var defaultValue = "";
+						var optionHtml = "<ul>"
+						if(prevAreaCode) {
+							if(prevAreaCode + "all" == defaultAreaCode) {
+								defaultValue = prevAreaCode + "all";
+								defaultValueTxt = "全部";
+								optionHtml += '<li tempValue="'+prevAreaCode+'all" onclick="iniSelectList('+grade+',\''+prevAreaCode+'all\',$(this),1)" selected="selected">全部</li>';
+							} else {
+								optionHtml += '<li tempValue="'+prevAreaCode+'all" onclick="iniSelectList('+grade+',\''+prevAreaCode+'all\',$(this),1)">全部</li>';
+							}
+						} else {
+							if(defaultAreaCode == "-1all") {
+								defaultValueTxt = "全部";
+								defaultValue = "-1all"
+							}
+							optionHtml += '<li tempValue="-1all" onclick="iniSelectList('+grade+',\'-1all\',$(this),1)">全部</li>';
+						}
+						
+						$.each(data, function(i, field){
+							//定义各个组件
+							var	areaCode = field.areaCode,
+								areaName = field.areaName;
+							if(defaultAreaCode == areaCode) {
+								defaultValue = areaCode;
+								defaultValueTxt = areaName;
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))" selected="selected">' + areaName + '</li>';
+							} else {
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))">' + areaName + '</li>';
+							}
+						});
+						optionHtml += '</ul>'
+						grade--;
+						var selectorFrag = $('<div class="selector" id="grade'+grade+'" tempValue="'+defaultValue+'" style="margin-right:4px">');
+						var spanFrag = '<span>'+defaultValueTxt+'</span>';
+						selectorFrag.append(spanFrag);
+						selectorFrag.append(optionHtml);
+						selectorFrag.appendTo("#selector-container");
+						if(i < areaLength) {
+							getSelectList(areaList,i);
+						}
+					}
+				}
+			});
+		}  
+		function submitForm(){
+		      var selectArray = [];
+			$("div[id*=grade]").each(function(index, element) {
+				selectArray.push($(this).attr("tempValue"));
+			});
+			$("#selectValue").val(selectArray);
+			$('#searchForm').submit();
+		}
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

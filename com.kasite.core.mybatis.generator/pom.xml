@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>kasite</groupId>
+		<artifactId>com.kasite.core</artifactId>
+		<version>1.0.0-RELEASES</version>
+	</parent>
+	<packaging>jar</packaging>
+	<name>mybatis</name>
+	<artifactId>com.kasite.core.mybatis.generator</artifactId>
+	<url>http://maven.apache.org</url>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.mybatis.generator</groupId>
+			    <artifactId>mybatis-generator-maven-plugin</artifactId>
+			    <version>1.3.7</version>
+			    <configuration>
+			　　　　<!-- mybatis用于生成代码的配置文件 -->
+			    　　   <configurationFile>generatorConfig.xml</configurationFile>
+			        <verbose>true</verbose>
+			        <overwrite>true</overwrite>
+			    </configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<properties>
+		<maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>kasite</groupId>
+			<artifactId>com.kasite.core.common</artifactId>
+			<version>1.0.0-RELEASES</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+		<dependency>
+		    <groupId>org.apache.ant</groupId>
+		    <artifactId>ant</artifactId>
+		    <version>1.9.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.log4j/org.apache.log4j -->
+		<dependency>
+		    <groupId>org.apache.log4j</groupId>
+		    <artifactId>org.apache.log4j</artifactId>
+		    <version>1.2.13.v200706111418</version>
+		</dependency>
+	</dependencies>
+</project>

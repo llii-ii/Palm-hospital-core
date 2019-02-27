@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>消息订阅</title>
+	    <script src="../js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../common/js/common.js" ></script>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="mes">
+				<div class="top"><b>用户名</b><div class="filter" onclick="filter()">筛选</div></div>
+				<ul id="list">
+				</ul>
+			</div>
+			<div id="filter" class="mask">
+				<div class="mask-box">
+					<div class="title">筛选</div>
+					<ul class="tab">
+						<li><div class="circle cur"  id="state1"></div>已订阅</li>
+						<li><div class="circle cur" id="state0"></div>未订阅</li>
+					</ul>
+					<div class="search">场景名称:<input type="text" name="name" id="sceneName" value="" /></div>
+					<div class="btn">
+						<button class="left" onclick="closeMask()">关闭</button>
+						<button class="right" onclick="queryList()">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.mes li,.tab li').click(function(){
+				$(this).find('.circle').toggleClass('cur');
+			})
+		})
+		function filter(){
+			$('#filter').show();
+		}
+		function closeMask(){
+			$('#filter').hide();
+		}
+		function dingyue(ModeType,sceneName,t){
+			if($(t).find("div").hasClass("cur")){
+				
+				var param = {};
+				var apiData = {};
+				apiData.modeType = ModeType;
+				apiData.state = 1;
+				apiData.sceneName = sceneName;
+				apiData.openId = Commonjs.getUrlParam("openid");
+				param.api = '';
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				var url = '/wsgw/msg/AddMsgOpenIdScene/callApi.do';
+				Commonjs.ajax(url, param, function(d) {
+					if (d.RespCode == 10000) {
+						$(t).find("div").removeClass("cur");
+					}
+				})
+			}
+			else{
+				var param = {};
+				var apiData = {};
+				apiData.modeType = ModeType;
+				apiData.openId = Commonjs.getUrlParam("openid");;
+				param.api = '';
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				var url = '/wsgw/msg/DeleteMsgOpenIdScene/callApi.do';
+				Commonjs.ajax(url, param, function(d) {
+					if (d.RespCode == 10000) {
+						$(t).find("div").addClass("cur");
+					}
+				})
+				
+			}
+		}
+		$(function(){
+			queryList();
+		})
+		function queryList(){
+			var state1 = $("#state1").hasClass("cur");
+			var state0 = $("#state0").hasClass("cur");
+			var state = -1;
+			if(state1&&state0){
+				state = -1;
+			}
+			else{
+				if(state1){
+					state=0;
+				}
+				if(state0){
+					state=1;
+				}
+			}
+			var param = {};
+			var apiData = {};
+			apiData.sceneName = $("#sceneName").val();
+			apiData.openId = Commonjs.getUrlParam("openid");
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgOpenIdSceneList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					var h = '';
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						if(item.State==0){
+							if(state==0||state==-1){
+								h+='<li onclick="dingyue(\''+item.ModeType+'\',\''+item.SceneName+'\',this)"><div class="circle cur"></div>'+item.SceneName+'</li>';
+							}
+						}
+						else{
+							if(state==1||state==-1){
+								h+='<li onclick="dingyue(\''+item.ModeType+'\',\''+item.SceneName+'\',this)"><div class="circle"></div>'+item.SceneName+'</li>';
+							}
+						}
+					})
+					$("#list").html(h);
+					
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+			$('#filter').hide();
+		}
+	</script>
+</html>

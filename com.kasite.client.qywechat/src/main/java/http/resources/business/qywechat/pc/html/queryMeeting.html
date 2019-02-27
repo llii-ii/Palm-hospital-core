@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>会议安排</title>
+		<style type="text/css">
+			.widget{
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="applyMeeting('')">
+	                    <div class="">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">会议申请</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="mettingRoom()">
+	                    <div class="">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">会议室管理</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="ps(6)">
+	                    <div class="">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">发起人管理</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="margin-left:420px;"></div>
+			</div>
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>会议日期：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input readonly="readonly" id="meetingDate" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'d5222\')}'})" class="form-control form-group" placeholder="开始时间">
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>会议时间：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input readonly="readonly" id="d5221" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'HH:mm',maxDate:'#F{$dp.$D(\'d5222\')}'})" style="width:120px!important;"  class="form-control form-group" placeholder="开始时间">
+					  			<label style="padding-left: 10px;">至</label>
+					  			<input readonly="readonly" id="d5222" type="text" name="endTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'HH:mm',minDate:'#F{$dp.$D(\'d5221\')}'})" class="form-control form-group" style="width:120px!important;" placeholder="结束时间">
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:660px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>会议主题：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="title" type="text" class="form-control" name="" id="" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>会议状态：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select id="status" name="" class="form-control" >
+									<option value="-1">请选择</option>
+									<option value="0">待发布</option>
+									<option value="1">未开始</option>
+									<option value="2">进行中</option>
+									<option value="3">已结束</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:240px;">
+						<button onclick="refresh()" type="button" class="btn btn-primary pull-right">查询</button>
+					</div>
+				</div>
+			</div>
+			
+			<table id="queryMeetingList" >
+	        </table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		$(function(){
+			queryMeetingList();
+		});
+		
+		//查询会议列表
+		function queryMeetingList(){
+			$('#queryMeetingList').bootstrapTable({
+				url: '/wsgw/qyWeChat/QueryMeeting/callApi.do',  //请求后台的URL（*）
+		        method: 'POST',                      //请求方式（*）
+		        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		        pagination: true,                   //是否显示分页（*）
+		        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+		        pageSize: 10,                     //每页的记录行数（*）
+		        queryParams : function (params) {
+					var page = {};
+					page.PIndex = 0;
+					page.PSize = 10;
+		        	var apiData = {};
+		        	apiData.id = -1;
+		        	apiData.status = $("#status option:selected").val();
+		        	apiData.meetingDate = $("#meetingDate").val();
+		        	apiData.timeStart = $("#d5221").val();
+		        	apiData.timeEnd = $("#d5222").val();
+		        	apiData.title = $("#title").val();
+		        	var temp = {   
+		                     rows: params.limit,                         //页面大小
+		                     page: (params.offset / params.limit) + 1,   //页码
+		                     sort: params.sort,      //排序列名  
+		                     sortOrder: params.order, //排位命令（desc，asc） 
+		                     token : Commonjs.getToken(),
+		                     apiParam : Commonjs.getApiReqParams(apiData)
+		                 };
+		            return temp;
+		        },
+		        columns: [
+		        {
+		            field: 'Meetingdate',
+		            title: '会议日期',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Timestart',
+		            title: '开始时间',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Timeend',
+		            title: '结束时间',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Title',
+		            title: '会议主题',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Address',
+		            title: '会议地点',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Status',
+		            title: '会议状态',
+		            align: 'center',
+		            valign: 'middle',
+		            formatter:function(value, row, index){
+		            	if(value == 0){
+		            		return "待发布";
+		            	}else if(value == 1){
+		            		return "未开始";
+		            	}else if(value == 2){
+		            		return "进行中";
+		            	}else if(value == 3){
+		            		return "已结束";
+		            	}
+		            }
+		            
+		        },{
+		            field: 'Operatorname',
+		            title: '发起人',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Number',
+		            title: '参会人数',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            field: 'Credits',
+		            title: '会议学分',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            title: '操作',
+		            align: 'center',
+		            valign: 'middle',
+		            formatter: formatter
+		        },],
+		        responseHandler: function(res) {
+		        	if(res.RespCode == 401){
+		        		alert(res.RespMessage);
+		        		top.location = "http://"+window.location.host;
+		        	}else if(res.RespCode == 10000){
+		        		if(res.Data == undefined){
+			       			return [];
+			       		}else{
+			       			return res.Data;
+			       		}
+		        	}
+		        },
+		        onLoadSuccess: function (result) {
+		        	
+		        },
+		        onLoadError: function () {
+		            //alert("数据加载失败！");
+		        },
+			});
+		}
+	
+		function formatter(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:applyMeeting(\''+row.Id+'\');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');
+			html.push('<a href="javascript:;tj(\''+row.Meetingid+'\')" style="color:#3685ff;font-size:12px;padding:0 6px;">统计</a>');
+			html.push('<a href="javascript:;" onclick="meetingDetail(\''+row.Id+'\')" style="color:#3685ff;font-size:12px;padding:0 6px;">查看详细</a>');
+			html.push('<a onclick="applyMeeting(\''+row.Id+'\',\'copyMeeting\')" style="color:#3685ff;font-size:12px;padding:0 6px;">复制会议</a>');
+			return html.join('')
+		}
+		
+		//查询刷新
+		function refresh(){
+			$("#queryMeetingList").bootstrapTable('destroy');
+			queryMeetingList();
+		}
+		
+		function tj(meetingId){
+			System.openWindow({
+				id:'queryMeetingSign',
+				title:'会议统计',
+				url:'queryMeetingSign.html?meetingId='+meetingId,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function ps(memberType){
+			System.openWindow({
+				id:'launchPersonSetting',
+				title:'发起人设置',
+				url:'launchPersonSetting.html?memberType='+memberType,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		//编辑
+		function applyMeeting(meetingId,type){
+			System.openWindow({
+				id:'applyMeeting',
+				title:'会议申请',
+				url:'applyMeeting.html?meetingId='+meetingId+'&type='+type,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+				}
+			});
+		}
+		
+		function meetingDetail(meetingId){
+			System.openWindow({
+				id:'meetingDetail',
+				title:'会议详细',
+				url:'meetingDetail.html?meetingId='+meetingId,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function mettingRoom(){
+			System.openWindow({
+				id:'queryMeetingRoom',
+				title:'会议室管理',
+				url:'queryMeetingRoom.html',
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+	</script>
+</html>

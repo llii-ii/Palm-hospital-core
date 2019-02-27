@@ -1,0 +1,433 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+	<meta name="author" content="yihu.com" />
+    <title>登录</title>
+    <link rel="stylesheet" href="css/loginstyles.css" type="text/css"/>
+    <link rel="stylesheet" href="css/loginbg.css" type="text/css"> 
+    <link rel="stylesheet" href="css/easyui.css" type="text/css"> 
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    
+    <script type="text/javascript" src="cross/js/jquery/1.8.3/jquery.js"></script>
+	<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script>
+	var artBox;
+	var ppwd = "";
+	var AUTO_PLAY_TIME;
+	var indexBanner_isIE9 = false;
+	
+	$(function() {
+		var loginId= $.cookie('login_ApmWeb_loginId'); 
+	    ppwd= $.cookie('login_ApmWeb_loginPwd');
+	    if(loginId && loginId!=""){
+			$("#appLoginId").val(loginId);
+		}
+		if(ppwd && ppwd!=""){
+			$("#appPWD").val("********");
+			$('#remember_password').attr("checked",'true')
+		}	
+	  	
+		 	$("#btnLogin").click(function () {
+			var loginId = $("#appLoginId").val();
+			var pwd = $("#appPWD").val();
+		 		login(loginId,pwd);
+	 		});
+		 	
+		 //忘记密码弹窗
+		$(".forget").on("click",function(){
+			$("#forget-loginId").val('');
+			$("#forget-YZM").val('');
+			$("#forget-newPwd").val('');
+			$("#forget-commitPwd").val('');
+			var contents=$('.forget-password-box').get(0);
+			artBox = art.dialog({
+				lock: true,
+				artIcon:'edit',
+				opacity:0.4,
+				width: 480,
+				title:'忘记密码',
+				content: contents,
+				ok: function () {
+					return resetNewPwd();
+				},
+				cancel: function () {
+			        time = 0;
+			    }
+			});
+		});
+		//忘记密码弹窗END
+		
+		//获取底部标签
+		getFooterName();
+	
+	    });
+	
+	  
+	   document.onkeydown=keyDownSearch;  
+	   //回车键事件监听
+	   function keyDownSearch(e) {
+	       // 兼容FF和IE和Opera
+	       var theEvent = e || window.event;
+	       var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+	       if (code == 13) {
+	       	var loginId = $("#appLoginId").val();
+			var pwd = $("#appPWD").val();
+			console.log(pwd);
+		 		login(loginId,pwd);
+	           return false;
+	       }
+	       return true;
+	   }
+	  
+	   function login(loginId, pwd){
+	   	if ($.trim(loginId)=='') {
+			showMessage("用户名不能为空");
+			return;
+		}
+	   	if ($.trim(pwd)=='') {
+			showMessage("密码不能为空");
+			return;
+		}
+	   	if(pwd!="********"){
+			pwd=hex_md5(pwd);
+		}else{
+			pwd=ppwd;
+		}
+		var param={
+			loginId : loginId,
+			pwd : pwd
+		};
+		
+			$.post(jkzl.common.path+"/appLogin/login", param,function (data) {
+	  			data=eval("("+data+")");
+	 			if(data.Code==10000){
+	 				//进行cookie存储
+				$.cookie('login_ApmWeb_loginId',loginId,{expires: 30});
+				if($('#remember_password').is(':checked')){
+					$.cookie('login_ApmWeb_loginPwd',pwd, { expires: 30 });
+				}else{
+					$.cookie('login_ApmWeb_loginPwd', '', { expires: -1 }); 
+				}
+				window.location.href  = '../index.html';
+	 			}else{
+	 				showMessage(data.Message);
+	 			}
+			},"text");
+	   }
+	   
+	   function reCode(){   
+		if(time>0){
+			setTimeout('reCode()',1000);    
+			$('.code-btn').html(time+'秒之后可再获取');
+			time--;   
+		}   
+		else{   
+			$('.code-btn').html('<span class="code-btn"><a href="javascript:;" onclick="getVCode();">获取验证码</a></span>');  
+		}   
+	}
+	//忘记密码-发送验证码
+	function getVCode(){
+		var loginID=$("#forget-loginId").val();
+		if(loginID == ''){
+			showMessage("手机号不能为空");
+			return;
+		}
+		var rex = /^\d{11}$/;
+		if (loginID == null || loginID == '' || !rex.test(loginID)) {
+			showMessage("请输入有效的手机号码");
+			return;
+		}	
+		time=60;
+		reCode();	
+		$.ajax({
+			url : jkzl.common.path+"/appLogin/getVCode",
+			type : 'POST',
+			data : {loginID : loginID},
+			dataType : "json",
+			success : function(data) {
+				if (data) {
+					if (data.Code == "10000") {
+																							
+					}else if(data.Code == "-10000"){
+						showMessage(data.Message);  
+					} else {
+						if (data.Message!=null&&data.Message!="")
+							showMessage(data.Message);
+					}
+				}
+			},
+			error : function() {
+				showMessage("获取验证码失败");
+			}
+		});
+	}
+	
+	//重置密码
+	function resetNewPwd() {
+		var loginID=$("#forget-loginId").val();
+		var loginPwd=$("#forget-newPwd").val();
+		if($("#forget-loginId").val()==''){
+		  	showMessage("手机号不能为空");
+		    return false;
+	  	}
+		var rex = /^\d{11}$/;
+		if (loginID == null || loginID == '' || !rex.test(loginID)) {
+			showMessage("请输入有效的手机号码");
+			return false;
+		}
+	  	if($("#forget-YZM").val()==''){
+		  	showMessage("短信验证码不能为空");
+		    return false;
+	  	}
+	  	if($("#forget-newPwd").val()==''){
+		  	showMessage("新密码不能为空");
+		    return false;
+	  	}
+	  	if($('#forget-newPwd').val().length<6 || $('#forget-newPwd').val().length>12 || !isNaN($('#forget-newPwd').val())){
+			showMessage("新密码长度需为6-12位，且必须包含字母");
+		    return false;
+		}
+	  	if($("#forget-commitPwd").val()==''){
+		  	showMessage("确认密码不能为空");
+		    return false;
+	  	}
+	  	if($("#forget-commitPwd").val() != $("#forget-newPwd").val()){
+		  	showMessage("新密码与确认密码不一致");
+			return false;
+	  	}
+		loginPwd = hex_md5(loginPwd);
+		var yzm = $("#forget-YZM").val();
+	  	var success = false;
+	  	
+	  	$.ajax({
+			url : jkzl.common.path+"/appLogin/resetUserPwd",
+			type : 'POST',
+			data : {
+				loginID : loginID,
+				loginPwd : loginPwd,
+				yzm : yzm
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data) {
+					if (data.Code == "10000") {
+							success=true;	
+							showMessage(data.Message);
+							time=0;
+							artBox.close();		
+					} else if (data.Code == "-10000") {
+						showMessage(data.Message);           		
+	       			} else {
+						if (data.Message != null && data.Message != "") {
+							showMessage(data.Message);	
+						}
+					}
+				}else{
+					showMessage("重置密码失败");					
+				}
+			},
+			error : function() {
+				showMessage("重置密码失败");				
+			}
+		});
+	  	return success;
+	}
+	   
+	   function getFooterName() {
+		$.ajax({
+			url : jkzl.common.path+"/combo/getFooterName",
+			cache : false,
+			async : false,
+			data : {},
+			success : function(result) {
+				if (result.Code == 1) {
+					var msg = result.Result;
+					var html = "";
+					html += "<footer><h2>";
+					if (msg.indexOf("：") >= 0) {
+						html += "<i>"
+						html += msg.substring(0,msg.indexOf("：")+1);
+						html += "</i>" + msg.substring(msg.indexOf("：")+1);
+					} else {
+						html += msg;
+					}
+					html += "</h2></footer>";
+					$("#footerDiv").html(html);
+				} else {
+					// 提示框
+					showMessage(result.Message);
+				}
+			}
+		});
+	}
+	   
+	   function showMessage(message) {
+	   	art.dialog({
+			lock : true,
+			artIcon : 'ask',
+			opacity : 0.4,
+			width : 250,
+			title : '提示',
+			content : message,
+			ok : function() {
+	
+			}
+		});
+	   }
+	</script>
+</head>
+
+<body>
+<!-- 背景图 -->
+<div class=" page-layout page-main-content" data-page-id="90136">
+	<div class="layout layout-grid-0">
+		<div class="grid-0">
+			<div class="col col-main">
+				<div class="main-wrap J_Region">
+					<div data-spm="418686" data-moduleid="175947"
+						data-name="aliyun-index-top-banner-2016" data-guid="418686"
+						id="guid-418686" data-scene-id="431827" data-scene-version="11"
+						data-hidden="" data-gitgroup="ali-mod" data-ext=""
+						class="aliyun-index-top-banner-2016 J_Module"
+						tms="aliyun-index-top-banner-2016/0.0.71" tms-datakey="431827"
+						data-spm-max-idx="10">
+						<div class="module-wrap J_tb_lazyload dbl_tms_module_wrap"
+							style="position: relative; z-index: 100;">
+							<div class="banner-container dark"
+								style="background: rgb(34, 37, 42);">
+								<!-- 介绍 -->
+								
+								<!-- 登陆from -->
+								<div id="operation">
+									<div id="wrapper">
+										<div id="content">
+											<div id="header">
+												<h1>
+													<span class="login-box-logo"></span>
+												</h1>
+											</div>
+											<div id="darkbanner" class="banner320">
+												<h2>Login</h2>
+											</div>
+											<div id="triangle-topright" class="banner320"></div>
+											<div id="darkbannerwrap"></div>
+											<fieldset class="form">
+												<p>
+													<label >用户名:</label>																											
+													<input type="text">
+												</p>
+												<p>
+													<label >密&nbsp&nbsp&nbsp&nbsp码:</label>
+													<input  type="text">
+												</p>														
+												<div id="darkbannerwrap"></div>
+												<div id="darkbannerwrap"></div>
+												<div id="darkbannerwrap"></div>
+												<div id="darkbannerwrap"></div> 
+											</fieldset>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="index-top-banner" data-hover-container="">
+									<div data-group="" data-isimage="" data-group-open=""
+										data-active="dark" data-groupindex="0"
+										class="center animating-enter-up">
+										<div data-base-layer=""
+											style="transform: rotateX(-8.87906deg) rotateY(0.194589deg);">
+											<div class="banner-row">
+												<div class="layer right-image no-transition"
+													data-zindex="50" style="transform: translateZ(50px);">
+													<img src="img/1-1.png">
+												</div>
+
+												<div class="layer right-image no-transition"
+													data-zindex="100" style="transform: translateZ(100px);">
+													<img src="img/1-2.png">
+												</div>
+
+												<div class="layer right-image no-transition"
+													data-zindex="150" style="transform: translateZ(150px);">
+													<img src="img/1-3.png">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="external_username" >
+	<input id="appLoginId" type="text" placeholder="请输入手机号" class="external_input">
+</div>
+<div id="external_pwd" >
+	<input id="appPWD" type="password" placeholder="请输入密码"  class="external_input">
+</div>
+<div id="external_sub" >
+	<ul class="forgottenpassword"  style="width:205%">
+		<li><input name="remember_password" type="checkbox" width="100%" class="remember_password" id="remember_password"/>记住密码</li>
+		
+	</ul> 
+	<ul class="forgottenpassword"  style="width:205%">
+		
+		<li  align="center">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" style="vertical-align:right" width="100%" class="fr forget"> 忘记密码？</a>
+
+		</li>
+	</ul>
+ 
+</div>
+
+<div id="external_sub2" >
+	 
+	 
+	<ul  class=" " style="width:125%;">
+		<br>
+		<br>
+		<li style="width:110%; display: inline; ">
+			<button type="button" style="width:100%;" id="btnLogin" >
+				 <img src="img/key.png" alt="Announcement">&nbsp;&nbsp;登录
+			</button>
+		</li>
+	</ul>
+</div>
+<!-- 忘记密码弹窗 start -->
+<div class="forget-password-box" style="display:none">
+	<table class="form">
+    	<tr>
+        	<td>手机号：</td>
+            <td><input type="text" id="forget-loginId"  class="input-text" value="" /></td>
+        </tr>
+        <tr>
+        	<td>短信验证码：</td>
+            <td><input type="text" id="forget-YZM" class="input-text code" value="" /> <span class="code-btn"><a href="javascript:;" onclick="getVCode();">获取验证码</a></span></td>
+        </tr>
+        <tr>
+        	<td>新密码：</td>
+            <td><input type="password" id="forget-newPwd" class="input-text" value="" /></td>
+        </tr>
+        <tr>
+        	<td>确认新密码：</td>
+            <td><input type="password" id="forget-commitPwd" class="input-text"  value="" /></td>
+        </tr>
+    </table>
+</div>
+
+<script src="js/loginjs2.js"></script> 
+
+<div id="footerDiv"></div>
+
+</body>
+</html>

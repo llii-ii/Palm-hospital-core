@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>新增问卷</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+		<style type="text/css">
+			.vote5{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.vote5-form{
+				padding: 0 0.4rem 0 0.25rem;
+				background: #fff;
+				margin-top: 0.12rem;
+			}
+			.vote5-form li{
+				position: relative;
+			}
+			.vote5-form li:after{
+				position: absolute;
+				content: '';
+				display: block;
+				height: 0;
+				left: -.25rem;
+				right: -.4rem;
+				bottom: 0;
+				border-bottom: 1px solid #f2f4f5;
+			}
+			.vote5-form li.noline:after{
+				display: none;
+			}
+			.vote5-form label{
+				color: #191919;
+				font-size: 0.3rem;
+			}
+			.vote5-form label span{
+				color: #ccc;
+				padding-left: 0.1rem;
+				font-size: 0.24rem;
+			}
+			.vote5-form input{
+				display: block;
+				font-size: 0.3rem;
+				line-height: 0.6rem;
+				height: 0.6rem;
+				padding: 0 .4rem 0 0.12rem;
+				margin-top: 0.24rem;
+				text-align: right;
+				float: right;
+			}
+			.vote5-form .x-row{
+				position: relative;
+				line-height: 1rem;
+			}
+			.vote5-form li:last-child:after{
+				display: none;
+			}
+			.right-arrow{
+				position: absolute;
+				right: 0;
+				top: 0.4rem;
+				width: 0.13rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote5">
+	        	<ul class="vote5-form">
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>标题</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input type="text" id="title" placeholder="请输入标题" />
+							</div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row" onclick="jzsj()">
+							<div class="x-row-cols " style="width: 2rem;"><label>截止时间</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input id="endtime" type="text" readonly="readonly" placeholder="请选择截止时间" />
+								<img class="right-arrow" src="../../img/icon-vote-2.png" />
+							</div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>首语</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input type="text" name="beginintro" id="beginintro" placeholder="请输入首语" />
+							</div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>尾语</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input type="text" name="endingintro" id="endingintro" placeholder="请输入尾语" />
+							</div>
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="openContact()">
+						<div class="x-row-cols " style="width: 2rem;"><label>可见人员</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input type="text" readonly="readonly" id="parter" placeholder="请选择可见人员" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+							<input id="checksId" type="hidden"  value="" >
+							<input id="checksName" type="hidden"  value="" >
+						</div>
+	        		</li>
+	        	</ul>
+	        	
+	        	<ul class="vote5-form">
+	        		<li class="noline">
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 100%;"><label>封面图片<span>可上传封面图片</span></label></div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 100%;">
+								<div class="imagelist ell" id="imagelist">
+									<div class="imagelist-item" id="addImage">
+										<div class="imagelist-item-btn">
+										<input name="newsFile" id="attachment" type="file" onchange="upload('attachment')" accept="image/jpg,image/png" />
+										<input type="hidden" id="attachmentUrl" name="attachmentUrl" value="" />
+										<input type="hidden" id="attachmentName" name="attachmentName" value="" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+	        		</li>
+        		</ul>
+	        </div>
+		</div>
+		
+		<div class="btn" onclick="addVote();">下一步</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	<script type="text/javascript" src="../../../../../module/backstage/commons/upload/upload.js"></script>
+	<script type="text/javascript">
+		var memberIds = "";
+		var memberNames = "";
+		var selectedDepartmentArray=[];
+		var selectedUserArray=[];
+		var uid;
+		$(function(){
+			getWxConfig();
+			uid=Commonjs.getUUID();
+		});
+		
+	//获取微信配置	
+	function getWxConfig(wxkey){
+		var apiData = {};	
+		apiData.url = location.href.split('#')[0];
+		//apiData.wxkey = wxkey
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQyWxConfigInfo/callApi.do',param,function(dd){
+			if(dd.RespCode==10000){
+				var data = JSON.parse(dd.RespMessage);
+				wx.config({
+				    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+				    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: data.appId, // 必填，企业微信的corpID
+				    timestamp: data.timestamp, // 必填，生成签名的时间戳
+				    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+				    signature: data.signature,// 必填，签名，见 附录-JS-SDK使用权限签名算法
+				    jsApiList: [
+						    'selectEnterpriseContact',
+					    	'chooseImage',
+					    	'uploadImage',
+					    	'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			}else{
+				myLayer.alert("获取企业微信配置异常！");
+			}
+		},{async:false});
+	}
+	// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+	wx.ready(function(){
+		
+	});
+	// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+	wx.error(function(res){
+	
+	});
+	
+	//打开通讯录
+	function openContact(){	
+		wx.invoke("selectEnterpriseContact", {
+		                "fromDepartmentId": -1,// 必填，表示打开的通讯录从指定的部门开始展示，-1表示自己所在部门开始, 0表示从最上层开始
+		                "mode": "multi",// 必填，选择模式，single表示单选，multi表示多选
+		                "type": ["department","user"],// 必填，选择限制类型，指定department、user中的一个或者多个
+		                "selectedDepartmentIds": selectedDepartmentArray,// 非必填，已选部门ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+		                // 非必填，已选用户ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+		                "selectedUserIds": selectedUserArray 
+		        },function(res){
+		                if (res.err_msg == "selectEnterpriseContact:ok") {
+		                        if(typeof res.result == 'string'){
+		                                res.result = JSON.parse(res.result) //由于目前各个终端尚未完全兼容，需要开发者额外判断result类型以保证在各个终端的兼容性
+		                        }
+		                       // 已选的部门列表 选择限制类型为user时无部门数据
+		                       selectedDepartmentList = res.result.departmentList;
+		                       selectedDepartmentArray = [];
+		                       for (var i = 0; i < selectedDepartmentList.length; i++){
+		                                var department = selectedDepartmentList[i];
+		                                if(department!=null){
+			                                var departmentId = department.id;// 已选的单个部门ID
+			                                var departemntName = department.name;// 已选的单个部门名称
+			                                selectedDepartmentArray.push(departmentId);
+			                                memberIds += "d_"+departmentId+",";
+											memberNames += departemntName+",";
+			                                
+		                                }
+		                        } 
+		                        selectedUserList = res.result.userList; // 已选的成员列表
+		                        selectedUserArray = [];
+		                        for (var i = 0; i < selectedUserList.length; i++){
+		                                var user = selectedUserList[i];
+		                                if(user!=null){
+		                                	var userId = user.id; // 已选的单个成员ID
+			                                var userName = user.name;// 已选的单个成员名称
+			                                //var userAvatar= user.avatar;// 已选的单个成员头像
+			                                selectedUserArray.push(userId);
+			                                memberIds += userId+",";
+											memberNames += userName+",";
+		                                }
+		                               
+		                        }
+		                        memberNames = memberNames.substr(0, memberNames.length-1);
+		                        $("#parter").val(memberNames);
+					        	$("#checksName").val(memberNames);
+					        	$("#checksId").val(memberIds);
+					        	memberIds = "";
+								memberNames = "";
+		                }
+		        }
+		);
+	}
+	
+		function addVote(){
+			//附件、图片
+			var attachmentUrl = $("#attachmentUrl").val();
+			var attachmentName = $("#attachmentName").val();
+			var title = $("#title").val();
+			var attachment = $("#attachment").val();
+			var beginintro = $("#beginintro").val();
+			var endingintro = $("#endingintro").val();
+			var endtime = $("#endtime").val();
+			var checksId = $("#checksId").val();
+			var checksName = $("#checksName").val();
+			//发布时  不能为空  草稿可为空
+			//if(status==1){
+				if(Commonjs.isEmpty(checksName)){
+					myLayer.alert("请选择参与人员！");
+					return;
+				}
+				if(Commonjs.isEmpty(title)){
+					myLayer.alert("请输入投票标题！");
+					return;
+				}
+				if(Commonjs.isEmpty(endtime)){
+					myLayer.alert("请输入截止日期！");
+					return;
+				}
+			//}
+			var apiData = {};	
+				apiData.uid = uid;
+				//apiData.status = status;
+				apiData.themeType = 1;
+				apiData.operatorId = Commonjs.getOpenId();
+				apiData.operatorName = Commonjs.getOpenId();
+				//添加页面参数
+				apiData.title=title;
+				apiData.attachmentUrl=attachmentUrl;
+				apiData.attachmentName=attachmentName;
+				apiData.beginIntro=beginintro;
+				apiData.endingIntro=endingintro;
+				apiData.endTime=endtime;
+				apiData.memberIds=checksId;
+				apiData.memberNames=checksName;
+				apiData.qyClientId=Commonjs.getQyWeChatClientId();
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('WJDC');
+				var param = {};
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				Commonjs.ajax('../../../../../wsgw/qyWeChat/AddVoteQuestion/callApi.do',param,function(dd){
+					if(dd.RespCode == 10000){
+						window.location.href = 'questList.html?uid='+uid+"&themeid="+dd.RespMessage;
+					}else{
+						myLayer.alert(dd.RespMessage,3000);
+					}
+				});
+		}
+		
+		//上传图片
+        function upload(id) {
+			var filePath = $("#"+id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.')+1,filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\')+1,filePath.length);
+			if(type.toLowerCase() != 'jpg' && type.toLowerCase() != 'png'){
+				myLayer.alert('图片格式必须为.jpg|.png');
+				return ;
+			}
+	        var arrID = [ id ];
+			$.yihuUpload.ajaxFileUpload( {
+				url : '../../../../../../upload/uploadFile.do', // 用于文件上传的服务器端请求地址
+				secureuri : false,// 一般设置为false
+				fileElementId : arrID,// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token='+Commonjs.getToken(),						
+				dataType : 'json',// 返回值类型 一般设置为json
+				success : function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host +"/"+uri;
+					//展示图片
+					var html = [];
+			        html.push('<div class="imagelist-item" id="imagelist-item">');
+					html.push('	<div class="imagelist-item-img"><img src="'+uri_target+'"/></div>');
+					html.push('</div>');
+					$('#imagelist-item').remove();
+			        $('#imagelist').before(html.join(''));
+	        		$('#attachment').val('');
+					//保存文件名和URL
+					$("#attachmentUrl").val(uri_target);
+					$("#attachmentName").val(filename);
+					//解决onchange只触发一次的问题
+					//$("#"+id).replaceWith('<input type="file" name="newsFile" id="'+id+'" onchange="upload(\''+id+'\')" accept="image/jpg,image/jpeg,image/gif,image/png" value="" />');
+				
+				},
+				error : function(data, status, e) {
+					myLayer.alert("图片上传失败：建议您选择不超过1M的图片且在良好的网络环境下继续上传",3000);
+				}
+			});
+        }
+		
+		function jzsj(){
+			var inputjzsj = $('#endtime');
+			var dtpicker = new mui.DtPicker({
+			    type: "datetime",//设置日历初始视图模式 
+			    beginDate: new Date(2018, 01, 01),//设置开始日期 
+			    endDate: new Date(2024, 12, 12),//设置结束日期 
+			    value: inputjzsj.val(),//设置默认标签区域提示语 
+			}) 
+			dtpicker.show(function(e) {
+			    inputjzsj.val(e.value);
+			})
+		}
+	</script>
+</html>

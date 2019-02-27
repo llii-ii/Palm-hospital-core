@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>活动邀约</title>
+		<style type="text/css">
+			.widget{
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="openWindow('','')">
+	                    <div class="160px">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">新建活动</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="ps(9)">
+	                    <div class="160px">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">发起人管理</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="margin-left:280px;"></div>
+			</div>
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 250px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 130px;">
+								<label>活动开始日期：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:130px;">
+								<input id="startTime" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control form-group" placeholder="开始时间">
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 400px;">
+						<div class="x-row" style="margin-left: 80px;">
+							<div class="x-row-cols " style="width: 130px;">
+								<label>活动结束日期：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="endTime" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" style="width:120px!important;" class="form-control form-group" placeholder="结束时间" >
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:660px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>活动主题：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="title" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>活动状态：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control" id="status">
+									<option value="-1">全部</option>
+									<option value="0">未开始</option>
+									<option value="1">进行中</option>
+									<option value="2">已结束</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:240px;">
+						<button type="button" class="btn btn-primary pull-right" onclick="refresh();">查询</button>
+					</div>
+				</div>
+			</div>
+			<table id="queryActivityList" > </table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script>
+	
+	$(function(){
+		queryActivityList();
+	});
+	
+	//查询活动列表
+	function queryActivityList(){
+		$('#queryActivityList').bootstrapTable({
+			url: '/wsgw/qyWeChat/QueryActivity/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 10,                     //每页的记录行数（*）
+	        queryParams : function (params) {
+	        	var apiData = {};
+	        	apiData.id = -1;
+	        	apiData.startTime = $("#startTime").val();
+	        	apiData.endTime = $("#endTime").val();
+	        	apiData.title = $("#title").val();
+	        	apiData.status = $("#status option:selected").val();
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	        {
+	            field: 'Starttime',
+	            title: '活动开始日期',
+	            align: 'center',
+	            valign: 'middle',
+	        }, {
+	            field: 'Endtime',
+	            title: '活动结束日期',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Title',
+	            title: '活动主题',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Status',
+	            title: '活动状态',
+	            align: 'center',
+	            valign: 'middle',
+	            formatter:function(value, row, index){
+	            	if(value == 0){
+	            		return "未开始";
+	            	}else if(value == 1){
+	            		return "进行中";
+	            	}else if(value == 2){
+	            		return "已结束";
+	            	}
+	            }
+	            
+	        },{
+	            field: 'Operatorname',
+	            title: '发起人',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'PartNumber',
+	            title: '已报名人数',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'ReadNumber',
+	            title: '阅读数',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            title: '操作',
+	            align: 'center',
+	            valign: 'middle',
+	            formatter: formatter
+	        }],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        		top.location = "http://"+window.location.host;
+	        	}else if(res.RespCode == 10000){
+	        		if(res.Data == undefined){
+		       			return [];
+		       		}else{
+		       			return res.Data;
+		       		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+	        	
+	        },
+	        onLoadError: function () {
+	            //alert("数据加载失败！");
+	        },
+		});
+	}	
+	
+		function formatter(value, row, index){
+			var html = [];
+			if(row.Status == 0){
+				html.push('<a href="javascript:openWindow('+row.Id+',\'UpdateActivity\');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');
+			}else {
+				html.push('<a href="javascript:;" style="color:#3685ff;font-size:12px;padding:0 6px;opacity: 0.2">编辑</a>');
+			}
+			html.push('<a href="javascript:tj(\''+row.Activityid+'\');" style="color:#3685ff;font-size:12px;padding:0 6px;">统计</a>');
+			html.push('<a href="javascript:;" onclick="activityDetail('+row.Id+')" style="color:#3685ff;font-size:12px;padding:0 6px;">查看详细</a>');
+			html.push('<a href="javascript:;" onclick="openWindow('+row.Id+',\'copyActivity\')" style="color:#3685ff;font-size:12px;padding:0 6px;">复制活动</a>');
+			return html.join('')
+		}
+		
+		function ps(memberType){
+			System.openWindow({
+				id:'launchPersonSetting',
+				title:'发起人员设置',
+				url:'launchPersonSetting.html?memberType='+memberType,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function openWindow(id,type){
+			System.openWindow({
+				id:'addActivity',
+				title:'活动申请',
+				url:'addActivity.html?id='+id+'&type='+type,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					refresh();
+				}
+			});
+		}
+		
+		function activityDetail(id){
+			System.openWindow({
+				id:'activityDetail',
+				title:'活动详细',
+				url:'activityDetail.html?id='+id,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function tj(uuid){
+			System.openWindow({
+				id:'activityStatistics',
+				title:'统计',
+				url:'activityStatistics.html?acUUid='+uuid,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function refresh(){
+			$("#queryActivityList").bootstrapTable('destroy');
+			queryActivityList();
+		}
+	</script>
+</html>

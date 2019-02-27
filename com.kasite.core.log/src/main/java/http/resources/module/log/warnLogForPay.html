@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="renderer" content="webkit" />
+    <title>告警详细信息</title>
+    <link rel="stylesheet" href="common/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="common/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="common/css/jvm.css" type="text/css" />
+    <link rel="stylesheet" href="common/iconfont/iconfont.css" type="text/css" />
+	<link rel="stylesheet" href="common/widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/datetimepicker/2.1.9/css/jquery.datetimepicker.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/jsonFormat/1.0/css/jsonFormat.min.css" type="text/css"/>
+	<link rel="stylesheet" href="common/yihu_js/syntaxhighlighter_3.0.83/styles/shCore.css" type="text/css" />
+    <link rel="stylesheet" href="common/yihu_js/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" type="text/css" />
+    <style>
+		html {
+			overflow-x: hidden;
+			overflow-y: auto;
+			font-size: 20px;
+		}
+		/** 列表细节展示表格 */
+		.dv-table {
+			word-break: break-all;
+			width: 360px;
+			border: 0;
+			border-spacing: 0px 4px;
+		}
+		
+		.dv-table td {
+			border: 1px solid #ddd;
+		}
+		
+		.dv-label {
+			font-weight: bold;
+			color: #15428B;
+			width: 100px;
+		}
+	</style>
+        
+</head>
+
+<body>
+	<div>
+		<table id="groupDataTable">
+		</table>
+	</div>
+	<!-- 请求日志JSON格式化返回结果 start -->
+    <div id="showReqResultJsonDiv" class="c-hide" style="max-height:500px; width:550px;overflow:auto;">
+		<div id="jsonFormat" class="jsonformat-box"></div>
+	</div>
+	<!-- 请求日志返回结果 end -->
+</body>
+	
+<script type="text/javascript" src="common/cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="common/cross/js/cross.ui.js"></script>
+<script type="text/javascript" src="common/widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="common/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="common/widget/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="common/widget/jsonFormat/1.0/js/jsonFormat.min.js"></script>
+<script type="text/javascript" src="common/app/js/common.js"></script>
+<script type="text/javascript" src="common/js/common.js"></script>
+<script type="text/javascript" src="common/app/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/urlParameter.js"></script>
+<script type="text/javascript">
+	var token;
+	var _api;
+	var _dayTime;
+	$(function(){
+		//token = getToken();
+		_api =  jkzl.common.getUrlParam("api");
+		_dayTime =  jkzl.common.getUrlParam("dayTime");
+		_orderid =  jkzl.common.getUrlParam("orderid");
+		initTable();
+	});
+	//初始化日志详情数据
+	function initTable() {
+		var aoData = new Array();
+		aoData.push( { "name": "token", "value":token});
+		aoData.push( { "name": "p_apiName", "value":_api});
+		aoData.push( { "name": "p_queryTime", "value":_dayTime});
+		aoData.push( { "name": "_orderid", "value":_orderid});
+		$.ajax({
+    		dataType: 'json',
+    		type: 'POST',
+    		url: location.protocol+'//'+location.host + "/log/api/querySliceCallLogInfo.do", //数据源位置
+	        data: aoData, 
+	        success: function(data){
+	        	var ret = eval(data.aaData);
+	        	var str1 = "<table class=\"dv-table\"><tr><td colspan=\"2\" class=\"dv-label\">基础信息</td></tr>";
+				var str2 = "<table class=\"dv-table\"><tr><td colspan=\"2\" class=\"dv-label\">请求参数</td></tr>";
+	        	$.each(ret[0],function(i,v){
+					if(i == 'param'){
+						if(isJsonObj(v)){
+							$.each(v,function(ii,vv){
+								str2 += "<tr><td class=\"dv-label\" style=\"width:100px;\"> "+ii+"</td><td>"+(isJsonObj(vv)?JSON.stringify(vv):(vv==undefined?"":vv))+"</td></tr>";
+							});	 
+						}else{
+								str2 += "<tr><td class=\"dv-label\"> "+v+"</td></tr>";
+							}
+					} else if(i == 'result'){
+						
+					} else{
+						str1 += "<tr><td class=\"dv-label\" style=\"width:100px;\"> "+i+"</td><td>"+v+"</td></tr>";
+					}
+				});
+	        	if (ret[0].result == undefined || ret[0].result == null) {
+					str2 += "<tr><td colspan=\"2\" class=\"dv-label\">返回结果</td></tr>";
+					str2 += "<tr><td colspan=\"2\">敬请期待，开发中</td></tr>";
+					str2 += "<tr><td colspan=\"2\" style='border:none'><div class='c-t-right mt5'><a href='javascript:showJsonResult(0);' class='c-btn c-btn-blue'><i class='iconfont'>&#xe66e;</i>JSON格式化</a></div></td></tr>";
+				} else {
+					var result = ret[0].result;
+					str2 += "<tr><td colspan=\"2\" class=\"dv-label\">返回结果</td></tr>";
+					str2 += "<tr><td colspan=\"2\">"+(isJsonObj(result)?JSON.stringify(result):(result==undefined?"":result))+"</td></tr>";
+					Process(JSON.stringify(ret[0].result), "jsonFormat");
+					str2 += "<tr><td colspan=\"2\" style='border:none'><div class='c-t-right mt5'><a href='javascript:showJsonResult(1);' class='c-btn c-btn-blue'><i class='iconfont'>&#xe68c;</i>JSON格式化</a></div></td></tr>";
+				}
+	        	str1 += "</table>";
+				str2 += "</table>";
+				var strHtml = "<table><tr><td align=\"center\" valign=\"top\">"+str1+"</td><td align=\"center\" valign=\"top\">"+str2+"</td></tr></table>";
+				$("#groupDataTable").html(strHtml);
+	        },
+	        complete: function (XMLHttpRequest, textStatus){
+				var json = eval("(" + XMLHttpRequest.responseText + ")");
+				if(json.Code != 1){
+					if (json.Code == 999) {
+						ask("每次查询限制每天前10000条，可调整查询条件查询被限制内容。");
+					} else if (json.Code == -1000) {
+						window.parent.parent.location.href = "app/appLogin.html";
+					} else {
+						ask(json.Message);
+					}
+				}
+			}
+    	});
+	} 
+	
+	function getToken(){
+		$.ajax({
+    		dataType: 'json',
+    		type: 'POST',
+    		url: location.protocol+'//'+location.host + "/weChat/getToken", //数据源位置
+	        data: {}, 
+	        async: false,
+	        success: function(data){
+	        	token = data;
+	        }
+		});
+	}
+	//JSON格式化
+  	function showJsonResult(flag) {
+  		if (flag == 1) {
+			var contents = $('#showReqResultJsonDiv').get(0);
+			art.dialog({
+				lock : true, 
+				artIcon : 'edit', 
+				opacity : 0.4, 
+				height: '100%',
+				width : 580,
+				overflow: true,
+				title : '返回结果详情', 
+				fixed : false,
+				content : contents, 
+				ok : null,
+				cancel : null
+			});
+   		} else {
+   			ask("不是合法的json格式，无法进行格式化");
+   		}
+  	}	
+function  isJsonObj(obj){
+   	var isjson = typeof(obj) == "object" 
+   		&& (Object.prototype.toString.call(obj).toLowerCase() == "[object object]" 
+   		|| Object.prototype.toString.call(obj).toLowerCase() == "[object array]")
+   		&& !obj.length; 
+   	var isarray = typeof(obj) == "object" 
+   		&& Object.prototype.toString.call(obj).toLowerCase() == "[object array]"; 
+   	return (isjson||isarray);
+}
+   
+//提示
+function ask(message){
+   	art.dialog({
+   		lock : true,
+   		artIcon : 'ask',
+   		opacity : 0.4,
+   		width : 250,
+   		title : '提示',
+   		content : message,
+   		ok : function() {
+
+   		}
+   	});
+}
+</script>
+</html>

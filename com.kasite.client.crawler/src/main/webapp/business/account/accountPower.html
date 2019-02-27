@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+	    <script type="text/javascript" src="../../commons/js/business-all.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.md5.js"></script>
+    	<script type="text/javascript" src="js/accountPower.js"></script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <!--main content-->
+        <div class="container-wrap">
+        	<div class="main-header">
+                <ul class="clearfix">
+                    <li><span><a  class="curr" href="javascript:window.location.href='accountPower.html';">用户管理</a></span></li>
+                    <li class="last"><span><a href="javascript:window.location.href='roleManage.html';">职务管理</a></span></li>
+                    <li class="last"><span><a href="javascript:window.location.href='menuManage.html';">菜单管理</a></span></li>
+                    <!-- <li class="last"><span><a href="javascript:window.location.href='buttonManage.html';">功能管理</a></span></li> -->
+                </ul>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                    <div class="setup-content m20">
+                    	<a href="javascript:;" class="btn-add" onclick="addUser();">新增用户</a>
+                        <div class="add-uer-box" id="addUerBox" style="display:none">
+                        	<table class="table-form">
+                                <tr>
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 用户账号
+                                    </td>
+                                    <td>
+                                        <input type="text" class="text w250" id="userName2"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        &nbsp;&nbsp;&nbsp;实&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名
+                                    </td>
+                                    <td>
+                                        <input type="text" class="text w250" id="name2"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                       &nbsp;&nbsp; 电话号码
+                                    </td>
+                                    <td>
+                                        <input type="text" class="text w250" id="mobile2"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 登录密码
+                                    </td>
+                                    <td>
+                                        <input type="password" class="text w250" id="password2"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 选择职务
+                                    </td>
+                                    <td>
+                                    	<div class="select-office-wrap">
+                                        	<div class="select-office" onclick="showorhide(this);">
+                                        		<input type="hidden" name="roleId2" id="roleId2"> 
+                                                <span class="nowrap" id="selectOffice2">门办</span>
+                                                <i class="icon icon-office"></i>
+                                            </div>
+                                            <div class="select-office-box jspScrollable" id='selectOfficeBox2' >
+                                                
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="office-box1 clearfix" id="newRol" style="display:none">
+                            <div class="office-box-fl fl">
+                                <table class="table-form">
+                                    <tr>
+                                        <td class="t">
+                                            <sub>&lowast;</sub> 职务名称
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="roleName"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                                                                                          职务描述
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="roleDesc"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                                                                                       职务标识
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="roleMark"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="office-box-fr fr">                            	
+                                <h2>设置菜单</h2>
+                                <div class="office-box-list" id="menuDiv">
+                                <table id="menuTb">
+                                
+                                </table>
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                           <div class="update-uer-box" id="updateUerBox" style="display:none">
+                        	<table class="table-form">
+                                <tr>
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 用户账号
+                                    </td>
+                                    <td>
+                                        <input readonly="readonly" type="text" class="text w250" id="userName1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        &nbsp;&nbsp;&nbsp;实&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名
+                                    </td>
+                                    <td>
+                                        <input type="text" class="text w250" id="name1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        &nbsp;&nbsp;&nbsp;电话号码
+                                    </td>
+                                    <td>
+                                        <input type="text" class="text w250" id="mobile1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                       &nbsp; &nbsp;&nbsp;重置密码
+                                    </td>
+                                    <td>
+                                        <div class="my-switch-box red" id="resetPassword"><span></span></div>
+                                    </td>
+                                </tr>
+                                <tr id="resetTr" style="display: none;">
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 登录密码
+                                    </td>
+                                    <td>
+                                        <input type="password" class="text w250" id="password1"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        <sub>&lowast;</sub> 选择职务
+                                    </td>
+                                    <td>
+                                    	<div class="select-office-wrap">
+                                        	<div class="select-office" onclick="showorhide(this);">
+                                        		<input type="hidden" name="roleId1" id="roleId1"> 
+                                                <span class="nowrap" id="selectOffice1">门办</span>
+                                                <i class="icon icon-office"></i>
+                                            </div>
+                                            <div class="select-office-box jspScrollable" id="selectOfficeBox1">
+                                               
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <table class="tb" width="100%" id="tb">
+                        </table>
+                        <div class="pager_container" >
+                                <input id="totalcount" type="hidden" value="0" />
+                                <input id="pagenumber" type="hidden" value="1" />
+                                <div id="pager"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/main content-->
+</body>
+</html>

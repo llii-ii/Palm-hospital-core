@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>新增消息来源</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+            <div class="ibox-content">
+            		<div class="row">
+					  	<div class="col-sm-6">
+					  		<div class="form-group">
+						    	<label class="col-sm-2 control-label">来源名称</label>
+						    	<div class="col-sm-10">
+						      		<input type="text" class="form-control" placeholder="请输入" id="sourceName"/>
+						    	</div>
+						  	</div>
+					  	</div>
+				  	</div>
+				  	</br>
+				  	<div class="form-group">
+				    	<div class="col-sm-offset-2 col-sm-10">
+				      		<button type="submit" class="btn btn-w-m btn-primary" onclick="addScene()">保存</button>
+				    	</div>
+				  	</div>
+            </div>
+	</body>
+	<script>
+	function addScene(){
+		var sourceName = $("#sourceName").val();
+		if(sourceName==""){
+			alert("请输入名称");// 错误提示
+			return;
+		}
+		var param = {};
+		var apiData = {};
+		apiData.orgId = Commonjs.hospitalId();
+		apiData.sourceName = sourceName;
+		apiData.operatorId =  Commonjs.getUrlParam("userId");
+		apiData.operatorName =  Commonjs.getUrlParam("userName");
+		param.api = '';
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/AddMsgSource/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				window.location.href='sourceList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+			} else {
+				alert(d.RespMessage);// 错误提示
+			}
+		});
+	}
+	</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" href="../css/Validform.css" />
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+		<style>
+			/*button.btn{
+				-webkit-border-radius: 0 !important;
+			    -moz-border-radius: 0 !important;
+			    border-radius: 0 !important;
+			}*/
+		</style>
+	</head>
+	<body>
+		<div>您确认要删除当前数据标准集吗?</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function showOrgTree(){
+			//页面层
+			layer.open({
+			  type: 2,
+			  skin: 'layui-layer-rim', //加上边框
+			  area: ['420px', '240px'], //宽高
+			  title:'标准发布',
+			  content: 'http://www.baidu.com'
+			});
+		}
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+		function downloadReport(){
+			 document.location.href='./p-0-2.html';
+		}
+	</script>
+</html>

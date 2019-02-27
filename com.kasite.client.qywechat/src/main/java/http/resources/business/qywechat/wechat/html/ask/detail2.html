@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>问卷调查</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/warn.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	</head>
+	<body>
+		<div class="container">
+			<div class="w-top">
+				<div class="title">
+					<span id="title" class="name"></span>
+				</div>
+			</div>
+			<div class="w-title">答卷详情</div>
+			<table class="w-table" cellspacing=0 cellpadding=0 width="100%">
+			  	<tr>
+				    <th width="15%">序号</th>
+				    <th width="80%">答卷内容</th>
+				</tr>
+			</table>
+		</div>
+		<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../common/js/base.js"></script>
+		<script type="text/javascript" src="../../../common/js/common.js"></script>
+		<script type="text/javascript">
+		 var uid;	
+		 $(function(){
+		 	uid = Commonjs.getUrlParam("uid");
+		 	getVoteQuestionAnalyze();
+		}) 
+			
+		//分析	
+	function getVoteQuestionAnalyze() {
+      var apiData = {};
+      apiData.id = uid;
+      var param = {};
+      param.apiParam = Commonjs.getApiReqParams(apiData);
+      Commonjs.ajax('../../../../../wsgw/qyWeChat/GetVoteQuestionAnalyze/callApi.do', param,
+      function(dd) {
+        if (dd.RespCode == 10000) {
+          var k=1;
+          if (Commonjs.ListIsNotNull(dd.Data)) {
+            Commonjs.BaseForeach(dd.Data,
+            function(i, item) {
+            	//问答
+            	if(item.ThemeId==uid && item.QuestType==2 && !Commonjs.isEmpty(item.Answer)){
+            		$('#title').html(item.QuestName);
+            		$('.w-table').append('<tr><td>'+k+'</td><td>'+item.Answer+'</td></tr>');
+            		k=k+1;
+            	}
+            });
+          }
+        } else {
+       		myLayer.alert(dd.RespMessage,3000);
+        }
+      }); 
+	}
+		</script>
+	</body>
+</html>

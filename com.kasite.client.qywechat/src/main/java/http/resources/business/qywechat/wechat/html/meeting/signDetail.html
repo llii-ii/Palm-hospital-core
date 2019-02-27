@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>会议签到详情</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	    
+		<style type="text/css">
+			.act2-title{
+				position: relative;
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .55rem;
+				padding-top: .3rem;
+				padding-bottom: .3rem;
+				font-weight: bold;
+			}
+			.act2-title:before{
+				content: '';
+				display: block;
+				width: 0.06rem;
+				height: 0.3rem;
+				background-color: #2988fc;
+				position: absolute;
+				left: 0.38rem;
+				top: 50%;
+				margin-top: -.15rem;
+				border-radius: 0.06rem;
+				-webkit-border-radius: 0.06rem;
+			}
+			.list{
+				background: #fff;
+				padding: 0 0.3rem;
+			}
+			.list li{
+				border-bottom: 1px solid #e6e6e6;
+				padding: 0.3rem 0;
+				overflow: hidden;
+			}
+			.list li:first-child{
+				padding-top: 0;
+			}
+			.list li:last-child{
+				border-bottom: 0;
+			}
+			.list img{
+				float: left;
+				width: 0.8rem;
+				height: 0.8rem;
+				margin-right: 0.2rem;
+			}
+			.list .name{
+				font-size: 0.28rem;
+				font-weight: bold;
+			}
+			.list .date{
+				font-size: 0.24rem;
+				margin-top: 0.05rem;
+				padding-left: 1rem;
+			}
+			.mb30{
+				margin-bottom: 0.3rem;
+			}
+			.mt20{
+				margin-top: 0.2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="mb30">
+				<p class="act2-title">已签到</p>
+	        	<ul class="list" id="signInPeople">
+<!-- 	        		<li>
+	        			<img src="../../img/avatar.png"/>
+		        		<div class="name">朱一龙</div>
+		        		<div class="date">2018-09-20 19:00</div>
+	        		</li> -->
+
+	        	</ul>
+	        </div>
+			<div class="mb30">
+				<p class="act2-title">请假</p>
+	        		<ul class="list" id="leavePeople">
+<!-- 		        		<li>
+		        			<img src="../../img/avatar.png"/>
+			        		<div class="name">白宇</div>
+			        		<div class="date">原因：回家结婚</div>
+		        		</li> -->
+	        		</ul>
+			</div>
+			<div class="mb30">
+				<p class="act2-title">未签到</p>
+	        	<ul class="list" id="notSignInPeople">
+	        	</ul>
+	        </div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+	var meetingUUid = Commonjs.getUrlParam("meetingUUid");
+	
+	$(function(){
+		queryMeetingSign();
+	});
+	
+	//获取签到情况
+	function queryMeetingSign(){
+		var apiData = {};	
+        apiData.uid = meetingUUid;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingSign/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000 && dd.Data != undefined){
+				for(var i = 0;i < dd.Data.length ;i++){
+					//已签到
+					if(dd.Data[i].SignInType == '已签到' && dd.Data[i].MemberType == '参加'){
+						var html = '';
+						if(dd.Data[i].MemberAvatar == ''){
+							html += '<li><img src="../../img/avatar.png"/>';	
+						}else {
+							html += '<li><img src="'+dd.Data[i].MemberAvatar+'"/>';	
+						}
+						html += '<div class="name">'+dd.Data[i].Membername+'</div>';
+						html += '<div class="date">'+dd.Data[i].SignInTime+'</div></li>';
+						$("#signInPeople").append(html);
+					}
+					//请假
+					if(dd.Data[i].MemberType == '请假'){
+						var html = '';
+						if(dd.Data[i].MemberAvatar == ''){
+							html += '<li><img src="../../img/avatar.png"/>';	
+						}else {
+							html += '<li><img src="'+dd.Data[i].MemberAvatar+'"/>';	
+						}
+						html += '<div class="name">'+dd.Data[i].Membername+'</div>';
+						html += '<div class="date">'+dd.Data[i].Reason+'</div></li>';
+						$("#leavePeople").append(html);
+					}
+					//未签到
+					if(dd.Data[i].SignInType == '未签到' && dd.Data[i].MemberType != '请假'){
+						var html = '';
+						if(dd.Data[i].MemberAvatar == ''){
+							html += '<li><img src="../../img/avatar.png"/>';	
+						}else {
+							html += '<li><img src="'+dd.Data[i].MemberAvatar+'"/>';	
+						}
+						html += '<div class="name mt20">'+dd.Data[i].Membername+'</div>';
+						$("#notSignInPeople").append(html);
+					}
+				}
+			}else{
+				myLayer.alert("查无具体签到情况！");
+			}
+		},{async:false});	
+	}
+	
+	</script>
+</html>

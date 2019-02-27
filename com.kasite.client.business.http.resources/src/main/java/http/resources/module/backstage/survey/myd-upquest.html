@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>满意度调查 - 创建问卷 - 调查设置</title>
+    <script type="text/javascript" src="/js/survey-all.js"></script>
+	<link href="/themes/default/css/leftnav.css" type="text/css" rel="stylesheet" />
+	
+	<script type="text/javascript" src="./js/upquest.js"></script>
+	
+</head>
+<body>
+
+<div class=" bl-d5 br-d5 hidden">
+  <div class="fl f14">
+ <!-- 编辑问题开始 -->
+     <div class="ml20 mt15 mb25 mr15 main-myd" id="two" style="">
+    	    	<h2 class="relative pb10 bb-ccc"><span class="f18 f-yahei" id="subjecttitle"></span><div class="absolute myd-step-2" style="right:0; top:0;"></div></h2>
+        <div class="mt10 clearfix">
+            <div class="fl myd-box-blue" style=" min-height:400px; height:100%; _height:400px;">
+                <div class="myd-blue-tit c-org"><strong>已设计指标</strong></div>
+                <div class="myd-blue-con">
+                    <ul id="zhibiaoul" class="myd-blue-ul">
+                    	
+                    </ul>
+                    <a href="#this" onclick="getquestroom()" class="dpb mt10 btn-gray-xl">选择问题</a>
+                    <a href="javascript:;" onclick="getnewquestion()" class="dpb mt15 btn-gray-xl">新增问题</a>
+                </div>
+            </div>
+            <div class="ml15 " style=" margin-left:190px">
+                <div class="myd-box-gray">
+                <input type="hidden" id="SubjectId"  />
+                    <div class="pl15 myd-gray-tit relative"><strong>开场白</strong><a href="javascript:;" class="absolute btn-edit" style="right:13px; top:8px;" onclick="$('#begin').attr('contenteditable',true).focus().select().addClass('cont-editable')"></a></div>
+                    <div id="" class="myd-gray-con">
+                    <div id="begin" class="p5 bd-fff" contenteditable="false" onblur="updateSubjectbegin(this)">
+                       
+                    </div>
+                    </div>
+                </div>
+                <div id="ifnoQuest" class="t-center c-555" style="margin:85px 0; height:30px; line-height:1.5;"><span class="valign-m f24 f-yahei">您可以</span><input type="button" onclick="getquestroom()" class="ml20 btn-gray-xl" value="从题库选题" /><span class="ml20 valign-m f24 f-yahei">或者</span><input type="button" onclick="getnewquestion()" class="ml20 btn-gray-xl" value="自己设计问题" /></div>
+                <div id="core"> </div>
+                <div class="myd-box-gray  mt15">
+                    <div class="pl15 myd-gray-tit relative"><strong>结束语</strong><a href="javascript:;" class="absolute btn-edit" style="right:13px; top:8px;" onclick="$('#end').attr('contenteditable',true).focus().select().addClass('cont-editable')"></a></div>
+                    <div  id="" class="myd-gray-con">
+                    
+                    <div id="end" class="p5 bd-fff" contenteditable="false" onblur="updateSubjectend(this)">
+                       
+                    </div>
+                    </div>
+                </div>
+                  <div class="mt15 clearfix"><input type="button" class="fr btn-blue-l" value="返回" onclick="goreturn()" /></div>
+            </div>
+        </div>
+        </div>
+  <!-- 编辑问题结束 --> 
+
+  </div>
+</div>
+<!--逻辑跳转-->
+<div class="pop" id="logicalSetting" style="display: none;">
+  <div class="mask"></div>
+  
+  <div class="popbox popbox-w440">
+    <div class="pop-tit relative f14 c-222 bold">设置逻辑<a href="javascript:;" class="btn-close absolute" onclick="closepop('logicalSetting')"></a></div>
+    <div  class="pop-main" style="padding:15px">
+       <div id="jumpdiv">
+		<div class=""><label style="width:45px;">选中：</label><select class="pop-sel" style="width:140px"><option>非常满意</option></select><label style="width:60px;">跳转至：</label><select class="pop-sel" style="width:140px"><option>Q2</option></select></div>
+		<div class="mt25"><label style="width:45px;">选中：</label><select class="pop-sel" style="width:140px"><option>非常满意</option></select><label style="width:60px;">跳转至：</label><select class="pop-sel" style="width:140px"><option>Q2</option></select></div>
+        </div>
+        <div id="jumpbutton" class="mt25"></div>
+    </div>
+    <div class="pop-btns t-rig">
+      <input type="button" class="btn-blue mr25" onclick="addJump()" value="确认" />
+    </div>
+  </div>
+</div>
+<!--新增问题弹窗-->
+<div class="pop" id="addQuestion" style="display: none;">
+  <div class="mask"></div>
+  <div class="popbox popbox-w430">
+    <div class="pop-tit relative f14 c-222 bold">新增问题<a href="javascript:;" class="btn-close absolute" onclick="closepop('addQuestion')"></a></div>
+    <div class="pop-main">
+		<div class="mt25"><label style="width:70px;">分类：</label><select id="ContentType" class="pop-sel">
+         				<option value="1">
+							医生服务
+						</option>
+						<option value="2">
+							护士服务
+						</option>
+						<option value="3">
+							医技服务
+						</option>
+
+						<option value="4">
+							药房服务
+						</option>
+						<option value="5">
+							收费服务
+						</option>
+						<option value="6">
+							就诊环境
+						</option>
+						<option value="7">
+							后勤保障
+						</option>
+						<option value="8">
+							导医导诊
+						</option>
+						<option value="9">
+							就诊流程
+						</option>
+						<option value="10">
+							医风医德
+						</option>
+						<option value="11">
+							忠诚指数
+						</option>
+						<option value="12">
+							其他问题
+						</option>
+						<option value="13">
+							通用指标
+						</option>
+        </select></div>
+        <div class="mt30 "><label style="width:70px;">适用对象：</label><select id="ObjType" class="pop-sel">
+						<option value="1">
+							门诊患者
+						</option>
+						<option value="2">
+							住院患者
+						</option>
+						<option value="3">
+							手术患者
+						</option>
+						<option value="4">
+							体检客户
+						</option>
+						<option value="5">
+							通用类型
+						</option>
+        </select></div>
+		<div class="mt30 mb25"><label style="width:70px;">题型：</label><select id="QuestType" class="pop-sel">
+                        <option value="1">
+							单选题
+						</option>
+						<option value="2">
+							多选题
+						</option>
+						<option value="3">
+							填空题
+						</option>
+						<option value="4">
+							矩阵题单选
+						</option>
+						<option value="5">
+							矩阵题多选
+						</option>
+                 
+                 </select></div>
+    </div>
+    <div class="pop-btns t-rig">
+      <input type="button" class="btn-blue mr25" onclick="insertQuest()" value="保存" />
+    </div>
+  </div>
+</div>
+<input id="QContentType" value="0" type="hidden"/>
+<input id="QObjType" value="0" type="hidden"/>
+<!--题库-->
+<div class="pop" id="chooseQuestion" style="display: none;">
+  <div class="mask"></div>
+  <!--[if lte IE 6]><iframe class="mask-iframe" frameborder="0"></iframe><![endif]-->
+  <div class="popbox popbox-w612 f14" style="">
+    <div class="pop-tit relative f14 c-222 bold">选择问题<a href="javascript:;" class="btn-close absolute" onclick="closepop('chooseQuestion')"></a></div>
+    <div class="pop-main" style=" padding-left:0; padding-right:0;">
+		<div class="bb-ccc" style="margin:0 25px;">
+			<ul class="tab-menu clearfix" id="popTabMenu1">
+				<li class="f-song f12 c-222 bc-c on"><strong>平台题库</strong></li>
+				<li class="f-song f12 c-222"><strong>我的题库</strong></li>
+			</ul>
+		</div>
+            	
+		<div id="popTabCon1">
+			<div class="pop-tab-con" style="display:none">
+				<div style="margin:0 25px;">
+				<table width="100%" class="mt10">
+                	<tr>
+                    	<td width="70" valign="top"><span class="c-org">指标类型：</span></td>
+                        <td class="pop-tb-a" id="ContentTypetd"><a href="javascript:;" onclick="SetContentType(0)" class="fl c-007 mr10">不限类型</a><a href="javascript:;" onclick="SetContentType(1)" class="fl  mr10">医生服务</a><a href="javascript:;" onclick="SetContentType(2)" class="fl  mr10">护士服务</a><a href="javascript:;" onclick="SetContentType(3)" class="fl  mr10">医技服务</a><a href="javascript:;" onclick="SetContentType(4)" class="fl  mr10">药房服务</a><a href="javascript:;" onclick="SetContentType(5)" class="fl  mr10">收费服务</a><a href="javascript:;" onclick="SetContentType(6)" class="fl  mr10">就诊环境</a><a href="javascript:;" onclick="SetContentType(7)" class="fl  mr10">后勤保障</a>
+                         <a href="javascript:;" onclick="SetContentType(8)" class="fl mr10">导医导诊</a><a href="javascript:;" onclick="SetContentType(9)" class="fl  mr10">就诊流程</a><a href="javascript:;" onclick="SetContentType(10)" class="fl  mr10">医风医德</a><a href="javascript:;" onclick="SetContentType(11)" class="fl  mr10">忠诚指数</a><a href="javascript:;" onclick="SetContentType(12)" class="fl  mr10">其他问题</a><a href="javascript:;" onclick="SetContentType(13)" class="fl  mr10">通用指标</a> 
+                          </td>
+                    </tr>
+                    <tr>
+                    	<td valign="top"><span class="c-org">调查对象：</span></td>
+                        <td class="pop-tb-a" id="ObjTypetd" >
+                        	<div class="clearfix"><a href="javascript:;" onclick="SetObjType(0)" class="fl c-007 mr10">不限对象</a><a href="javascript:;"  onclick="SetObjType(1)" class="fl mr10">门诊患者</a><a href="javascript:;" onclick="SetObjType(2)" class="fl mr10">住院患者</a><a href="javascript:;" onclick="SetObjType(3)" class="fl mr10">手术患者</a><a href="javascript:;"  onclick="SetObjType(4)" class="fl mr10">体检客户</a><a href="javascript:;" onclick="SetObjType(4)" class="fl mr10">通用对象</a></div>
+                        <ol id="getPlatform" class="mt10 question-list" style=" height:180px; overflow-x:hidden; overflow-y:scroll">
+                          
+                        </ol>
+                        </td>
+                    </tr>
+                </table>
+				</div>
+				<div class="pop-btns t-rig" style="padding-left:0; border-top:1px solid #E6E6E6">
+				  <input type="button" class="mr15 btn-blue" onclick="optionPlatQuestion()" value="确定" />
+				</div>
+			</div>
+			<div class="pop-tab-con" style="display:none">
+				<div style="margin:0 25px;">
+					<div class="mt10"><label>历史问卷：</label><select id="myzoneselect" class="pop-sel" onchange="getmyquestbyid()"><option>所有问卷</option></select></div>
+							<ol id="getmyzone" class="mt5 question-list" style="margin-left:75px; height:240px; overflow-x:hidden; overflow-y:scroll">
+							
+
+							</ol>
+					</div>
+
+					<div class="pop-btns t-rig" style="padding-left:0; border-top:1px solid #E6E6E6">
+					 <input type="button" class="mr15 btn-blue" onclick="optionmyZoneQuestion()" value="确定" />
+					</div>
+				</div>
+		</div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

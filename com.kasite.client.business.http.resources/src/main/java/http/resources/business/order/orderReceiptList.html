@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>订单结算支付列表</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+<body>
+<div class="c-main">
+	<div class="h45">
+    	<ul class="doc-filter">
+        	<li>
+            	<a href="javascript:void(0);">
+            	<i class="sicon icon-jzr"></i>
+            	<label class="c-f15 mr5" id="jzrword"><span id="memberPicker_name"></span></label>
+            	<span class="c-999">就诊卡：<span id="memberPicker_cardNo"></span></span>
+            	<i class="sicon icon-gjt"></i></a>
+            	<input type="text" id="filter-jzr" class="filtertext" value="" />
+            </li>
+        </ul>
+    </div>
+    <div class="mt10"  id="listPart">
+    	<ul class="order-list order-check" id="orderList">
+    	
+        </ul>
+         <div class="nomore" id="nomore" style="display:none">没有更多了</div>
+         <div class="infinite-scroll" id="loading" style="display: none">
+        	<div class="infinite-preloader"></div>
+        	正在加载
+        </div>
+        <div class="nomess" id="noData" style="display: none">
+        	<i class="nomess-tb"></i>
+            <p class="mt10">暂无数据</p>
+        </div>
+    </div>
+    
+    <div class="h50 mt10">
+    	<div class="order-bot order-check">
+        	<div class="input-checkbox mr30" data-check="all" >
+                <div class="input-pack mr5">
+                    <i class="sicon"></i>
+                    <input type="checkbox" name="n1" checked="checked">
+                </div>
+                	全选
+            </div>
+        	<div class="ob-cost">合计：<span class="c-ffac0b" id="totalMoney">0</span>元</div>
+            <a href="javascript:void(0);" onclick="settleNow()" class="order-btn">结算(<span id="orderNum">0</span>)</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="../../common/js/memberpicker.js"></script>
+<script type="text/javascript" src="js/orderReceiptList.js?v=201901152112"></script>
+</body>
+</html>

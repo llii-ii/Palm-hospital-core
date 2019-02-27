@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="css/base.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+<body class="bgc-24242d">
+<div class="login-hold clearfix">
+	<div class="login-logo">
+    	<img src="/favicon.ico" alt="" />
+    	<span>
+        	<p id="hosName"></p>
+        	<p>智慧支付管理系统</p>
+        </span>
+    </div>
+    <div class="login-box">
+    	<ul class="login-ul">
+        	<li class="mb45"><img src="images/log-tit.png" alt="" /></li>
+        	<li class="mb30">
+            	<div class="login-info lbg1">
+                	<label><i class="icon icon-logzh"></i></label>
+                    <input type="text" id="loginAcc" placeholder="请输入账户名" />
+                </div>
+            </li>
+        	<li class="mb30">
+            	<div class="login-info lbg2">
+                	<label><i class="icon icon-logmm"></i></label>
+                    <input type="password" id="loginPass" placeholder="请输入密码" />
+                </div>
+            </li>
+        	<li class="mb10">
+            	<a href="javascript:doLogin();" class="login-btn">登录</a>
+            </li>
+        	<li class="errortip c-hide" id="logininfoid"></li>
+        </ul>
+    </div>
+    <div class="login-bot">Copyright © 2018 福州卡思特（FUZHOU KASITE）版权所有</div>
+</div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="commons/js/jquery.md5.js"></script>
+<script type="text/javascript" src="commons/js/common.js"></script>
+<script type="text/javascript" src="widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<link rel="stylesheet" href="widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+<script type="text/javascript" src="widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#hosName").text(Commonjs.hospitalName());
+		//alert(Commonjs.getRoot);
+		var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1
+		//To check version of browser
+		if(!isChrome) {
+			var DEFAULT_VERSION = "8.0";
+			var DEFAULT_VERSION = "8.0";
+			var ua = navigator.userAgent.toLowerCase();
+			var isIE = ua.indexOf("msie")>-1;
+			var safariVersion;
+			if(isIE){
+				safariVersion =  ua.match(/msie ([\d.]+)/)[1];
+			    if(safariVersion <= DEFAULT_VERSION ){
+			    	if(Commonjs.checkOS()) {
+			    		window.location.href='/downloadIE.html?os=0';
+			    	}else {
+			    		window.location.href='/downloadIE.html?os=1';
+			    	}
+			    }else{
+			        //window.location.href='/Hos-PaymentManager/login.html';
+			    }
+			}
+		}
+		
+		//enter键登陆
+	    $(document.body).keydown(function () {
+	          var event = window.event || arguments.callee.caller.arguments[0];
+	          if (event.keyCode == "13") {
+	              doLogin();
+	          }
+	    });
+	});
+	//登陆
+	function doLogin(){
+		$('.errortip').removeClass('c-hide');
+		var n = $('#loginAcc').val();
+		var p = $('#loginPass').val();
+		
+	    var f = false;
+		if(Commonjs.isEmpty(n) || Commonjs.isEmpty(p)){
+			f = true;
+		}
+		if(f){
+			$('#logininfoid').html('用户名或密码不能为空!');
+			return ;
+		}
+		
+		var Service = {};
+		var code = 2006;
+		Service.UserName = n;
+		Service.PassWord = $.md5(p).toUpperCase();
+		var param = {};
+		var params = Commonjs.getParams(code,Service);//获取参数
+		param.params = Commonjs.jsonToString(params);
+		Commonjs.ajax('../../backstage/login.do',param,function(d){
+			if(d.RespCode != 10000){
+				$('#logininfoid').html('<font color=red>'+d.RespMessage+'</font>');	
+			}else{
+				var session = Commonjs.getSession();
+				var roleId = session.roleId;
+				var roleName = session.roleName;
+				//病历复印 打开新标签页
+				if(!Commonjs.isEmpty(roleId) && roleName.indexOf('病历复印') >= 0){
+					window.location.href='/business/mCopy/html/pc/index.html';
+				}else if(!Commonjs.isEmpty(roleId) && roleName.indexOf('统一对账') >= 0){
+					window.location.href='/module/payment/index/main-frame.html';
+				}else{
+					window.location.href='/module/backstage/index/main-frame.html';
+				}
+			}
+		});
+	}
+</script>
+</body>
+</html>

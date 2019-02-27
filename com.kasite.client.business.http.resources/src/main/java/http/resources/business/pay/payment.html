@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>收银台</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />  
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="js/payment.js?v=201901152112"></script>
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="toptip c-t-center" id="payTimeSrc">订单已生成！请在<span class="c-ffac0b">10分钟内</span>完成付款</div>
+    <div class="c-border-tb">
+    	<ul class="c-list c-f15" id="payItems">
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li class="c-list-a">
+            	<a href="javascript:void(0);" class="c-arrow-r" id="wxPay">
+                    <div class="c-list-info" id = "payDiv" style="display: none"><img id='payImg' src="https://v1kstcdn.kasitesoft.com/common/images/pay-wx.png" alt="" class="pay-tb" /><span id = 'paySpan'>微信支付</span></div>
+            	</a>
+            	<a href="javascript:void(0);" class="c-arrow-r" id="netPay" style="display: none">
+                    <div class="c-list-info" id = "netPayBtn" ><img src="https://v1kstcdn.kasitesoft.com/common/images/pay-netpay.png" alt="" class="pay-tb" /><span>招行一网通</span></div>
+            	</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

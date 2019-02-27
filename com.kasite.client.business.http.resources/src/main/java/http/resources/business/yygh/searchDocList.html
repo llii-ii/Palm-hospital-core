@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>科室选择</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main">
+    <div class="h40">
+    	<div class="searchhold" style="top:0;">
+        	<div class="ser-main">
+            	<i class="sicon icon-search"></i>
+                <input type="search" class="ser-input" placeholder="搜索科室或医生" id="searchName" />
+                <a href="javascript:void(0);" class="ser-btn" onclick="query();">搜索</a>
+            </div>
+        </div>
+    </div>
+    <div class="">
+    	<div class="ser-result c-border-b" id="dept">
+        	<h4 class="sr-title" id="deptNum"></h4>
+            <ul class="c-list c-f15">
+            </ul>
+        </div>
+    	<div class="ser-result mt5 c-border-b" id="doctors">
+        	<h4 class="sr-title" id="doctorNum"></h4>
+            <ul class="c-list">
+            </ul>
+        </div>
+        <div class="nomess" id="nomess">
+        	<i class="nomess-tb"></i>
+            <p class="mt10">暂未找到与<i class="c-f00"></i>相关的信息</p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="js/searchDocList.js?v=201901152112"></script>
+
+</body>
+</html>

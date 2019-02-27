@@ -1,0 +1,31 @@
+/* CSS Article */
+.querybar label { line-height: 30px; color: #222; }
+.main-header-btns { margin-right: 40px }
+.i-btn-list { overflow: hidden;}
+.i-btn-list li { margin-left: -1px; float: left; padding: 0 15px; border-left: 1px solid #f2f2f2; }
+a.i-btn { display: block; height: 16px; line-height: 16px; vertical-align: middle; overflow: hidden; }
+a.i-btn i { display: block; width: 16px; height: 16px; float: left; vertical-align: middle; background: url(../images/icons.png) no-repeat; }
+a.i-btn .i-edit { background-position: 0 -124px; }
+a.i-btn .i-del { background-position: -21px -124px; }
+a.i-btn .i-notop { background-position: -41px -124px; }
+a.i-btn .i-top { background-position: -61px -124px; }
+a.i-btn span { padding-left: 5px; }
+.w100p { width: 100px; }
+.w80p { width: 80px; }
+.w160p { width: 160px; }
+.w100p { width: 100px; }
+.w200p { width: 200px; }
+.input-text-w450 { width: 430px; }
+textarea.input-text-w660{width:660px;}
+.add-article { width: 750px; }
+.add-article table { }
+.add-article table th { font-weight: bold; width: 70px; padding: 12px 0 8px 0!important; vertical-align: top; color: #222 !important; font-weight:normal !important;}
+.add-article table th i{ color:#ed4c3b; margin-right:5px; font-weight:bold;}
+.add-article table td { padding: 8px 0; }
+.add-article table td select{ margin-left:0; min-width:100px;}
+.add-pic { float: left; margin-right: 8px; text-align: center; }
+.add-pic p { color: #999; padding: 10px 0 0 0; }
+.add-pic a { position: relative; display: block; width: 130px; height: 130px; border: 1px solid #d6d8db; background: #f3f3f3; }
+.add-pic-big a { width: 310px; cursor: pointer; }
+.add-pic a span { position: absolute; top: 50%; left: 50%; margin: -24px 0 0 -24px; display: block; width: 48px; height: 48px; background: url(../images/icons.png) no-repeat 0 -156px; }
+.mt0{margin-top:0 !important}

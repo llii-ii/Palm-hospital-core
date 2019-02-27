@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>我的问卷</title>
+         <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+    	<script type="text/javascript" src="./js/myd-cjwj.js"></script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center; border: 2px solid #8DB2E3; width: 200px; height: 40px; font-size: 14px; padding: 10px; font-weight: bold; background: #fff; color: #15428B;">
+					<img src="../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+    <div id="mainV" style="display: none;">
+	  <div class="main-tit"  ><h2>我的问卷</h2></div>
+		 <div class="t-center" style="padding:105px 0 50px;">
+	    	<i class="icon-paper-l"></i>
+	  		<div class="mt20 f16" style="line-height:26px;" >
+	       		您还没有问卷，请先到我的问卷里 <a href="./myd-cjwdwj.html">创建第一份问卷</a>
+	        </div>
+		</div>
+		</div>
+	<script type="text/javascript">
+	    $(function(){
+	        var objType = $('.obj-type');
+	        var objTypeChosed = $('<i>',{'class':'chosed'});
+	        objType.delegate('li','click',function(){
+	            if(objType.find('.closed').length) { objTypeChosed=objType.find('.closed').detach(); $(this).append(objTypeChosed);}
+	            else {$(this).append(objTypeChosed);}
+	            objType.find('li').removeClass('on');
+	            $(this).addClass('on');
+	        })
+	    })
+	</script>
+    </body>
+</html>

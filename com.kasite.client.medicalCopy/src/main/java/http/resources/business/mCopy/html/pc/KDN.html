@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<title>快递查询</title>
+<link rel="stylesheet" href="../../js/pc/webCom1.0/css/KDNWidget.css" />
+</head>
+<body>
+	<div id="demoID"></div>
+	<script src="../../js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../../js/pc/KDNWidget.js"></script>
+
+	<script>
+		var code = Commonjs.getUrlParam("code");
+		var cNum = Commonjs.getUrlParam("cNum");
+                      	
+        window.onload = function () {
+        	KDNWidget.run({
+            	serviceType: "B",
+            	expCode:code,
+                expNo:cNum,
+                showType:"normal",
+                container: "demoID"
+        	});
+		}
+     </script>
+</body>
+</html>

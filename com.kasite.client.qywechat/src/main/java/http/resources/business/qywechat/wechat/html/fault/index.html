@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>故障申报</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/fault.css"/>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="f-tab x-row boxflex">
+				<div class="x-row-cols" data-type="new"><img src="../../img/icon-1.png"/>新申报</div>
+				<div class="x-row-cols" data-type="list"><img src="../../img/icon-2.png"/>历史订单</div>
+			</div>
+			<div id="new">
+				<div class="f-input">
+					<label>故障标题</label>
+					<input type="text" name="name" id="name" value="" placeholder="请输入故障标题"/>
+				</div>
+				<div class="f-input">
+					<label>故障描述</label>
+					<textarea name="info" id="info" rows="4" value="" placeholder="请描述故障现象"></textarea>
+				</div>
+				<div class="f-input">
+					<div class="f-input-title"><label>附件</label><span>可上传故障图片</span></div>
+					<div class="imagelist ell">
+						<div class="imagelist-item">
+							<div class="imagelist-item-btn"><input type="file" onchange="upimg(this)" accept="image/jpeg,image/png,image/gif" /></div>
+						</div>
+					</div>
+				</div>
+				<button class="submit-btn">提交</button>
+			</div>
+			<div id="list" style="display: none;">
+				<div style="padding-left: 0.35rem;"><div class="main-title">订单列表</div></div>
+				<ul class="f-list">
+					<li onclick="window.location.href = 'detail.html'">
+						<div class="title">二楼灯坏了</div>
+						<div class="date">2018-05-20 08:30</div>
+						<div class="info"><label>状态</label><span>您的申请正在处理中</span></div>
+						<div class="info"><label>处理人</label><span>朱一龙</span></div>
+					</li>
+					<li>
+						<div class="title">二楼灯坏了</div>
+						<div class="date">2018-05-20 08:30</div>
+						<div class="info"><label>状态</label><span>您的申请还未处理</span></div>
+						<div class="info"><label>处理人</label><span>朱一龙</span></div>
+					</li>
+					<li>
+						<div class="title">二楼灯坏了</div>
+						<div class="date">2018-05-20 08:30</div>
+						<div class="info"><label>状态</label><span>您的申请已完成</span></div>
+						<div class="info"><label>处理人</label><span>朱一龙</span></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.f-tab .x-row-cols').click(function(){
+					var type = $(this).attr('data-type');
+					$('#new').hide();
+					$('#list').hide();
+					$('#'+type).show();
+				})
+			})
+			function upimg(o){
+				//获取文件
+	    		var file = o.files[0];
+				//创建读取文件的对象
+			    var reader = new FileReader();
+			 
+			    //创建文件读取相关的变量
+			    var imgFile;
+			 
+			    //为文件读取成功设置事件
+			    reader.onload=function(e) {
+			        imgFile = e.target.result;
+			        var html = [];
+			        html.push('<div class="imagelist-item">');
+					html.push('	<div class="imagelist-item-img"><img src="'+imgFile+'"/></div>');
+					html.push('</div>');
+			        $(o).parents('.imagelist-item').before(html.join(''));
+			        o.value = "";
+			    };
+			 
+			    //正式读取文件
+			    reader.readAsDataURL(file);
+			}
+		</script>
+	</body>
+</html>

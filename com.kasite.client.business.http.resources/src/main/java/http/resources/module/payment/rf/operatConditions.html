@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+</head>
+<body class="bgc-fff">
+<div class="wrapper">
+    <div class="operate-top">运营概况</div>
+    <div class="operate-box">
+    	<div class="oeb-title">昨日数据</div>
+        <div class="oeb-data">
+        	<table>
+            	<tr>
+                	<td>
+                    	<img src="../images/oeb-tb1.png" alt="" />
+                        <span class="data-con">
+                        	<p>昨日总交易额</p>
+                            <p class="d-val" id="yesterdayMoney"></p>
+                        </span>
+                    </td>
+                	<td>
+                    	<img src="../images/oeb-tb2.png" alt="" />
+                        <span class="data-con">
+                        	<p>昨日总交易笔数</p>
+                            <p class="d-val" id="yesterdayCount"></p> 
+                        </span>
+                    </td>
+                	<td>
+                    	<img src="../images/oeb-tb3.png" alt="" />
+                        <span class="data-con">
+                        	<p>昨日微信交易额</p>
+                            <p class="d-val" id="yesterdayWXMoney"></p>
+                        </span>
+                    </td>
+                	<td>
+                    	<img src="../images/oeb-tb4.png" alt="" />
+                        <span class="data-con">
+                        	<p>昨日支付宝交易额</p>
+                            <p class="d-val" id="yesterdayZFBMoney"></p>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="operate-box mt20">
+    	<div class="oeb-title">趋势走向<div class="trend-date"><a id="day" class="curr" href="javascript:void(0);">日</a><a id="month" href="javascript:void(0);">月</a></div></div>
+        <div class="oeb-trend plr40 pt30">
+        	<div class="trend-lab">
+            </div>
+            <div class="chart-trend mt20">
+            	<div class="trend-ct">金额（万元）</div>
+                <div class="trend-ch" id="trend"></div>
+            </div>
+        </div>
+    </div>
+    <div class="operate-box mt20">
+    	<div class="oeb-title">年度统计(交易笔数)</div>
+        <div class="oeb-trend clearfix ptb30">
+        	<div class="chart-stati" id="stati1">
+            	
+            </div>
+        	<div class="chart-stati" id="stati2">
+            	
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../widget/echarts/js/echarts.js"></script>
+<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript">
+var time = "1";  //默认日
+var channel_ = "0";
+$(function(){
+	initLoad();
+	showByMonthOrDay(1,0);
+	$('.trend-date a').on('click',function(){
+		$(this).addClass('curr').siblings().removeClass('curr');
+		if($(this).attr("id") == 'day'){  //日
+			time = "1";
+			showByMonthOrDay(time,channel_);
+		}else if($(this).attr("id") == 'month'){  //月
+			time = "0";
+			showByMonthOrDay(time,channel_);
+		}
+	});
+	$('.trend-lab a').on('click',function(){
+		$(this).addClass('curr').siblings().removeClass('curr');
+		channel_ = $(this).attr("val");
+		showByMonthOrDay(time,channel_);
+	});
+	yearCount();
+	
+});
+
+var type = "0";
+var a = new Array();
+var b = new Array();
+var channel = new Array();
+var pay = new Array();
+var channelName = new Array();
+var paylName = new Array();
+
+function showByMonthOrDay(ti,ty){
+	a.splice(0, a.length);
+	b.splice(0, b.length);
+	var Service = {};
+    Service.Time = ti;
+    Service.Type = ty;
+    var param = {};
+	param.reqParam = Commonjs.getApiReqParams(Service);
+    Commonjs.ajaxSync("/report/echatsShow.do",param,function(d){
+    	if(d.RespCode!=10000){
+            //异常提示
+            Commonjs.alert(d.RespMessage);
+        }
+    	var list = d.Data;
+        if(!Commonjs.isEmpty(list) && list.length > 0){
+            for(var i = 0; i< list.length; i++){
+            	a.push(list[i].RQ);
+            	b.push(list[i].Total);
+            }
+        }
+    });
+    
+    var chart1 = echarts.init(document.getElementById('trend'));
+    chart1.clear();
+    chart1.setOption(option1);
+}
+
+function initLoad(){
+	var Service = {};
+	var param = {};
+	param.reqParam = Commonjs.getApiReqParams(Service);
+    Commonjs.ajaxSync("/report/init.do",param,function(d){
+    	if(d.RespCode!=10000){
+    	    Commonjs.alert(d.RespMessage);
+    	}
+    	var data = d.Data[0];
+    	$("#yesterdayMoney").text(Commonjs.centToYuan(data.YesterdayMoney));
+    	$("#yesterdayCount").text(Commonjs.isEmpty(data.YesterdayCount)?0:data.YesterdayCount);
+    	$("#yesterdayWXMoney").text(Commonjs.centToYuan(data.YesterdayWXMoney));
+    	$("#yesterdayZFBMoney").text(Commonjs.centToYuan(data.YesterdayZFBMoney));
+    	var channelList = data.ChannelList;
+    	var channelHtml = "<a val='0' href='javascript:void(0);' class='curr'>全部交易场景</a>";
+    	if(!Commonjs.isEmpty(channelList) && channelList.length > 0){
+			for(var i=0;i<channelList.length;i++){
+				var channelInfo = channelList[i];
+				if(channelInfo.ChannelId == '100129' || channelInfo.ChannelId == 'wincancel'){
+   	        		continue;
+   	        	}
+				channelHtml += "&nbsp;&nbsp;<a val='"+channelInfo.ChannelId+"' href='javascript:void(0);' title='"+channelInfo.ChannelName+"'>"+channelInfo.ChannelName+"</a>";
+			}
+    	}
+    	//channelHtml += "&nbsp;&nbsp;......."
+    	$(".trend-lab").html(channelHtml);
+    });
+}
+
+function yearCount(){
+	var Service = {};
+	var param = {};
+	param.reqParam = Commonjs.getApiReqParams(Service);
+    Commonjs.ajax("/report/yearCount.do",param,function(d){
+    	if(d.RespCode!=10000){
+    	    Commonjs.alert(d.RespMessage);
+    	}
+   	    var channelList = d.Data[0].ChannelList;
+   	    var payList = d.Data[0].PayList;
+   	    if(!Commonjs.isEmpty(channelList) && channelList.length > 0){
+   	        for(var i = 0; i< channelList.length; i++){
+   	        	channelName.push(channelList[i].Name);
+   	        	var channelInfo = {};
+   	        	var itemStyle = {};
+   	        	channelInfo.name = channelList[i].Name;
+   	        	channelInfo.value = channelList[i].Value;
+   	        	if(channelList[i].Name.indexOf("微信") > -1){
+   	        		itemStyle.color = "#3bca53";
+   	        	}else if(channelList[i].Name.indexOf("支付宝") > -1){
+   	        		itemStyle.color = "#0090ff";
+   	        	}else if(channelList[i].Name.indexOf("当面付") > -1){
+   	        		itemStyle.color = "#f39800"; //orange maroon red
+   	        	}else if(channelList[i].Name.indexOf("mini") > -1){
+   	        		itemStyle.color = "#034700";
+   	        	}else{
+   	        		itemStyle.color = "#e32860";
+   	        	}
+   	        	channelInfo.itemStyle = itemStyle;
+   		        channel.push(channelInfo);
+   	        }
+   	    }
+   	    if(!Commonjs.isEmpty(payList) && payList.length > 0){
+   	        for(var i = 0; i< payList.length; i++){
+   	        	var payInfo = {};
+   	        	var itemStyle = {};
+   	        	payInfo.value = payList[i].Value;
+   	        	if(payList[i].Name=='1'){
+   	        		payList[i].Name="微信";
+   	        		itemStyle.color = "#3bca53";
+   	        	}else if(payList[i].Name=='2'){
+   	        		payList[i].Name="支付宝";
+   	        		itemStyle.color = "#0090ff";
+   	        	}else if(payList[i].Name=='3'){
+   	        		payList[i].Name="银联";
+   	        		itemStyle.color = "#f39800";
+   	        	}
+   	        	paylName.push(payList[i].Name);
+   	        	payInfo.name = payList[i].Name;
+   	        	payInfo.itemStyle = itemStyle;
+   	        	pay.push(payInfo);
+   	        }
+   	    }
+   	    var chart2 = echarts.init(document.getElementById('stati1'));
+   	    chart2.setOption(option2);
+   	    var chart3 = echarts.init(document.getElementById('stati2'));
+   	    chart3.setOption(option3);
+    });
+}
+
+option1 = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: a
+    },
+    yAxis: {
+        type: 'value'
+    },
+	grid:{
+		left:'40',
+		right:'40'
+	},
+    series: [{
+        data: b,
+        type: 'line',
+		smooth: true,
+        areaStyle: {},
+		label: {
+			normal: {
+				show: true,
+				position: 'top'
+			}
+		},
+		itemStyle:{
+			color:{
+				type: 'linear',
+				x: 0,
+				y: 0,
+				x2: 0,
+				y2: 1,
+				colorStops: [{
+					offset: 0, color: '#2a82fe' // 0% 处的颜色
+				}, {
+					offset: 1, color: '#877fed' // 100% 处的颜色
+				}],
+				globalCoord: false // 缺省为 false
+			}
+		}
+    }]
+};
+    
+option2 = {
+	title:{
+		text:'交易场景占比图',
+		bottom:'0',
+		left:'48%',
+		textStyle:{
+			fontSize:'14',
+			fontWeight:'normal'	
+		}
+	},
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: '20',
+        data:channelName
+    },
+    series: [
+        {
+            name:'交易场景占比图',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            center: ['60%', '50%'],
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data: channel
+        }
+    ]
+};
+
+/* var option3 = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            selectedMode: false,
+            orient : 'vertical',
+            x : 'left',
+            data:paylName
+        },
+        calculable : true,
+        series : [
+            {
+                name: '交易场景占比图',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data: pay
+            }
+        ]
+    }; */
+    
+option3 = {
+	title:{
+		text:'支付方式占比图',
+		bottom:'0',
+		left:'center',
+		textStyle:{
+			fontSize:'14',
+			fontWeight:'normal'	
+		}
+	},
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        right: '50',
+        data:paylName
+    },
+    series: [
+        {
+            name:'支付方式占比图',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:pay
+        }
+    ]
+};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+.section { background-color:#fff;}
+.section-header { padding: 15px 20px; height: 20px; border-bottom: 1px solid #e1e1e1; font-size: 14px; color:#222;}
+.header-shadow { -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.15);
+box-shadow: 0 1px 5px rgba(0,0,0,.15);}
+.section-con-wrap { overflow:hidden; position:relative}
+
+.jiekou-left { display: inline; float: left; width: 440px; border-right: 1px solid #e1e1e1; background-color: #fafafa;}
+.jiekou-left .section-con { width: 400px; overflow: auto; position: relative;}
+.jiekou-left1 { display: inline; float: left; width: 240px; border-right: 1px solid #e1e1e1; background-color: #fafafa;}
+.jiekou-left1 .section-con { width: 200px; overflow: auto; position: relative;}
+.jiekou-left1 .entra { position: absolute; left: 0; top:50%; margin-top: -43px;}
+.jiekou1-data { margin-left: 240px; border-left: 1px solid #e1e1e1;}
+.jk-entra { display: inline; float: left; width: 105px; height: 139px; margin-top: 25px; background:url(../images/safe/jk-entrance.jpg) no-repeat;}
+.jiekou-left .entra { position: absolute; left: 0; top:50%; margin-top: -43px;}
+.sub-1 { display: inline; float: left; margin-left: 80px; width:60px; zoom:1;}
+.sub-1 li { width: 64px; margin-bottom: 45px; padding-left: 22px; cursor: pointer; position: relative; _position:static; _height: 1%;}
+.sub-1 li.last { margin-bottom: 0;}
+.sub { position: absolute; left: 100px; top:0; width: 76px; display: none;}
+.sub li { height: 50px; margin-bottom: 30px; width: 64px;}
+.sub li.last { margin-bottom: 0;}
+.sub .jk-item { display: inline-block; width: 30px; height: 50px; padding:0 10px; margin-right: 10px; line-height: 1.2; background:url(../images/safe/jk-icon.png) 0 -60px no-repeat; text-align: center; color:#fff; vertical-align: middle; overflow: hidden; cursor: pointer; *display: inline; *zoom:1;}
+.sub-tit { display: inline-block; width: 60px; text-align: center; vertical-align: middle; *display: inline; *zoom:1;}
+.icon-weixin, .icon-alipay, .icon-baidu, .icon-entra { display: inline-block; width: 60px; height: 60px; background:url(../images/safe/jk-icon.png) no-repeat; *display: inline; *zoom:1;}
+.icon-weixin { background-position: 0 0;}
+.icon-alipay { background-position: -60px 0;}
+.icon-baidu { background-position: -120px 0;}
+.icon-entra { background-position: -180px 0;}
+.sub-line-h { position: absolute; top:33px; top:32px\0; left: -10px; width:10px; height: 1px; font-size:0; background-color:#e1e1e1; overflow: hidden;}
+.sub-line-v { position: absolute; top:34px; bottom:52px; width:1px; height: auto; font-size:0; background-color:#e1e1e1; overflow: hidden;}
+.jk-item-line { position: absolute; left: 0; top: 33px; display: inline-block; width: 17px; height: 1px; background-color:#e1e1e1; font-size:0; overflow: hidden; *display: inline; *zoom:1;}
+
+
+.sub-2 { position: absolute; left: 103px; top:5px; width: 76px; display: none;}
+.sub-2 .jk-item { padding:0 5px; width: 40px;}
+.sub-2 .sub-line-h { top:25px; top:24px\0;}
+.sub-2 .sub-line-v { top:25px; bottom:25px;}
+.sub-2 .jk-item-line { top: 25px;}
+.sub-2 .jk-item em { display: inline-block; vertical-align: middle; *display: inline; *zoom:1;}
+.sub-2 .jk-item em.s { height: 50px; width: 0;}
+.sub-2 .jk-item-disabled { background-position: -50px -60px;}
+
+.jiekou-data { margin-left: 440px; border-left: 1px solid #e1e1e1;}
+
+/*数据-业务统计*/
+.tb .total td { padding:17px 0; font-size:14px;}
+
+.table-form td { padding:5px 0;}
+.table-form td.t { text-align: left; padding:5px 10px;}
+
+.querybar { padding:15px 0;}
+.querybar label { line-height: 30px; color:#222;}

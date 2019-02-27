@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>消息模版</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="form-inline">
+    		<div class="form-group">
+        		<label>模版ID：</label>
+            	<input class="form-control" type="text" name="" id="modeId" value="" />
+        	</div>
+        	<div class="form-group">
+        		<label>场景：</label>
+            	<select name="" class="form-control" id="modeType">
+            		
+            	</select>
+        	</div>
+        	<div class="form-group">
+        		<label>渠道：</label>
+            	<select name="" class="form-control" id="useChannel">
+            		<option value="">全部</option>
+            		<option value="100123">微信</option>
+            		<option value="100125">支付宝</option>
+            	</select>
+        	</div>
+        	<div class="form-group">
+        		<label>消息类型：</label>
+            	<select name="" class="form-control" id="msgType">
+            		<option value="">全部</option>
+            		<option value="1">模板</option>
+            		<option value="2">文本</option>
+            	</select>
+        	</div>
+        	<div class="form-group">
+        		<label>状态：</label>
+            	<select name="" class="form-control" id="stateSel">
+            		<option value="1">启用</option>
+            		<option value="">全部</option>
+            		<option value="0">禁用</option>
+            	</select>
+        	</div>
+    		<div class="form-group">
+        		<label>渠道模版ID：</label>
+            	<input class="form-control" type="text" name="" id="templateId" value="" />
+        	</div>
+        	<div class="form-group">
+            	<button type="button" class="btn" onclick="queryList()">查询</button>
+        	</div>
+    	</div>
+    	
+    	<table id="exampleTablePagination">
+            <thead>
+                <tr>
+                    <!--<th data-field="state" data-checkbox="true"></th>-->
+                    <th data-field="Begin" data-align="center">创建时间</th>
+                    <th data-field="MsgTempName" data-align="center">场景</th>
+                    <th data-formatter="formatter2" data-align="center">状态</th>
+                    <th data-field="TemplateId" data-align="center">模版ID</th>
+                    <th data-formatter="formatter" data-align="center">操作</th>
+                </tr>
+            </thead>
+            <tbody id="msgTemp_list"></tbody>
+        </table>
+        
+        <p>
+	        <button class="btn btn-w-m btn-primary " onclick="openWindow()" type="button">新增</button>
+	    </p>
+	</body>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		function formatter(value, item, index){
+			var html = [];
+			var h='<a onclick="queryDetail(\''+item.ModeId+'\')" style="color:#3685ff;font-size:12px;">详情</a>&nbsp;&nbsp;&nbsp;';
+			if(item.State==1){
+				h+='<a onclick="edit(\''+item.ModeId+'\',0)" style="color:#3685ff;font-size:12px;">禁用</a>';
+			}
+			else{
+				h+='<a onclick="edit(\''+item.ModeId+'\',1)" style="color:#3685ff;font-size:12px;">启用</a>';
+			}
+			html.push(h);
+			return html.join('')
+		}
+		function formatter2(value, item, index){
+			var html = [];
+			var h='';
+			if(item.State==1){
+				h+='启用';
+			}
+			else{
+				h+='禁用';
+			}
+			html.push(h);
+			return html.join('')
+		}
+		function openWindow(ModeId,opt){
+			System.openWindow('MsgTempInfo.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName"));
+		}
+		function queryDetail(ModeId){
+			System.openWindow('MsgTempInfo.html?modeId='+ModeId+"&opt=1");
+		}
+		$(function(){
+			querySceneList();
+			queryList();
+		})
+		function querySceneList(){
+			var param = {};
+			var apiData = {};
+			apiData.state = 1;
+			apiData.OrgId = Commonjs.hospitalId();
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgSceneList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					var html = '';
+					html+='<option value="">全部</option>';
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						html+='<option value="'+item.ModeType+'">'+item.SceneName+'</option>';
+					})
+					$("#modeType").html(html);
+				} else {
+					alert('获取场景失败');// 错误提示
+				}
+			});
+		}
+		function edit(modeId,State){
+			var param = {};
+			var apiData = {};
+			param.api = '';
+			apiData.modeId = modeId;
+			apiData.state = State;
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/EditMsgTemp/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					window.location.href='msgTempList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		function queryList(){
+			var param = {};
+			var apiData = {};
+			apiData.modeId = $("#modeId").val();
+			apiData.orgId = Commonjs.hospitalId();
+			apiData.modeType = $("#modeType").val();
+			apiData.templateId = $("#templateId").val();
+			apiData.useChannel = $("#useChannel").val();
+			apiData.msgType = $("#msgType").val();
+			apiData.state = $("#stateSel").val();
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgTempList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					initTable(d.Data)
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		var f = 1;
+		function initTable(data){
+			if(f==1){
+				f=0;
+				$('#exampleTablePagination').bootstrapTable({
+			        data: data,
+			        pagination: true, 
+			        sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+			        paginationLoop:false,
+		            paginationPreText:'上一页',
+		            paginationNextText:'下一页',
+	                pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	                pageSize: 25,                     //每页的记录行数（*）
+	                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+			    });
+			}
+			else{
+				if(data==undefined){
+					 $("#exampleTablePagination").bootstrapTable('removeAll');
+				}
+				else{
+					$('#exampleTablePagination').bootstrapTable('load',data);
+				}
+				
+			}
+			$(".fixed-table-loading").css("display","none");
+		}
+		function initHtml(d){
+			var html = '';
+			Commonjs.BaseForeach(d, function(i,item){
+				html+='<tr>';
+				html+='<td style="text-align:center">'+item.Begin+'</td>';
+				html+='<td style="text-align:center">'+item.MsgTempName+'</td>';
+				if(item.State==1){
+					html+='<td style="text-align:center">启用</td>';
+				}
+				else{
+					html+='<td style="text-align:center">禁用</td>';
+				}
+				html+='<td style="text-align:center">'+item.TemplateId+'</td>';
+				html+='<td style="text-align:center"><a onclick="queryDetail(\''+item.ModeId+'\')" style="color:#3685ff;font-size:12px;">详情</a>&nbsp;&nbsp;&nbsp;';
+				if(item.State==1){
+					html+='<a onclick="edit(\''+item.ModeId+'\',0)" style="color:#3685ff;font-size:12px;">禁用</a>';
+				}
+				else{
+					html+='<a onclick="edit(\''+item.ModeId+'\',1)" style="color:#3685ff;font-size:12px;">启用</a>';
+				}
+				html+='</td>';
+				html+='</tr>';
+			})
+			$("#msgTemp_list").html(html);
+		}
+	</script>
+</html>

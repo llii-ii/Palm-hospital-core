@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<das-client>
+    <Sqls>
+        <!-- HIS账单表去重 -->
+        <Sql name='oracleDeleteHisBillByTransDate'><![CDATA[
+			delete from p_his_bill where 1=1 AND transDate >= to_date(?,'yyyy-MM-dd HH24:mi:ss') and transDate < to_date(?,'yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+
+        <!-- 汇总全流程账单明细数据 to_char字段主要是针对oracle  NVarchar2字符集不匹配的问题-->
+        <Sql name='oracleSummaryQLCBalance'><![CDATA[
+			SELECT oa.orderId,oa.serviceId,oa.reserveId,oa.priceName,oa.price,oa.orderMemo,oa.cardNo,oa.operator,oa.operatorName,oa.createDate,oa.channelId,oa.payUpdateKey,oa.orderState FROM
+				(
+				    SELECT to_char(a.orderId) orderId,a.serviceId,a.reserveId,a.priceName,a.price,a.orderMemo,a.cardNo,a.operator,a.operatorName,a.begin createDate,(case to_char(b.payState) when '2' then '1' end) orderState ,to_char(b.channelId) channelId,
+                         to_char(b.updateKey) payUpdateKey
+ 				    FROM o_payOrder b LEFT JOIN o_order a on a.orderId = b.orderId
+				    WHERE b.payState='2' AND a.begin >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and a.begin <= to_date('@e','yyyy-MM-dd HH24:mi:ss')
+				UNION ALL
+				    SELECT
+					    to_char(c.orderId) orderId,a.serviceId,a.reserveId,a.priceName,a.price,a.orderMemo,a.cardNo,a.operator,a.operatorName,a.begin createDate,(case to_char(c.payState) when '4' then '2'end) orderState,to_char(c.channelId) channelId,
+                        to_char(c.updateKey) payUpdateKey
+				    FROM o_cancelOrder c LEFT JOIN o_order a on a.orderId = c.orderId
+				    WHERE c.payState='4' AND a.begin >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and a.begin < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+				) oa
+		]]></Sql>
+
+        <!-- 查看p_bill比p_qlcBalance表多出的订单数据 （这边的关联条件用到了渠道，如果有多渠道的话还需要新增条件）-->
+        <Sql name='oracleQueryChannelBillDiffQlcBill'><![CDATA[
+			SELECT p.businessOrderId orderId,q.serviceId,q.reserveId,q.priceName,CAST(p.transactions AS DECIMAL(10,2))*100 price,q.orderMemo,q.cardNo,q.operator,
+				   q.operatorName,p.transTime createDate,p.channel channelId,p.orderNo payUpdateKey,p.orderType orderState
+			FROM
+				p_bill p
+			LEFT JOIN p_qlcBalance q ON p.businessOrderId = q.orderId
+			AND (((q.payUpdateKey = p.refundOrderId and p.orderType='2' AND p.channel = '100125') OR ( p.orderType='1' AND p.channel = '100125' )) OR ((q.payUpdateKey = p.orderNo  AND p.channel = '100123')))
+			AND p.orderType = q.orderState
+			WHERE
+				p.transTime >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.transTime < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+			AND q.orderId IS NULL
+
+		]]></Sql>
+
+        <!-- 查询出来的异常账单由于会缺少一些展示字段,所以这边需要到o_order表中获取那些展示字段 -->
+        <Sql name="oracleQueryOrderData"><![CDATA[
+            SELECT * from O_Order o WHERE 1=1 @p
+        ]]>
+        </Sql>
+
+        <!-- 全流程表去重 -->
+        <Sql name='oracleDeleteQLCBalance'><![CDATA[
+			delete from p_qlcBalance WHERE 1=1 AND createDate >= to_date(?,'yyyy-MM-dd HH24:mi:ss') and createDate < to_date(?,'yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+
+        <!-- 汇总三方账单明细数据 由于多数的数据库的金额单位已是分,所以这边不做*100的动作，但是如需转换可以使用如下语句
+              (xxx * 100)-->
+        <Sql name='oracleSummaryThreePartyBalance'><![CDATA[
+			SELECT ob.orderId,ph.hisOrderId, pb.orderNo channelOrderId, ob.serviceId,ob.reserveId,
+                    ob.priceName,ob.orderMemo,ob.cardNo, ob.operator,ob.operatorName,
+                    to_char((case when  ph.payMoney<>0 then ph.payMoney end)) receivableMoney,pb.transactions  alreadyReceivedMoney, ph.refundMoney, pb.alreadyRefundMoney alreadyRefundMoney,ob.createDate,
+                    ob.channelId,ob.payUpdateKey,ob.orderState QLCOrderState,ph.HisOrderState HisOrderState,pb.orderType ChannelOrderState
+                FROM p_qlcBalance ob
+            LEFT JOIN (select b.businessOrderId,b.orderNo,b.orderType,b.transactions,
+                    (case when b.transactions=0 then '0' else '0' end) alreadyRefundMoney
+                    FROM p_bill b
+                WHERE b.orderType = '1' AND b.transTime >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and b.transTime < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+                 ) pb ON ob.orderId = pb.businessOrderId
+            LEFT JOIN (select p.hisOrderState, p.orderId,p.payMoney, p.hisOrderId,p.refundMoney
+                FROM p_his_bill p
+                WHERE p.HisOrderState = '1' AND to_date(p.TransDate,'yyyy-MM-dd HH24:mi:ss') >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and to_date(p.TransDate,'yyyy-MM-dd HH24:mi:ss') < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+                 ) ph ON ob.orderId = ph.orderId
+            WHERE ob.orderState = '1'
+            AND ob.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and ob.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+            UNION  ALL
+            SELECT ob.orderId,ph.hisOrderId, pb.orderNo channelOrderId,ob.serviceId,ob.reserveId,ob.priceName,ob.orderMemo,ob.cardNo,ob.operator,ob.operatorName,
+                    (case when  ph.payMoney<>0 then '0'end) receivableMoney,pb.transactions  alreadyReceivedMoney,ph.refundMoney,pb.alreadyRefundMoney alreadyRefundMoney,ob.createDate,
+                    ob.channelId,ob.payUpdateKey,ob.orderState QLCOrderState,ph.HisOrderState HisOrderState,pb.orderType ChannelOrderState
+                FROM p_qlcBalance ob
+            LEFT JOIN (select b.businessOrderId, b.orderNo, b.orderType,(case when  b.transactions<>0 then '0' else  b.transactions  end) transactions,
+                    b.transactions alreadyRefundMoney FROM p_bill b
+                WHERE b.orderType = '2' AND b.transTime >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and b.transTime < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+                 ) pb ON ob.orderId = pb.businessOrderId
+            LEFT JOIN (select p.hisOrderState, p.orderId, p.payMoney, p.hisOrderId,p.refundMoney
+                FROM p_his_bill p
+                WHERE p.HisOrderState = '2' AND to_date(p.TransDate,'yyyy-MM-dd HH24:mi:ss') >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and to_date(p.TransDate,'yyyy-MM-dd HH24:mi:ss') < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+                ) ph ON ob.orderId = ph.orderId
+            WHERE ob.orderState = '2'
+            AND ob.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and ob.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 三方汇总订单明细数据表进行去重 -->
+        <Sql name='oracleDeleteThreePartyBalance'><![CDATA[
+			delete from p_threePartyBalance where 1=1  AND bizType is null AND exeState is not null AND createDate >= to_date(?,'yyyy-MM-dd HH24:mi:ss') and createDate < to_date(?,'yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 查询三方汇总账单明细数据 用于前端页面展示-->
+        <Sql name='oracleQueryThreePartyDetailBills'><![CDATA[
+			SELECT @a FROM p_threePartyBalance p WHERE 1 = 1  @p Order By p.createDate desc
+		]]></Sql>
+        <!-- 再将异常的三方汇总订单明细数据到异常数据表,并防止重复 -->
+        <Sql name='oracleQueryExceptionBillWhetherNull'><![CDATA[
+			SELECT count(*) FROM p_exceptionBill p WHERE 1 = 1  @p
+		]]></Sql>
+        <!-- 给三方汇总明细账单数据表中的订单数据赋上业务执行状态-->
+        <Sql name='oracleAddPendingOrder'><![CDATA[
+			update p_threePartyBalance p SET p.bizType=?,p.exeState='0'  WHERE 1=1 @p
+		]]></Sql>
+        <!-- 查询当前退费订单是否在P_Bill表中存在支付订单-->
+        <Sql name='oracleQueryOrderExistBill'><![CDATA[
+			SELECT count(*) FROM P_Bill p where p.businessOrderId=? AND p.orderType=?
+ 		]]></Sql>
+        <!-- 查询当前订单是否在P_His_Bill表中-->
+        <Sql name='oracleQueryOrderExistHisBill'><![CDATA[
+			SELECT count(*) FROM P_His_Bill p where p.orderId=? AND p.hisOrderState=?
+ 		]]></Sql>
+
+
+
+        <!-- 查询三方汇总账单明细表指定日期内的数据 -->
+        <Sql name='oracleQueryThreePartyBalance'><![CDATA[
+			SELECT * from p_threePartyBalance p WHERE 1=1 AND p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+
+        <!-- 查询每日汇总账单表里的明细总数-->
+        <Sql name='oracleQueryEveryDayBillCount'><![CDATA[
+			SELECT COUNT(*)
+			FROM p_threePartyBalance p
+			WHERE p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 汇总每日账单数据 -->
+        <Sql name='oracleSummaryEveryDayBalance'><![CDATA[
+			SELECT DISTINCT to_char(p.createDate,'yyyy-MM-dd') billDate,
+                SUM(CASE WHEN p.hisOrderState IS NOT NULL THEN 1 ELSE 0 END) hisBills,
+                SUM(CASE WHEN p.qlcOrderState IS NOT NULL THEN 1 ELSE 0 END) qlcBills,
+                SUM(CASE WHEN p.channelOrderState IS NOT NULL THEN 1 ELSE 0 END) channelBills,
+				SUM(p.receivableMoney) receivableMoney,
+				SUM(p.alreadyReceivedMoney) alreadyReceivedMoney,
+				SUM(p.refundMoney) refundMoney,
+				SUM(p.alreadyRefundMoney) alreadyRefundMoney
+			FROM p_threePartyBalance p
+				WHERE p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+			group by  to_char(p.createDate,'yyyy-MM-dd')
+		]]></Sql>
+        <!-- 生成每日分类汇总账单数据 根据渠道ID和服务ID进行分组-->
+        <Sql name='oracleClassifySummaryBill'><![CDATA[
+			SELECT to_char(p.createDate, 'yyyy-MM-dd') billDate,p.channelId,p.serviceId,p.priceName serviceName,
+				SUM(CASE WHEN p.hisOrderState IS NOT NULL THEN 1 ELSE 0 END) hisBills,
+                SUM(CASE WHEN p.qlcOrderState IS NOT NULL THEN 1 ELSE 0 END) qlcBills,
+                SUM(CASE WHEN p.channelOrderState IS NOT NULL THEN 1 ELSE 0 END) channelBills,
+				SUM(p.receivableMoney) receivableMoney,
+				SUM(p.alreadyReceivedMoney) alreadyReceivedMoney,
+				SUM(p.refundMoney) refundMoney,
+				SUM(p.alreadyRefundMoney) alreadyRefundMoney
+			FROM p_threePartyBalance p
+			    WHERE p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+				GROUP BY p.channelId,p.serviceId,to_char(p.createDate, 'yyyy-MM-dd'),p.priceName
+		]]></Sql>
+
+        <!-- 每日汇总账单表去重-->
+        <Sql name='oracleDeleteEveryDayBalance'><![CDATA[
+			delete from p_everyDayBalance where 1=1 AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') >= to_date(?,'yyyy-MM-dd HH24:mi:ss') and to_date(billDate,'yyyy-MM-dd HH24:mi:ss') < to_date(?,'yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+		 <!-- 分类汇总账单表去重-->
+        <Sql name='oracleDeleteClassifySummaryBalance'><![CDATA[
+			delete from p_classifySummaryBalance where 1=1 AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') >= to_date(?,'yyyy-MM-dd HH24:mi:ss') and to_date(billDate,'yyyy-MM-dd HH24:mi:ss') < to_date(?,'yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 查询指定日期内的每日汇总账单列表-->
+        <Sql name='oracleQueryEveryDayBills'><![CDATA[
+			SELECT @a FROM p_everyDayBalance p WHERE 1 = 1  @p ORDER BY p.billDate desc
+		]]></Sql>
+        <!-- 查询指定日期内的分类汇总账单数据-->
+        <Sql name='oracleQueryClassifySummaryBills'><![CDATA[
+			SELECT @a FROM p_classifySummaryBalance p WHERE 1 = 1  @p ORDER BY p.billDate desc
+		]]></Sql>
+
+
+        <!--                               涉及冲正，退费业务的SQL                                  -->
+        <!-- 查询三方汇总明细数据表中的异常账单笔数-->
+        <Sql name='oracleQueryErrorNum'><![CDATA[
+			SELECT COUNT(*) errorNum from p_threePartyBalance o WHERE o.hisOrderState IS NULL AND o.exeState<>'2' AND o.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and o.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 查询需要执行退费业务的订单-->
+        <Sql name='oracleQueryExistBizOrder'><![CDATA[
+			SELECT * FROM p_threePartyBalance p where (p.bizType='2' or p.bizType='3')  AND p.exeState='0'
+		]]></Sql>
+        <!-- 查询订单创建时间-->
+        <Sql name='oracleQueryOrderCreateDate'><![CDATA[
+			SELECT  to_char(p.createDate,'yyyy-MM-dd') createDate from p_threePartyBalance p where 1=1 @p
+		]]></Sql>
+        <!-- 更新执行订单状态-->
+        <Sql name='oracleUpdateThreePartyBalanceExeState'><![CDATA[
+			UPDATE p_threePartyBalance p SET p.exeState=? @s WHERE 1=1 @p
+		]]></Sql>
+        <!--  查询当前日期内是否还存在异常账单（用于汇总每日账单）要特别注意hisOrderId IS NULL 这个条件,也许数据库或者表不同，该字段取值也得修改-->
+        <Sql name='oracleQueryVeryDayExitsErrorBill'><![CDATA[
+			select COUNT(*) errorNum from p_threePartyBalance p WHERE  (p.channelorderid IS NULL OR p.hisOrderId IS NULL) AND p.exeState<>'2' AND p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 查询已存在业务的异常订单-->
+        <Sql name='oracleQueryExitsErrorBills'><![CDATA[
+			select *  from p_threePartyBalance p WHERE  p.bizType is not null AND p.exeState is not null AND p.createDate >= to_date('@s','yyyy-MM-dd HH24:mi:ss') and p.createDate < to_date('@e','yyyy-MM-dd HH24:mi:ss')
+		]]></Sql>
+        <!-- 查询当前存在已执行业务的异常订单是否在表中-->
+        <Sql name='oracleQueryOrderExist'><![CDATA[
+			select count(*) from p_threePartyBalance p WHERE 1=1 AND p.bizType is not null @p
+		]]></Sql>
+    </Sqls>
+</das-client>

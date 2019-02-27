@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>会员管理</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="form-inline">
+        	<div class="form-group">
+        		<label>卡号：</label>
+            	<input class="form-control" type="text" name="" id="cardNo" value="" />
+        	</div>
+        	<div class="form-group">
+            	<button type="button" cl ass="btn" onclick="queryList()">查询</button>
+        	</div>
+    	</div>
+    	
+    	<table id="exampleTablePagination">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody id="msgUser_list"></tbody>
+        </table>
+        
+        <p>
+	        <button class="btn btn-w-m btn-primary " onclick="openWindow()" type="button">新增</button>
+	    </p>
+	</body>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		function openWindow(){
+			System.openWindow('addMsgUserOpenId.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName"));
+		}
+		$(function(){
+			queryList();
+		})
+		function queryList(){
+			$("#exampleTablePagination").bootstrapTable('destroy');
+			$('#exampleTablePagination').bootstrapTable({
+				url: '/wsgw/msg/MsgUserOpenIdList/callApi.do',  //请求后台的URL（*）
+		        method: 'POST',                      //请求方式（*）
+		        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		        sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+		        pagination: true,                   //是否显示分页（*）
+		        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+		        pageSize: 25,                     //每页的记录行数（*）
+		        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+		        queryParams : function (params) {
+		        	var param = {};
+					var apiData = {};
+					apiData.cardNo = $("#cardNo").val();
+					apiData.orgId = Commonjs.hospitalId();
+					param.api = '';
+					param.apiParam = Commonjs.getApiReqParams(apiData);
+					var Page={};
+					Page.PSize = params.limit;
+					Page.PIndex = (params.offset / params.limit) + 1;
+					apiData.Page=Page;
+		        	var temp = {   
+		                     rows: params.limit,                         //页面大小
+		                     page: (params.offset / params.limit) + 1,   //页码
+		                     sort: params.sort,      //排序列名  
+		                     sortOrder: params.order, //排位命令（desc，asc） 
+		                     token : Commonjs.getToken(),
+		                     apiParam : Commonjs.getApiReqParams(apiData)
+		                 };
+		            return temp;
+		        },
+		        columns: [
+		                  {
+		            field: 'CardType', 	    
+		            title: '卡类型',
+		            formatter : function(value, row, index){
+		            	if(value == 1){
+		            		return "门诊";
+		            	}
+		            	else{
+		            		return "住院";
+		            	}
+		            }
+		        }, {
+		            field: 'CardNo',
+		            title: '卡号'
+		        }, {
+		            field: 'OpenType',
+		            title: '渠道类型',
+		            formatter : function(value, row, index){
+		            	if(value == 1){
+		            		return "门诊";
+		            	}
+		            	else{
+		            		return "住院";
+		            	}
+		            }
+		        }, {
+		            field: 'OpenId',
+		            title: 'OpenId',
+		            sortable: true,
+		        }, {
+		            field: 'State',
+		            title: '状态',
+		            sortable: true,
+		            formatter : function(value, row, index){
+		            	if(value == 1){
+		            		return "有效";
+		            	}
+		            	else{
+		            		return "无效";
+		            	}
+		            }
+		        }
+		        , {
+		            field: 'State',
+		            title: '操作',
+		            sortable: true,
+		            formatter : function(value, row, index){
+		            	var a = "";
+		            	if(value == 1){
+		            		a = "<a onclick=\"edit('"+row.Id+"',"+0+")\">禁用</a>";
+		            		
+		            	}
+		            	else{
+		            		a = "<a onclick=\"edit('"+row.Id+"',"+1+")\">启用</a>";
+		            	}
+		            	return a;
+		            }
+		        }
+		        ],
+		        responseHandler: function(res) {
+		        	if(res.RespCode == 401){
+		        		alert(res.RespMessage);
+		        	}else{
+		        		if(res.Data == undefined){
+		        			return [];
+		        		}else{
+		        			var o ={};
+		        			var data = 
+		        			o.total = res.Data[0].Total;
+		        			o.rows = res.Data[0].Rows;
+		        			return o;
+		        		}
+		        	}
+		        },
+		        onLoadSuccess: function (result) {
+		        	console.log(result);
+		        },
+		        onLoadError: function () {
+		            alert("数据加载失败！");
+		        },
+			});
+		}
+		
+		function edit(id,State){
+			var param = {};
+			var apiData = {};
+			param.api = '';
+			apiData.id = id;
+			apiData.state = State;
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/EditMsgUserOpenId/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					window.location.href='msgUserList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+	</script>
+</html>

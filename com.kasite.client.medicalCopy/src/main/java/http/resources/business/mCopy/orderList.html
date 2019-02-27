@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>订单列表</title>
+	    <script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/wechat/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wechat/index.css"/>
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/tab.css" type="text/css" />
+				<style>
+			.copyright > div {
+			    line-height: 3rem;
+			    z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="list">
+				<div class="list-date">订单列表<div class="list-filter" onclick="openfilter()"><img src="../mCopy/img/wechat/icon-5.png"/>筛选</div></div>
+				<ul class="order-list">
+				</ul>
+			</div>
+			<div class="mask">
+				<div class="mask-box">
+					<div class="mask-box-title">支付状态</div>
+					<ul id="payState">
+						<li class="cur" value = ''>全部</li>
+						<li value = '1'>待支付</li>
+						<li value = '2'>支付中</li>
+						<li value = '3'>已支付</li>
+						<li value = '4'>退款中</li>
+						<li value = '5'>已退款</li>
+					</ul>
+					<div class="mask-box-title">订单状态</div>
+					<ul id="orderState">
+						<li class="cur" value = ''>全部</li>
+						<li value = '1'>申请成功</li>
+						<li value = '2'>已确认</li>
+						<li value = '3'>已寄送</li>
+						<li value = '4'>已取消</li>
+					</ul>
+					<div class="mask-box-title">申请时间</div>
+					<div class="mask-box-date">
+						<input id='st' data-options='{"type":"date"}' class="btn mui-btn mui-btn-block" placeholder="请选择时间"/> 
+						<img src="../mCopy/img/wechat/icon-right.png"/>
+					</div>
+<!-- 					<div class="mask-box-title">结束时间</div>
+					<div class="mask-box-date">
+						<input id='et' data-options='{"type":"date"}' class="btn mui-btn mui-btn-block" placeholder="请选择时间"/> 
+						<img src="../mCopy/img/wechat/icon-right.png"/>
+					</div> -->
+					<div class="i-footer" style="left: 1rem;">
+						<div class="b-1" onclick="closeFilter()">取消</div>
+						<div class="b-2" onclick="sureFilter()">确认</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/common.js"></script>
+		<script type="text/javascript" src="js/wechat/orderList.js"></script>
+		<script type="text/javascript">
+			//选择状态
+			$(document).ready(function(){
+				$('.mask-box li').click(function(){
+			    	$(this).toggleClass('cur');
+			    	$(this).siblings().removeClass('cur');
+			    })
+			})
+			//打开筛选
+			function openfilter(){
+				$('.mask').show();
+			}
+			//关闭筛选
+			function closeFilter(){
+				$('#st').val('');
+				$('#et').val('');
+				$('.mask').hide();
+			}
+			//时间控件
+			(function($) {
+				$.init();
+				var result = $('.mui-btn-block');
+				var btns = $('.mui-btn-block');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							result[i].value = rs.text;
+							picker.dispose();
+						});
+					}, false);
+				});
+			})(mui);
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+         <link rel="stylesheet" href="./index/commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="./index/commons/css/login.css" type="text/css" />
+        <script type="text/javascript" src="./index/commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="./index/commons/js/jquery.artDialog.js"></script>
+		<script type="text/javascript" src="./index/commons/js/jquery.md5.js"></script>
+		<script type="text/javascript" src="./index/commons/js/common.js"></script>
+		<link rel="stylesheet" href="./index/commons/css/artDialog.css" type="text/css" />
+    </head>
+    <body>
+    <font color=red>您的浏览器版本过低，请在下面选择适合您电脑的浏览器； 安装完后请重启浏览器</font>
+<div class="lg-wrap">
+ <span id="ie9-32id"><a href="javascript:void(0);" onclick="downloadIE(32);">下载IE9浏览器_win7_32位</a></span><br/><br/>
+ <span id="ie9-64id"><a href="javascript:void(0);" onclick="downloadIE(64);">下载IE9浏览器_win7_64位</a></span><br/><br/>
+ <span id="infoid"></span>
+ <span id="ggid"><a href="javascript:void(0);" onclick="downloadIE(11);">下载谷歌浏览器稳定版</a></span><br/><br/>
+</div>
+
+<script type="text/javascript">
+	var os = Commonjs.getUrlParam('os');
+	
+		//xp,2000,2003只让下载谷歌
+		if(os==0) {
+			$('#ie9-32id').hide();
+			$('#ie9-64id').hide();
+			$('#infoid').html('<font color=red>如果您已安装谷歌浏览器(Chrome)，请用此打开</font><br/><br/>');
+		}
+		
+    var downloadIE = function(a) {
+    	switch(a){
+    	case 32 :
+    		//window.location.href='http://172.13.0.19:8080/Hos-Process/download/IE9win7x32.exe';
+    		downloadFile('download','IE9win7x32.exe');
+    		break;
+    	case 64 : 
+    		//window.location.href='http://172.13.0.19:8080/Hos-Process/download/IE9win7x64.exe';
+    		downloadFile('download','IE9win7x64.exe');
+    		break;
+    	case 11 : 
+    		//window.location.href='http://172.13.0.19:8080/Hos-Process/download/IE9win7x64.exe';
+    		downloadFile('download','google.exe');
+    		break;
+    	default : break;
+    	}
+    }
+    //下载文件
+    function downloadFile(fileDir,fileName){
+    	window.location.href = "/Hos-PaymentManager/servlets/DownloadServlet?fileDir="+fileDir+"&fileName="+fileName;
+    }
+</script>
+    </body>
+</html>

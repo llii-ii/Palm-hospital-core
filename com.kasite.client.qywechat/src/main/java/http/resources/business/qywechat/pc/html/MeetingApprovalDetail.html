@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>审批详细</title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width: 100%;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>审批编号：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="approvalId" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>提交时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Inserttime" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>申请人：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Membername" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>申请部门：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Deptname" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>请假会议：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Meetingtitle" style="padding: 8px 12px;margin-bottom: 5px;">
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>请假原因：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Reason" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>申请状态：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Status" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>审批备注：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="Remark" style="padding: 8px 12px;margin-bottom: 5px;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var id = Commonjs.getUrlParam("id");
+		
+		$(function(){
+			queryMeetingApprovalById();
+		});
+		
+		function queryMeetingApprovalById(){
+			var apiData = {};	
+            apiData.id = id;
+            apiData.status = -1;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingApproval/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    	         	$("#approvalId").text(dd.Data[0].Approvalid);
+    	         	$("#Inserttime").text(dd.Data[0].Inserttime);
+    	         	$("#Membername").text(dd.Data[0].Membername);
+    	         	$("#Deptname").text(dd.Data[0].Deptname);
+    	         	$("#Remark").text(dd.Data[0].Remark);
+    	         	$("#Reason").text(dd.Data[0].Reason);
+    	         	$("#Meetingtitle").text(dd.Data[0].Meetingtitle);
+    	         	if(dd.Data[0].Status == 0){
+    	         		$("#Status").text("待审批");
+    	         	}else if(dd.Data[0].Status == 1){
+    	         		$("#Status").text("通过");
+    	         	}else if(dd.Data[0].Status == 2){
+    	         		$("#Status").text("驳回");
+    	         	}
+    	         	
+    			}else if(dd.RespCode == -14018){
+    	         	alert("查无详情！");
+    			}
+    		});
+		}
+		
+		$(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+		
+        System.addEventListener("pageEvent",function(str){
+			alert(window.location.href+'===='+str);
+		})
+	</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>商户交易金额统计</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+</head>
+<body>
+<div class="com-title">对账报表</div>
+<div class="wrapper">
+    <div class="clearfix mt20">
+        <div class="fl">
+            <div class="date-wrap mr5 mb10">
+                <input type="text" placeholder="请选择" class="date-txt datetimepicker" id="queryDate" value=""/>
+            </div>
+            <span class="d-inline">
+            	<input type="radio" name="transType" value=""/>&nbsp;全部&nbsp;
+            	<input type="radio" name="transType" checked="checked" value="OUTPATIENT"/>&nbsp;门诊&nbsp;
+                <input type="radio" name="transType" value="HOSPITALIZATION"/>&nbsp;住院
+                <a href="javascript:search();" class="query-btn mr5 mb10"><i class="icon icon-search"></i></a>
+            </span>
+        </div>
+        <div class="fr">
+            <a href="javascript:downloadFile();" class="c-btn c-btn-blue mb10"><i class="icon icon-download"></i>Excel下载</a>
+        </div>
+    </div>
+    <div class="mt10">
+        <table class="tb tb-b c-t-center" id="bankBillrfList">
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../widget/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/date.js"></script>
+<script type="text/javascript" src="../js/jquery.util.js"></script>
+<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript" src="../commons/js/jquery.pager.js"></script>
+<script type="text/javascript" src="js/bill-bank-report.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.trend-date a').on('click',function(){
+		$(this).addClass('curr').siblings().removeClass('curr');
+	});
+	
+	laydate.render({
+		elem: '.datetimepicker'
+	});
+});
+</script>
+</body>
+</html>

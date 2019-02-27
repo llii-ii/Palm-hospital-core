@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>订单列表</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main">
+	<div class="h45">
+    	<div class="order-top ui-grid">
+        	<div class="ui-col-1">
+            	<div class="order-top-date">
+                    <a href="javascript:;"><label id="dateword"></label><i class="sicon icon-gjt"></i></a>
+                    <input type="text" id="filter-date" class="filtertext" />
+                </div>
+            </div>
+        	<div class="ui-col-0 filter-into"><i class="sicon icon-filter"></i>筛选</div>
+        </div>
+    </div>
+    <div class="mt10" id="listPart">
+    	 <ul class="order-list" id="orderlist">
+        	
+        </ul> 
+        <div class="infinite-scroll" style="display: none">
+        	<div class="infinite-preloader" ></div>
+        	正在加载
+        </div>
+        <div class="nomess" style="display: none">
+        	<i class="nomess-tb"></i>
+            <p class="mt10">暂无数据</p>
+        </div>
+    </div>
+    
+    <div class="pb20 c-hide" id="filterPart">
+    	<div class="filter-box c-border-b">
+        	<div class="prefilter">
+            	<h4>就诊人：</h4>
+                <ul class="clearfix" id='memberUl'>
+                </ul>
+            </div>
+        	<div class="prefilter">
+            	<h4>业务：</h4>
+                <ul class="clearfix" id="servicesidUl">
+                </ul>
+            </div>
+        	<div class="prefilter">
+            	<h4>状态：</h4>
+                <ul class="clearfix">
+                	<li class="curr"><a href="javascript:void(0);" onclick="setOrderType('0')">全部</a></li>
+                	<li><a href="javascript:void(0);" onclick="setOrderType('1')">未支付</a></li>
+                	<li><a href="javascript:void(0);" onclick="setOrderType('2')">已支付</a></li>
+                	<li><a href="javascript:void(0);" onclick="setOrderType('3')">退款中</a></li>
+                	<li><a href="javascript:void(0);" onclick="setOrderType('4')">已退款</a></li>
+                	<li><a href="javascript:void(0);" onclick="setOrderType('5')">已取消</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt20 plr15">
+            <a href="javascript:;" class="c-btn c-btn-blue" id="filter-btn">确定</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=20190118"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="js/orderLocalListMemberId.js?v=20190118"></script>
+</body>
+</html>

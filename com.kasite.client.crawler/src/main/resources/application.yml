@@ -1,0 +1,61 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8080
+    context-path: /
+# spring
+spring:
+    # 上饶市立医院 ：srslyy   上饶医高专医院：srygz  本地开发环境： dev
+    profiles:
+        active: zk
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    servlet:
+       multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true
+    boot:
+      admin:
+        client:
+            read-timeout: 30000
+            connect-timeout: 30000
+            instance:
+              name: 数据爬取工程
+              # 你的工程首页外网地址
+              service-url: http://127.0.0.1:8080
+              # http://外网IP或域名/actuator
+              management-url: http://127.0.0.1:8080/actuator
+              # http://外网IP或域名/actuator/health
+              health-url: http://127.0.0.1:8080/actuator/health
+              # admin服务端地址 http://springadmin.kasitesoft.com http://119.23.210.15:9999  http://127.0.0.1:9999
+            url: http://springadmin.kasitesoft.com
+            username: admin
+            password: kst.2018
+
+info: #定义各种额外的详情给服务端显示 #从pom.xml中获取
+    name: 我是数据爬取工程 #'@project.name@'
+    orgCode: 10001
+management: # Actuator 在 spring boot 2.0 版本后，默认只暴露了两个端点
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS 
+  security: #管理端点安全 spring-boot 1.5.2之后严格执行安全策略，所以需要配置这个为false
+    enabled: false 
+logging:
+  level:
+    com.kasite: info #设置com.kasite路径下的所有日志为info级别
+    org.springframework.web: info
+    org.springboot.sample: info
+  file: D:\Client\logs\logback\all.log #改成你自己的工程日志所在路径
+  
+      
+   

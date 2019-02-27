@@ -1,0 +1,154 @@
+body,html{margin: 0;padding: 0;font-family: "microsoft yahei",Helvetica,sans-serif;background: #f5f6f9;}
+.container{
+	color: #333;
+	font-size: 0.28rem;
+}
+.con-top{
+	position: relative;
+	height: 1.5rem;
+	background: #43a5fc;
+}
+.con-box{
+	position: absolute;
+	top: 0.3rem;
+	left: 0.3rem;
+	right: 0.3rem;
+	background: #fff;
+	padding-bottom: 0.3rem;
+	border-radius: 0.16rem;
+	box-shadow: 0 0.08rem 0.08rem rgba(0,0,0,.1);
+}
+.con-box-info{
+	font-weight: bold;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0.3rem 0.1rem 0.2rem 0.26rem;
+}
+.con-box-info .icon{
+	position: relative;
+	top: 0.04rem;
+	width: 0.28rem;
+	height: 0.28rem;
+	margin-right: 0.06rem;
+}
+.con-box-info .name{
+	margin-right: 0.26rem;
+}
+.con-box-info .num{
+	font-size: 0.24rem;
+	margin-right: 0.26rem;
+}
+.con-box-info .addr{
+	font-size: 0.24rem;
+}
+.con-box .x-row{
+	color: #999;
+	font-size: 0.24rem;
+	padding-left: 0.4rem;
+	margin-top: 0.2rem;
+}
+.con-footer{
+	position: fixed;
+	bottom: 0.5rem;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+.con-round{
+	position: relative;
+	height: 6rem;
+	margin-top: 1.8rem;
+}
+.con-round-li{
+	position: absolute;
+	width: 1.8rem;
+	height: 1.8rem;
+	font-size: 0.24rem;
+	text-align: center;
+	background: #fff;
+	border-radius: 100%;
+	box-shadow: 0rem 0.04rem 0.2rem rgba(0,0,0,.2);
+}
+.con-round-li img{
+	width: 0.7rem;
+	height: 0.7rem;
+	margin-top: 0.3rem;
+	margin-bottom: 0.1rem;
+}
+.con-round-li .status{
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-size: 0.24rem;
+	font-weight: bold;
+	border-radius: 100%;
+	line-height: 1.8rem;
+	background: rgba(0,0,0,.4);
+}
+.con-round-li.four .status{
+	line-height: 3.4rem;
+}
+.con-round-li.one{
+	top: 0;
+	left: 50%;
+	margin-left: -0.9rem;
+}
+.con-round-li.two{
+	top: 1.2rem;
+	right: 0.6rem;
+}
+.con-round-li.three{
+	top: 1.2rem;
+	left: 0.6rem;
+}
+.con-round-li.four{
+	width: 3.4rem;
+	height: 3.4rem;
+	top: 2.5rem;
+	left: 50%;
+	margin-left: -1.7rem;
+}
+.con-round-li.four img{
+	width: 1.3rem;
+	height: 1.3rem;
+	margin-top: 0.7rem;
+	margin-bottom: 0.2rem;
+}
+/*布局*/
+.x-row{
+    overflow: hidden;
+}
+.x-row-cols{
+    display: block;
+    float: left;
+    height: 100%;
+}
+.dr .x-row-cols{
+    display: block;
+    float: right;
+    height: 100%;
+}
+.x-row-cols:last-child{
+    float: none;
+}
+.x-row-cols.last-child{
+    float: none;
+}
+.x-row.boxflex{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -o-box;
+    display: box;
+    float: none;
+    width: 100%;
+}
+.boxflex .x-row-cols{
+    display: block;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    float: none;
+    width:100%;
+}

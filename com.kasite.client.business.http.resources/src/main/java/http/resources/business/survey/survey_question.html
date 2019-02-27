@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>满意度调查</title>
+<script type="text/javascript"  src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js" ></script>
+<script type="text/javascript"   src="https://v1kstcdn.kasitesoft.com/common/js/base.js" ></script>
+<script type="text/javascript"   src="../../common/js/common.js?v=201901152112" ></script>
+<script type="text/javascript"   src="https://v1kstcdn.kasitesoft.com/common/js/checkForm.js" ></script>
+<script type="text/javascript">
+var subjectId = "";
+var objtype = "";
+$(function(){
+	subjectId = Commonjs.getUrlParam('subjectId');
+	objtype = Commonjs.getUrlParam('objtype');
+ });
+</script>
+<script type="text/javascript" src="js/survey_question.js?v=201901152112"></script>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/dialog.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/satify.css" type="text/css" />
+
+</head>
+<style>
+    .mask {       
+            position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;     
+            z-index: 1002; left: 0px;     
+            opacity:0.5; -moz-opacity:0.5;     
+        }
+    .phoneOrPc {       
+            position: absolute; bottom: 10px;    
+            z-index: 1003; left: 0px;      
+        }
+ </style>
+<script language="javascript">
+//多选表单值返回
+function check_radio_up(class_id){
+	var check_box_val ="";
+	$("."+class_id).find("div").each(function() {
+		if($(this).find("label").hasClass("checked")){
+			check_box_val += $(this).find("span").html()+",";
+		}
+	})
+	return check_box_val.replace(/,$/,"");
+}
+$(function(){
+	$(".combtn a").click(function(){
+		$('#ques1').val(check_radio_up("ques1"));
+		$('#ques2').val(check_radio_up("ques2"));
+		$('#ques3').val(check_radio_up("ques3"));
+		$('#ques4').val(check_radio_up("ques4"));
+		$('#ques5').val(check_radio_up("ques5"));
+		$('#ques6').val(check_radio_up("ques6"));
+	});
+	$(".sradio").click(function(){
+		$(this).siblings(".sradio").find("label").removeClass("checked");
+		$(this).find("label").addClass("checked");
+	});
+	$(".scheckbox").click(function(){
+		$(this).find("label").toggleClass("checked");
+	});
+})
+</script>
+<body>
+<div class="satihold" id="divSurveyList" style="display:none;">
+    <div id="divList">
+   </div>
+   <!-- 遮罩层 -->
+   <div id="mask" class="mask"></div> 
+   <!-- 遮罩层 -->
+   
+
+   <div class="combtn"><a href="javascript:CommitAnswer();" id="aSubmit">提交</a></div>
+</div>
+    <div class="satisfy_box phone_box" style="display: none;" id = 'phoneOrPc'>
+        <div class="saty_answ awnbor">
+           请输入您的手机号: <input type = 'text' class="answtext" id='phoneOrPcText'>
+           <div style="color: red;font-size: 15px;display: none" id='warmId'>手机号码格式错误!请重新输入</div>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:commitAnswersbyPhone();" id="aSubmit">提交</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a   href="javascript:hideMask();" id="cancel">取消</a> </div>
+    </div>
+<div class="nomess" id="divNoSurvey" style="display:none;"><i class="icon"></i>暂无调查问题~</div>
+
+<dir id="openDiv"></dir>
+
+</body>
+</html>

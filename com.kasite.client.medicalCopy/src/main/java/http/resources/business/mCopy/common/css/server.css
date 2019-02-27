@@ -1,0 +1,164 @@
+/* ˧ѡ */
+.filthold{ height:40px;}
+.filtdiv{ width:100%; padding:10px 0; height:20px; line-height:20px; background:#fdfdfd; position:fixed; left:0px; top:44px; z-index:995; border-bottom:1px solid #e1e1e1;}
+.filtdiv li{ display:block; width:33%; height:20px; float:left; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; font-size:12px; overflow:hidden; text-align:center; padding:0 2%;}
+.filtdiv li a{ display:inline-block; max-width:100%; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; padding-right:13px; position:relative; overflow:hidden;}
+.filtdiv li a .aspan{ width:100%; display:inline-block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.filtdiv li a .ajt{ width:10px; height:5px; display:inline-block; background-position:-21px -1px; position:absolute; right:0px; top:8px;}
+.filtdiv li.abor{ border-left:1px solid #e1e1e1;}
+/* ҽ���б� */
+.app_list{ background:#fff;}
+.app_list li{ display:block; min-height:65px; padding:10px 4%; border-bottom:1px solid #ddd; overflow:hidden; position:relative;}
+.app_list .apl_head{ position:absolute; left:4%;}
+.app_list .apl_head img{ width:65px; height:65px; border-radius:7px; -webkit-border-radius:7px;}
+.app_list .apl_mess{ width:100%; font-size:14px; color:#808080; line-height:21px; padding-left:77px;}
+.app_list .mname{ font-size:17px; color:#000; margin-right:5px;}
+.apl_btn{ position:absolute; right:3%; top:10px;}
+.apl_btn a{ display:block; width:66px; height:30px; line-height:30px; text-align:center; color:#fff; background:#00A1D8; font-size:14px; border-radius:5px; float:right;}
+.apl_btn a.nohy{ background:#d2d2d2;}
+.zc_list{ width:100%;}
+.zc_list li{ display:block; width:100%; line-height:45px; background:#fff; position:relative; border-bottom:1px solid #e1e1e1;}
+.zc_list li a{ display:block; width:100%; padding:0 4%;}
+/* ����ѡ�� */
+.datechoo{ position:absolute; width:100%; left:110%; top:0px; z-index:1500; background:#f3f3f3; display:none;}
+.dtophold{ height:24px;}
+.dweek{ width:100%; height:24px; line-height:24px; position:fixed; top:0; left:110%; overflow:hidden; background:#f7f7f7; border-bottom:1px solid #c8c8c8;}
+.dweek li{ float:left; display:block; width:14%; text-align:center;}
+.premouth{ width:100%; background:#fff; overflow:hidden; margin-bottom:10px; padding-bottom:10px;}
+.premouth .mouth{ display:block; width:100%; line-height:25px; padding:10px 0; text-align:center;}
+.premouth li{ display:block; width:14%; line-height:35px; float:left; text-align:center;}
+.premouth li a{ display:block; width:100%; line-height:35px; color:#333;}
+.dbtnhold{ height:50px;}
+.datebtn{ width:100%; background:#fff; border-top:1px solid #e1e1e1; height:49px; position:fixed; left:110%; bottom:0px;}
+.datebtn a{ display:block; width:90%; height:40px; line-height:40px; margin:5px auto 0 auto; text-align:center; background:#00A1D8; border-radius:5px; font-size:16px; color:#fff;}
+/* ҽ����ҳ */
+.index_top{ width:90%; height:95px; background:url(../images/index_bg.jpg) no-repeat; background-size:100%; -moz-background-size:100%; -webkit-background-size:100%; padding:0 5%; position:relative;}
+.index_doc{ width:100%; height:60px; position:relative; background:#fff;}
+.docbox{ width:100%; position:absolute; left:0px; top:-50px; overflow:hidden; z-index:410;}
+.docbox .dochead{ width:33%; float:left; text-align:center; padding-left:2%;}
+.docbox .dochead .headimg{ display:inline-block; width:73px; height:94px; padding:2px; background:#fff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;}
+.docbox .docmess{ width:64%; float:left; line-height:23px; color:#909090; font-size:13px;}
+.docbox .docmess .dtit{ color:#333; padding:17px 0 10px 0;}
+.docbox .docmess .dname{ font-size:22px;}
+.docbox .docmess img{ margin-right:7px;}
+.idepthold{ width:100%; background:#fff; position:relative; height:40px;}
+.idept_list{ position:absolute; top:0px; left:0; overflow:auto; width:89%; height:40px;}
+#scroller { width:4000px; height:100%; float:left; padding:0;}
+#scroller ul { list-style:none; display:block; float:left; height:100%; text-align:left;}
+#scroller li { display:block; float:left; padding:0 12px; font-size:15px; height:36px; line-height:36px; padding-top:2px; border-bottom:2px solid #fff;}
+#scroller li.dq{ color:#00A1D8; border-bottom:2px solid #00A1D8;}
+.is_dept_det{ background:#fff; margin-bottom:20px;}
+.is_dept_det li{ display:block; overflow:hidden; font-size:13px; padding:10px 3%; border-bottom:1px solid #e1e1e1;}
+.is_dept_det li .ipweek{ display:block; width:35%; float:left; padding-left:3%; line-height:20px;}
+.is_dept_det li .ipcost{ display:block; width:35%; float:left; text-align:center; line-height:20px;}
+.is_dept_det li .ipbtn{ display:block; width:27%; float:left; overflow:hidden;}
+.is_dept_det li .ipbtn a{ display:block; width:66px; height:30px; line-height:30px; text-align:center; color:#fff; background:#00A1D8; font-size:14px; border-radius:5px; float:right; margin-top:5px;}
+.intr_screen{ width:100%; height:100%; background:#000; filter: alpha(opacity=0); opacity:0.2; position:fixed; z-index:400; top:0; left:0;}
+.index_intr{ width:100%; position:fixed; top:155px; left:0; background:url(../images/mbbg.png); color:#fff; font-size:14px; line-height:23px; padding:10px 3% 60px 3%; z-index:500; display:none;}
+.dintro{ width:100%; height:100%; top:0; left:0;}
+.inclose{ position:absolute; width:24px; height:24px; bottom:15px; left:50%; margin-left:-12px; background-position:-81px -32px;}
+.inposf{ position:fixed; left:0; z-index:555;}
+
+.zsintro{ background:#fff; padding:10px 4%; font-size:14px; line-height:23px;}
+/* ������Ϣ */
+.patmess{ background:#fff;}
+.patmess li{ display:block; width:100%; line-height:45px; position:relative; padding:0 15px 0 105px; overflow:hidden;}
+.patmess li .ptit{ position:absolute; left:15px; top:0;}
+.patmess li .ijzr{ display:block; width:19px; height:22px; background-position:-34px -1px; position:absolute; right:15px; top:12px;}
+.patmess li .ihy{ display:block; width:22px; height:22px; background-position:-54px -1px; position:absolute; right:15px; top:11px;}
+.pattop{ background:#f3f3f3; padding:0 4%; line-height:40px;}
+.patchoo{ background:#fff;}
+.patchoo li{ display:block; position:relative; line-height:45px; padding:0 4%; border-bottom:1px solid #e1e1e1;}
+.pcard{ padding-right:20px;}
+/* ֧�� */
+.sub_top{ line-height:25px; padding:10px 4%; text-align:center;}
+.sub_list{ border-bottom:1px solid #e1e1e1; border-top:1px solid #e1e1e1; background:#fff; padding-left:4%;}
+.sub_list li{ line-height:25px; padding:10px 4% 10px 0; border-top:1px solid #e1e1e1; position:relative;}
+.sub_list li:first-child{ border-top:none;}
+.sub_list li .yepay{ display:inline-block; width:26px; height:26px; background-position:-79px -1px; vertical-align:middle; margin-right:12px;}
+.sub_list li .wxpay{ display:inline-block; width:26px; height:26px; background-position:-108px -1px; vertical-align:middle; margin-right:12px;}
+.sub_list li .syue{ float:right; color:#909090; padding-right:15px; font-size:13px;}
+.sub_list li .topay{ font-size:12px; color:#909090; line-height:13px; padding-right:13px; text-align:right;}
+.payinput{ width:65%; float:right; border:none;}
+.psucc_top{ background:#4db944; text-align:center; color:#fff; font-size:20px; line-height:33px; padding:20px 0 13px 0;}
+.paysucc{ display:block; width:47px; height:47px; background-position:-137px -1px; margin:0 auto;}
+.psucc_list{ background:#fff;}
+.psucc_list li{ line-height:45px; padding:0 4%; border-bottom:1px solid #e1e1e1;}
+.paybtn{ margin-top:20px; padding:0 5%; font-size:16px;}
+.paybtn a{ display:block; width:46%; height:40px; line-height:40px; color:#fff; text-align:center; float:left; background:#00A1D8; border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;}
+.paybtn a.canc{ background:#d2d2d2; float:right;}
+.psucc_tip{ line-height:20px; padding:0 4%;}
+.psucc_to{ text-align:center; line-height:35px;}
+.psucc_to a{ color:#007cd9;}
+/* ���浥�б� */
+.labhold{ height:41px;}
+.lablist{ width:100%; height:41px; overflow:hidden; position:fixed; top:0; left:0; background:#fff; z-index:500;}
+.lablist:before{ content:''; display:block; width:50%; height:18px; top:11px; left:0; border-right:1px solid #ddd; position:absolute; z-index:400;}
+.lablist a{ display:block; width:50%; height:38px; line-height:38px; border-bottom:3px solid #fff; float:left; text-align:center; position:relative; z-index:500;}
+.lablist a.hit{ border-bottom:3px solid #00A1D8; color:#00A1D8;}
+.ser_rept{ width:100%;}
+.ser_rept li{ display:block; padding:10px 4%; background:#fff; border-top:1px solid #e1e1e1; border-bottom:1px solid #e1e1e1; position:relative; line-height:22px; margin-bottom:10px;}
+.ser_rept li .srtit{ width:100%; padding-right:80px; position:relative;}
+.ser_rept li .srust{ position:absolute; top:0; right:14px; font-size:13px;}
+.serd_top{ background:#00A1D8; padding:12px 4% 10px 4%; line-height:35px; color:#fff;}
+.serd_top .snum{ font-weight:700; font-size:18px;}
+.sftb{ display:inline-block; width:20px; height:20px; background-position:-188px -1px; vertical-align:middle; margin:0 0 5px 10px;}
+.serd_num{ width:100%; text-align:center; padding-bottom:20px; line-height:20px;}
+.preserd{ background:#fff; padding-left:4%; margin-bottom:10px; border-top:1px solid #e1e1e1; border-bottom:1px solid #e1e1e1;}
+.pstit{ line-height:33px;}
+.pslist{ border-top:1px solid #e1e1e1; padding:5px 0;}
+.pslist li{ display:block; line-height:20px; padding:3px 0; overflow:hidden; font-size:13px; color:#5b5b5b;}
+.pslist li label{ display:block; width:48%; float:left; padding-right:2%; word-break:break-all;}
+.pslist li label img{ vertical-align:middle; margin:0 0 0 5px;}
+
+.wait_top{ padding:15px 4%; background:#fff; font-size:13px; color:#909090; position:relative; line-height:22px; border-bottom:1px solid #e1e1e1; overflow:hidden;}
+.wait_list{ background:#fff;}
+.wait_list li{ display:block; border-bottom:1px solid #e1e1e1; line-height:44px; padding:0 4%; color:#5b5b5b; position:relative; overflow:hidden;}
+.wait_list li .wlname{ color:#333; margin-right:10px;}
+.wait_list li .wleave{ float:right; padding-right:15px; font-size:14px;}
+.wait_tip{ background:#fff; margin:15px 0; border-top:1px solid #e1e1e1; font-size:15px; color:#333; line-height:44px;}
+.wopera{ display:block; border-bottom:1px solid #e1e1e1; padding:0 4%;}
+.wopera a{ display:block; width:51px; height:31px; float:right; margin-top:7px; position:relative; overflow:hidden; border-radius:20px;}
+.wopen{ display:block; width:51px; height:31px; position:absolute; right:0px; top:0px; border-radius:20px; z-index:300; background-position:-1px -63px;}
+.wclose{ display:block; width:51px; height:31px; position:absolute; right:-20px; top:0px; border-radius:20px; z-index:321; display:none; background-position:-57px -63px;}
+.wcost{ display:block; border-bottom:1px solid #e1e1e1; padding:0 4%;}
+.nchange{ display:block; width:16px; height:16px; line-height:15px; margin-top:15px; float:right; position:relative;}
+.wcost .wtext{ -webkit-appearance:none; -moz-appearance:none; appearance:none; display:inline-block; width:16px; height:16px; border:none; padding:none; position:absolute; z-index:200; left:0; top:0; opacity:0;}
+.wbjtb{ display:inline-block; width:16px; height:16px; background-position:-59px -31px; position:absolute; left:0; top:0; z-index:100;}
+.leavenum{ margin:0 3px; color:#00A1D8;}
+.sftb_green{ display:inline-block; width:20px; height:20px; background-position:-210px -1px; vertical-align:middle; margin:12px 0 5px 10px; float:right;}
+
+
+    /* ҽ����Ϣ */
+ .nindex_doc{ width:100%; min-height:60px; position:relative; background:#fff;}
+.ndocbox{ width:100%; position:absolute; left:0px; top:-50px; overflow:hidden; z-index:410;}
+.ndocbox .dochead{ width:33%; float:left; text-align:center; padding-left:2%;}
+.ndocbox .dochead .headimg{ display:inline-block; width:73px; height:94px; padding:2px; background:#fff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;}
+.ndocbox .docmess{ width:64%; float:left; line-height:23px; color:#909090; font-size:13px;}
+.ndocbox .docmess .dtit{ color:#333; padding:17px 0 10px 0;}
+.ndocbox .docmess .dname{ font-size:22px;}
+.ndocbox .docmess img{ margin-right:7px;}
+.ndocgood{ padding:55px 4% 10px 4%; line-height:21px; color:#909090; font-size:13px;}
+.ngdet{ width:100%; position:relative;}
+.ngspec{ display:block;}
+.ngshow{ display:block; position:absolute; right:0; top:0; font-size:13px; color:#007cd9; display:none;}
+.nghide{ display:inline-block; font-size:13px; color:#007cd9; margin-left:10px; display:none;}
+
+/* ѡ���Դ */
+.dmtpop{ width:100%; max-height:50%; bottom:0px; left:0; z-index:10001; position:fixed; display:none; -webkit-animation:choopop .5s ease; animation:choopop .5s ease; background:#fff;}
+@-webkit-keyframes choopop{
+	0%{ bottom:-200px;}
+	100%{ bottom:0px;}
+}
+@keyframes choopop{
+	0%{ bottom:-200px;}
+	100%{ bottom:0px;}
+}
+.dmtpop ul{ display:block; overflow:hidden; background:#fff;}
+.dmtpop li{ display:block; width:100%; line-height:38px; text-align:center; color:#262626; font-size:15px; border-top:1px solid #f2f2f2;}
+.dmtpop li.hit{ color:#00a0e9;}
+.dmtpop li:first-child{ border-top:none;}
+.dmtadd{ display:block; line-height:40px; text-align:center; border-bottom:1px solid #e1e1e1; position:relative;}
+.dpclose{ display:block; width:60px; height:40px; background-position:-193px -127px; border-left:1px solid #f2f2f2; position:absolute; right:0; top:0;}
+.floor-img{ background:#fff; padding:10px 15px; text-align: center;}
+.floor-img img{ max-width: 100%;}

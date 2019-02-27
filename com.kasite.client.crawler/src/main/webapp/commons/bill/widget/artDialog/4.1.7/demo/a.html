@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>链接</title>
+    <link rel="stylesheet" href="../../../../cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../iconfont/iconfont.css" type="text/css" />
+    <!--[if lt IE 9]>
+	<script type="text/javascript" src="../../../../cross/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="w500 h500">
+    <div style="width:400px; height:300px; padding:20px">
+        <div style="margin:4px 0; padding:5px; background:#EEF7F5; text-align:left; color:#000; border-radius:3px; border:1px solid #D7EAE2; " class="tips">
+            我是iframe页面：<a href="a.html" target="_blank">a.html</a>
+        </div>
+        <input class="input-text" id="aInput" value="我是小A">
+        <a href="javascript:;" class="c-btn-tiny c-btn-blue" id="aButton">传递给B页面</a>
+        <div class="mt10">
+            <a href="javascript:;" class="c-btn-tiny c-btn-blue" id="exit">关闭并返回数据到主页面</a>
+            <a href="javascript:;" class="c-btn-tiny c-btn-blue" id="reload">刷新主页面</a>
+            <a href="javascript:;" class="c-btn-tiny c-btn-blue" id="prentFun">取父页面的方法</a>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="../../../../cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="../../../../cross/js/cross.ui.js"></script>
+<link rel="stylesheet" href="../../../../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+<script type="text/javascript" src="../../../../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../../../../widget/artDialog/4.1.7/js/iframeTools.js"></script>
+<script type="text/javascript">
+    $(function(){
+        if (art.dialog.data('test')) {
+            $('#aInput').val(art.dialog.data('test'));
+        };
+
+        // 传递给B页面
+        $('#aButton').on('click', function () {
+            var aValue = $('#aInput').val();
+            art.dialog.data('aValue', aValue);// 存储数据
+
+            var path = art.dialog.data('homeDemoPath') || './';
+
+            art.dialog.open(path + '../widget/artDialog/4.1.7/demo/b.html?fd', {
+                id: 'AAA',
+                close: function () {
+                    var bValue = art.dialog.data('bValue');// 读取B页面的数据
+                    if (bValue !== undefined) $('#aInput').val(bValue);
+                }
+            }, false);
+        });
+
+        // 关闭并返回数据到主页面
+        $('#exit').on('click',function () {
+            var origin = artDialog.open.origin;
+            var aValue = document.getElementById('aInput').value;
+            var input = origin.document.getElementById('art-iframe-text');
+            $(input).val(aValue);
+            $(input).select();
+            art.dialog.close();
+        });
+
+        // 刷新主页面
+        $('#reload').on('click',function () {
+            art.dialog.data('iframeTools', '我知道你刷新了页面～哈哈'); // plugin.iframe.html可以收到
+            var win = art.dialog.open.origin;//来源页面
+            // 如果父页面重载或者关闭其子对话框全部会关闭
+            win.location.reload();
+            return false;
+        });
+
+
+        //取父页面的方法
+        $('#prentFun').on('click',function(){
+            var origin = artDialog.open.origin;
+            origin.window.artDialogAdemo();
+        });
+    });
+</script>
+</body>
+</html>

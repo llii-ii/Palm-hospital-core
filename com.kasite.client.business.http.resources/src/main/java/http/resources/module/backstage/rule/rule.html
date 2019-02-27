@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script type="text/javascript" src="../../commons/js/common.js"></script>
+	    <link rel="stylesheet" href="../../commons/css/manage.css" type="text/css"></link>
+	    <link rel="stylesheet" href="../../commons/css/base.css" type="text/css"></link>
+	    <link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css"></link>
+		<link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+	    <script type="text/javascript" src="../../commons/js/business-all.js"></script>
+    	<script type="text/javascript" src="js/rule.js"></script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <div class="container-wrap">
+            <div class="main-header hidden" style="top:1px; left:1px;">
+                 <div class="fl ml20 mt15 f14 c-222">预约规则</div>
+                <a href="javascript:void(0);" onclick="edit();" class="btn fr mr40 mt10">编辑</a>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                    <div class="p20 bg-grey" style="padding: 1px;padding-top: 20px;" >
+                        <div class="sec rule-sec">
+                            <div class="sec-header"><h5>预约挂号服务的基本规则</h5></div>
+                            <div class="sec-con">
+                                <table class="table-form">
+                                    <tr>
+                                        <td class="t">预约开放时点：</td>
+                                        <td width="285">提前<span class="ml5 mr5 c-green" id="startDay">7</span>天的<span class="ml5 mr5 c-green" id="startTime">8：00</span>开始预约</td>
+                                        <td class="t">退号截止时点：</td>
+                                        <td>提前<span class="ml5 mr5 c-green" id="endDay">7</span>天的<span class="ml5 mr5 c-green" id="endTime">20：00</span>开始退号</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">取号地点：</td>
+                                        <td id="drawPoint">门诊三楼消化科导诊台</td>
+                                        <td class="t"><input type="checkbox" style="display:none;" ><label class="" for="action">取号统一截止：</label></td>
+                                        <td>上午<span class="ml5 mr5 c-green" id="amTakeNum">07：20</span>截止；下午<span class="ml5 mr5 c-green" id = "pmTakeNum">15：30</span>截止</td>
+                                    </tr>
+                                    <tr>
+                                    	 <td class="t">取号说明：</td>
+                                        <td id="numbernDes">===</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="sec rule-sec">
+                            <div class="sec-header"><h5><div class="my-switch-box" id="xhgzRuleSwitch"><span></span></div><input type="checkbox" style="display:none;" id="xhgz"><label class="" for="action">限号规则</label></h5></div>
+                            <div class="sec-con">
+                                <table class="table-form" id="gz">
+                                    <!-- <tr>
+                                        <td class="t" id="text_0.0">同一患者同一天同一科室最多只能预约：</td>
+                                        <td width="285"><span class="ml5 mr5 c-green">7</span></td>
+                                        <td id="text_0.1">个号</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t" id="text_1.0">同一患者同一天最多只能预约：</td>
+                                        <td><span class="ml5 mr5 c-green">7</span></td>
+                                        <td id="text_1.1">个号</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t" id="text_2.0">同一患者同一天最多只能预约：</td>
+                                        <td><span class="ml5 mr5 c-green">7</span></td>
+                                        <td id="text_2.1">个号</td>
+                                    </tr> -->
+                                </table>
+                            </div>
+                        </div>
+                        <div class="sec rule-sec">
+                            <div class="sec-header"><h5><div class="my-switch-box" id="wyxzgzRuleSwitch" ><span></span></div><input type="checkbox" style="display:none;" id="wyxzgz"><label class="" for="action">违约限制规则</label></h5></div>
+                            <div class="sec-con">
+                                <table class="table-form">
+                                    <tr>
+                                        <td width="230">违约一次将暂停预约<span class="ml5 mr5 c-green" id="breachDay">30</span>天</td>
+                                        <td>连续违约<span class="ml5 mr5 c-green" id="breachTimes">30</span>次将取消患者的预约资格</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end container -->
+            </div>
+        </div>
+    </body>
+</html>

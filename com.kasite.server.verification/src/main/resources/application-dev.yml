@@ -1,0 +1,23 @@
+#生产环境配置
+kasite:
+    appConfig:
+        isConnectionKastieCenter: false
+        centerUrl: 127.0.0.1:8666
+        appId: KASITE-SERVER-VERINFICATION
+        appSecret: zzXHt3e7wrKQ8eD3L
+        orgCode: KASITE
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyFvk7xCEWfwzD6Me4H3Q6EyI5s3++uKK0bmIs+sOS+m+9WphC4LzaIXHH4tYbnP6o9OttehwnninTYDd93yQo+tOI5jGQZyxuT1DpwZ8eB5bIw1gKKrlmuhs03BDD86XtbR306REkJ7XR1kbXMfFX9qBalPB7ElvuH2V3Ek62IsVwQyhotL8Acskt7nO7WY6Y+zUAdIeD/MRvp+VvNzhze0Cr4NFT5BTRdAyaQL8ny8ZH18hRvcU5wuElwK5SRHoFpdtYVziWOQZYxzSqdTVUuV0XAjAG4ZH7EgSx0J+6LOHrhHrggcxznOKlxv1m6XyDtz1D0KIEUo4GIs1mrgn2wIDAQAB#RPC服务需要对应的配置信息
+        #本地保存配置文件的目录（必须）
+        configPath: /Users/daiyanshui/Desktop/Config
+    db:
+        #oracle mysql sqlserver
+        dbType: mysql
+        ip: 172.18.20.81
+        port: 3306
+        showSql: true
+        alias: kasite_center       
+        username: root
+        #password: Root1234567890_
+        password: Root1234567890_
+        databaseName: kasite_center_v2
+        validationQuery: select 1 from dual

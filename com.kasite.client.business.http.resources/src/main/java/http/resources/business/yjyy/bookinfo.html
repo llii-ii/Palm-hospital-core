@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>预约回执单</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css"/>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"/>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/public.css" type="text/css" />
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/server.css" type="text/css" />
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/member.css" type="text/css" />
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/checkForm.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/iscroll.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" language="javascript">
+var HisKey = "";
+var LabName=""; 
+var CardType="";
+$(function(){
+	CardType = Commonjs.getUrlParam("CardType");
+	HisKey = Commonjs.getUrlParam("HisKey");
+	LabName = Commonjs.getUrlParam("LabName");
+	LabName = unescape(LabName);
+ 	if(HisKey!=null && HisKey!="" && HisKey!="null"){
+ 		GetOrderDetail();
+ 	}
+});
+	
+//获取订单详细信息
+function GetOrderDetail(){
+	
+	var param = {};
+	var apiData = {};
+	apiData.HisKey=HisKey;
+	param.api = '';
+	param.apiParam = Commonjs.getApiReqParams(apiData);
+	var url = '../../wsgw/yy/GetAppointReceiptInfo/callApi.do';
+	Commonjs.ajax(url, param, function(d) {
+	if (d.RespCode == 10000) {
+		var listheml='';
+		Commonjs.BaseForeach(d.Data, function (i, item) {
+			if(LabName==''){
+				LabName = item.LabName;
+			}
+        	listheml += '<li><span class="fr c909090">'+item.LabName+'</span>项目</li>';
+        	listheml += '<li><span class="fr c909090">'+item.CardNo+'</span>卡号</li>';
+        	listheml += '<li><span class="fr c909090">'+item.StartAppointmentTime.substring(0,10)+'</span>预约日期</li>';
+        	listheml += '<li><span class="fr c909090">'+item.StartAppointmentTime.substring(10,18)+"-"+item.EndAppointmentTime.substring(10,18)+'</span>预约时段</li>';
+        	listheml += '<li><span class="fr c909090">'+item.ExamDept+'</span>科室</li>';
+        	listheml += '<li><span class="fr c909090">'+item.Address+'</span>科室地址</li>';
+        	listheml += '<span class="fr c909090">'+item.FriendlyReminder+'</span>';
+        	//LabName=item.HisName;
+    	})
+	$("#hzdInfo").html(listheml);
+    } else {
+    	myLayer.alert('网络繁忙,请刷新后重试');
+    }
+    })
+
+}
+function CancelAppoint(){
+	var param = {};
+	var apiData = {};
+	apiData.HisKey=HisKey;
+	apiData.CardType=1;
+	apiData.CardNo=1
+	apiData.LabName = escape(LabName);
+	param.api = '';
+	param.apiParam = Commonjs.getApiReqParams(apiData);
+	
+	var url = '../../wsgw/yy/CancelAppoint/callApi.do';
+	Commonjs.ajax(url, param, function(d) {
+		 if(d.RespCode==10000){
+			 myLayer.alert("取消成功");
+        	 	history.go(-1);
+         }
+		 else{
+			 myLayer.alert(d.RespMessage,3000);
+		 }
+	})
+	
+}
+
+</script>
+<style>
+	.mgua_list{ background:#fff;}
+	.mgua_list li{ line-height:25px; padding:10px 15px; border-bottom:1px solid #f2f2f2;}
+	.mgua_list li:last-child{ border-bottom:1px solid #e1e1e1;}
+	.mgua_bot{ text-align:center; color:#5b5b5b; margin:30px 0 10px 0;}
+	.mbtnhold{ height:53px;}
+	.mgua_btn{ width:100%; height:52px; background:#fff; position:fixed; left:0; bottom:0; border-top:1px solid #e1e1e1; padding:0 15px; z-index:899; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box;}
+	.mgua_btn a.disab{ border:1px solid #e1e1e1; color:#909090; background:#fff; margin-left:0;}
+</style>
+</head>
+
+<body>
+
+    <div class="mgua_list mt20" style="margin-bottom:300px">
+        <ul id="hzdInfo">
+        </ul>
+    </div>
+    <div class="combtn">
+            <a href="javascript:void(0);" onclick="CancelAppoint();" id="btnbook">取消预约</a></div>
+    <div id="openDiv"></div>
+</body>
+</html>

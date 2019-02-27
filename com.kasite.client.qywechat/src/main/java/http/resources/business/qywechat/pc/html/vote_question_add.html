@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<meta name="skin" content="mes">
+		<script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css" />
+		<title>添加</title>
+		<style type="text/css">.nl{ line-height: 34px; padding: 0 10px; } ul,li{ list-style: none; margin: 0; padding: 0; } .img-list-item{ position: relative; float: left; padding-right: 10px; padding-bottom: 5px; } .img-list-addBtn{ cursor: pointer; } .img-list-addBtn:after{ content: ''; display: block; width: 90px; height: 90px; background: url('../js/webCom1.0/css/skin/yqw/img/addImg2.png'); background-size: 30px 30px; background-position: center; background-repeat: no-repeat; border:1px dashed #e5e6e7; } .img-list-addBtn input[type="file"]{ position: absolute; cursor: pointer; left: 0; top: 0; right: 0; bottom: 0; z-index: 1; opacity: 0; } .img-list-item img{ width: 90px; height: 90px; border:1px solid #e5e6e7; }</style></head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width: 100%;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目类型：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding-top: 8px;">
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" checked="" value="0" name="questType" />单选</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="1" name="questType" />多选</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="2" name="questType" />问答</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="3" name="questType" />打分</label></div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目标题：</label></div>
+				<div class="x-row-cols text-right" style="width: 400px;">
+					<input type="text" class="form-control" name="questName" id="questName" value="" /></div>
+				<div class="x-row-cols " style="margin-left:540px;">
+					<span class="nl">0/200</span></div>
+			</div>
+			<!-- <div class="x-row">
+			<div class="x-row-cols text-right" style="width: 140px;">
+			<label>题目图片：</label></div>
+			<div class="x-row-cols" style="margin-left:140px;">
+			<ul class="img-list fix"> 
+			<li>
+			<div class="img-list-item img-list-addBtn"><input type="file" onchange="upimg(this)" accept="image/jpeg,image/gif,image/png" value=""/></div></li>
+			</ul>
+			</div>
+			</div> -->
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目选项：</label></div>
+				<div class="x-row-cols" style="width: 280px;">
+					<input type="text" class="form-control" name="item" id="item_0" value="" /></div>
+				<div class="x-row-cols" style="width: 70px;">
+					<span class="nl">0/200</span></div>
+				<div class="x-row-cols " style="margin-left:490px;">
+					<!--<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加图片</button>-->
+					<button type="button" onclick="del(this)" class="btn btn-danger">
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+			<div class="x-row addBtn" id="addBtn">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols" style="margin-left:140px;">
+					<button type="button" onclick="addItem()" style="width: 280px;margin-bottom: 8px;" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加选项</button>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>是否必答：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding-top: 8px;">
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" checked="" value="0" name="isMust">
+								<i>
+								</i>必答</label>
+						</div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="1" name="isMust">
+								<i>
+								</i>选答</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<button type="button" onclick="addQuestion()" class="btn btn-info btn-w-m">保存</button></div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br /></body>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script type="text/javascript">var uid;
+		$(document).ready(function() {
+			uid = Commonjs.getUrlParam("uid");
+			console.log(uid);
+
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			});
+
+			$("input:radio[name='questType']").on('ifChecked',
+			function(event) {
+				if ($(this).val() == 0 || $(this).val() == 1) {
+					$("#addBtn").show();
+					$("input[name='item']").parents('.x-row').show();
+				}
+				if ($(this).val() == 2 || $(this).val() == 3) {
+					$("#addBtn").hide();
+					$("input[name='item']").parents('.x-row').hide();
+				}
+			});
+		});
+
+		//添加问题
+		function addQuestion() {
+			var questType = $("input[name='questType']:checked").val();
+			var questName = $("#questName").val();
+			var isMust = $("input[name='isMust']:checked").val();
+			var itemArray = [];
+			if(questType==0 || questType==1){
+				$("input[name='item']").each(function(index) {
+					if (!Commonjs.isEmpty($(this).val())) {
+						itemArray.push(index + 1 + "@" + $(this).val());
+					}
+				}) 
+			}
+			if (Commonjs.isEmpty(questName)) {
+				alert("请输入题目标题！");
+				return;
+			}
+			if (itemArray.length == 0 && (questType == 0 || questType == 1)) {
+				alert("请输入题目选项！");
+				return;
+			}
+			var apiData = {};
+			//问答、打分无问题选项	
+			if (questType == 2 || questType == 3) {
+				apiData.itemArray = "";
+			} else {
+				apiData.itemArray = itemArray.join(",");
+			}
+			apiData.themeId = uid;
+			apiData.questType = questType;
+			apiData.questName = questName;
+			apiData.isMust = isMust;
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.operatorName = Commonjs.getOpenId();
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/AddQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					//alert("新增成功");
+					//调用父窗口的刷新查询方法
+					parent.refresh();
+					System.closeThisWindow();
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+
+		function del(o) {
+			var _this = $(o);
+			System.confirm({
+				title: '',
+				text: '是否删除该项？',
+				type: 'info',
+				callback: function(bool) {
+					if (bool) {
+						_this.parents('.x-row').remove();
+					}
+				}
+			})
+		}
+
+		function addItem() {
+			var html = [];
+			html.push('<div class="x-row">');
+			html.push('	<div class="x-row-cols text-right" style="width: 140px;">');
+			html.push('		<label><span class="red">*</span>题目选项：</label>');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols" style="width: 280px;">');
+			html.push('		<input type="text" class="form-control" name="item" id="" value="" />');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols" style="width: 70px;">');
+			html.push('		<span class="nl">0/200</span>');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols " style="margin-left:490px;">');
+			html.push('		<button type="button" onclick="del(this)" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>');
+			html.push('	</div>');
+			html.push('</div>');
+			$('.addBtn').before(html.join(''));
+		}
+
+		function clo() {
+			System.closeThisWindow()
+		}</script>
+
+</html>

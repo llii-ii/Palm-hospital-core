@@ -1,0 +1,102 @@
+/*
+	use for: 个人中心
+*/
+body{_background-attachment:fixed;_background-image:url(about:blank);}
+.f18 { font-size:18px;}
+.f-yahei { font-family:微软雅黑,"Microsoft Yahei";}
+.relative { position:relative; zoom:1;}
+
+.pb15 { padding-bottom:15px;}
+.pb20 { padding-bottom:20px;}
+.mr20 { margin-right:20px;}
+
+.c-444 { color:#444;}
+.c-888 { color:#888;}
+
+.btn-edit { display:inline-block; width:17px; height:17px; background:url(../images/bmgl/icons.gif) no-repeat -30px 0; vertical-align:middle;}
+.btn-del { display:inline-block; width:17px; height:17px; background:url(../images/bmgl/icons.gif) no-repeat -70px 0; vertical-align:middle;}
+.btn-blue,.btn-blue-l,.btn-gray-xl,.btn-gray-l,.btn-gray-s,.btn-blue-xl,.btn-gray-xxl,.btn-gray-xs { display:inline-block; height:28px; line-height:28px; background:url(../images/tijian/btns.gif) no-repeat; border:none; text-align:center; cursor:pointer; vertical-align:middle; *display:inline; *zoom:1;}
+.btn-blue { width:62px; color:#fff;}
+.btn-blue-l { width:82px; background-position:0 -30px; color:#fff;}
+.btn-blue-xl { width:104px; background-position:0 -60px; color:#fff;}
+.btn-gray-xl { width:96px; background-position:0 -150px; color:#555;}
+.btn-gray-l { width:82px; background-position:0 -120px; color:#555;}
+.btn-gray-s { width:62px; background-position:0 -90px; color:#555;}
+.btn-gray-xs { width:92px; height:20px; line-height:20px; background-position:0 -210px; color:#555;}
+.btn-gray-xxl { width:129px; height:25px; line-height:25px; background-position:0 -180px; color:#555;}
+
+.btn-gray-l.c-444 { color:#444;}
+.btn-gray-l.c-999 { color:#999;}
+
+.inp-txtarea { width:450px; height:105px; border:1px solid #bbb; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.2); -moz-box-shadow:inset 0 0 2px rgba(0,0,0,.2); box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+.inp-txt { display:inline-block; width:166px; height:26px; padding:0 5px; line-height:26px; border:1px solid #bbb; vertical-align:middle; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.2); -moz-box-shadow:inset 0 0 2px rgba(0,0,0,.2); box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+.inp-sel { height:26px; padding:4px 5px; border:1px solid #bbb; vertical-align:middle; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.2); -moz-box-shadow:inset 0 0 2px rgba(0,0,0,.2); box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+
+.mt30 { margin-top:30px;}
+
+.center { margin:0 auto;}
+
+.c-green { color:#009944;}/*绿色*/
+.c-org { color:#ff8a00;}/*橙色*/
+.c-666 { color:#666;}
+a.c-007 { color:#007cd9;}
+a.c-007:hover { color:#ff8a00;}
+.bb-ccc { border-bottom: 1px solid #ccc; }
+
+/****体检****/
+.main-member { min-height:400px; height:100%; _height:400px;}
+.main-member h2 { height:36px; font:18px/2 微软雅黑,"Microsoft Yahei";}
+.tip-member { padding:10px 20px; background-color:#f2f9ff; line-height:22px;}
+
+/*弹窗*/
+.pop { _position:absolute; _left:0; _top:0; _width:100%; _height:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)); z-index:1000;}
+.mask { position:fixed; _position:absolute; left:0; top:0; width:100%; height:100%; _height:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)); background-color:#000; opacity:.3; filter:alpha(opacity=30); z-index:999;}
+.btn-close { display:block; right:15px; top:15px; width:9px; height:9px; background:url(../images/bmgl/btn-close.gif) no-repeat;}
+.pop-tit { height:35px; line-height:35px; background-color:#eee; border-bottom:1px solid #fff; text-align:center; -webkit-border-radius:3px 3px 0 0; -moz-border-radius:3px 3px 0 0; border-radius:3px 3px 0 0;}
+.pop-main { padding:15px 25px; background-color:#fafafa; border-bottom:1px solid #e6e6e6;}
+.pop-inp-txt { width:166px; height:26px; padding:0 5px; line-height:26px; border:1px solid #bbb; vertical-align:middle; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.2); -moz-box-shadow:inset 0 0 2px rgba(0,0,0,.2); box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+.pop-sel { width:178px; height:26px; padding:4px 5px; vertical-align:middle; border:1px solid #bbb; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.2); -moz-box-shadow:inset 0 0 2px rgba(0,0,0,.2); box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+
+.pop-btns { height:42px; padding:10px 0 0 275px; background-color:#fafafa; -webkit-border-radius:0 0 3px 3px; -moz-border-radius:0 0 3px 3px; border-radius:0 0 3px 3px;}
+.pop-btn-ok { display:inline-block; width:62px; height:28px; line-height:28px; background:url(../images/tijian/btns.gif) no-repeat; color:#fff; border:none; text-align:center; cursor:pointer;}
+.pop-btn-cancel { display:inline-block; width:62px; height:28px; line-height:28px; background:url(../images/tijian/btns.gif) no-repeat 0 -90px; color:#555; border:none; text-align:center; cursor:pointer;}
+
+.sel-cus {display:inline-block; width:168px; height:28px; padding:0 5px; line-height:28px; background:url(../images/bmgl/sel-bg.gif) no-repeat;}
+.sel-list-box {left:0; top:28px; width:150px; background-color:#fff; border:1px solid #bbb; border-radius:3px;}
+
+.w80 { width:80px;}
+
+.p5 { padding:5px;}
+
+/*预约验证*/
+.face-fail, .face-suc { display:inline-block; width:50px; height:50px; background:url(../images/tijian/face.gif) no-repeat; vertical-align:middle; *display:inline; *zoom:1}
+.face-fail { background-position:-50px 0;}
+.fail-info { display:inline-block; margin-left:40px; width:285px; text-align:left; vertical-align:middle;*display:inline; *zoom:1;}
+.suc-info { display:inline-block; margin-left:30px; width:120px; text-align:left; vertical-align:middle; color:#666; font-family:微软雅黑,"Microsoft Yahei";*display:inline; *zoom:1;}
+
+/*修改密码*/
+.changepw {}
+.changepw label, .acc-info label { display:inline-block; width:105px; height:28px; line-height:28px; font-size:14px; text-align: justify; color:#000; vertical-align:middle;}
+.changepw .inp-txt { width:216px;}
+.err-msg { margin-left:10px; font-size:12px; color:#f00;}
+
+/*转诊资源设置*/
+.member-setting { border:1px solid #ccc; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+.member-setting h4 { height:37px; line-height:37px; background-color:#f2f9ff; color:#555; font-family:微软雅黑; border-bottom:1px solid #ccc; -webkit-border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0; border-radius:5px 5px 0 0;}
+.member-setting-f { height:45px; background-color:#f5f5f5; -webkit-border-radius:0 0 5px 5px; -moz-border-radius:0 0 5px 5px; border-radius:0 0 5px 5px;}
+
+.popbox-w430, .popbox-w450, .popbox-w760 { position:fixed; _position:absolute; left:50%; top:50%; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; -webkit-box-shadow:0 0 5px rgba(0,0,0,.5); -moz-box-shadow:0 0 5px rgba(0,0,0,.5); box-shadow:0 0 5px rgba(0,0,0,.5); z-index:10000;}
+.popbox-w430 { margin-left:-215px; margin-top:-170px; width:430px;}
+.popbox-w430 .pop-tit { text-align:left; padding:0 20px;}
+.popbox-w430 label { display:inline-block; width:75px; height:28px; line-height:28px; vertical-align:middle; text-align:right; font-size:14px; *display:inline; *zoom:1;}
+
+.icon-info, .icon-smile, .icon-question { display:inline-block; width:37px; height:37px; background:url(../images/zz/zz-icons.gif) no-repeat; vertical-align:middle; *display:inline; *zoom:1;}
+.icon-info { background-position:0 -40px;}
+.icon-smile { background-position:-80px -40px;}
+.icon-question { background-position:-40px -40px;}
+.icon-view, .icon-del { display:inline-block; width:15px; height:15px; background:url(../images/zz/zz-icons.gif) no-repeat; vertical-align:middle; *display:inline; *zoom:1;}
+.icon-view { background-position:0 -20px;}
+.icon-del { background-position:-20px -20px;}
+.icon-human1, .icon-human2 { display:inline-block; width:18px; height:18px; background:url(../images/zz/zz-icons.gif) no-repeat; vertical-align:middle; *display:inline; *zoom:1;}
+.icon-human1 { background-position:-40px -20px;}
+.icon-human2 { background-position:-60px -20px;}

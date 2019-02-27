@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>修改问题</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.vote5{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.btn{
+				position: relative;
+				width: 100%;
+			}
+			.btn.btn-border{
+				position: relative;
+				background-image: none;
+				color: #2988fc;
+			}
+			.btn.btn-border:after{
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				border: 1px solid #2988fc;
+			}
+			.vote5-form{
+				padding: 0 0.4rem 0 0.25rem;
+				background: #fff;
+				margin-top: 0.12rem;
+			}
+			.vote5-form li{
+				position: relative;
+			}
+			.vote5-form li:after{
+				position: absolute;
+				content: '';
+				display: block;
+				height: 0;
+				left: -.25rem;
+				right: -.4rem;
+				bottom: 0;
+				border-bottom: 1px solid #f2f4f5;
+			}
+			.vote5-form label{
+				color: #191919;
+				font-size: 0.3rem;
+			}
+			.vote5-form label span{
+				color: #ccc;
+				padding-left: 0.1rem;
+				font-size: 0.24rem;
+			}
+			.vote5-form input{
+				display: block;
+				font-size: 0.3rem;
+				line-height: 0.6rem;
+				height: 0.6rem;
+				padding: 0 .4rem 0 0.12rem;
+				margin-top: 0.24rem;
+				text-align: right;
+				float: right;
+			}
+			.vote5-form .x-row{
+				position: relative;
+				line-height: 1rem;
+			}
+			.vote5-form li:last-child:after{
+				display: none;
+			}
+			.vote5-form-del{
+				position: absolute;
+				z-index: 1;
+				right: -0.3rem;
+				top: 50%;
+				margin-top: -.3rem;
+				width: 0.6rem;
+				height: 0.6rem;
+				background-image: url(../../img/icon-vote-10.png);
+				background-size: 0.32rem;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.right-arrow{
+				position: absolute;
+				right: 0;
+				top: 0.4rem;
+				width: 0.13rem;
+				z-index: 1;
+			}
+			.imagelist{
+				padding-top: 0.25rem;
+			}
+			.imagelist-item{
+				display: block;
+				float: left;
+				padding-right: 0.25rem;
+				padding-bottom: 0.25rem;
+			}
+			.imagelist-item-img{
+				width: 2rem;
+				height: 2rem;
+			}
+			.imagelist-item-img img{
+				width: 100%;
+				height: 100%;
+			}
+			.imagelist-item-btn{
+				position: relative;
+				overflow: hidden;
+			}
+			.imagelist-item-btn:after{
+				content: '';
+				display: block;
+				width: 2rem;
+				height: 2rem;
+				background-image: url(../../img/icon-vote-8.png);
+				background-position: center;
+				background-size: 0.7rem;
+				background-repeat: no-repeat;
+				border: 1px solid #f2f4f5;
+			}
+			.imagelist-item-btn input[type="file"]{
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 2;
+				opacity: 0;
+				height: auto;
+				width: 100%;
+			}
+			.vote5-form-addbtn{
+				line-height: 1rem;
+				background: #fff;
+				text-align: center;
+				color: #2988fc;
+				font-size: 0.3rem;
+				border-top: 1px solid #f2f4f5;
+			}
+			.rc{
+				line-height: 0.34rem;
+				padding-right: 0.1rem;
+				display: inline-block;
+			}
+			.rc:before{
+				content: '';
+				display: block;
+				width: 0.34rem;
+				height: 0.34rem;
+				margin-right: 0.1rem;
+				float: left;
+				background-image: url(../../img/icon-vote-6.png);
+				background-size: 0.31rem;
+				background-position: 0 .01rem;
+				background-repeat: no-repeat;
+			}
+			.rc.active:before{
+				background-image: url(../../img/icon-vote-5.png);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote5">
+	        	<ul class="vote5-form">
+	        		<li>
+	        			<input type="hidden" id="themeId" value="" />
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>选项类型</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;text-align: right;">
+								<span id="questtype0" name="questtype" value="0" class="rc ell">单选</span>
+								<span id="questtype1" name="questtype" value="1" class="rc ell">多选</span>
+								<span id="questtype2" name="questtype" value="2" class="rc ell">问答</span>
+								<span id="questtype3" name="questtype" value="3" class="rc ell">打分</span>
+							</div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>问题</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input type="text" name="questName" id="questName" placeholder="请输入问题" />
+							</div>
+						</div>
+	        		</li>
+	        		<li>
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>是否必答</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;text-align: right;">
+								<span id="isMust0" name='isMust' value="0" class="rc ell">必答</span>
+								<span id="isMust1" name='isMust' value="1" class="rc ell">选答</span>
+							</div>
+						</div>
+	        		</li>
+	        		<div id="item-list">
+	        		<li id="item">
+	        			<div class="x-row">
+							<div class="x-row-cols " style="width: 2rem;"><label>选项</label></div>
+							<div class="x-row-cols " style="margin-left:2rem;">
+								<input type="text" name="item" placeholder="请输入选项内容" />
+							</div>
+						</div>
+						<div class="vote5-form-del"></div>
+	        		</li>
+	        		</div>
+	        	</ul>
+	        	<div class="vote5-form-addbtn" onclick="addItem('')">
+	        		+&nbsp;新增选项
+	        	</div>
+	        </div>
+		</div>
+		
+		<div style="position: fixed;left: 0;right: 0;height: 1rem;bottom: 0;background: #fff;">
+			<div class="x-row boxflex">
+				<div class="x-row-cols" onclick="updateQuestion(true)"><div class="btn btn-border">预览</div></div>
+				<div class="x-row-cols" onclick="updateQuestion(false)"><div class="btn">完成</div></div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		var uid;
+		var questType;
+		var isMust;
+		var questId;
+		var themeid;
+		$(function(){
+			uid = Commonjs.getUrlParam("id");
+			themeid = Commonjs.getUrlParam("themeid");
+			getQuestionById();
+		});
+	
+		$(document).ready(function(){
+			$(document).on('click','.rc',function(){
+				var _this = $(this);
+				_this.siblings().removeClass('active');
+				_this.addClass('active');
+				if($(this).attr('name')=='questtype'){
+					showItem($(this).attr("value"));
+					questType = $(this).attr("value");
+				}
+				if($(this).attr('name')=='isMust'){
+					isMust = $(this).attr("value");
+				}
+			})
+			
+			
+			$(document).on('click','.vote5-form-del',function(){
+				var _this = $(this);
+				if(window.confirm('是否删除？')){
+					_this.parents('li').remove();
+				}
+			})
+		})
+		
+		function showItem(questtype){
+			if(questtype==2 || questtype==3){
+				$("#item-list").hide();
+				$(".vote5-form-addbtn").hide();
+			}else{
+				$("#item-list").show();
+				$(".vote5-form-addbtn").show();
+			}
+		}
+		
+		function addItem(value){
+			var html = [];
+			html.push('<li>')
+    		html.push('	<div class="x-row">')
+			html.push('		<div class="x-row-cols " style="width: 2rem;"><label>选项</label></div>')
+			html.push('		<div class="x-row-cols " style="margin-left:2rem;">')
+			html.push('			<input type="text" name="item" value="' + value + '"  placeholder="请输入选项内容" />')
+			html.push('		</div>')
+			html.push('	</div>')
+			html.push('	<div class="vote5-form-del"></div>')
+    		html.push('</li>')
+    		$('#item-list').append(html.join(''));
+		}
+		
+		//获取问题详情
+		function getQuestionById() {
+			if (Commonjs.isEmpty(uid)) {
+				myLayer.alert("问题ID不能为空！");
+				return;
+			}
+			var apiData = {};
+			apiData.id = uid;
+			apiData.tag = "uid";
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQuestionById/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if (dd.Data.length > 0) {
+						var result = dd.Data[0];
+						$("#questName").val(result.Questname);
+						$("#themeId").val(result.Themeid);
+						$("#questtype"+result.Questtype).addClass("active");
+						$("#isMust"+result.Ismust).addClass("active");
+						showItem(result.Questtype);
+						questType = result.Questtype;
+						isMust = result.Ismust;
+						questId=result.Id;
+						getQuestionItemByQuestionId(result.Id, result.Questtype);
+					}
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			});
+		}
+
+		//获取问题选项列表
+		function getQuestionItemByQuestionId(questionId, questtype) {
+			if (Commonjs.isEmpty(questionId)) {
+				myLayer.alert("问题ID不能为空！");
+				return;
+			}
+			var apiData = {};
+			apiData.id = questionId;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQuestionItemList/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if (Commonjs.ListIsNotNull(dd.Data)) {
+						Commonjs.BaseForeach(dd.Data,
+						function(i, item) {
+							//移除默认的
+							$("#item").remove();
+							if (questtype == 0 || questtype == 1) {
+								addItem(item.Itemvalue);
+							}
+						});
+					}
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			});
+		}
+
+		//修改问题
+		function updateQuestion(view) {
+			var questName = $("#questName").val();
+			var itemArray = [];
+			if(questType==0 || questType==1){
+				$("input[name='item']").each(function(index) {
+					if (!Commonjs.isEmpty($(this).val())) {
+						itemArray.push(index + 1 + "@" + $(this).val());
+					}
+				}) 
+			}
+			if (Commonjs.isEmpty(questName)) {
+				myLayer.alert("请输入题目标题！");
+				return;
+			}
+			if (itemArray.length == 0 && (questType == 0 || questType == 1)) {
+				myLayer.alert("请输入题目选项！");
+				return;
+			}
+			var apiData = {};
+			apiData.itemArray = itemArray.join(",");
+			apiData.themeId = $("#themeId").val();
+			apiData.id = questId;
+			apiData.questType = questType;
+			apiData.questName = questName;
+			apiData.isMust = isMust;
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.operatorName = Commonjs.getOpenId();
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/UpdateQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if(view){
+						window.location.href = 'view.html?themeid='+themeid+'&from=quest';
+					}else{
+						window.location.href = 'index.html';
+					}
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-dashboard"></i> 数据统计
+			</div>
+			<div class="title-right-filter mui-pull-right">
+				<div class="form-inline">
+				  	<div class="form-group has-feedback">
+					    <label >数据筛选:</label>
+					    <select class="form-control selector" id = "municipal">
+						  	<option value="上饶市">上饶市</option>
+						</select>
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector" id = "county" onchange="county_hos()">
+					    	<option value="">全部</option>
+						  	<option value="信州区">信州区</option>
+						  	<option value="上饶县">上饶县</option>
+						  	<option value="鄱阳县">鄱阳县</option>
+						  	<option value="广丰县">广丰县</option>
+						  	<option value="德兴市">德兴市</option>
+						  	<option value="弋阳县">弋阳县</option>
+						  	<option value="万年县">万年县</option>
+						  	<option value="婺源县">婺源县</option>
+						  	<option value="铅山县">铅山县</option>
+						  	<option value="余干县">余干县</option>
+						  	<option value="横峰县">横峰县</option>
+						  	<option value="玉山县">玉山县</option>
+						</select>
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector" id = "name">
+						  	<option value="">全部</option>
+						</select>
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <input class="form-control" id='startTime' onfocus="WdatePicker({onpicked:function(){changeDate(6);},dateFmt:'yyyy-MM-dd'})" type="text" >
+					    <!--<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>-->
+				  	</div>
+				  	<div class="form-group has-feedback">
+				  		<label >-</label>
+					    <input class="form-control" id='endTime' onfocus="WdatePicker({onpicked:function(){changeDate(-6);},dateFmt:'yyyy-MM-dd'})" type="text" >
+					    <!--<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>-->
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector" id = 'state'>
+						  	<option value="1">上报</option>
+						  	<option value="2">校验</option>
+						  	<option value="3">转换</option>
+						  	<option value="4">采集</option>
+						</select>
+				  	</div>
+				  	<button class="btn btn-primary" onclick="loadData()">查询</button>
+				</div>
+			</div>
+		</div>
+		<div class="widget">
+			<table class="table table-bordered table-striped table-hover">
+				<thead id = "thList"></thead>
+				<tbody id = "dataList"></tbody>
+			</table>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var PageSize = 2;
+		$(document).ready(function(){
+			$("#endTime").val(today());
+			$("#startTime").val(addDate(today(), -6));
+			var html = '';
+			var hos = _ajax('../../online/getAllHos.do',paramData(0),false);//所有的医院
+			
+			$.each(hos.data.result,function(i,o) {
+				html+= '<option>'+o.name+'</option>';
+			});
+			$("#name").append(html);
+			
+			loadData();
+		});
+		
+		//数据渲染
+		function loadData(){
+			//$("#name option").eq(0).nextAll().remove();
+			var html = '';
+			var allNum = 0;
+			var number = 0;
+			var state = $('#state option:selected').val();
+			var start = $("#startTime").val();
+			var end = $("#endTime").val();
+			
+			//添加th,完成清空html参数
+			html+= '<tr><th>设备名称</th>';
+			for (var k = 0; k < 7; k++) {
+				html+= '<th class="w100 text-right">'+start+'</th>';
+				start = addDate(start,'');
+			}
+			html+= '<th class="w100 text-right">总计</th></tr>';
+			$("#thList").empty();
+			$("#thList").append(html);
+			html = '';
+			
+			var reportData = _ajax('../../report/reportByhosIdAndDate.do',paramData(0),false);//上报数据
+			var reportTotal = _ajax('../../report/reportByDate.do',paramData(0),false);
+			var hos = _ajax('../../online/getAllHos.do',paramData(0),false);//所有的医院
+			
+ 			if(hos.data.result.length){
+				$.each(hos.data.result,function(i,o) {
+					start = $("#startTime").val();
+					html+= '<tr><th>'+o.name+'</th>';
+					
+					for (var k = 0; k < 7; k++) {
+						$.each(reportData.data.result,function(j,r) {
+							if(r.hospitalId == o.id && r.date.substring(0,10) == start){
+								if(state == 1){
+									allNum = parseInt(r.reportTrue);
+								}
+								if(state == 2){
+									allNum = parseInt(r.checkNum);
+								}
+								if(state == 3){
+									allNum = parseInt(r.convertNum);
+								}
+								if(state == 4){
+									allNum = parseInt(r.reportTrue) + parseInt(r.reportFalse);
+								}
+								
+								return false;
+							}
+						});
+						html+= '<td class="text-right">'+allNum+'</td>'; 	
+						number = number + allNum;
+						allNum = 0;
+						start = addDate(start,'');
+					}
+					html+= '<td class="text-right">'+number+'</td>';
+					number = 0;
+					html+= '</tr>';
+				});
+
+				html+= '<tr><th>合计</th>';
+				start = $("#startTime").val();
+				for (var k = 0; k < 7; k++) {
+					$.each(reportTotal.data.result,function(j,r) {
+						if(r.date.substring(0,10) == start){
+							if(state == 1){
+								allNum = parseInt(r.reportTrue);
+							}
+							if(state == 2){
+								allNum = parseInt(r.checkNum);
+							}
+							if(state == 3){
+								allNum = parseInt(r.convertNum);
+							}
+							if(state == 4){
+								allNum = parseInt(r.reportTrue) + parseInt(r.reportFalse);
+							}
+							number = number + allNum;
+							return false;
+						}
+					});
+					html+= '<td class="text-right">'+allNum+'</td>'; 	
+					allNum = 0;
+					start = addDate(start,'');
+				}
+				html+= '<td class="text-right">'+number+'</td></tr>';
+				
+			}else{
+				html += '<tr align=center><td colspan=7><font color=red>未找到相关数据!</font></td></tr>';
+			} 
+			$("#dataList").empty();
+			$("#dataList").append(html);
+		}
+		
+		//数据准备
+		function paramData(PageStart){ 
+			var param = {}; 
+			param.PageSize = PageSize;
+			param.PageStart = PageStart;
+			param.municipal = $('#municipal option:selected').val();//选中的市
+			param.county = $('#county option:selected').val();//选中的县/区
+			param.hosName = $('#name option:selected').val();//选中的医院
+			param.name = $('#name option:selected').val();//选中的医院
+			param.startTime = $("#startTime").val();
+			param.endTime = $("#endTime").val();
+			return param;
+		}
+		
+		
+		
+	    //分页
+	    function page(allNum){
+			$("#pagination").pagination(allNum, {
+		        items_per_page: PageSize,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:3,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		    		
+		        }
+			});
+	    }
+		
+		//ajax获取数据
+	    function _ajax(url,param,flag){
+			var obj = null;
+			try{
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: param,
+					async: flag,
+					timeout : 8000,
+					dataType: 'json',
+					success: function(data){
+						obj = data;
+		 			}
+				});
+			}catch(err){
+				ComWbj.artTips("提示","error",err,2,null);
+			}
+			if(!flag) return obj;
+		}
+		
+		
+		//选择时间
+		function changeDate(days){
+			if(days>0){
+				$("#endTime").val(addDate($("#startTime").val(), days));
+			}else{
+				$("#startTime").val(addDate($("#endTime").val(), days));
+			}
+		}
+		
+		
+		//当前年月日
+		function today(){
+		    var today=new Date();
+		    var h=today.getFullYear();
+		    var m=today.getMonth()+1;
+		    var d=today.getDate();
+		    var hh=today.getHours();
+		    var mm=today.getMinutes();
+		    var ss=today.getSeconds();
+		    m= m<10?"0"+m:m;     
+		    d= d<10?"0"+d:d;
+		    hh = hh < 10 ? "0" + hh:hh;
+		    mm = mm < 10 ? "0" +  mm:mm;
+		    ss = ss < 10 ? "0" + ss:ss;
+		    return h+"-"+m+"-"+d;
+		}
+		
+		// 日期，在原有日期基础上，增加/减少days天数，默认增加1天
+	    function addDate(date, days) {
+	        if (days == undefined || days == '') {
+	            days = 1;
+	        }
+	        var date = new Date(date);
+	        date.setDate(date.getDate() + days);
+	        var month = date.getMonth() + 1;
+	        var day = date.getDate();
+	        return date.getFullYear() + '-' + getFormatDate(month) + '-' + getFormatDate(day);
+	    }
+	    // 日期月份/天的显示，如果是1位数，则在前面加上'0'
+	    function getFormatDate(arg) {
+	        if (arg == undefined || arg == '') {
+	            return '';
+	        }
+
+	        var re = arg + '';
+	        if (re.length < 2) {
+	            re = '0' + re;
+	        }
+
+	        return re;
+	    }
+	    
+		function county_hos(){
+			$("#name option").eq(0).nextAll().remove();
+			var html = '';
+			var hos = _ajax('../../online/getAllHos.do',paramData(0),false);//所有的医院
+			$.each(hos.data.result,function(i,o) {
+				html+= '<option>'+o.name+'</option>';
+			});
+			$("#name").append(html);
+		}
+	</script>
+</html>

@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <!-- <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico">  -->
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>打印邮寄信息</title>
+		<style type="text/css">
+			#list{
+				text-align: center;
+			}
+			#list th,#list td{
+				padding:3px 3px;
+				font-size: 16px;
+			}
+			@page {
+		      size: auto;  /* auto is the initial value */
+		      margin: 0mm; /* this affects the margin in the printer settings */
+		    }
+			.tit {
+			    font-size: 24px;
+			    font-weight: bold;
+			    color: #333;
+			    text-align: center;
+			    margin-bottom: 10px;
+			}
+			.tit1 {
+			    font-size: 16px;
+			    font-weight: bold;
+			    color: #333;
+			    text-align: left;
+			    margin-bottom: 10px;
+			    display:none;
+			}
+		</style>
+	</head>
+	<body>
+		 <div style="text-align: center;padding-bottom: 15px;">
+	        <button id="pbtn"  class="btn" type="button" onclick="p()">打印</button>
+	        <button id="tableExport"  class="btn" type="button" onclick="tableExport()">导出</button>
+        	<button id="return"  class="btn" type="button" onclick="r()">返回</button>
+        </div> 
+		<p class="tit">病历复印邮寄信息表</p>
+		<p class="tit1"></p>
+		<div>
+			<table id="list" border="1">
+				<tr>
+					<th>序号</th>
+					<th>病案号</th>
+					<th>患者姓名</th>
+					<th>收件人</th>
+					<th>联系方式</th>
+					<th>邮寄地址信息</th>
+				</tr>
+			</table>
+		</div>
+<!--  		<div style="text-align: center;padding-top: 15px;">
+	        <button id="pbtn"  class="btn" type="button" onclick="p()">打印</button>
+	        <button id="tableExport"  class="btn" type="button" onclick="tableExport()">导出</button>
+        	<button id="return"  class="btn" type="button" onclick="r()">返回</button>
+        </div>  -->
+	</body>
+</html>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script src="../../js/pc/tableExport.js" type="text/javascript" charset="utf-8"></script>
+<script>
+var v = JSON.parse(Commonjs.getUrlParam('printAddress'));
+$(function(){
+	var sd = Commonjs.getUrlParam('selectDate');
+	if(sd != '' && sd != null ){
+		$(".tit1").text("申请日期:"+sd);
+		$(".tit1").show();
+	}
+	var html = '';	
+	for(var i = 0; i<v.length; i++){
+		html+='<tr><td>'+(i+1)+'</td><td>'+v[i].PatientId+'</td><td>'+v[i].Name+'</td><td>'+v[i].Addressee+'</td><td>'+v[i].Telephone+'</td><td>'+v[i].Address+'</td></tr>';
+	}
+
+	$("#list").append(html);
+/* 	setTimeout(function(){
+		//window.print();
+		setTimeout(function(){
+			$('#pbtn').show();
+			$('#return').show();
+			$('#tableExport').show();
+		},300)
+	},1000) */
+});
+
+function p(){
+	changeOrderState();
+	$('#pbtn').hide();
+	$('#return').hide();
+	$('#tableExport').hide();
+	window.print();
+	setTimeout(function(){
+		$('#pbtn').show();
+		$('#return').show();
+		$('#tableExport').show();
+	},300)
+}
+
+function r(){
+	window.location.href = 'copy.html';
+}	
+
+function tableExport(){
+	changeOrderState();
+	$('#list').tableExport({
+        type:'excel',
+        escape:'false',
+        showExport:'true',
+        fileName: '病历复印邮寄信息表'
+	});	
+}
+
+function changeOrderState(){
+	for(var i = 0; i<v.length; i++){
+		if(v[i].Id != "" || v[i].Id != null || v[i].Id != undefined){
+			var apiData = {};	
+			apiData.id = v[i].Id;
+			apiData.orderState = "3";
+			param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/medicalCopy/UpdateOrder/callApi.do',param,function(dd){
+				
+			},{async:false});			
+		}
+	}
+}
+</script>

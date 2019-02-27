@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>满意度调查 - 我的问卷</title>
+	<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+	<script type="text/javascript" src="./js/wdwj.js?v=2014-11-17"></script>
+	<script type="text/javascript" src="./js/platfrom.js"></script>
+</head>
+<body>
+<div class=" bl-d5 br-d5 hidden">
+
+  <div class="fl" style="width: 100%;">
+    <div class="ml20 mt15 mb25 mr15 main-myd">
+         <input id="username_id" type="hidden" /> 
+    	<h2 class="relative"><span class="f18 f-yahei">我的问卷</span><!-- <a href="#"  onclick="openPT('myd')" class="absolute btn-gray-xl" style="right:0; top:0;" >创建新问卷</a> --></h2>
+       	<input type="button" value="统计" onclick="tj()" />
+       	<input type="button" value="统计3D" onclick="tj1()" />
+       	<script>
+       		function tj(){
+       			var k=window.showModalDialog("tj.html",'',
+       			"dialogWidth=600px;dialogHeight=458px;status:no;location=No;");
+       		}
+       		function tj1(){
+       			var k=window.showModalDialog("tj3d.html",'',
+       			"dialogWidth=600px;dialogHeight=458px;status:no;location=No;");
+       		}
+       	</script>
+       <div id="mydiv" class="mt10"  style=""></div>
+       <div class="pager_container">
+         <input id="pagenumber" value="1" type="hidden" />
+          <div id="pager"></div>
+       </div>
+        <!--当没有问卷时显示-->
+        <div class="clearfix" style="padding:140px 0 0 185px;display: none;" id="nohave">
+        	<i class="fl icon-info"></i>
+            <div class="fl ml15 c-555">
+            	<h4 class="f24 f-yahei" style="line-height:1.5">您尚无调查问卷！</h4>
+                <div class="mt5 f14 f-yahei">如果您想创建一份调查问卷，可<a href="myd-cjwj.html" class="c-007">点击这里进入>> </a></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

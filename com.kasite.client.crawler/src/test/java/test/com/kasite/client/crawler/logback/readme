@@ -1,0 +1,159 @@
+Conversion Word
+Effect
+c{length} 
+lo{length}
+logger{length} 
+logger 的名称
+可接收一个可选参数，设置logger name的长度。默认输出全名，参数0代表只输出Logger name最右边点号的值，如只输出类名，不输出包名。
+注意：点号最右边的字符串不会被压缩，如果length的值小于Logger name，其他字符串最小也只能被压缩成1个字符，但不会缺失。
+
+Conversion specifier	Logger name	Result
+%logger	mainPackage.sub.sample.Bar	mainPackage.sub.sample.Bar
+%logger{0}	mainPackage.sub.sample.Bar	Bar
+%logger{5}	mainPackage.sub.sample.Bar	m.s.s.Bar
+%logger{10}	mainPackage.sub.sample.Bar	m.s.s.Bar
+%logger{15}	mainPackage.sub.sample.Bar	m.s.sample.Bar
+%logger{16}	mainPackage.sub.sample.Bar	m.sub.sample.Bar
+%logger{26}	mainPackage.sub.sample.Bar	mainPackage.sub.sample.Bar
+
+C{length} 
+class{length} 
+日志请求调用所在的全限定类名（caller data中的一部分），之前说过获取caller data消耗资源高。所以非必要，不建议。
+contextName
+cn
+logger context上下文名称 
+d{pattern} 
+date{pattern} 
+d{pattern, timezone} 
+date{pattern, timezone} 
+logging event的时间
+可接收时间格式化参数（默认ISO 8601，格式参照java.text.SimpleDateFormat.）
+以及时区参数（默认Jvm时区，如果所设置的时区有错，则使用GMT时区）
+需要注意，在pattern中，如果要使用逗号, 需要用引号括起来。 例如%date{"HH:mm:ss,SSS"}
+
+Conversion Pattern	Result
+%d	2006-10-20 14:06:49,812
+%date	2006-10-20 14:06:49,812
+%date{ISO8601}	2006-10-20 14:06:49,812
+%date{HH:mm:ss.SSS}	14:06:49.812
+%date{dd MMM yyyy;HH:mm:ss.SSS}	20 oct. 2006;14:06:49.812
+
+F / file	日志请求所在的java source file 文件名。不提倡，速度慢。参考caller data
+caller{depth}
+caller{depthStart..depthEnd}
+caller{depth, evaluator-1, ... evaluator-n}
+caller{depthStart..depthEnd, evaluator-1, ... evaluator-n}
+日志请求的caller data 
+包含 caller 的全限定类名，文件名，以及行号。
+参数evaluator指定鉴别器，可以实现特定日志请求才包含caller data
+参数depth,指定caller data 的深度
+例如, %caller{2} 将输出如下
+0    [main] DEBUG - logging statement 
+Caller+0   at mainPackage.sub.sample.Bar.sampleMethodName(Bar.java:22)
+Caller+1   at mainPackage.sub.sample.Bar.createLoggingRequest(Bar.java:17)
+%caller{3} 如下
+16   [main] DEBUG - logging statement 
+Caller+0   at mainPackage.sub.sample.Bar.sampleMethodName(Bar.java:22)
+Caller+1   at mainPackage.sub.sample.Bar.createLoggingRequest(Bar.java:17)
+Caller+2   at mainPackage.ConfigTester.main(ConfigTester.java:38)
+
+也可以指定一个范围
+%caller{1..2} 如下
+0    [main] DEBUG - logging statement
+Caller+0   at mainPackage.sub.sample.Bar.createLoggingRequest(Bar.java:17)
+
+而%caller{3, CALLER_DISPLAY_EVAL}，当鉴别器返回true时才会输出caller data
+L / line	caller data 行号，速度慢，不推荐
+m / msg / message	logging event 的 message
+M / method	caller data 的method ，速度慢，不推荐
+n	输出与系统平台相关的换行符。例如linux 的"\n", 或者 windows"\r\n"
+p / le / level	日志的level 
+r / relative	日志产生时，应用已存活的时间 
+t / thread	产生logging event 的线程名 
+X{key:-defaultVal} 
+mdc{key:-defaultVal} 
+
+输出指定MDC指定Key的值，没有输出默认值，如果不通过 :- 指定默认值，当key不存在，则输出空字符串
+ex{depth} 
+exception{depth} 
+throwable{depth} 
+
+ex{depth, evaluator-1, ..., evaluator-n} 
+exception{depth, evaluator-1, ..., evaluator-n} 
+throwable{depth, evaluator-1, ..., evaluator-n}
+输出 exception的相关的stack trace 的值。默认是全部 stack trace
+depth可以选择以下几种类型的值:
+short: prints the first line of the stack trace
+full: prints the full stack trace
+Any integer: prints the given number of lines of the stack trace
+
+以下是一些例子:
+Conversion Pattern
+Result
+%ex	
+mainPackage.foo.bar.TestException: Houston we have a problem
+  at mainPackage.foo.bar.TestThrower.fire(TestThrower.java:22)
+  at mainPackage.foo.bar.TestThrower.readyToLaunch(TestThrower.java:17)
+  at mainPackage.ExceptionLauncher.main(ExceptionLauncher.java:38)
+%ex{short}	
+mainPackage.foo.bar.TestException: Houston we have a problem
+  at mainPackage.foo.bar.TestThrower.fire(TestThrower.java:22)
+%ex{full}	
+mainPackage.foo.bar.TestException: Houston we have a problem
+  at mainPackage.foo.bar.TestThrower.fire(TestThrower.java:22)
+  at mainPackage.foo.bar.TestThrower.readyToLaunch(TestThrower.java:17)
+  at mainPackage.ExceptionLauncher.main(ExceptionLauncher.java:38)
+%ex{2}	
+mainPackage.foo.bar.TestException: Houston we have a problem
+  at mainPackage.foo.bar.TestThrower.fire(TestThrower.java:22)
+  at mainPackage.foo.bar.TestThrower.readyToLaunch(TestThrower.java:17)
+
+evaluator鉴别器，意义参照caller data中的声明。当evaluator返回false，则输出，与caller conversion相反哦。切记
+xEx{depth} 
+xException{depth} 
+xThrowable{depth} 
+
+xEx{depth, evaluator-1, ..., evaluator-n} 
+xException{depth, evaluator-1, ..., evaluator-n} 
+xThrowable{depth, evaluator-1, ..., evaluator-n}
+与%ex类似，但是包含了包名以及版本号，如果包，版本号不确定，则会附带~波浪号。如果pattern不指定任何%ex或%xEx，则会默认添加%xEx。
+但是需要注意，如果你使用Netbeans，则获取包名版本号可能导致阻塞，所以需要禁止%ex来防止这种默认行为。
+例子：
+java.lang.NullPointerException
+at com.xyz.Wombat(Wombat.java:57) ~[wombat-1.3.jar:1.3]
+at com.xyz.Wombat(Wombat.java:76) ~[wombat-1.3.jar:1.3]
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.5.0_06]
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.5.0_06]
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.5.0_06]
+at java.lang.reflect.Method.invoke(Method.java:585) ~[na:1.5.0_06]
+at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:59) [junit-4.4.jar:na] at org.junit.internal.runners.MethodRoadie.runTestMethod(MethodRoadie.java:98) [junit-4.4.jar:na] ...etc
+
+nopex 
+nopexception
+无视 exception 信息，同时禁止PatternLayout中默认的安全机制，就是在pattern中添加%eXe。
+marker	
+日志的marker 标签
+如果marker 存在 子marker，则转换器都会将它们按以下格式输出
+parentName [ child1, child2 ]
+property{key}	
+输出指定Key的property属性值，如何定义属性呢，之前也讲过define variables
+如果key指定的property不在logger context中，则会在system properties中找，如果还没有，就返回 Property_HAS_NO_KEY
+replace(p){r, t}	
+以 t 值 替换 在 p 中出现的符合 r 模板的值。
+例如 "%replace(%msg){'\s', '’}" 会删除event message中所有的空格
+注意，p 可以包含多个conversion word 。注意转义符的问题。 例如：%replace(%logger %msg){'\.', '/'}" 
+rEx{depth} 
+rootException{depth} 
+
+rEx{depth, evaluator-1, ..., evaluator-n} 
+rootException{depth, evaluator-1, ..., evaluator-n}
+与%eXe类似，不同的是，将 root cause 放在了第一句，原本一般是在最后一句的。
+例如：
+java.lang.NullPointerException
+  at com.xyz.Wombat(Wombat.java:57) ~[wombat-1.3.jar:1.3]
+  at com.xyz.Wombat(Wombat.java:76) ~[wombat-1.3.jar:1.3]
+Wrapped by: org.springframework.BeanCreationException: Error creating bean with name 'wombat': 
+  at org.springframework.AbstractBeanFactory.getBean(AbstractBeanFactory.java:248) [spring-2.0.jar:2.0]
+  at org.springframework.AbstractBeanFactory.getBean(AbstractBeanFactory.java:170) [spring-2.0.jar:2.0]
+  at org.apache.catalina.StandardContext.listenerStart(StandardContext.java:3934) [tomcat-6.0.26.jar:6.0.26]
+

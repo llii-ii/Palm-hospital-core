@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kasite.client.hospay.module.bill.dao.PayDao">
+
+    <!--
+        注意：1.所有SELECT子句中的节点都请按照自己数据库的标准进行修改，
+        如有不明白的请及时沟通，避免意外某个节点取值错误，导致数据异常
+    -->
+
+    <!-- 将退费记录的日志记录在P_NOTICE_LOG中，有助于后续查看-->
+    <insert id="insertNoticeLog" useGeneratedKeys="false">
+        INSERT INTO P_NOTICE_LOG
+        (notice_Id,out_Trade_No,transaction_Id,chanel_Type,op_Type,message,op_Time,return_Code,result_Code,final_Result)
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{noticeLog.NOTICE_ID,jdbcType=VARCHAR},
+            #{noticeLog.OUT_TRADE_NO,jdbcType=VARCHAR},
+            #{noticeLog.TRANSACTION_ID,jdbcType=VARCHAR},
+            #{noticeLog.CHANEL_TYPE,jdbcType=NUMERIC},
+            #{noticeLog.OP_TYPE,jdbcType=NUMERIC},
+            #{noticeLog.MESSAGE,jdbcType=CLOB},
+            #{noticeLog.OP_TIME,jdbcType=TIMESTAMP},
+            #{noticeLog.RETURN_CODE,jdbcType=VARCHAR},
+            #{noticeLog.RESULT_CODE,jdbcType=VARCHAR},
+            #{noticeLog.FINAL_RESULT,jdbcType=VARCHAR}
+        </trim>
+    </insert>
+
+    <!-- 保存HIS账单数据-->
+    <insert id="insertHisBill" useGeneratedKeys="false">
+        INSERT INTO p_his_bill
+        (orderId,refundOrderId,merchOrderNo,hisOrderId,payMoney,totalMoney,refundMoney,priceName,orderMemo,hisOrderState,hisBizState,createDate,transDate,channelId)
+        <foreach collection="list" item="hisBill" index="index" separator="UNION ALL">
+            SELECT
+            #{hisBill.orderId,jdbcType=VARCHAR},
+            #{hisBill.refundOrderId,jdbcType=VARCHAR},
+            #{hisBill.merchOrderNo,jdbcType=VARCHAR},
+            #{hisBill.hisOrderId,jdbcType=VARCHAR},
+            #{hisBill.payMoney,jdbcType=VARCHAR},
+            #{hisBill.totalMoney,jdbcType=VARCHAR},
+            #{hisBill.refundMoney,jdbcType=VARCHAR},
+            #{hisBill.priceName,jdbcType=VARCHAR},
+            #{hisBill.orderMemo,jdbcType=VARCHAR},
+            #{hisBill.hisOrderType,jdbcType=VARCHAR},
+            #{hisBill.hisBizState,jdbcType=VARCHAR},
+            sysdate,
+            #{hisBill.transDate,jdbcType=TIMESTAMP},
+            #{hisBill.channelId,jdbcType=VARCHAR}
+            from dual
+        </foreach>
+    </insert>
+
+    <!-- HIS账单表去重 -->
+    <delete id="deleteOldHisBillByTransDate">
+        delete from p_his_bill
+        where
+          1=1
+        AND transDate BETWEEN to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </delete>
+
+</mapper>

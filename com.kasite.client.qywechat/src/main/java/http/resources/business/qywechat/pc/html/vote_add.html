@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css" />
+		<title>新增投票</title>
+		<style type="text/css">
+			.addimg{
+				margin-bottom: 5px;
+			}
+			.addimg-has,
+			.addimg-has-text{display: none;}
+			.addimg-no,
+			.addimg-has{
+				position: relative;
+				cursor: pointer;
+				width: 300px;
+				height: 167px;
+				text-align: center;
+				border:1px dashed #e5e6e7;
+				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				overflow: hidden;
+			}
+			.addimg-has{
+				border: 1px solid #e5e6e7;
+			}
+			.addimg-no input[type="file"],
+			.addimg-has input[type="file"]{
+				cursor: pointer;
+				position: absolute;
+				opacity: 0;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 2;
+			}
+			.addimg-no img{
+				width: 40px;
+				margin: 30px auto 10px auto;
+				display: block;
+			}
+			.addimg-has img{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.addimg-no span,
+			.addimg-has-text span{
+				font-size: 16px;
+				font-weight: bold;
+				margin-bottom: 5px;
+				display: block;
+			}
+			.addimg-no p,
+			.addimg-has-text p{
+				color: #e5e6e7;
+			}
+			.addimg.active .addimg-has,
+			.addimg.active .addimg-has-text{
+				display: block;
+			}
+			.addimg.active .addimg-no{
+				display: none;
+			}
+			
+			.form-control{
+				margin-bottom: 5px;
+			}
+			.nl{ line-height: 34px; padding: 0 10px; } ul,li{ list-style: none; margin: 0; padding: 0; } .img-list-item{ position: relative; float: left; padding-right: 10px; padding-bottom: 5px; } .img-list-addBtn{ cursor: pointer; } .img-list-addBtn:after{ content: ''; display: block; width: 90px; height: 90px; background: url('../js/webCom1.0/css/skin/yqw/img/addImg2.png'); background-size: 30px 30px; background-position: center; background-repeat: no-repeat; border:1px dashed #e5e6e7; } .img-list-addBtn input[type="file"]{ position: absolute; cursor: pointer; left: 0; top: 0; right: 0; bottom: 0; z-index: 1; opacity: 0; } .img-list-item img{ width: 90px; height: 90px; border:1px solid #e5e6e7; }
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 600px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label><span class="red">*</span>参与人员：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input id="parter" type="text" onfocus="cc(this)" value="" class="form-control" placeholder="请选择">
+					<input id="checksId" type="hidden"  value="" >
+					<input id="checksName" type="hidden"  value="" >
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label id="titleLabel"><span class="red">*</span>投票标题：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="text" id="title" class="form-control" value="" />
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>封面图片：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="hidden" id="attachmentUrl" name="attachmentUrl" value=""/>
+					<input type="hidden" id="attachmentName" name="attachmentUrl" value=""/>
+					<div class="addimg">
+						<div class="addimg-no">
+							<input type="file" name="newsFile" id="attachment" onchange="upload('attachment')" accept="" value="" />
+							<img id="imgView"  src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+							<span>点击上传图片</span>
+							<p>建议使用900x500像素的图片</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>首语：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<textarea name="beginintro" id="beginintro" rows="5" style="width: 100%;resize: none;" class="form-control" cols=""></textarea>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>尾语：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<textarea name="endingintro" id="endingintro" rows="5" style="width: 100%;resize: none;" class="form-control" cols=""></textarea>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label><span class="red">*</span>截至日期：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="text" id="endtime" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" value="" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-inline" style="min-width: 100%;">
+		<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目类型：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding-top: 8px;">
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" checked="" value="0" name="questType" />单选</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="1" name="questType" />多选</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="2" name="questType" />问答</label></div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="3" name="questType" />打分</label></div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目标题：</label></div>
+				<div class="x-row-cols text-right" style="width: 400px;">
+					<input type="text" class="form-control" name="questName" id="questName" value=""  maxlength = "200"/></div>
+				<div class="x-row-cols " style="margin-left:540px;">
+					<span class="nl">0/200</span></div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>题目选项：</label></div>
+				<div class="x-row-cols" style="width: 280px;">
+					<input type="text" class="form-control" name="item" id="item_0" value="" /></div>
+				<div class="x-row-cols" style="width: 70px;">
+					<span class="nl">0/200</span></div>
+				<div class="x-row-cols " style="margin-left:490px;">
+					<!--<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加图片</button>-->
+					<button type="button" onclick="del(this)" class="btn btn-danger">
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+			<div class="x-row addBtn" id="addBtn">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols" style="margin-left:140px;">
+					<button type="button" onclick="addItem()" style="width: 280px;margin-bottom: 8px;" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加选项</button>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>是否必答：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding-top: 8px;">
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" checked="" value="0" name="isMust">
+								<i>
+								</i>必答</label>
+						</div>
+						<div class="radio i-checks">
+							<label>
+								<input type="radio" value="1" name="isMust">
+								<i>
+								</i>选答</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="form-inline" style="max-width: 600px;">
+			
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="addVote(1,true)">发布</button>
+				    <button type="button" class="btn btn-w-m btn-info" onclick="addVote(0,false)"> 预览</button>
+					<button type="button" class="btn btn-w-m btn-border" onclick="addVote(0,true)">存为草稿</button>
+				</div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script type="text/javascript" src="../js/webCom1.0/component/dateTime/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../../../module/backstage/commons/upload/upload.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var themeId;
+		var uid;
+		$(function(){
+			themeId = "";
+			type = Commonjs.getUrlParam("type");
+			//前端生成UID
+			uid=Commonjs.getUUID();
+			
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			});
+
+			$("input:radio[name='questType']").on('ifChecked',
+			function(event) {
+				if ($(this).val() == 0 || $(this).val() == 1) {
+					$("#addBtn").show();
+					$("input[name='item']").parents('.x-row').show();
+				}
+				if ($(this).val() == 2 || $(this).val() == 3) {
+					$("#addBtn").hide();
+					$("input[name='item']").parents('.x-row').hide();
+				}
+			});
+		});
+		
+		//预览
+	    function view(){
+	    	var apiData = {};
+			apiData.id = themeId;
+			apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('TPGL');
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/GetVoteQuestionQRCode/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					showQRcode(dd.Data[0].QrPicUrl);
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+	    }
+		
+		//展示二维码
+        function showQRcode(qrPicUrl){
+			System.openWindow({
+				id:'votequestionQRcode1',
+				title:'请使用企业微信扫码预览',
+				url: qrPicUrl,
+				width:'400',
+				height:'450',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					parent.edit(themeId);
+					System.closeThisWindow();
+				}
+			});
+		}
+		
+		function addVote(status,isclose){
+			if(!isclose && !Commonjs.isEmpty(themeId)){
+				view();
+				return false;
+			}
+			//附件、图片
+			var attachmentUrl = $("#attachmentUrl").val();
+			var attachmentName = $("#attachmentName").val();
+			var title = $("#title").val();
+			var attachment = $("#attachment").val();
+			var beginintro = $("#beginintro").val();
+			var endingintro = $("#endingintro").val();
+			var endtime = $("#endtime").val();
+			var checksId = $("#checksId").val();
+			var checksName = $("#checksName").val();
+			if(Commonjs.isEmpty(checksName)){
+				alert("请选择参与人员！");
+				return;
+			}
+			if(Commonjs.isEmpty(title)){
+				alert("请输入投票标题！");
+				return;
+			}
+			if(Commonjs.isEmpty(endtime)){
+				alert("请输入截止日期！");
+				return;
+			}
+			
+			var questType = $("input[name='questType']:checked").val();
+			var questName = $("#questName").val();
+			var itemArray = [];
+			if(questType==0 || questType==1){
+				$("input[name='item']").each(function(index) {
+					if (!Commonjs.isEmpty($(this).val())) {
+						itemArray.push(index + 1 + "@" + $(this).val());
+					}
+				}) 
+			}
+			if (Commonjs.isEmpty(questName)) {
+				alert("请输入题目标题！");
+				return;
+			}
+			if (itemArray.length == 0 && (questType == 0 || questType == 1)) {
+				alert("请输入题目选项！");
+				return;
+			}
+			
+			var apiData = {};	
+				apiData.uid = uid;
+				apiData.status = status;
+				apiData.themeType = type;
+				apiData.operatorId = Commonjs.getOpenId();
+				apiData.operatorName = Commonjs.getOpenId();
+				//添加页面参数
+				apiData.title=title;
+				apiData.attachmentUrl=attachmentUrl;
+				apiData.attachmentName=attachmentName;
+				apiData.beginIntro=beginintro;
+				apiData.endingIntro=endingintro;
+				apiData.endTime=endtime;
+				apiData.memberIds=checksId;
+				apiData.memberNames=checksName;
+				apiData.qyClientId=Commonjs.getQyWeChatClientId();
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('TPGL');
+				var param = {};
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				Commonjs.ajax('/wsgw/qyWeChat/AddVoteQuestion/callApi.do',param,function(dd){
+					if(dd.RespCode == 10000){
+						//添加问题
+						addQuestion();
+						if(isclose){
+							alert("新增成功");
+							//调用父窗口的刷新查询方法
+							parent.refresh();
+							System.closeThisWindow();
+						}else{
+							themeId = dd.RespMessage;
+							view();
+						}
+					}else{
+						alert(dd.RespMessage);
+					}
+				});
+		}
+		
+		function clo( ){
+			System.closeThisWindow()
+		}
+		
+		//上传图片
+        function upload(id) {
+			var filePath = $("#"+id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.')+1,filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\')+1,filePath.length);
+			if(type.toLowerCase() != 'jpg' && type.toLowerCase() != 'png'){
+				alert('图片格式必须为.jpg|.png');
+				return ;
+			}
+	        var arrID = [ id ];
+			$.yihuUpload.ajaxFileUpload( {
+				url : '/upload/uploadFile.do', // 用于文件上传的服务器端请求地址
+				secureuri : false,// 一般设置为false
+				fileElementId : arrID,// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token='+Commonjs.getToken(),						
+				dataType : 'json',// 返回值类型 一般设置为json
+				success : function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host +"/"+uri;
+					//展示图片
+					$("#imgView").attr("src", uri_target);
+					$("#imgView").css("width","300px");
+					$("#imgView").css("height","167px"); 
+					//保存文件名和URL
+					$("#attachmentUrl").val(uri_target);
+					$("#attachmentName").val(filename);
+					console.log("attachmentUrl="+$("#attachmentUrl").val());
+					//解决onchange只触发一次的问题
+					$("#"+id).replaceWith('<input type="file" name="newsFile" id="'+id+'" onchange="upload(\''+id+'\')" accept="image/jpg,image/jpeg,image/gif,image/png" value="" />');
+				},
+				error : function(data, status, e) {
+					alert("图片上传失败：建议您选择不超过1M的图片且在良好的网络环境下继续上传");
+				}
+			});
+        }
+        
+        //定义全局的选中输入框对象
+        var cd = null;
+        function cc(o){
+        	cd = $(o);
+        	//把选中的项放到缓存
+        	window.localStorage.setItem('checksId',$("#checksId").val());
+        	window.localStorage.setItem('checksName',$("#checksName").val());
+			System.openWindow({
+				id:'vote',
+				title:'请选择',
+				url:'deptUser.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+        
+        //接收子页面传来的参数
+        function ccResult(checksId,checksName){
+        	cd.val(checksName);
+        	$("#checksName").val(checksName);
+        	$("#checksId").val(checksId);
+        }
+        
+	  //添加问题
+		function addQuestion() {
+			var questType = $("input[name='questType']:checked").val();
+			var questName = $("#questName").val();
+			var isMust = $("input[name='isMust']:checked").val();
+			var itemArray = [];
+			if(questType==0 || questType==1){
+				$("input[name='item']").each(function(index) {
+					if (!Commonjs.isEmpty($(this).val())) {
+						itemArray.push(index + 1 + "@" + $(this).val());
+					}
+				}) 
+			}
+			/*if (Commonjs.isEmpty(questName)) {
+				alert("请输入题目标题！");
+				return;
+			}
+			if (itemArray.length == 0 && (questType == 0 || questType == 1)) {
+				alert("请输入题目选项！");
+				return;
+			} */
+			var apiData = {};
+			//问答、打分无问题选项	
+			if (questType == 2 || questType == 3) {
+				apiData.itemArray = "";
+			} else {
+				apiData.itemArray = itemArray.join(",");
+			}
+			apiData.themeId = uid;
+			apiData.questType = questType;
+			apiData.questName = questName;
+			apiData.isMust = isMust;
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.operatorName = Commonjs.getOpenId();
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/AddQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					//alert("新增成功");
+					//调用父窗口的刷新查询方法
+					/* parent.refresh();
+					System.closeThisWindow(); */
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+
+		function del(o) {
+			var _this = $(o);
+			System.confirm({
+				title: '',
+				text: '是否删除该项？',
+				type: 'info',
+				callback: function(bool) {
+					if (bool) {
+						_this.parents('.x-row').remove();
+					}
+				}
+			})
+		}
+
+		function addItem() {
+			var html = [];
+			html.push('<div class="x-row">');
+			html.push('	<div class="x-row-cols text-right" style="width: 140px;">');
+			html.push('		<label><span class="red">*</span>题目选项：</label>');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols" style="width: 280px;">');
+			html.push('		<input type="text" class="form-control" name="item" id="" value="" />');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols" style="width: 70px;">');
+			html.push('		<span class="nl">0/200</span>');
+			html.push('	</div>');
+			html.push('	<div class="x-row-cols " style="margin-left:490px;">');
+			html.push('		<button type="button" onclick="del(this)" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>');
+			html.push('	</div>');
+			html.push('</div>');
+			$('.addBtn').before(html.join(''));
+		}
+	  
+		
+		$("#questName").bind("input propertychange", function () {
+			$(".nl").eq(0).text($("#questName").val().length+"/200");
+		});
+	
+		
+		
+	</script>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<meta name="skin" content="mes">
+		<script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>投票管理</title>
+		<style type="text/css"></style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="ps()">
+	                    <div class="">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">发起人管理</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="margin-left:420px;"></div>
+			</div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 250px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label id="queryStatus">投票状态：</label></div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select id="status" class="form-control">
+									<option value="">请选择</option>
+									<option value="0">待发布</option>
+									<option value="1">已发布</option>
+									<option value="2">已结束</option></select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:250px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label id="queryTitle">投票标题：</label></div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" id="title" value="" /></div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>创建时间：</label></div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="startTimeFrom" type="text" name="startTimeFrom" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('startTimeTo');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'yyyy-MM-dd ',maxDate:'#F{$dp.$D(\'startTimeTo\')}'})" style="width:120px!important;" class="form-control form-group" placeholder="开始时间">
+								<label style="padding-left: 10px;">至</label>
+								<input id="startTimeTo" type="text" name="startTimeTo" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd ',minDate:'#F{$dp.$D(\'startTimeFrom\')}'})" class="form-control form-group" style="width:120px!important;" placeholder="结束时间"></div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>截至时间：</label></div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="endTimeFrom" type="text" name="endTimeFrom" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('endTimeTo');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'yyyy-MM-dd ',maxDate:'#F{$dp.$D(\'endTimeTo\')}'})" style="width:120px!important;" class="form-control form-group" placeholder="开始时间">
+								<label style="padding-left: 10px;">至</label>
+								<input id="endTimeTo" type="text" name="endTimeTo" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd ',minDate:'#F{$dp.$D(\'endTimeFrom\')}'})" class="form-control form-group" style="width:120px!important;" placeholder="结束时间"></div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:840px;">
+						<span style="padding-left: 20px;">
+							<button type="button" class="btn btn-primary" onclick="refresh()">查询</button></span>
+					</div>
+				</div>
+			</div>
+			<p id="toolbar">
+				<button type="button" onclick="add()" class="btn btn-primary" id="queryAdd">新增投票</button></p>
+			<table id="orderTable"></table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script type="text/javascript" src="../js/webCom1.0/component/dateTime/My97DatePicker/WdatePicker.js"></script>
+	<script>
+		var type;
+		var name;
+		var memberType;
+		$(function() {
+			type = Commonjs.getUrlParam("type");
+			if (type == 1) {
+				$(document).attr("title", "问卷管理");
+				$("#queryStatus").text("问卷状态：");
+				$("#queryTitle").text("问卷标题：");
+				$("#queryAdd").text("新增问卷");
+				memberType = 8;
+				name = "问卷";
+			} else {
+				name = "投票";
+				memberType = 7;
+			}
+			getList();
+		});
+
+		//查询刷新
+		function refresh() {
+			$("#orderTable").bootstrapTable('destroy');
+			getList();
+		}
+		//查询列表
+		function getList() {
+			$('#orderTable').bootstrapTable({
+				url: '/wsgw/qyWeChat/QueryVoteQuestionList/callApi.do',
+				//请求后台的URL（*）
+				method: 'POST',
+				//请求方式（*）
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				pagination: true,
+				//是否显示分页（*）
+				pageNumber: 1,
+				//初始化加载第一页，默认第一页,并记录
+				pageSize: 10,
+				//每页的记录行数（*）
+				queryParams: function(params) {
+					var apiData = {};
+					apiData.themeType = type;
+					apiData.status = $('#status option:selected').val();
+					apiData.title = $("#title").val();
+					apiData.startTimeFrom = $("#startTimeFrom").val();
+					apiData.startTimeTo = $("#startTimeTo").val();
+					apiData.endTimeFrom = $("#endTimeFrom").val();
+					apiData.endTimeTo = $("#endTimeTo").val();
+					var temp = {
+						rows: params.limit,
+						//页面大小
+						page: (params.offset / params.limit) + 1,
+						//页码
+						sort: params.sort,
+						//排序列名  
+						sortOrder: params.order,
+						//排位命令（desc，asc） 
+						token: Commonjs.getToken(),
+						apiParam: Commonjs.getApiReqParams(apiData)
+					};
+					return temp;
+				},
+				columns: [{
+					checkbox: false,
+					visible: false //是否显示复选框  
+				},
+				{
+					field: 'Title',
+					title: name + '标题',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					field: 'InsertTime',
+					title: '创建时间',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					field: 'Count',
+					title: '参与人数',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					field: 'Status',
+					title: name + '状态',
+					align: 'center',
+					valign: 'middle',
+					formatter: formatterStatus
+				},
+				{
+					field: 'EndTime',
+					title: '截至时间',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					title: '操作',
+					align: 'center',
+					valign: 'middle',
+					formatter: formatter
+				}],
+				responseHandler: function(res) {
+					if (res.RespCode == 401) {
+						alert(res.RespMessage);
+						top.location = "http://" + window.location.host;
+					} else {
+						if (res.Data == undefined) {
+							return [];
+						} else {
+							return res.Data;
+						}
+					}
+				},
+				onLoadSuccess: function(result) {
+
+				},
+				onLoadError: function() {
+					alert("数据加载失败！");
+				},
+			});
+		}
+
+		function formatter(value, row, index) {
+			var html = [];
+			if(row.Status == 0){
+				html.push('<a href="javascript:edit(' + row.Id + ');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');		
+			}else{
+				html.push('<a style="color:#3685ff;font-size:12px;padding:0 6px;opacity: 0.4">编辑</a>');
+			}
+			html.push('<a href="javascript:fx(\'' + row.Uid + '\');" style="color:#3685ff;font-size:12px;padding:0 6px;">' + name + '分析</a>');
+			html.push('<a href="javascript:getInfo(' + row.Id + ');" style="color:#3685ff;font-size:12px;padding:0 6px;">查看详情</a>');
+			html.push('<a href="javascript:updateEndTime(' + row.Id + ',\'' + row.EndTime + '\');" style="color:#3685ff;font-size:12px;padding:0 6px;">修改截至时间</a>');
+			html.push('<a href="javascript:copyVote(' + row.Id + ');" style="color:#3685ff;font-size:12px;padding:0 6px;">复制' + name + '</a>');
+			if(row.Status == 1){
+				html.push('<a style="color:#3685ff;font-size:12px;padding:0 6px;opacity: 0.4">删除</a>');
+			}else{
+				html.push('<a href="javascript:deleteVote(' + row.Id + ');" style="color:#3685ff;font-size:12px;padding:0 6px;">删除</a>');
+			}
+			return html.join('')
+		}
+
+		function formatterStatus(value, row, index) {
+			var html = [];
+			var Text = '';
+			if (value == '0') {
+				Text = '待发布'
+			} else if (value == '1') {
+				Text = '已发布'
+			} else if (value == '2') {
+				Text = '已结束'
+			} else {
+				Text = '未知'
+			}
+			html.push(Text);
+			return html.join('')
+		}
+		//新增
+		function add() {
+			var url;
+			if(type=="1"){
+				url = 'quest_add.html?type=' + type;
+			}else{
+				url = 'vote_add.html?type=' + type;
+			}
+			System.openWindow({
+				id: 'vote_add',
+				title: '新增',
+				url: url,
+				width: '100%',
+				height: '100%',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+				},
+				closed: function() {
+					refresh();
+				}
+			});
+		}
+		//编辑
+		function edit(id) {
+			var url;
+			if(type=="1"){
+				url = 'quest_update.html?id=' + id + '&type=' + type;
+			}else{
+				url = 'vote_update.html?id=' + id + '&type=' + type;
+			}
+			System.openWindow({
+				id: 'vote_update',
+				title: '编辑',
+				url: url,
+				width: '100%',
+				height: '100%',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+				},
+				closed: function() {
+
+				}
+			});
+		}
+		//详情
+		function getInfo(id) {
+			var url;
+			if(type=="1"){
+				url = 'quest_info.html?id=' + id + '&type=' + type;
+			}else{
+				url = 'vote_info.html?id=' + id + '&type=' + type;
+			}
+			System.openWindow({
+				id: 'vote_info',
+				title: '详情',
+				url: url,
+				width: '100%',
+				height: '100%',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+				},
+				closed: function() {
+
+				}
+			});
+		}
+		//分析
+		function fx(uid) {
+			System.openWindow({
+				id: 'vote_analyze',
+				title: name + '分析',
+				url: 'vote_analyze.html?uid=' + uid,
+				width:'100%',
+				height:'100%',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+				},
+				closed: function() {
+
+				}
+			});
+		}
+		//修改截止时间
+		function updateEndTime(id,endTime) {
+			var date = new Date(endTime);
+			var expiretime = date.getTime();
+ 			System.openWindow({
+				id: 'vote_updateEndTime',
+				title: '截止时间',
+				url: 'vote_updateEndTime.html?id=' + id+'&endTime='+expiretime,
+				width: '350',
+				height: '230',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+				},
+				closed: function() {
+
+				}
+			});  
+		}
+		//复制
+		function copyVote(id) {
+			var apiData = {};
+			apiData.id = id;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/CopyVoteQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					refresh();
+					alert("复制成功");
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+		//删除
+		function deleteVote(id) {
+			System.confirm({
+				title: '',
+				text: '是否删除该' + name + '？',
+				type: 'info',
+				callback: function(bool) {
+					if (bool) {
+						var apiData = {};
+						apiData.id = id;
+						var param = {};
+						param.apiParam = Commonjs.getApiReqParams(apiData);
+						Commonjs.ajax('/wsgw/qyWeChat/DeleteVoteQuestion/callApi.do', param,
+						function(dd) {
+							if (dd.RespCode == 10000) {
+								refresh();
+								alert("删除成功");
+							} else {
+								alert(dd.RespMessage);
+							}
+						});
+					}
+				}
+			})
+		}
+		
+		//发起人管理
+		function ps(){
+			System.openWindow({
+				id:'launchPersonSetting',
+				title:'发起人设置',
+				url:'launchPersonSetting.html?memberType='+memberType,
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		</script>
+
+</html>

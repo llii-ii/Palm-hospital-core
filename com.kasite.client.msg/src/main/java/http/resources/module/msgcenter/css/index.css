@@ -1,0 +1,239 @@
+/*个人中心*/
+body,html{margin: 0;padding: 0;}
+div{-webkit-appearance;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+ul{margin: 0;}
+li{list-style: none;}
+body,html,.mui-content{
+	background: #f5f6f9;
+	font-size: 0.28rem;
+	line-height: normal!important;
+}
+.person .top{
+	height: 2.4rem;
+	text-align: center;
+	background: url(../img/bg.png) no-repeat;
+	background-size: cover;
+	padding-top: 1.9rem;
+}
+.person .top .avatar{
+	width: 1.6rem;
+	height: 1.6rem;
+	border-radius: 100%;
+	margin: 0 auto;
+	text-align: center;
+	background: #fff;
+}
+.person .top .avatar img{
+	position: relative;
+	top: 0.05rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 100%;
+}
+.person .top .name{
+	margin-top: 0.2rem;
+}
+.person .top .name img{
+	width: 0.2rem;
+	height: 0.2rem;
+	margin-left: 0.1rem;
+}
+.person ul{
+	padding: 0 0.3rem;
+	margin-top: 0.4rem;
+	background: #fff;
+}
+.person li{
+	border-bottom: 1px solid #f0f0f0;
+	padding: 0.38rem 0;
+}
+.person li .icon{
+	position: relative;
+	top: 0.12rem;
+	width: 0.44rem;
+	height: 0.44rem;
+	margin-right: 0.3rem;
+}
+.person li .right{
+	position: relative;
+	top: 0.18rem;
+	float: right;
+	width: 0.12rem;
+	height: 0.22rem;
+}
+/*消息筛选*/
+.mes .top{
+	padding: 0.4rem 0.3rem;
+	font-size: 0.32rem;
+	background: #fff;
+}
+.mes .top .filter{
+	float: right;
+	color: #3b7cf5;
+}
+.mes ul{
+	margin-top: 0.3rem;	
+	padding: 0 0.3rem;
+	background: #fff;
+}
+.mes li{
+	padding: 0.4rem 0;
+	border-bottom: 1px solid #f5f6f9;
+}
+.mes li .circle{
+	position: relative;
+	top: -0.02rem;
+	float: left;
+	width: 0.36rem;
+	height: 0.36rem;
+	border-radius: 100%;
+	margin-right: 0.3rem;
+	border: 2px solid #e5e5e5;
+}
+.mes li .circle.cur{
+	width: 0.44rem;
+	height: 0.44rem;
+	border: 0;
+	background: url(../img/icon-yes.png) no-repeat;
+	background-size: cover;
+}
+.mask{
+	display: none;
+	width: 100%;
+	background: rgba(0,0,0,0.5);
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 100;
+}
+.mask-box{
+	position: absolute;
+	left: 0.8rem;
+	right: 0.8rem;
+	top: 25%;
+	background: #FFFFFF;
+	padding: 0.3rem;
+	border-radius: 0.02rem;
+	z-index: 101;
+}
+.mask-box .title{
+	padding: 0.25rem 0;
+	font-weight: bold;
+	font-size: 0.32rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.mask-box .tab{
+	padding: 0.35rem 0;
+	overflow: hidden;
+	border-bottom: 1px solid #e5e5e5;
+}
+.mask-box .tab li{
+	float: left;
+	margin-right: 0.6rem;
+}
+.mask-box .tab li .circle{
+	position: relative;
+	top: -0.02rem;
+	float: left;
+	color: #999;
+	width: 0.36rem;
+	height: 0.36rem;
+	border-radius: 100%;
+	margin-right: 0.2rem;
+	border: 2px solid #e5e5e5;
+}
+.mask-box .tab li .circle.cur{
+	width: 0.44rem;
+	height: 0.44rem;
+	border: 0;
+	color: #333;
+	background: url(../img/icon-yes.png) no-repeat;
+	background-size: cover;
+}
+.mask-box .search{
+	margin-top: 0.6rem;
+}
+.mask-box .search input{
+	width: 70%;
+	border: 0;
+	margin: 0;
+	outline:none;
+	height: 0.6rem;
+	padding: 0.05rem;
+	font-size: 0.3rem;
+	margin-left: 0.2rem;
+	border-bottom: 1px solid #3c7cf5;
+}
+.mask-box .btn{
+	margin-top: 1.2rem;
+}
+.mask-box .btn .left{
+	float: left;
+	color: #666;
+	width: 45%;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	background: #ccc;
+	font-size: 0.3rem;
+}
+.mask-box .btn .right{
+	float: right;
+	color: #fff;
+	width: 45%;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	background: #3c7cf5;
+	font-size: 0.3rem;
+}
+.detail .title{
+	background: #fff;
+	font-size: 0.32rem;
+	font-weight: bold;
+	padding: 0.4rem 0.3rem;
+}
+.detail ul{
+	padding: 0 0.3rem;
+	background: #fff;
+	margin-top: 0.3rem;
+}
+.detail li{
+	color: #ccc;
+	padding: 0.4rem 0;
+	border-bottom: 1px solid #f5f6f9;
+}
+.detail li label{
+	display: inline-block;
+	color: #333;
+	width: 2.3rem;
+}
+.detail .more{
+	background: #fff;
+	margin-top: 0.3rem;
+	padding: 0.4rem 0.3rem;
+}
+.detail .more .circle{
+	position: relative;
+	top: -0.02rem;
+	float: right;
+	color: #999;
+	width: 0.36rem;
+	height: 0.36rem;
+	border-radius: 100%;
+	margin-right: 0.2rem;
+	border: 2px solid #e5e5e5;
+}
+.detail .more .circle.cur{
+	width: 0.44rem;
+	height: 0.44rem;
+	border: 0;
+	color: #333;
+	background: url(../img/icon-yes.png) no-repeat;
+	background-size: cover;
+}

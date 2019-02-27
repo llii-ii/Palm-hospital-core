@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <style type="text/css">
+    	body {height: auto;}
+    	#orderReportList_print{
+    		width:100%;
+    		font-size:12px;
+    	}
+    	#orderReportList_print td{
+    		border:1px solid #000000;
+    		color:#000000;
+    	}
+    	#orderReportList_print th{
+    		border:1px solid #000000;
+    		color:#000000;
+    	}
+    </style>
+</head>
+<body>
+<div class="com-title">交易报表</div>
+<div class="wrapper">
+    <div class="clearfix mt20">
+        <div class="fl">
+            <div class="date-wrap mr5 mb10">
+                <input type="text" placeholder="请选择" class="date-txt datetimepicker" id="queryDate" value=""/>
+            </div>
+            <div class="form-select mr5 mb10">
+                <select class="select select-w180" id="payType">
+                </select>
+            </div>
+            <span class="d-inline">
+                <a href="javascript:search();" class="query-btn mr5 mb10"><i class="icon icon-search"></i></a>
+            </span>
+        </div>
+        <div class="fr">
+        	<a href="javascript:doPrint();" class="c-btn c-btn-blue mb10"><i></i>报表打印</a>
+            <a href="javascript:downloadFile();" class="c-btn c-btn-blue mb10"><i class="icon icon-download"></i>Excel下载</a>
+        </div>
+    </div>
+    <!--startprint-->
+    <div class="mt10">
+        <table class="tb tb-b c-t-center" id="orderReportList">
+        </table>
+    </div>
+    <!--endprint-->
+</div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../widget/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/date.js"></script>
+<script type="text/javascript" src="../js/jquery.util.js"></script>
+<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript" src="../commons/js/jquery.print-preview.js"></script>
+<script type="text/javascript" src="../commons/js/jquery.print.js"></script>
+<script type="text/javascript" src="js/order_report.js"></script>
+<script type="text/javascript">
+$(function(){
+	laydate.render({
+		elem: '.datetimepicker',
+  		range: true
+	});
+});
+</script>
+</body>
+</html>

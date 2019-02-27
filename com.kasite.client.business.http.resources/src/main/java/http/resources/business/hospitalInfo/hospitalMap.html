@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" /><meta content="telephone=no" name="format-detection" />
+<title id="title">院外导航</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<script type="text/javascript"  src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js" ></script>
+<script type="text/javascript"   src="../../common/js/common.js?v=201901152112" ></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" language="javaScript">
+
+$(function(){
+	var apiData = {};
+	apiData.HosId = Commonjs.getUrlParam("HosId");
+	var param = {};
+	param.api = ''; 
+	param.apiParam =Commonjs.getApiReqParams(apiData);
+	var url = '../../wsgw/basic/QueryHospitalLocal/callApi.do';
+	Commonjs.ajax(url,param,function(d){
+		if(d.RespCode == 10000){
+			if(!Commonjs.isEmpty(d.Data)){
+				var coordinateX = d.Data[0].CoordinateX;
+	      		var coordinateY = d.Data[0].CoordinateY;
+	       		var address = d.Data[0].Address;
+	        	var hosName = d.Data[0].HosName;
+	            if(coordinateX == null  || coordinateX == undefined){
+	         		alert('医院经度为空!');
+	         		return  ;
+	          	}
+	          	if(coordinateY == null  || coordinateY == undefined){
+	        	  	alert('医院纬度为空!');
+	        	  	return  ;
+	          	}
+	            if(address == null || address == undefined){
+	        	   alert('医院地址为空!');
+	        	   return  ;
+	            }
+	            if(hosName == null  || hosName == undefined){
+	        	   hosName = Commonjs.hospitalName;
+	            }
+	          //添加地图缩放控件
+	          window.location.href=
+	          "http://api.map.baidu.com/marker?location=" + coordinateY + "," + coordinateX + "&title=" + hosName + "&content=" + address + "&output=html";
+			}
+		}
+	})
+});
+</script>
+</head>
+<body>
+</body>
+</html>

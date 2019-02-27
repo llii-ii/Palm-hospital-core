@@ -1,0 +1,417 @@
+
+
+
+
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>区域医疗集中监管系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta content="always" name="referrer">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<meta name="MobileOptimized" content="320">
+
+<script type="text/javascript" src="../../js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../js/jquery.form.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui-1.9m7.js"></script>
+<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/jquery.uniform.js"></script>
+<script type="text/javascript" src="../../js/jquery.busy.js"></script>
+<script type="text/javascript" src="../../js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="../../js/store.js"></script>
+<script type="text/javascript" src="../../js/json2.js"></script>
+<script type="text/javascript" src="../../js/jquery.scroll-follow.js"></script>
+<script type="text/javascript" src="../../js/realesoft.js"></script>
+<script type="text/javascript" src="../../js/Validform_v5.0.js"></script>
+<script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.fixedheadertable.js"></script>
+<script type="text/javascript" src="../../js/jquery.easytabs.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.spin.js"></script>
+<script type="text/javascript" src="../../js/general.js"></script>
+<script type="text/javascript" src="../../js/jquery.bottomTipbar.js"></script>
+<script type="text/javascript" src="../../js/pmc-general.js"></script>
+<script src="../../js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../js/app.js" type="text/javascript"></script>
+<script src="../../js/jquery.nicescroll.min.js" type="text/javascript"></script>
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link rel="stylesheet" href="../../css/font-awesome.min.css" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../../css/bootstrap.css" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<link rel="icon" href="../../images/favicon.ico" mce_href="../../images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="../../images/favicon.ico" mce_href="../../images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../css/jquery.mCustomScrollbar.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/pagination.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/jquery-ui.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/Validform.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/uniform.default.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/widget.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/plugins.css" type="text/css"/>
+<link rel="stylesheet" href="../../css/main.css" type="text/css"/>
+
+<!-- BEGIN THEME STYLES -->
+<link href="../../css/style-metronic.css" rel="stylesheet" type="text/css" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/style-responsive.css" rel="stylesheet" type="text/css" />
+<link href="../../css/default-embed.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico" />
+
+  
+  <script>
+	jQuery(document).ready(function() {
+	    //add by wangn 2015-10-26 
+	    var d = new Date();
+	    var str = d.getFullYear();
+	    $("#copy-date").html('2004-'+str);
+	    //add end
+		App.init(); // initlayout and core plugins
+		$("input, textarea").uniform();
+	  	$("select").uniform();
+	  	$(".page-sidebar-menu li").bind("click",function(e){
+	  		//清除主屏幕内容
+			
+			/*$(".sub-menu").empty().width(100);
+			$(".page-content").empty();
+			$(".sub-left-menu,.sub-right-menu").empty().css("background","#FFF");
+			$(".third-menu").empty().height(40).css("background","#FFF");*/
+		});
+	  	
+	  	$(".page-sidebar-menu li").bind("click",function(){
+	  	/* 注释掉 ，解决backspace回退 问题 和 二级菜单空白区域 点击问题 。
+	  		if($(this).find("ul").hasClass("sub-menu")) {
+	  			$(".page-content").css("margin-left","180px");
+				$(".third-menu").css("margin-left","180px");
+				$(this).addClass("active ").siblings("li").removeClass("active");
+				$(this).find("ul li:eq(0)").addClass("active").siblings("li").removeClass("active");
+				var href = $(this).find("a").attr("href");
+				window.location.href = href;
+	  		} else {
+	  			$(".page-content").css("margin-left","80px");
+				$(".third-menu").css("margin-left","80px");
+				$(".page-sidebar-menu li:gt(0)").removeClass("open");
+				$(".sub-menu").hide();
+				$(this).addClass("active ").siblings("li").removeClass("active");
+	  		}*/
+	  	});
+	  	$(".sub-menu").bind("click",function(e){
+	  		//e.stopPropagation();
+	  	});
+
+		$(".sub-menu > li").bind("click",function(e){
+			//e.stopPropagation();
+			$(this).addClass("active").siblings("li").removeClass("active");
+			$(this).parent(".sub-menu").parent("li").removeClass("open").addClass("active ").siblings("li").removeClass("active");
+		});
+		//各种高度设定
+//		$(".sub-menu").height($(window).height() + 8);
+//		if($("body").find(".third-menu > ul > li").html()) {
+//			$(".page-content").height($(window).height() );
+//			$(".sub-left-menu").height($(window).height() );
+//			$(".sub-right-menu").height($(window).height() );
+//		} else {
+//			$(".page-content").height($(window).height() );
+//		}
+//		if($("body").find(".sub-left-menu").html()) {
+//			$(".page-content").css("padding-left","290px");
+//		}
+//		if($("body").find(".sub-right-menu").html()) {
+//			$(".page-content").css("padding-right","210px");
+//		}
+		
+		$(".sub-menu").niceScroll({cursorcolor:"#CCC"});
+		
+	});
+	$(window).resize(function() {
+		
+		//各种高度设定
+		$(".sub-menu").height($(window).height() + 8);
+		if($("body").find(".third-menu > ul > li").html()) {
+			$(".page-content").height($(window).height() );
+			$(".sub-left-menu").height($(window).height() );
+			$(".sub-right-menu").height($(window).height() );
+		} else {
+			$(".page-content").height($(window).height() );
+		}
+		if($("body").find(".sub-left-menu").html()) {
+			$(".page-content").css("padding-left","290px");
+		}
+		if($("body").find(".sub-right-menu").html()) {
+			$(".page-content").css("padding-right","210px");
+		}
+		$(".sub-menu").getNiceScroll().resize();
+		
+	});
+
+  </script>
+<!-- END JAVASCRIPTS -->
+</head>
+	<!-- BEGIN THIRD MENU -->
+    <div class="third-menu tabbable">
+	    <ul class="nav nav-tabs" id="myTab">
+			<li>
+			 	<a href="./p-0-usermanager.html">用户管理</a>
+			</li>
+			<li>
+			 	<a href="./p-0-rolemanager.html">角色管理</a>
+			</li>
+			<li class="active">
+				<a href="./p-0-mechanismmanager.html">机构管理</a>
+			</li>
+			<li>
+				<a href="./p-0-equipmentmanager.html">设备管理</a>
+			</li>
+		</ul>
+	</div>
+	<!-- BEGIN LEFT MENU -->
+    <div class="sub-left-menu">
+
+
+
+
+
+<script type="text/javascript" src="../../js/jquery.ztree.all-3.1.js"></script>
+<link rel="stylesheet" href="../../css/zTreeStyle.css" type="text/css" />
+<script type="text/javascript">
+	 var zTree;//树
+	 var setting;//参数设置
+	 var zTreeNodes = [] ;//数据
+	 var setting = {
+			 data : {
+			 	key : {
+			 		name : "name"
+			 		},
+				 simpleData : {
+					 enable : true,
+					 idKey : "id",
+					 pIdKey : "parentId",
+					 rootPId : 1
+				 }
+			 	},
+			 callback: {
+					onClick: zTreeOnClick
+				}
+			 };
+
+	 //所选节点
+	 function getSelectedNodes(){
+		  var selectedNode = zTree.getCheckedNodes();
+		  for(var i=0;i<selectedNode.length;i++)
+		  {
+		   alert(selectedNode[i].id);
+		  }
+	 }
+	 function zTreeOnClick(event, treeId, treeNode){
+		 //var url = "/PMC/app/plugins/platform/pages/organization/form?organizationId="+treeNode.id;
+		 //$("#middleFrame").attr("src",url);
+		leftNodeClick(treeNode.id);
+	 }
+	 
+	 $(document).ready(function(){
+		 $.ajax({
+			 async : false,
+			 cache:false,
+			 type: 'GET',
+			 dataType : "json",
+			 url: "../../data/tree-data.json",//请求的action路径
+			 error: function () {//请求失败处理函数
+			 	//alert('请求失败');
+				 requestError();
+			 },
+			 success:function(data){ //请求成功后处理函数。
+			
+			 	zTreeNodes = data; 
+			 	zTree = $.fn.zTree.init($("#organizationTree"), setting, zTreeNodes);
+			 	
+//			 	if(zTreeNodes.length > 0)
+//				{
+//			 		var treeNodes = zTree.getNodes();
+//					 window.parent.leftNodeClick(treeNodes[0].id);
+//				}
+//			 	else
+//				{
+//			 		
+//			 		window.parent.leftNodeClick();
+//				}
+		
+			 }
+			 });
+
+	 });
+  </script>
+  
+<div id="c300c9c1-c2fe-40cb-b582-51b4d82e057a" class="widget" style="min-width: 280px;">
+	
+		<div class="widget-head">
+			<span class="icon-tree"></span>
+			<h2>机构树</h2>
+		</div>
+	
+	
+	<div>
+
+		<div class="right">
+			<a id="addRootOrganization" href="javascript:void(0)" onclick="addgorg()" class="btn btn-primary" style="color: white !important;">添加根机构</a>
+			<a href="javascript:window.location.reload()" class="btn">刷新</a>
+		</div>
+		<div  id="organizationTreeDiv" style="overflow: auto;min-height: 450px;">
+			<ul id="organizationTree" class="ztree" style="padding-top:15px;"></ul>
+		</div>
+	</div>
+</div>
+
+
+<div id="deleteOrganization-dialog-confirm" title="删除" style="display: none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>机构被删除之后,机构数据将无法恢复,你确认要删除这个机构吗?</p>
+</div>
+
+<div id="check-organization-ok-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" title="检查" style="display: none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>你要添加/编辑的机构不存在,你可以添加/编辑。</p>
+</div>
+
+<div id="check-organization-error-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" title="检查" style="display: none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>你要添加/编辑的机构已经存在,请修改机构名称再添加/编辑。</p>
+</div>
+
+<script>
+
+	function checkError()
+	{
+		$( "#check-organization-error-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" ).dialog( "open" );
+		return false;
+	}
+
+	function checkOk()
+	{
+		$( "#check-organization-ok-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" ).dialog( "open" );
+		return false;
+	}
+
+	$( "#addRootOrganization" ).click(function() {
+		//$("#middleFrame").attr("src","/PMC/app/plugins/platform/pages/organization/form");
+		leftNodeClick();
+		return false;
+	});
+
+	$(document).ready(function(){
+
+		$( "#deleteOrganization-dialog-confirm" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"删除": function() {
+					$.ajax( {
+			            url: '/PMC/deviceManage/ajax-delete-action?organizationId='+ deleteOrganizationId, 
+			            type: "GET", 
+			            success: function(data){
+			            	var result = eval("(" + data + ")");
+							 if(result.result == "ERROR")
+							{
+								alert("删除机构下的设备出错！");
+							}
+							 else{
+								document.location.href = '/PMC/organization/manager/delete-action?organizationId='+ deleteOrganizationId;
+								$( this ).dialog( "close" );
+							}
+			            }
+			    	});
+					
+				},
+				"取消": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+
+		$( "#check-organization-ok-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+
+		$( "#check-organization-error-dialog-confirmc300c9c1-c2fe-40cb-b582-51b4d82e057a" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+
+	var deleteOrganizationId = -1;
+
+	function delete_Organization(id)
+	{
+		//alert(id);
+		deleteOrganizationId = id;
+		//$( "#deleteOrganization-dialog-confirm", parent.document).dialog( "open" );
+		$( "#deleteOrganization-dialog-confirm").dialog( "open" );
+		return false;
+	}
+</script></div>
+	<!-- END LEFT MENU -->
+		<!-- BEGIN LEFT MENU -->
+    
+	<!-- END LEFT MENU -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content" style="top: 40px;margin-left: 300px;left: 0;">
+		<iframe src="./p-0-mechanismmanager-1.html" name="middleFrame" width="100%" height="100%" id="middleFrame" frameborder="0" scrolling="no"></iframe>
+<script type="text/javascript">
+		//点击添加根机构
+//	//iframeé«åº¦éåå®¹èªå¨è°æ´ 
+//	function reinitIframe() { //alert("dd");
+//		var height = $('#middleFrame').contents().find("body").height();
+//		$('#middleFrame').height(height);
+//		$('#organizationTreeDiv').height(height);
+//		sizePane();
+//	}
+//	window.setInterval("reinitIframe()", 500);	
+
+	//å·¦è¾¹çç»ç»æ èç¹ç¹å»æ¶ååºæ¹æ³
+	function leftNodeClick(id)
+	{
+		if(id != null){
+			var url = "/PMC/app/plugins/platform/pages/organization/form?organizationId="+id;
+			$("#middleFrame").attr("src",url);
+		}
+		else
+		{
+			var url = "/PMC/app/plugins/platform/pages/organization/form";
+			$("#middleFrame").attr("src",url);
+		}
+	}		
+
+</script>
+</div>
+    <!-- END PAGE -->
+  </div>
+
+</body>
+<!-- END BODY -->
+</html>

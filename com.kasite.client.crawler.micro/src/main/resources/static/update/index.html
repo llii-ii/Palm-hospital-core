@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+   <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!-- import CSS -->
+  <!-- 引入样式 -->
+<link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+<title>文件管理</title>  
+</head>
+<body>
+  <div id="app">
+	<el-row>
+	  <el-col>
+	  	<el-form ref="form" :rules="rules" :model="form" label-width="80px" size="medium">
+		 <el-form-item label="应用" prop="appId">
+		    <el-select v-model="form.appId" @change="checkApp" placeholder="请选择应用">
+		    <el-option
+		      v-for="item in appList"
+		      :key="item.appId"
+		      :label="item.name"
+		      :value="item.appId">
+		    </el-option>
+		    </el-select>
+		  </el-form-item>
+		  <el-form-item label="地址" prop="path">
+		    <el-input placeholder="请输入位置"  v-model="form.path"></el-input>
+		  </el-form-item>
+		  <el-form-item  size="large">
+		  		<el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="onSubmit('form')">查询</el-button>
+		  		<el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="onSubmitUp('form')">上一级</el-button>
+		  		<el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="queryServiceStatus()">查询服务（windows）</el-button>
+		  		<el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="startServiceStatus()">启动服务（windows）</el-button>
+		  		<el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="stopServiceStatus()">关闭服务（windows）</el-button>
+		  		<el-upload
+				  class="upload-demo"
+				  ref="upload"
+				  action="/guard/systemUpdate/uploadFile.do"
+				  :data="form"
+				  :headers="uploadheaders"
+				  :on-preview="handlePreview"
+				  :on-remove="handleRemove" 
+				  :file-list="fileList"
+				  :auto-upload="false">
+				  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+				  <el-button style="margin-left: 10px;" size="small" type="success" v-loading.fullscreen.lock="fullscreenLoading" @click="submitUpload">上传到服务器</el-button>
+				</el-upload>
+		  </el-form-item>
+		</el-form>
+	  </el-col>
+	</el-row>
+   <el-row>
+	  	<el-col>
+		 <el-table
+		    :data="tableData"
+		    stripe
+		    style="width: 100%">
+		    <el-table-column
+		      prop="lastModified"
+		      label="最后修改时间"
+		      >
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="文件名"
+		      :formatter="formatter"
+		      >
+		    </el-table-column>
+		    <el-table-column
+		      fixed="right"
+		      label="操作"
+		      >
+		      <template slot-scope="scope">
+		        <el-button @click="handleClick_query(scope.row)" type="text" size="small">查看</el-button>
+		        <el-button @click="handleClick_download(scope.row)" type="text" size="small">下载</el-button>
+		        <el-button @click="handleClick_delete(scope.row)" type="text" size="small">删除</el-button>
+		        <el-button @click="handleClick_rockback(scope.row)" type="text" size="small">回滚</el-button>
+		      </template>
+		    </el-table-column>
+		  </el-table>
+		</el-col>
+	</el-row>
+		
+<el-dialog
+  title="文件内容"
+  :visible.sync="dialogVisible"
+  width="80%"
+  >
+  <el-input type="textarea" :rows="10" v-model="fileContent"></el-input>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="handlerClick_readNew()">读取最新10条记录</el-button>
+  </span>
+</el-dialog>
+		
+	</div>
+</body>
+  	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  	<!-- import Vue before Element -->
+  	<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+	<!-- 引入组件库 -->
+	<script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+  <script>
+  
+  $.ajaxSetup({
+	　　　　timeout: 30000,
+	　　　　//请求成功后触发
+	　　　　//success: function (data) { show.append('success invoke!' + data + '<br/>'); },
+	　　　　//请求失败遇到异常触发
+	　　　　error: function (XMLHttpRequest,status, e) { 
+			var statusCode = XMLHttpRequest.status;
+			console.log(XMLHttpRequest);
+			if(statusCode != 200){
+				var msg = "系统异常："+XMLHttpRequest.responseText;
+					vm.$message({
+                    message: msg,
+                    type: 'error'
+                  });
+			}
+		  },
+		  complete: function (XMLHttpRequest, status) {
+			  if(vm){
+				  vm.fullscreenLoading = false; 
+			  }
+		  },
+	　　　　//完成请求后触发。即在success或error触发后触发
+	　　　　//complete: function (XMLHttpRequest, status) { show.append('complete invoke! status:' + status+'<br/>'); },
+	　　　　//发送请求前触发
+	　　　　beforeSend: function (XMLHttpRequest) {
+			 if(vm){
+				  vm.fullscreenLoading = true; 
+			  }
+	       }
+	　　　　//可以设置自定义标头
+	　　　　//xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+	　　　　//show.append('beforeSend invoke!' +'<br/>');
+	　　　　//},
+	});
+
+  var DownLoadFile = function (options) {
+	    var config = $.extend(true, { method: 'post' }, options);
+	    var $iframe = $('<iframe id="down-file-iframe" />');
+	    var $form = $('<form target="down-file-iframe" method="' + config.method + '" />');
+	    $form.attr('action', config.url);
+	    for (var key in config.data) {
+	        $form.append('<input type="hidden" name="' + key + '" value="' + config.data[key] + '" />');
+	    }
+	    $iframe.append($form);
+	    $(document.body).append($iframe);
+	    $form[0].submit();
+	    $iframe.remove();
+	}
+
+  
+   var vm = new Vue({
+      el: '#app', 
+      data: function() {
+        return { 
+        	uploadheaders:{ token:''},
+        	fullscreenLoading: false,
+        	uploadUrl:"/guard/systemUpdate/uploadFile.do",
+        	fileList:[],
+        	appList:[
+        		{"appId":"appId-test","name":"测试","path":"/Users/daiyanshui/Desktop/Config"},
+        		{"appId":"appId-test2","name":"测试2","path":"/Users/daiyanshui/Desktop/Config/update_upload"}
+        	],
+        	dialogVisible: false,
+        	readFilePath:'',
+        	readAppId:'',
+        	fileContent:'',
+        	form: {
+        		appId: '',
+                path: '',
+        	 },
+        	 tableData:[],
+        	 rules: {
+        		 
+        	 }
+        }
+      },
+      methods: { 
+    	  formatter(row, column) {
+    		  var name = row.name;
+    		  if(row.isFile == true){
+    			  name = name;
+    		  }else{
+    			  name = name +"-(文件夹)"
+    		  }
+    		  return name;
+    	  },
+    	  //选择应用
+    	  checkApp(value){
+    		  $.each(this.appList,function(index,val){
+    			  if(value == val.appId){
+    				  vm.form.path = val.path;
+    			  }
+    		  });
+    	  },
+    	  //查询服务状态
+    	  queryServiceStatus(){
+    		  this.excuteCmd("sc query Tomcat8");
+    	  },
+    	  //停止服务
+		  stopService(){
+    		  this.$confirm('此操作停止Tomcat8服务, 是否继续?', '提示', {
+    	          confirmButtonText: '确定',
+    	          cancelButtonText: '取消',
+    	          type: 'warning'
+    	        }).then(() => {
+    	       	  this.excuteCmd("sc stop Tomcat8");
+    	          this.$message({
+    	            type: 'success',
+    	            message: '执行成功!'
+    	          });
+    	        }).catch(() => {
+    	          this.$message({
+    	            type: 'info',
+    	            message: '已取消'
+    	          });          
+    	        });
+    	  },
+    	  //启动服务
+		  startService(){
+    		  this.$confirm('此操作启动Tomcat8服务, 是否继续?', '提示', {
+    	          confirmButtonText: '确定',
+    	          cancelButtonText: '取消',
+    	          type: 'warning'
+    	        }).then(() => {
+   	    		  this.excuteCmd("sc start Tomcat8");
+    	          this.$message({
+    	            type: 'success',
+    	            message: '执行成功!'
+    	          });
+    	        }).catch(() => {
+    	          this.$message({
+    	            type: 'info',
+    	            message: '已取消'
+    	          });          
+    	        });
+    	  },
+		  excuteCmd(cmd){
+    		  var appId = this.form.appId;
+    	      var path = this.form.path;
+    	      var data =  "path="+path+"&cmd="+cmd;
+    	      var url = "/guard/systemUpdate/"+appId+"/systemApi/excuteCmd/call.do";
+     	      this.excuteAjax(url,data,function(r,result){
+     	    	var resultContent = result;
+   	    	 	if(vm.isJSON(result)){
+   	    	 		resultContent = $.parseJSON(result).result;
+   	    	 	}
+   	    	 	vm.fileContent = resultContent;
+		        vm.dialogVisible = true;
+   	    	  });
+   	      },
+    	  submitUpload() {
+   	          this.$refs.upload.submit();
+   	      },
+   	      handleRemove(file, fileList) {
+   	        console.log(file, fileList);
+   	      },
+   	      handlePreview(file) {
+   	        console.log(file);
+   	      },
+   	      handleClick_rockback(row){
+   	    	  var appId = this.form.appId;
+    	      var path = row.path;
+   	    	  var data = 
+           		"path="+path
+            	+"&appId="+appId;
+   	    	 if(path.endsWith(".json") ){
+   	    	   this.$confirm('此操作将回滚此次操作, 是否继续?', '提示', {
+    	          confirmButtonText: '确定',
+    	          cancelButtonText: '取消',
+    	          type: 'warning'
+    	        }).then(() => {
+    	        	 var url = "/guard/systemUpdate/"+this.form.appId+"/systemApi/rockback/call.do";
+       	    		 this.excuteAjax(url,data,function(r,result){
+          	    		var resultContent = result;
+        	    	 	if(vm.isJSON(result)){
+        	    	 		resultContent = result;
+        	    	 	}
+        	    	 		vm.fileContent = resultContent;
+     		        		vm.dialogVisible = true;
+        	    	  });
+    	        }).catch(() => {
+    	          this.$message({
+    	            type: 'info',
+    	            message: '已取消'
+    	          });          
+    	        });
+			  }else{
+   			  vm.$message({
+                     message: "非操作日志文件",
+                     type: 'error'
+                   });
+			  }
+   	    	 
+   	      },
+    	  handleClick_download(row){
+    		  var appId = this.form.appId;
+    		  this.downLoad(row.path,appId);
+    	  },
+    	  handlerClick_readNew(){
+    		  this.read(this.readFilePath,this.readAppId,true);
+    	  },
+    	  handleClick_delete(row){
+    		  var appId = this.form.appId;
+    		  var isFile = row.isFile;
+    		  var path = row.path;
+    		  if(isFile){
+	    		  this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+	    	          confirmButtonText: '确定',
+	    	          cancelButtonText: '取消',
+	    	          type: 'warning'
+	    	        }).then(() => {
+	    			  this.del(path,appId);
+	    	          this.$message({
+	    	            type: 'success',
+	    	            message: '删除成功!'
+	    	          });
+	    	        }).catch(() => {
+	    	          this.$message({
+	    	            type: 'info',
+	    	            message: '已取消删除'
+	    	          });          
+	    	        });
+    		  }else{
+    			  vm.$message({
+                      message: "只能删除文件",
+                      type: 'error' 
+                    });
+    		  }
+    	  },
+    	  handleClick_query(row){
+    		  var appId = this.form.appId;
+    		  var isDir = row.isDirectory;
+    		  var path = row.path;
+    		  if(isDir){
+    			  this.query(path,appId);
+    		  }else{
+    			  if(path.endsWith(".json")||path.endsWith(".log")||path.endsWith(".txt")||path.endsWith(".yml")){
+    				  this.read(path,appId,false);
+    			  }else{
+        			  vm.$message({
+                          message: "非文件夹",
+                          type: 'error'
+                        });
+    			  }
+    		  }
+    	  },
+   	   	  downLoad(path,appId){
+ 	    		DownLoadFile(
+ 	    		{
+ 	    			url: "/guard/systemUpdate/"+this.form.appId+"/systemApi/downLoad/download.do", //请求的url
+ 	    		    data:{"path": path }//要发送的数据
+ 	    		});
+   	      },
+   	   	  read(path,appId,isAppend){
+   	    		this.readFilePath = path;
+   	    		this.readAppId = appId;
+     	    	var data =  "path="+path +"&appId="+appId;
+     	    	var url = "/guard/systemUpdate/"+this.form.appId+"/systemApi/read/call.do";
+     	    	this.excuteAjax(url,data,function(r,result){
+     	    		if(isAppend){
+						vm.fileContent += result;
+					}else{
+						vm.fileContent = result;
+					}
+			        vm.dialogVisible = true;
+     	    	});
+    	  },
+   	      del(path,appId){
+   	    	var data =  "path="+path +"&appId="+appId;
+   	    	var url = "/guard/systemUpdate/"+appId+"/systemApi/delete/call.do";
+   	    	this.excuteAjax(url,data,function(r,result){
+    			 vm.query(vm.form.path,appId);
+ 	    	});
+   	      },
+   	      query(path,appId){
+  	    	this.form.path = path;
+   	    	var data =  "path="+path +"&appId="+appId;
+   	    	var url = "/guard/systemUpdate/"+this.form.appId+"/systemApi/filelist/call.do";
+   	    	this.excuteAjax(url,data,function(r,result){
+ 	    		vm.tableData = $.parseJSON(r.result);
+			}); 
+   	      },
+   	   	  queryAppList(){
+    	    	var url = "/guard/systemUpdate/appList.do";
+    	    	this.excuteAjax(url,{},function(r,result){
+    	    		vm.appList= (r.result);
+ 				}); 
+     	  },
+     	  onSubmitUp(form){
+     		  var path = this.form.path;
+     		  var i = path.lastIndexOf("\\");
+     		  if(i<=0){
+     			 i = path.lastIndexOf("/");
+     		  }
+     		  path = path.substring(0,i);
+     		  this.form.path = path;
+     		  this.onSubmit(form);
+     	  },
+          onSubmit(form) {
+            this.$refs[form].validate((valid) => {
+                if (valid) {
+                	this.query(this.form.path,this.form.appId);
+                } else {
+                  console.log('error submit!!');
+                  return false;
+                }
+              });
+          },
+	      getCookie:function (name) {
+	    	  var strCookie = document.cookie;
+		  		var arrCookie = strCookie.split("; ");
+		  		for (var i = 0; i < arrCookie.length; i++) {
+		  			var arr = arrCookie[i].split("=");
+		  			if (arr[0] == name) {
+		  				if (arr[1] == '' || arr[1] == null || arr[1] == undefined) {
+		  					return "";
+		  				} else {
+		  					return arr[1];
+		  				}
+		  			}
+		  		}
+		  		return "";
+		  },
+          isJSON(str) {
+        	    if (typeof str == 'string') {
+        	        try {
+        	            var obj=JSON.parse(str);
+        	            if(typeof obj == 'object' && obj ){
+        	                return true;
+        	            }else{
+        	                return false;
+        	            }
+
+        	        } catch(e) {
+        	            return false;
+        	        }
+        	    }
+        	},
+          excuteAjax(url,data,callback){
+        		var token = this.getCookie("token");
+            	$.ajax({
+      				type: "POST",
+      			    url: url,
+      			    data: data, 
+      			    headers: {
+    			        'token': token
+    			    },
+      			    dataType: "json",
+      			    success: function(r){
+      					if(r.code == 0){//调用成功
+      						callback(r,r.result);
+                        }else{
+      						vm.error = true;
+      						vm.errorMsg = r.msg;
+      						vm.$message({
+                                message: r.msg,
+                                type: 'error'
+                              });
+      					} 
+      				}
+      			});
+     	      }
+        }, 
+        mounted: function () {
+        	this.uploadheaders.token =  this.getCookie("token");
+        	this.queryAppList();
+        }
+    })
+  </script>
+</html>

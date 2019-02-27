@@ -1,0 +1,61 @@
+<Response>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalizationDiagnosis">
+		<diagnosisCode></diagnosisCode>
+		<diagnosisDate>2007-08-20</diagnosisDate>
+		<diagnosisName>L1爆裂性骨折并不全瘫内固定术后</diagnosisName>
+		<diagnosisType>3</diagnosisType>
+		<doctor></doctor>
+		<doctorCode></doctorCode>
+		<inHospitalNum>20074054            </inHospitalNum>
+		<patientId>336132</patientId>
+		<result></result>
+		<resultCode></resultCode>
+		<sort>0</sort>
+	</Data>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalizationDiagnosis">
+		<diagnosisCode></diagnosisCode>
+		<diagnosisDate>2007-08-20</diagnosisDate>
+		<diagnosisName>经气不利</diagnosisName>
+		<diagnosisType>3</diagnosisType>
+		<doctor></doctor>
+		<doctorCode></doctorCode>
+		<inHospitalNum>20074054            </inHospitalNum>
+		<patientId>336132</patientId>
+		<result></result>
+		<resultCode></resultCode>
+		<sort>0</sort>
+	</Data>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalizationDiagnosis">
+		<diagnosisCode>ZYXV40</diagnosisCode>
+		<diagnosisDate>2007-08-20</diagnosisDate>
+		<diagnosisName>血瘀气滞</diagnosisName>
+		<diagnosisType>3</diagnosisType>
+		<doctor></doctor>
+		<doctorCode></doctorCode>
+		<inHospitalNum>20074054            </inHospitalNum>
+		<patientId>336132</patientId>
+		<result></result>
+		<resultCode></resultCode>
+		<sort>0</sort>
+	</Data>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalizationDiagnosis">
+		<diagnosisCode></diagnosisCode>
+		<diagnosisDate>2007-08-20</diagnosisDate>
+		<diagnosisName>左胫骨平台骨折内固定术后</diagnosisName>
+		<diagnosisType>3</diagnosisType>
+		<doctor></doctor>
+		<doctorCode></doctorCode>
+		<inHospitalNum>20074054            </inHospitalNum>
+		<patientId>336132</patientId>
+		<result></result>
+		<resultCode></resultCode>
+		<sort>0</sort>
+	</Data>
+	<Message>成功</Message>
+	<Code>10000</Code>
+	<total>0</total>
+</Response>

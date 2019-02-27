@@ -1,0 +1,10 @@
+.cus-sel { position:relative; display:inline-block; vertical-align: middle; *display:inline; *zoom:1; z-index:2;}
+.cus-sel-chosed { position: relative; height:43px; width:122px; padding:0 36px 0 20px; line-height:43px; background-color:#fff; border:1px solid #ebebeb; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; cursor:pointer;}
+.cus-sel-chosed-txt { color:#4c4c4c; font-size:14px;}
+.jselect-icon { position: absolute; right:0; top:0; display:block; width: 35px; height: 43px; border-left: 1px solid #ebebeb; background:url(../images/jselect-icon.png) no-repeat;}
+.cus-sel-list { position:absolute; left:0; top:45px; width:178px; padding:0; border:1px solid #ebebeb; background-color:#f1f6f5; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; display:none;}
+.cus-sel-list li { margin:0; padding:0;}
+.cus-sel-list a { display: block; height:42px; padding:0 20px; font-size:14px; line-height:42px; cursor:pointer;}
+.cus-sel-list a:link, .cus-sel-list a:visited { color:#4c4c4c;}
+.cus-sel-list a:hover, .cus-sel-list li.hover a { background-color:#18bd9c; color:#fff; text-decoration: none;}
+.cus-sel.active .jselect-icon { background-position: -35px 0;}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>住院费用</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+	<div class="c-main pb15">
+		<div class="bein-head-hold">
+			<div class="forbtset">
+				<div class="bein-jzr">
+					<i class="sicon icon-rt"></i> 
+					<label class="c-f15 mr5" id="memberPicker_name"></label> 
+					<span class="jzcard c-999" id="memberPicker_cardNo"></span> 
+					<i class="sicon icon-gjt-b"></i> 
+					<input type="text" id="filter-jzr" class="filtertext" />
+				</div>
+				<div class="bein-head">
+					<div class="bein-mess c-pack">
+						<p id="p_deptName">
+							科&emsp;&emsp;室：<span id='deptName'></span>
+						</p>
+						<p id="p_bedNo">
+							床&emsp;&emsp;位：<span id='bedNo'></span>
+						</p>
+						<p id="p_inHospitalDate">
+							入院日期：<span id='inHospitalDate'></span>
+						</p>
+						<p id="p_inHospitalDays">
+							入院天数：<span id='inHospitalDays'></span>
+						</p>
+					</div>
+					<div class="c-pack" >
+						<p>住院总费用(元)</p>
+						<p class="c-f28" id='totalFee'></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bill-title-hold">
+			<div class="bill-title">
+				<span class="fr">金额(元）</span>每日费用
+			</div>
+		</div>
+		<div>
+			<ul class="c-list c-border-b">
+			</ul>
+			<!-- nomore 下面这个元素，不要用shou hide操作，会影响页面展示 -->
+			<div class="nomore" >没有更多了</div>
+			<div class="infinite-scroll" style="display: none;">
+				<div class="infinite-preloader"></div>
+				正在加载
+			</div>
+			<div class="nomess" id='noInfo' style="display: none;">
+				<i class="nomess-tb"></i>
+				<p class="mt10">暂无此类数据</p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+	<script type="text/javascript" src="../../common/js/memberpicker.js"></script>
+	<script type="text/javascript" src="js/hospitalCostMemberId.js?v=201901152112"></script>
+</body>
+</html>

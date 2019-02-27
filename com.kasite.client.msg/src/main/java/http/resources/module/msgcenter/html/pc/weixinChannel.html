@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../common/js/common.js" ></script>
+		<title>微信消息模版</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<p class="text-danger">注：微信消息模版设置请进入微信公众号内进行设置</p>
+		<p>所在行业</p>
+		
+		<table id="exampleTablePagination">
+            <thead>
+                <tr>
+                    <!--<th data-field="state" data-checkbox="true"></th>-->
+                    <th data-field="id" data-visible="false" >ID</th>
+                    <th data-field="template_id" data-align="center">模版ID</th>
+                    <th data-field="title" data-align="center">标题</th>
+                    <th data-field="primary_industry" data-align="center">一级行业</th>
+                    <th data-field="deputy_industry" data-align="center">二级行业</th>
+                    <th data-formatter="formatter" data-align="center">操作</th>
+                </tr>
+            </thead>
+            <tbody id="template_list">
+	       </tbody>
+        </table>
+	</body>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		function openWindow(id){
+			System.openWindow('templateDetail.html?modeId='+id);
+		}
+		function formatter(value, item, index){
+			var html = [];
+			var h = '';
+			h+='<a href="javascript:;" onclick="openWindow(\''+item.template_id+'\')" class="J_menuItem" style="color:#3685ff;font-size:12px;">详情</a>';
+			html.push(h);
+			return html.join('')
+		}
+		$(function(){
+			var param = {};
+			var apiData = {};
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/QueryWxTemplateList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					initTable(d.Data);//初始化页面
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		})
+		var f = 1;
+		function initTable(data){
+			if(f==1){
+				f=0;
+				$('#exampleTablePagination').bootstrapTable({
+			        data: data,
+			        pagination: true, 
+			        sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+			        paginationLoop:false,
+		            paginationPreText:'上一页',
+		            paginationNextText:'下一页',
+	                pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	                pageSize: 25,                     //每页的记录行数（*）
+	                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+			    });
+			}
+			else{
+				if(data==undefined){
+					 $("#exampleTablePagination").bootstrapTable('removeAll');
+				}
+				else{
+					$('#exampleTablePagination').bootstrapTable('load',data);
+				}
+				
+			}
+			$(".fixed-table-loading").css("display","none");
+		}
+		function initHtml(d){
+			var html = '';
+			Commonjs.BaseForeach(d, function(i,item){
+				html+='<tr>';
+				html+='<td style="text-align:center">'+item.template_id+'</td>';
+				html+='<td style="text-align:center">'+item.title+'</td>';
+				html+='<td style="text-align:center">'+item.primary_industry+'</td>';
+				html+='<td style="text-align:center">'+item.deputy_industry+'</td>';
+				html+='<td style="text-align:center"><a href="javascript:;" onclick="openWindow(\''+item.template_id+'\')" class="J_menuItem" style="color:#3685ff;font-size:12px;">详情</a></td>';
+				html+='</tr>';
+			})
+			$("#template_list").html(html);
+		}
+	</script>
+</html>

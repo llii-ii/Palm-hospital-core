@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta name="skin" content="mes">
+    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+    <title>分析</title>
+    <style type="text/css">.echarts { height: 300px; }</style></head>
+  
+  <body class="children-page"></body>
+  <!-- ECharts -->
+  <script src="../js/webCom1.0/js/echarts-all.js"></script>
+  <script src="../../pc/js/jquery-1.9.1.min.js"></script>
+  <script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+  <script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+  <script type="text/javascript" src="../../common/js/base.js"></script>
+  <script type="text/javascript" src="../../common/js/common.js"></script>
+  <script type="text/javascript">var uid;
+    $(function() {
+      uid = Commonjs.getUrlParam("uid");
+      getVoteQuestionAnalyze(uid);
+    })
+
+    function getVoteQuestionAnalyze(uid) {
+      var apiData = {};
+      apiData.id = uid;
+      var param = {};
+      param.apiParam = Commonjs.getApiReqParams(apiData);
+      Commonjs.ajax('/wsgw/qyWeChat/GetVoteQuestionAnalyze/callApi.do', param,
+      function(dd) {
+        if (dd.RespCode == 10000) {
+          var id;
+          var questName;
+          var sortNum;
+          var data = [];
+          var json = {};
+          if (Commonjs.ListIsNotNull(dd.Data)) {
+            Commonjs.BaseForeach(dd.Data,
+            function(i, item) {
+              if (Commonjs.isEmpty(id) || id == item.Id) {
+                id = item.Id;
+                sortNum =  item.SortNum;
+                questName = sortNum + "、"+item.QuestName;
+                if (item.QuestType == 0 || item.QuestType == 1) {
+                  json = {
+                    "value": item.Num,
+                    "name": item.ItemValue + "（" + item.Lv + "%，" + item.Num + "人）"
+                  };
+                  data.push(json);
+                } else if (item.QuestType == 2){
+                  json = {
+                    "value": item.Num,
+                    "name": item.Answer + "（" + item.Lv + "%，" + item.Num + "人）"
+                  };
+                  data.push(json);
+                } else if (item.QuestType == 3){
+                  json = {
+                    "value": item.Num,
+                    "name": item.Answer + "分（" + item.Lv + "%，" + item.Num + "人）"
+                  };
+                  data.push(json);
+                }
+              } 
+             if ((!Commonjs.isEmpty(id) && id != item.Id) || i==dd.Data.length-1) { 
+              	console.log("创建");
+                html = '<div class="echarts" id="echarts-pie-chart' + id + '"></div>';
+                $('.children-page').before(html);
+                var pieChart = echarts.init(document.getElementById("echarts-pie-chart" + id));
+                var pieoption = {
+                  title: {
+                    text: '    ' + questName,
+                    subtext: '',
+                    x: 'left'
+                  },
+                  tooltip: {
+                    trigger: 'item',
+                    formatter: "{b}"
+                  },
+                  calculable: true,
+                  series: [{
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '45%'],
+                    data: data
+                  }]
+                };
+                pieChart.setOption(pieoption);
+                $(window).resize();
+
+                id = "";
+                data = [];
+                json = {};
+                if (Commonjs.isEmpty(id) || id == item.Id) {
+                  id = item.Id;
+                  sortNum =  item.SortNum;
+                  questName = sortNum + "、"+item.QuestName;
+                  if (item.QuestType == 0 || item.QuestType == 1) {
+                    json = {
+                      "value": item.Num,
+                      "name": item.ItemValue + "（" + item.Lv + "%，" + item.Num + "人）"
+                    };
+                    data.push(json);
+                  } else if (item.QuestType == 2){
+                    json = {
+                      "value": item.Num,
+                      "name": item.Answer + "（" + item.Lv + "%，" + item.Num + "人）"
+                    };
+                    data.push(json);
+                  } else if (item.QuestType == 3){
+                    json = {
+                      "value": item.Num,
+                      "name": item.Answer + "分（" + item.Lv + "%，" + item.Num + "人）"
+                    };
+                    data.push(json);
+                  }
+                }
+              }
+
+            });
+          }
+        } else {
+          alert(dd.RespMessage);
+        }
+      });
+    }</script>
+
+</html>

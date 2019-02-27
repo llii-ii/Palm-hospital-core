@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kasite.client.hospay.module.bill.dao.DownloadBillExcelDao">
+    <!--
+        注意：1.所有SELECT子句中的节点都请按照自己数据库的标准进行修改，
+        如有不明白的请及时沟通，避免意外某个节点取值错误，导致数据异常
+    -->
+    <sql id="EveryDayBalanceResult">
+        billDate,hisBills,qlcBills,channelBills,checkNum,abnormalNum,overPlusErrNum,receivableMoney,
+        alreadyReceivedMoney,refundMoney,alreadyRefundMoney,checkResult
+    </sql>
+
+    <sql id="ThreePartyBalanceResult">
+        orderId,hisOrderId,channelOrderId,serviceId,reserveId,priceName,receivableMoney,
+        alreadyreceivedMoney,refundMoney,alreadyRefundMoney,orderMemo,cardNo,operator,
+        operatorName,createDate,lastDate,channelId,payUpdateKey,qlcOrderState,hisOrderState,
+        channelOrderState,errorState,checkState,bizType,exeState,isSyn
+    </sql>
+
+    <sql id="ClassifySummaryBillResult">
+        billDate,channelId,serviceName,hisBills,qlcBills,channelBills,receivableMoney,
+        alreadyReceivedMoney,refundMoney,alreadyRefundMoney
+    </sql>
+
+    <!-- 下载每日汇总账单数据的excel-->
+    <select id="downloadEveryDayBillsExcel"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.bo.ThreeEveryDayBillsExcel">
+        SELECT
+          <include refid="EveryDayBalanceResult"/>
+        FROM
+          p_everyDayBalance p
+        <where>
+            1 = 1
+            <if test="startDate != '' and startDate != null">
+                and DATE_FORMAT(p.billDate,'%Y-%m-%d %T') >= #{startDate,jdbcType=VARCHAR}
+            </if>
+            <if test="endDate != '' and endDate != null"><![CDATA[
+                and DATE_FORMAT(p.billDate,'%Y-%m-%d %T') < #{endDate,jdbcType=VARCHAR}]]>
+            </if>
+            <if test="checkState != '' and checkState != null">
+                and p.checkResult = #{checkState,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY p.billDate desc
+    </select>
+
+    <!-- 下载三方汇总账单明细数据的excel-->
+    <select id="downloadThreePartyBillsExcel"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.bo.ThreePartyBillsExcel">
+        SELECT
+        <include refid="ThreePartyBalanceResult"/>
+        FROM
+        p_threePartyBalance p
+        <where>
+              1 = 1
+            and
+              p.createDate BETWEEN #{billParam.startDate,jdbcType=VARCHAR} and #{billParam.endDate,jdbcType=VARCHAR}
+            <choose>
+                <when test="billParam.orderId != '' and billParam.orderId != null">
+                    <choose>
+                        <when test="billParam.channelOrderType == 1">
+                            and p.orderId = #{billParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                        <when test="billParam.channelOrderType == 2">
+                            and p.channelOrderId = #{billParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                        <when test="billParam.channelOrderType == 3">
+                            and p.hisOrderId = #{billParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                    </choose>
+                </when>
+            </choose>
+            <if test="billParam.orderType != '' and billParam.orderType != null">
+                and p.qlcOrderState = #{billParam.orderType,jdbcType=VARCHAR}
+            </if>
+            <!-- 由于此字段比较特殊,所以需要做一些逻辑处理 1. 前端传入的checkState状态为2时，查询的是已经处理完成的(账平处置后)
+			     2. 如果传入的checkState不为2时，将查询当前订单的所有的情况 -->
+            <choose>
+                <when test="billParam.checkState != '' and billParam.checkState != null">
+                    <choose>
+                        <when test="billParam.checkState == 2">
+                            and p.checkState != '0' and p.exeState='2'
+                        </when>
+                        <otherwise>
+                            <choose>
+                                <when test="billParam.checkState == 0">
+                                    and p.checkState = #{billParam.checkState,jdbcType=VARCHAR}
+                                </when>
+                                <otherwise>
+                                    and p.checkState = #{billParam.checkState,jdbcType=VARCHAR} and p.exeState != '2'
+                                </otherwise>
+                            </choose>
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+            <if test="billParam.channelId != '' and billParam.channelId != null">
+                and p.channelId = #{billParam.channelId,jdbcType=VARCHAR}
+            </if>
+            <!-- 由于每日汇总针对异常账单有个按钮的跳转，所以这边需要针对这种入口的账单下载做一个特殊处理-->
+            <if test="billParam.errorState == '-1' and billParam.checkState == '' or billParam.checkState == null">
+                and p.errorState = '-1'
+            </if>
+            <!-- 根据前端传入的执行状态进行查询 -->
+            <if test="billParam.exeState != '' and billParam.exeState != null">
+                and p.exeState != #{billParam.exeState,jdbcType=VARCHAR}
+            </if>
+        </where>
+        Order By p.createDate desc
+    </select>
+
+    <!-- 下载分类汇总账单数据的excel-->
+    <select id="downloadClassifySummaryBillExcel"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.bo.ThreeClassifySummaryExcel">
+        SELECT
+        <include refid="ClassifySummaryBillResult"/>
+        FROM
+        p_classifySummaryBalance p
+        <where>
+            1 = 1
+            and p.parenServiceId IS NULL
+            <if test="billParam.startDate != '' and billParam.startDate != null">
+                and DATE_FORMAT(p.billDate,'%Y-%m-%d %T') >= #{billParam.startDate,jdbcType=VARCHAR}
+            </if>
+            <if test="billParam.endDate != '' and billParam.endDate != null"><![CDATA[
+                and DATE_FORMAT(p.billDate,'%Y-%m-%d %T') < #{billParam.endDate,jdbcType=VARCHAR}]]>
+            </if>
+            <if test="billParam.serviceId != '' and billParam.serviceId != null">
+                and p.serviceId = #{billParam.serviceId,jdbcType=VARCHAR}
+            </if>
+            <if test="billParam.channelId != '' and billParam.channelId != null">
+                and p.channelId = #{billParam.channelId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY p.billDate desc
+    </select>
+</mapper>

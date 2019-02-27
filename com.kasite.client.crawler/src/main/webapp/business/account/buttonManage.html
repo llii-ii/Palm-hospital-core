@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <link rel="stylesheet" href="../../commons/css/base.css" type="text/css"></link>
+	    <link rel="stylesheet" href="../../commons/css/setup.css" type="text/css"></link>
+		<link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/Pager.css" type="text/css"/>
+         <script type="text/javascript" src="../../commons/js/common.js"></script>
+	    <script type="text/javascript" src="../../commons/js/business-all.js"></script>
+    	<script type="text/javascript" src="js/buttonManage.js"></script>
+      <script language="javascript" type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <!--main content-->
+        <div class="container-wrap">
+        	<div class="main-header">
+                <ul class="clearfix">
+                    <li class="last"><span><a  href="javascript:window.location.href='accountPower.html';">用户管理</a></span></li>
+                    <li class="last"><span><a href="javascript:window.location.href='roleManage.html';">职务管理</a></span></li>
+                	<li class="last"><span><a href="javascript:window.location.href='menuManage.html';">菜单管理</a></span></li>
+                	<!--<li ><span><a  class="curr" href="javascript:window.location.href='buttonManage.html';">功能管理</a></span></li>
+                --></ul>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                   <div class="section">
+                        <div class="section-con clearfix">
+                            <div class="section jiekou-left" style="overflow-x: true;width: 380px;" >
+                                <div class="section-header">职务菜单</div>
+                                <div class="section-con section-con-wrap p20"  style="height:420px;width: 340px;" >
+                                    <div class="relative resel-box clearfix">
+                                    	<div>
+                                    		<table  class="table-form">
+                                    		  <tr>
+                                   				 <td class="t">
+                                   				 职务选择
+                                   				 </td>
+                                   				 <td style="width: 250px;">
+                                   				 	<div class="select-office-wrap">
+			                                        	<div class="select-office" onclick="showorhideRole(this);">
+			                                        		<input type="hidden" name="roleId" id="roleId"> 
+			                                                <span class="nowrap" id="selectOffice">门办</span>
+			                                                <i class="icon icon-office"></i>
+			                                            </div>
+			                                            <div class="select-office-box jspScrollable" id='selectOfficeBox' style="bottom:-180px;">
+			                                            </div>
+		                                        	</div>	
+                                   				 </td>
+                                   			   </tr>
+                                    		</table>
+                                    		<table class="tb" width="100%" id="tb">
+                    						</table>
+                                    	</div>
+                                	</div>
+                            	</div>
+                            </div>
+                            <div class="section jiekou-data" style="margin-left: 380px;">
+                                <div class="section-header" id="divMenuBtnTitle">菜单功能</div>
+                                <div class="section-con section-con-wrap">
+                                	<div class="setup-content m20">
+                                		<a href="javascript:;" class="btn-add office-btns" btnPermission="ADDBTN">新增功能</a>
+                                		<div class="office-box clearfix" style="display:none">
+                            				<table class="table-form">
+			                                    <tr>
+			                                        <td class="t">
+			                                            <sub>&lowast;</sub> 按钮名称
+			                                        </td>
+			                                        <td>
+			                                            <input type="text" class="text w250" id="txtBtnName"/>
+			                                            <input type="hidden" id="roleId"/>
+			                                            <input type="hidden" id="menuId"/>
+			                                            <input type="hidden" id="menuName"/>
+			                                        </td>
+			                                    </tr>
+			                                     <tr>
+			                                        <td class="t">
+			                                            <sub>&lowast;</sub> 按钮类型
+			                                        </td>
+			                                        <td>
+			                                            <input type="text" class="text w250" id="txtBtnType"/>
+			                                        </td>
+			                                    </tr>
+			                                    <tr>
+			                                        <td class="t">
+			                                           API
+			                                        </td>
+			                                        <td>
+			                                            <input type="text" class="text w250" id="txtBtnAPI"/>
+			                                        </td>
+			                                    </tr>
+			                                     <tr>
+			                                        <td class="t">
+			                                           Action
+			                                        </td>
+			                                        <td>
+			                                            <input type="text" class="text w250" id="txtBtnAction"/>
+			                                        </td>
+			                                    </tr>
+                                			</table>
+                            			</div>
+                                		<table class="tb" width="100%" id="tabRoleBtn" >
+                                			 <tr>
+                                    			<th>按钮名称</th>
+                                    			<th>操作类型</th>
+                                    			<th>调用API</th>
+                                    			<th>调用Action</th>
+                                    			<th>状态</th>
+                                    			<th>操作</th>
+                                    		</tr>
+                                		</table>
+                                	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/main content-->
+</body>
+</html>

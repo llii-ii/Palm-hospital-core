@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" /><meta content="telephone=no" name="format-detection" />
+<title>全流程</title>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	setAuthInfo();
+	$("#btnSaveCookie").on('click',function(){
+		
+		setAuthInfo();
+		alert('设置cookie成功！');
+	});
+
+});
+
+function setAuthInfo(){
+	
+	$(".nav_bot li div a").each(function(){
+		$(this).click(function(){
+			var url = "../../../../"+$(this).attr("url");
+			document.location.href = "/api/"+$("#txtOpenId").val()+
+			"/"+$("#txtClientId").val()+"/"+$("#txtConfigKey").val()+
+			"/test.do?toUrl="+encodeURI(url);
+		});
+	});
+	
+	
+}
+</script>
+</head>
+<style type="text/css">
+/*全局*/
+body { margin:0; padding:0; font-family:"\5FAE\8F6F\96C5\9ED1", Helvetica; font-size:15px; background:#fafafa; color:#333;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td, i, em, label, iframe { margin:0; padding:0;}
+ul, li { list-style: none;}
+i{ font-style:normal;}
+html{ overflow-x:hidden;}
+a{ text-decoration:none; outline:none; -webkit-tap-highlight-color:rgba(0, 0, 0, 0); color:#333;}
+span,div{ -webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
+.nav_bot{ position:fixed; background:#ccc; width:100%; height:40px; left:0; bottom:0;}
+.nav_bot li{ display:block; width:33%; height:40px; line-height:40px; float:left; border-left:1px solid #e1e1e1; text-align:center; position:relative;}
+.nav_bot li:first-child{ border:none;}
+.prelist{ position:absolute; width:100%; left:0px; bottom:40px; text-align:center; line-height:40px; background:#fff;}
+.prelist a{ font-size:14px; color:#333; display:block; border-top:1px solid #e1e1e1;}
+</style>
+<body>
+<div style="padding-top: 100px;">
+	<div>
+		<label style="padding-left: 50px;">openId:</label>
+		<input style="width:60%;height: 30px;"  id="txtOpenId" value="okTXZsgajYK8L0SBWdvvCyvaFC3c" /><br><br>
+		<label style="padding-left: 50px;">clientId:</label>
+		<input style="width:60%;height: 30px;"  id="txtClientId" value="100123" /><br><br>
+		<label style="padding-left: 50px;">configKey:</label>
+		<input style="width:60%;height: 30px;"  id="txtConfigKey" value="WX1000006" /><br><br>
+		<div style="text-align: center;"><button id="btnSaveCookie">保存鉴权信息</button></div>
+	</div>
+</div>
+<div class="nav_bot">
+	<ul>
+    	<li>
+        	<a href="#">服务</a>
+            <div class="prelist">
+            	<a url="business/yygh/yyghDeptList.html">一级科室预约挂号</a>
+            	<a url="business/yygh/yyghTwoLevelDeptList.html">二级科室预约挂号</a>
+            	<a url="business/queue/queueList.html">排队候诊</a>
+            	<a url="business/survey/survey_home.html">满意度调查</a>
+            	<a url="business/inHospital/hospitalNoRechargeQr.html">腕带付</a>
+            </div>
+        </li>
+    	<li>
+        	<a href="#">关于医院</a>
+            <div class="prelist">
+            	<a url="business/hospitalInfo/hospitalIntro.html">医院介绍</a>
+            	<a url="business/hospitalNews/news.html">医院动态</a>
+            </div>
+        </li>
+    	<li>
+        	<a href="#">我的</a>
+            <div class="prelist">
+            	<a url="business/index/myCenterTab.html">个人中心</a>
+            	<a url="business/index/hospitalizationTab.html">我的住院</a>
+            	<a url="business/index/clinicTab.html">我的门诊</a>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

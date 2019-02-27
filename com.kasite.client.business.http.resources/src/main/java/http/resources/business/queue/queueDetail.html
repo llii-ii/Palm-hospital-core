@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>排队候诊</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+     <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"></link>
+     <style>
+	    .arrow_down {
+		    width: 0;
+		    height: 0;
+		    border-left: 6px solid transparent;
+		    border-right: 6px solid transparent;
+		    border-top: 6px solid #008fd4;
+		}
+     </style>
+</head>
+<body>
+<div class="c-main pb15">
+    <div class="h45">
+    	<ul class="doc-filter">
+        	<li>
+            	<a href="javascript:;"><i class="sicon icon-jzr"></i><label class="c-f15 mr5" id="jzrword"></label><span class="c-999" id="jzkid"></span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<div class="wait-detail">
+        	<h4 class="wd-top">候诊详情</h4>
+            <ul class="visit-mess ml15 c-f13">
+                <li>
+                    <div class="vm-key c-999">科室</div>
+                    <div class="vm-info"  id="DeptName"></div>
+                </li>
+                <li>
+                    <div class="vm-key c-999">医生</div>
+                    <div class="vm-info" id="DoctorName"></div>
+                </li>
+                <li>
+                    <div class="vm-key c-999">位置</div>
+                    <div class="vm-info" id="Location"></div>
+                </li>
+            </ul>
+            <ul class="visit-mess ml15 c-f13 bor-t-f2">
+                <li>
+                    <div class="vm-key c-999">您的候诊号序</div>
+                    <div class="vm-info"><span class="c-0093ff" id=No></span>号 <span id = "noWaitNum">还需等待<span class="c-0093ff" id="WaitNum"></span>人</span></div>
+                </li>
+                <li>
+                    <div class="vm-key c-999">当前就诊号序</div>
+                    <div class="vm-info" id="MaxNo"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="wait-open mt10 c-border-tb">
+    	<div class="wo-top">
+        	<div class="input-group-switch fr">
+                <input type="checkbox" id='warmCheck' />
+            </div>
+        	智能提醒
+        </div>
+        <div class="wo-bot c-hide">
+       		当候诊号序至
+       		<input type="text" class="wait-text" style="width: 1.8rem;" id="wait-number"/><i class="arrow_down" style="position:relative;top:0.56rem;left:-0.40rem;"></i>
+       		号时，提醒您准备就诊
+        </div>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="queueList.html" class="c-btn c-btn-blue">返回</a>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="js/queueDetail.js?v=201901152112"></script>
+</body>
+</html>

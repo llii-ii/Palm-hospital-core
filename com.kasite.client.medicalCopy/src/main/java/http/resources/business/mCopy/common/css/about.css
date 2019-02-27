@@ -1,0 +1,45 @@
+/* 选择科室 */
+.cdept_box{ width:100%; background:#fff; position:fixed; height:100%; left:0px; z-index:550;}
+.cdept_box li{ line-height:45px;}
+.cdept_box li a{ display:block; width:100%; padding:0 30px 0 15px; position:relative; border-bottom:1px solid #e1e1e1; color:#333; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.cdept_box li a.hit{ background:#00A1D8; color:#fff;}
+.cdept_box li a .cdeptjt{ position:absolute; width:8px; height:13px; top:16px; right:15px; background-position:-1px -1px;}
+.cdept_box li a.hit .cdeptjt{ background-position:-12px -1px;}
+.cdsec_box{ width:55%; position:fixed; right:-60%; background:#f8f8f8; height:100%;}
+.cdsec_box li{ line-height:45px; padding:0 15px;}
+.cdsec_box li a{ display:block; border-bottom:1px solid #e1e1e1; color:#262626; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.cdsec_box li a.hit{ color:#007cd9;}
+.dintro_top{ padding:10px 4%; background:#fff; line-height:24px;}
+.rocon{ padding:5px 0 10px 0; display:block;}
+/* 楼层分布 */
+.floor_img{ text-align:center; background:#fff;}
+.floor_img img{ max-width:640px; vertical-align:bottom;}
+.floor_list{ width:100%;}
+.floor_list li{ line-height:45px; background:#fff; border-bottom:1px solid #e1e1e1;}
+.floor_list li a{ display:block; line-height:45px; line-height:45px; position:relative; padding:0 4%;}
+.floor_det li{ display:block; width:100%; padding:10px 4% 10px 63px; position:relative; background:#fff; line-height:25px; color:#909090; word-break:break-all;}
+.floor_det li .flnum{ position:absolute; left:15px; top:10px;}
+/* 演示医院 */
+.hosm_top{ width:100%;}
+.hosm_top img{ vertical-align:bottom; max-height:300px;}
+.hosm_mess{ width:100%;}
+.hosm_mess li{ display:block; width:100%; min-height:45px; padding:10px 4% 10px 95px; position:relative; background:#fff; line-height:25px; color:#909090; word-break:break-all;}
+.hosm_mess li.tointro{ padding:10px 35px 10px 95px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.hmtit{ position:absolute; left:15px; top:10px;}
+/* 科室搜索 */
+.dserhold{ height:46px;}
+.dserdiv{ width:100%; height:45px; border-bottom:1px solid #e1e1e1; background:#fff; position:fixed; left:0; top:0; z-index:800;}
+.dserbox{ width:92%; height:30px; line-height:30px; margin:7px auto 0 auto; background:#eee; color:#999;}
+.dserbox i{ display:inline-block; width:15px; height:15px; background-position:-235px -1px; vertical-align:middle; margin:0 10px 3px 10px;}
+.srpage{ padding-right:45px;}
+.srpage a{ display:block; position:absolute; right:4%; top:7px; line-height:30px;}
+.serinput{ display:block; width:100%; height:30px; line-height:30px; border:none; padding:0 10px 0 30px; background-position:-228px 7px; color:#5b5b5b;}
+.serhis li{ line-height:45px; background:#fff; padding:0 4%; border-bottom:1px solid #e1e1e1; position:relative;}
+.serhis li .shmess{ display:block; width:100%;}
+.serhis li .shmess i.ihis{ display:inline-block; width:13px; height:13px; background-position:-116px -136px; vertical-align:middle; margin:0 10px 4px 0;}
+.serhis li .shmess i.irul{ display:inline-block; width:13px; height:13px; background-position:-236px -24px; vertical-align:middle; margin:0 10px 4px 0;}
+.serhis li a.idel{ display:block; width:40px; height:40px; background-position:-130px -122px; position:absolute; right:3px; top:2px;}
+.serbot{ display:block; text-align:center; padding:10px 0;}
+.serbot a{ color:#333; font-size:14px; line-height:23px;}
+.serbot .deltb{ display:inline-block; width:15px; height:15px; background-position:-176px -136px; vertical-align:middle; margin:0 10px 4px 0;}
+.serbot .sertb{ display:inline-block; width:15px; height:15px; background-position:-235px -1px; vertical-align:middle; margin:0 10px 4px 0;}

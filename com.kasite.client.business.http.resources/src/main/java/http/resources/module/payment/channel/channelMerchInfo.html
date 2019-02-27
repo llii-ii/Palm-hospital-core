@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+</head>
+<body>
+<div class="com-title">
+	渠道管理<i class="icon icon-jt"></i><span class="c-828c91">渠道详情</span>
+    <a  href="#" class="com-back"><i class="icon icon-back"></i>返回</a>
+</div>
+<div class="wrapper">
+	<div class="chan-top mt30" id="divChannelInfo">
+		<label id="channelName">加载中...</label> <label class="radio ml25"
+			data-toggle="radio" id="channelStatus"> </label> <a
+			href="javascript:;" id="editChannelBtn" class="fr" editable="1"
+			style="display:none;"><i class="icon icon-edit"></i>编辑</a>
+	</div>
+	<div class="chan-box pb30 mt20" id="editChannelForm">
+		
+	
+	</div>
+	<div class="chan-box mt20" ><a id="addChannelMerchBtn" added="1"   class="c-btn c-btn-blue q-addpay" style="display: none;"><i class="icon icon-add"></i>添加支付方式</a></div>
+    <div  id="channelMerchList">
+       
+</div><a name="addMao"></a></div>
+<!--添加支付方式-->
+<div class="c-hide" id="qAddpay">
+		<div class="cb-top">
+            <label class="radio ml25 checked" id="isEnable" data-toggle="checkbox">
+                <input type="radio"  checked >
+                <i class="icon-radio"></i> 是否启用
+            </label>
+        </div>
+        <div class="cb-box mt20">
+        	<div class="cb-left">
+            	<div>
+                    <p><i class="icon icon-shop"></i></p>
+                    <p>商户信息</p>
+                </div>
+            </div>
+            <table class="tb tb-l c-t-center">
+                <tr>
+					<th width="33%">商户代码</th>
+                    <th width="33%">商户号ID</th>
+                    <th>收款银行帐号</th>
+                </tr>
+                <tr>
+                    <td><div class="form-select">
+                            <select class="select select-w182" id="selMerch" name="merchCode">
+                            </select>
+                        </div>
+                        <span class="ml5">&emsp;</span></td>
+ 					<td id="tdMerchAccount"></td>
+                    <td id="tdBankName"></td>
+                </tr>
+            </table>
+        </div>
+		<div class="cb-box mt20">
+        	<div class="cb-left">
+            	<div>
+                    <p><i class="icon icon-pay"></i></p>
+                    <p>支付规则</p>
+                </div>
+            </div>
+            <table class="tb tb-l c-t-center">
+                <tr>
+                    <th width="33%">交易规则</th>
+                    <th>规则说明</th>
+                </tr>
+                <tr class="lgtr">
+                    <td>单笔限额</td>
+                    <td>
+                    	<input type="text" class="input-text input-text-w80" value="1.00" id="singlePriceLimitMin" />
+                    	<span class="mlr5">-</span>
+                    	<input type="text" class="input-text input-text-w80" value="2000.00"  id="singlePriceLimitMax" />
+                        <span class="ml5">元</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>允许支付时段</td>
+                    <td>
+                    	<input type="text" class="date-txt datetimepicker input-text " id="payTimeLimit" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>是否允许信用卡支付</td>
+                    <td>
+                    	<div class="form-select">
+                            <select class="select select-w182" id="isCredit">
+                                <option value="0">允许</option>
+                                <option value="1">不允许</option>
+                            </select>
+                        </div>
+                        <span class="ml5">&emsp;</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>允许退款时段</td>
+                    <td>
+                    	<input type="text" class="date-txt datetimepicker input-text " id="refundTimeLimit" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="cb-box mt20">
+        	<div class="cb-left">
+            	<div>
+                    <p><i class="icon icon-qpower"></i></p>
+                    <p>接口权限</p>
+                </div>
+            </div>
+            <table class="tb tb-l c-t-center">
+                <tr>
+                    <td class="checktd" id="smartPayApiList">
+                    	<!-- <label class="checkbox mr40" data-toggle="checkbox">
+                            <input type="checkbox" name="tags">
+                            <i class="icon-chkbox"></i>统一下单接口
+                        </label> -->
+                    </td>
+                </tr>
+            </table>
+        </div> 
+</div>
+<script type="text/juicer"  id="tmp">
+<div class="chan-box">
+<div class="cb-top">
+		支付方式${i}：${MerchTypeName}
+<!--<input type="radio" name="group" checked>
+                <i class="icon-radio"></i> -->
+			{@if IsEnable==1}
+				 启用中
+			{@else}
+				禁用中
+			{@/if}
+		</label>
+					{@if isAdmin==1}
+						 <a href="javascript:openEditChannelMerchDialog(${i});" class="fr"><i class="icon icon-bedit"></i>编辑</a>
+					{@else}
+					{@/if}
+
+	</div>
+	<div class="cb-box mt20">
+		<div class="cb-left">
+			<div>
+				<p>
+					<i class="icon icon-shop"></i>
+				</p>
+				<p>商户信息</p>
+			</div>
+		</div>
+		<table class="tb tb-l c-t-center">
+			<tr>
+				<th width="33%">商户号代码</th>
+				<th width="33%">商户号ID</th>
+				<th>收款银行帐号</th>
+			</tr>
+			<tr class="lgtr">
+				<td>${MerchCode}</td>
+				<td>${MerchAccount}</td>
+				<td>${BankName}:${BankNo}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="cb-box mt20">
+		<div class="cb-left">
+			<div>
+				<p>
+					<i class="icon icon-pay"></i>
+				</p>
+				<p>支付规则</p>
+			</div>
+		</div>
+		<table class="tb tb-l c-t-center">
+			<tr>
+				<th width="33%">交易规则</th>
+				<th>规则说明</th>
+			</tr>
+			<tr>
+				<td>单笔限额</td>
+				<td>${SinglePriceLimit}</td>
+			</tr>
+			<tr>
+				<td>允许支付时段</td>
+				<td>${PayTimeLimit}</td>
+			</tr>
+			<tr>
+				<td>是否允许信用卡支付</td>
+				<td>{@if IsCredit==1}
+						不允许
+					{@else}
+						允许
+					{@/if}</td>
+			</tr>
+			<tr>
+				<td>允许退款时段</td>
+				<td>${RefundTimeLimit}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="cb-box mt20">
+		<div class="cb-left">
+			<div>
+				<p>
+					<i class="icon icon-qpower"></i>
+				</p>
+				<p>IP白名单</p>
+			</div>
+		</div>
+		<table class="tb tb-l c-t-center">
+			{@if IpWhiteJson.length == 0}
+				<tr><td></br></br>无</br></br></td></tr>	 
+			{@else}
+				{@each IpWhiteJson.IpWhiteSet as item}
+					<tr><td>${item}</td></tr>
+				{@/each}
+			{@/if}
+		</table>
+	</div>
+	<div class="cb-box mt20">
+		<div class="cb-left">
+			<div>
+				<p>
+					<i class="icon icon-qpower"></i>
+				</p>
+				<p>接口权限</p>
+			</div>
+		</div>
+		<table class="tb tb-l c-t-center">
+			<tr>
+				<th>API接口</th>
+				<th>是否启用</th>
+			</tr>
+			{@if ApiList.length == 0}
+				<tr><td></br></br>无</br></br></td></tr>	 
+			{@else}
+				{@each ApiList as it}
+					<tr>
+						<td>${it.Apiname}</td>
+						<td>
+							{@if it.Status==1}
+								开启
+							{@else}
+								禁用
+							{@/if}
+						</td>
+					</tr>
+				{@/each}
+			{@/if}
+			
+		</table>
+		</div>
+</div>
+</script>
+<script type="text/juicer"  id="editChannelFormTmp">
+<div class="ca-top">
+			<div class="ca-tit">渠道信息</div>
+			<div class="ca-con">
+				<p class="mt10">
+					<input type="text" class="input-text input-text-w200"
+						placeholder="请输入交易渠道名称" value="${ChannelName}" readonly="true"/>
+				</p>
+				<p class="mt10">
+				<div class="form-select">
+					<select class="select select-w200" id="selChannelStatus">
+						<option  value=1
+						{@if Status == 1}
+							selected = "selected"
+						{@/if}
+						>启用</option>
+						<option  value=0
+						{@if Status == 0}
+							selected = "selected"
+						{@/if}
+						>禁用</option>
+					</select>
+				</div>
+				</p>
+			</div>
+		</div>
+		<div class="mt20 ">
+			<a href="javascript:saveChannelInfo();" class="c-btn c-btn-blue q-addpay"  id="saveChannelBtn"><i class="icon" ></i>保存渠道</a>
+		</div>
+</script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../widget/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/juicer.js"></script>
+<script type="text/javascript" src="../commons/js/common.js"></script>
+<script type="text/javascript" src="js/channelMerchInfo.js"></script>
+</body>
+</html>

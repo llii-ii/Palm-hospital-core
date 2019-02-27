@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, div, h1, h2, h3, h4, h5, h6, input, span, p, label { margin:0; padding:0;}
+a { text-decoration:none;}
+
+a.c-007 { color:#007cd9;}
+a.c-007:hover { color:#ff8a00;}
+
+.f12 { font-size:12px;}
+.v-center-box { font-size: 0;  *word-spacing: -1px;height: 100%;}
+
+.mt20 { margin-top:20px;}
+.ml10 { margin-left:10px;}
+.ml20 { margin-left:20px;}
+.p20 { padding:20px;}
+
+.abs { position:absolute;}
+.rel { position:relative;}
+.t-hide { text-indent:-999em; overflow:hidden; font-size:0;}
+
+body { font:14/1 宋体，"Simsun";}
+
+.wrapper { width:980px; margin:0 auto;}
+
+.headerbg { height:79px; background:url(../images/member/header-bg-r.jpg) repeat-x;}
+.header { height:79px; background:url(../images/member/header-bg.jpg) no-repeat;}
+.header-xj { background:url(../images/member/header-bg-xj.jpg) no-repeat;}
+
+.main { padding:80px 0; background-color:#eef0f2;}
+.main-con { padding-left:570px; width:348px; background:url(../images/member/mainbg.jpg) no-repeat 27px 0;}
+.main-con-xj { background:url(../images/member/mainbg-xj.jpg) no-repeat 27px 0;}
+.login-form { border:1px solid #dcdcdc; background-color:#fff;}
+.login-tit { height:43px; background:url(../images/member/login-titbg.jpg) no-repeat; border-bottom:1px solid #dfdfdf;}
+.login-main { padding:30px 20px;}
+.login-form label {display:block; font-size:14px; color:#858585;}
+.inp-txt { margin-top:10px; width:279px; height:33px; padding:0 5px; line-height:33px; border:1px solid #d6d6d6; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; -webkit-box-shadow:0 0 2px rgba(0,0,0,.2) inset; -moz-box-shadow:0 0 2px rgba(0,0,0,.2) inset; box-shadow:0 0 2px rgba(0,0,0,.2) inset;}
+.btn-login { display:inline-block;  width:109px; height:38px; background:url(../images/member/btn-login.jpg) no-repeat; border:none; vertical-align:middle; cursor:pointer;}
+.a-fp { display:inline-block; vertical-align:middle; *display:inline; *zoom:1;}
+.footer { height:36px; line-height:36px; background-color:#024b77; text-align:center; color:#fff; font-size:12px;}
+.logo-f { display:inline-block; width:77px; height:22px; margin:7px 5px; background:url(../images/member/logo-f.jpg) no-repeat; vertical-align:middle;}
+
+.mask { position:fixed; _position:absolute; left:0; top:0; width:100%; height:100%; _height:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight)); background-color:#000; opacity:.5; filter:alpha(opacity=50); z-index:999;}
+.popbox { position:fixed; _position:absolute; left:50%; top:50%; margin-left:-185px; margin-top:-105px; width:370px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; -webkit-box-shadow:0 0 5px rgba(0,0,0,.5); -moz-box-shadow:0 0 5px rgba(0,0,0,.5); box-shadow:0 0 5px rgba(0,0,0,.5); z-index:10000;}
+.btn-close { display:block; right:15px; top:15px; width:9px; height:9px; background:url(../images/bmgl/btn-close.gif) no-repeat;}
+.pop-tit { height:35px; padding-left:20px; line-height:35px; background-color:#eee; font:14px/35px 微软雅黑,"Microsoft Yahei"; border-bottom:1px solid #fff; -webkit-border-radius:3px 3px 0 0; -moz-border-radius:3px 3px 0 0; border-radius:3px 3px 0 0;}
+.pop-main { padding:20px; background-color:#fff; border-bottom:1px solid #e6e6e6; color:#666; line-height:1.5;}
+.pop-inp-txt { display:inline-block; width:210px; height:26px; padding:0 5px; border:1px solid #d6d6d6; line-height:26px; vertical-align:middle; *display:inline;*zoom:1; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; -webkit-box-shadow:0 0 2px rgba(0,0,0,.2) inset; -moz-box-shadow:0 0 2px rgba(0,0,0,.2) inset; box-shadow:0 0 2px rgba(0,0,0,.2) inset;}
+.pop-footer { height:40px; padding-top:10px; background-color:#fff; text-align:center; -webkit-border-radius:0 0 3px 3px; -moz-border-radius:0 0 3px 3px; border-radius:0 0 3px 3px;}
+.btn-blue,.btn-gray-s,.btn-gray-xl { display:inline-block; height:28px; line-height:28px; background:url(../images/tijian/btns.gif) no-repeat; border:none; text-align:center; cursor:pointer; vertical-align:middle; *display:inline; *zoom:1;}
+.btn-blue { width:62px; color:#fff;}
+.btn-gray-xl { width:96px; background-position:0 -150px; color:#555;}
+.btn-gray-s { width:62px; background-position:0 -90px; color:#555;}

@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>新建活动</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+			.addimg{
+				margin-bottom: 5px;
+			}
+			.addimg-has,
+			.addimg-has-text{display: none;}
+			.addimg-no,
+			.addimg-has{
+				position: relative;
+				cursor: pointer;
+				width: 300px;
+				height: 167px;
+				text-align: center;
+				border:1px dashed #e5e6e7;
+				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				overflow: hidden;
+			}
+			.addimg-has{
+				border: 1px solid #e5e6e7;
+			}
+			.addimg-no input[type="file"],
+			.addimg-has input[type="file"]{
+				cursor: pointer;
+				position: absolute;
+				opacity: 0;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 2;
+			}
+			.addimg-no img{
+				width: 40px;
+				margin: 30px auto 10px auto;
+				display: block;
+			}
+			.addimg-has img{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.addimg-no span,
+			.addimg-has-text span{
+				font-size: 16px;
+				font-weight: bold;
+				margin-bottom: 5px;
+				display: block;
+			}
+			.addimg-no p,
+			.addimg-has-text p{
+				color: #e5e6e7;
+			}
+			.addimg.active .addimg-has,
+			.addimg.active .addimg-has-text{
+				display: block;
+			}
+			.addimg.active .addimg-no{
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>活动开始日期：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input readonly="readonly" id="startTime" type="text" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control form-group" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>活动结束日期：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input readonly="readonly" id="endTime" type="text" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control form-group" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>参会人数：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input id="totalNumber" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>活动地点：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input id="place" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>参与人员：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input id="checksId" type="hidden"  value="" >
+							<input id="checksName" type="text" onfocus="cc()" value="" class="form-control" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>报名截止日期：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input readonly="readonly" id="expireTime" type="text" value="" class="form-control form-group datatime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"  class="form-control form-group" placeholder="时间">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 160px;">
+					<label>封面图片：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:160px;">
+					<input type="hidden" id="imgUrl" name="imgUrl" value=""/>
+					<input type="hidden" id="imgName" name="imgName" value=""/>
+					<div class="addimg">
+						<!--没有图片-->
+						<div class="addimg-no">
+							<input type="file" name="newsFile" id="uploadImg" onchange="upload('uploadImg')" accept="image/jpg,image/png" value="" />
+							<img id="imgView" src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+							<span>点击上传图片</span>
+							<p>建议使用900x500像素的图片</p>
+						</div>
+						
+<!-- 						有图片
+						<div class="addimg-has">
+							<input type="file" name="" id="" onchange="upimg(this)" accept="image/jpeg,image/gif,image/png" value="" />
+							<img src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+						</div>
+						<div class="addimg-has-text">
+							<p>建议使用900x500像素的图片</p>
+						</div> -->
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>活动主题：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input id="title" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>活动内容：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<textarea id="editor" component="editor" style="width:100%;height:300px;"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label>上传附件：</label>
+						</div>
+						<input type="hidden" id="attachmentUrl" name="attachmentUrl" value=""/>
+						<input type="hidden" id="attachmentName" name="attachmentUrl" value=""/>
+						<label style="display:none;" id="fileSign"></label>
+						<div class="x-row-cols " style="margin-left:160px;padding-top: 5px;">
+							<input type="file" name="newsFile" id="attachment" onchange="upload('attachment')" value="点击上传" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-center" style="margin-left:160px;">
+					<button onclick="addActivity(0);" type="button" class="btn btn-primary btn-w-m">发布</button>
+					<button onclick="addActivity(10);" type="button" class="btn btn-warning btn-w-m">预览</button>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../../module/backstage/commons/upload/upload.js"></script>
+	<script>
+		var acid = Commonjs.getUrlParam("id");
+		var type = Commonjs.getUrlParam("type");
+		var acUUid = '';
+		var oldMemberIds = '';
+		var changePeopleFlag = false;
+        $(function(){
+        	if(acid != '' && acid != null && acid != undefined){
+        		getActivityInfo();
+        		getPeopleList(0);
+        	}
+        	if(type == 'copyActivity'){
+        		acid = '';
+        	}
+        });
+        
+		//获取活动信息
+		function getActivityInfo(){
+			var apiData = {};	
+    		apiData.id = acid;
+    		apiData.status = -1;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryActivityById/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				acUUid = dd.Data[0].Activityid;
+     				
+     				$("#startTime").val(dd.Data[0].Starttime);
+     				$("#endTime").val(dd.Data[0].Endtime);
+     				$("#place").val(dd.Data[0].Place);
+     				$("#editor").html(dd.Data[0].Intro);
+     				$("#title").val(dd.Data[0].Title);
+     				$("#expireTime").val(dd.Data[0].Expiretime);
+     				$("#totalNumber").val(dd.Data[0].Totalnumber);
+     				
+     				if(dd.Data[0].ImgUrl != ''){
+    	    			$("#imgUrl").val(dd.Data[0].ImgUrl);
+    	    			$("#imgName").val(dd.Data[0].ImgName);
+    					//展示图片
+    					$("#imgView").attr("src", dd.Data[0].ImgUrl);
+    					$("#imgView").css("width","100%");
+    					$("#imgView").css("height","100%"); 
+     				}
+     				
+     				if(dd.Data[0].AttachmentUrl != ''){
+            			$("#fileSign").text("已关联附件："+dd.Data[0].AttachmentName+",如需修改请重新上传！");
+            			$("#fileSign").show();
+    	    			$("#attachmentUrl").val(dd.Data[0].AttachmentUrl);
+    	    			$("#attachmentName").val(dd.Data[0].AttachmentName);
+     				}     				
+     				
+     			}
+     		},{async:false});
+		}
+		
+		//获取参与人
+		function getPeopleList(memberType){
+			var apiData = {};	
+            apiData.uid = acUUid;
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var names = '';
+					var ids = '';
+					for(var i = 0;i<dd.Data.length; i++){
+						var id = dd.Data[i].Memberid;
+						if(dd.Data[i].IsDept == 1){
+							id = "d_" + id;
+						}
+						names = names + dd.Data[i].Membername + ",";
+						ids = ids + id + ",";
+					}
+			        $("#checksName").val(names.substring(0,names.length-1));
+		        	$("#checksId").val(ids.substring(0,ids.length-1));
+		        	if(memberType == 0){
+		        		oldMemberIds = ids.substring(0,ids.length-1);
+		        	}		        	
+    			}else{
+					$("#checksName").val("暂无参与人");
+    			}
+    		},{async:false});		
+		}
+        
+		//新增活动
+		function addActivity(status){
+			var startTime = $("#startTime").val();
+			var endTime = $("#endTime").val();
+			var place = $("#place").val();
+			var totalNumber = $("#totalNumber").val();
+			var expireTime = $("#expireTime").val();
+			var title = $("#title").val();
+			var intro = $("#editor").val();
+			var checksId = $("#checksId").val();
+			if(startTime == ''){
+				alert('请选择活动开始日期');
+			}else if(endTime == ''){
+				alert('请选择活动结束日期');
+			}else if(totalNumber == ''){
+				alert('请输入活动人数');
+			}else if(place == ''){
+				alert('请填写活动地点');
+			}else if(checksId == ''){
+				alert('请选择参加人员');
+			}else if(expireTime == ''){
+				alert('请选择活动报名截止日期');
+			}else if(title == ''){
+				alert('请填写活动主题');
+			}else if(intro == ''){
+				alert('请填写活动内容');
+			}else {
+				var apiData = {};
+    			if(acid != '' && acid != null){
+    				apiData.id = acid;
+    				apiData.activityId = acUUid;
+    			}
+	    		apiData.startTime = startTime;
+	    		apiData.endTime = endTime;
+	    		apiData.place = place;
+	    		apiData.totalNumber = totalNumber;
+	    		apiData.expireTime = expireTime;
+	    		apiData.title = title;
+	    		apiData.intro = intro;
+	    		if(type == 'UpdateActivity'){
+	    			apiData.status = 0 ;
+	    		}else {
+	    			apiData.status = status;
+	    		}
+	    		if($("#imgUrl").val() != ''){
+	    			apiData.imgUrl = $("#imgUrl").val();
+	    			apiData.imgName = $("#imgName").val();
+	    		}
+	    		
+	    		if($("#attachmentUrl").val() != ''){
+	    			apiData.attachmentUrl = $("#attachmentUrl").val();
+	    			apiData.attachmentName = $("#attachmentName").val();
+	    		}
+	    		
+	     		var param = {};
+	     		param.apiParam = Commonjs.getApiReqParams(apiData);
+    			if(acid != '' && acid != null){
+             		Commonjs.ajax('/wsgw/qyWeChat/UpdateActivity/callApi.do',param,function(dd){
+             			if(dd.RespCode == 10000){
+             				if(oldMemberIds != $("#checksId").val()){
+             					changeChecksPeople(acUUid);
+             				}
+             				if(status == 0){
+             					if(changePeopleFlag){
+             						meetingPush(dd.RespMessage);
+             					}
+                 				alert('修改成功');
+    							parent.refresh();
+    							System.closeThisWindow();
+             				}else if(status == 10){
+             					//跳出二维码
+             					getQRcode(acUUid);
+             				}
+             			}else if(dd.RespCode == -30000 || dd.RespCode == -20000){
+             				alert("修改失败请联系管理员！");
+             			}else if(dd.RespCode == 500){
+             				alert("请将信息填写完整后重试！");
+             			}
+             		},{async:false});
+    			}else{
+    	     		Commonjs.ajax('/wsgw/qyWeChat/AddActivity/callApi.do',param,function(dd){
+    	     			
+                 			if(dd.RespCode == 10000){
+                 				changeChecksPeople(dd.RespMessage);
+                 				if(status == 0){
+                 					if(changePeopleFlag){
+                 						meetingPush(dd.RespMessage);
+                 					}
+                 					alert("活动创建成功！");
+                					parent.refresh();
+                					System.closeThisWindow();
+                 				}else if(status == 10){
+                 					//跳出二维码
+                 					getQRcode(dd.RespMessage);
+                 				}
+                 			}else if(dd.RespCode == -30000){
+                 				alert("申请失败请联系管理员！");
+                 			}else if(dd.RespCode == 500){
+                 				alert("请将信息填写完整后重试！");
+                 			}
+             		},{async:false}); 
+    			}
+			}
+		}
+		
+		//预览
+        function getQRcode(uuid){
+			var apiData = {};
+    		apiData.activityId = uuid;
+    		apiData.status = -1;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HDYQ');
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryActivityById/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				acid = dd.Data[0].Id;
+        			acUUid = dd.Data[0].Activityid;
+     				System.openWindow({
+     					id:'activityQRcode',
+     					title:'请使用企业微信扫码预览',
+     					url:dd.Data[0].QrPicUrl,
+     					width:'400',
+     					height:'450',
+     					maxmin:false,
+     					onload:function(){
+     						
+     					},
+     					closed:function(){
+     						
+     					}
+     				});
+     			}
+     		},{async:false});
+		}
+		
+        
+        
+        function cc(){
+        	window.localStorage.setItem('checksId',$("#checksId").val());
+        	window.localStorage.setItem('checksName',$("#checksName").val());
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'deptUser.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+        
+        //接收子页面传来的参数
+        function ccResult(ids,names){
+        	$("#checksId").val(ids);
+        	$("#checksName").val(names);
+        }
+           
+		//添加参与人
+		function changeChecksPeople(uid){
+			var apiData = {};	
+            apiData.uid = uid;
+            apiData.memberIds = $("#checksId").val();
+            apiData.memberNames = $("#checksName").val();
+            apiData.memberType = 0;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				changePeopleFlag = true;
+    			}else{
+    				changePeopleFlag = false;
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+	
+		}
+        
+		//上传图片/文件
+        function upload(id) {
+			var filePath = $("#"+id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.')+1,filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\')+1,filePath.length);
+			if(id == 'uploadImg'){
+				if( type.toLowerCase() != 'jpg' && type.toLowerCase() != 'png'){
+					alert('图片格式必须为.jpg或.png');
+					return ;
+				}
+			}
+	        var arrID = [ id ];
+			$.yihuUpload.ajaxFileUpload( {
+				url : '/upload/uploadFile.do', // 用于文件上传的服务器端请求地址
+				secureuri : false,// 一般设置为false
+				fileElementId : arrID,// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token='+Commonjs.getToken(),						
+				dataType : 'json',// 返回值类型 一般设置为json
+				success : function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host +"/"+uri;
+					
+					if( id == 'uploadImg'){
+						//展示图片
+						$("#imgView").attr("src", uri_target);
+						$("#imgView").css("width","100%");
+						$("#imgView").css("height","100%"); 
+						//保存文件名和URL
+						$("#imgUrl").val(uri_target);
+						$("#imgName").val(filename);
+					}else if( id == 'attachment'){
+						//保存文件名和URL
+						$("#attachmentUrl").val(uri_target);
+						$("#attachmentName").val(filename);						
+					}
+					
+				},
+				error : function(data, status, e) {
+					alert("上传失败！建议您选择不超过1M的文件且在良好的网络环境下继续上传。");
+				}
+			});
+        }
+		
+		//消息推送
+		function meetingPush(uid){
+			var checksId = $("#checksId").val();
+			var apiData = {};	
+            apiData.uid = uid;
+            apiData.memberIds = checksId;
+            apiData.type = 0;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HDYQ');
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		console.log(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/ActivityMeetingPush/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					
+    			}else{
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+		}
+	</script>
+</html>

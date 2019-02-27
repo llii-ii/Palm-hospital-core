@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-area-chart"></i> 作业执行效率
+			</div>
+			<div class="title-right-filter mui-pull-right">
+				<form class="form-inline">
+				  	<div class="form-group has-feedback">
+					    <label >数据筛选:</label>
+					    <select class="form-control selector">
+						  	<option>1</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector">
+						  	<option>1</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector">
+						  	<option value="">全部状态</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>
+				  	<!--<div class="form-group has-feedback">
+					    <input class="form-control" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" >
+					    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+				  	</div>-->
+				  	<div class="form-group has-feedback">
+				  		<label >-</label>
+					    <input class="form-control" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" >
+					    <!--<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>-->
+				  	</div>
+				  	<button type="submit" class="btn btn-primary">查询</button>
+				</form>
+			</div>
+		</div>
+		<div class="widget">
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th class="">设备名称</th>
+						<th class="w200 text-right">采集作业执行效率（条/秒）</th>
+						<th class="w200 text-right">转换作业执行效率（条/秒）</th>
+						<th class="w200 text-right">校验作业执行效率（条/秒）</th>
+						<th class="w200 text-right">上报作业执行效率（条/秒）</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr>
+							<th>上饶市妇幼保健院</th>
+							<td class="text-right">
+								104.6
+							</td>
+							<td class="text-right">
+							    302.7
+							</td>
+							<td class="text-right">
+							    0.0
+							</td>
+							<td class="text-right">
+							    1122.94
+							</td>
+						</tr>
+					
+						<tr>
+							<th>上饶市第三人民医院</th>
+							<td class="text-right">
+								12.76
+							</td>
+							<td class="text-right">
+							    76.8
+							</td>
+							<td class="text-right">
+							    712.64
+							</td>
+							<td class="text-right">
+							    432.05
+							</td>
+						</tr>
+					
+						<tr>
+							<th>上饶市第二人民医院</th>
+							<td class="text-right">
+								182.03
+							</td>
+							<td class="text-right">
+							    88.05
+							</td>
+							<td class="text-right">
+							    0.0
+							</td>
+							<td class="text-right">
+							    458.33
+							</td>
+						</tr>
+					
+				</tbody>
+			</table>
+			<div class="datatable-footer">
+				<div class="dataTables_info">总共：3</div>
+				<div id="pagination" class="pagination pagination-small dataTables_paginate"><li class="active prev">前一页</li><li class="active">1</li><li><a href="#">2</a></li><input type="text" style="text-align:center;height:28px;line-height:28px;margin:0 2px;" id="jump-index" title="请输入正整数" size="1"><button style="height:28px;font-size:12px;line-height:22px;float:right;padding:0 5px;border:1px solid #CCC;background:#EEE;" href="#">转到</button><li class="next"><a href="#">下一页</a></li></div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

@@ -1,0 +1,435 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">  
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta content="always" name="referrer">
+		<title>区域医疗集中监管系统</title>
+		<link rel="stylesheet" href="../css/layout-popup.css" type="text/css"/>
+		<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="../js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.busy.min.js"></script>
+		<script type="text/javascript" src="../js/realesoft.js"></script> 
+		<script type="text/javascript" src="../js/general.js"></script>
+		<script type="text/javascript" src="../js/Validform_v5.0.js"></script>
+		<script type="text/javascript" src="../js/jquery-ui-1.9m7.js"></script>
+		<script type="text/javascript" src="../js/jquery.uniform.js"></script>
+		<script type="text/javascript" src="../js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.mCustomScrollbar.js"></script>
+		<script type="text/javascript" src="../js/jquery.pagination.js"></script>
+		<script type="text/javascript" src="../js/jquery.spin.js"></script>
+		<script type="text/javascript" src="../js/jquery.bottomTipbar.js"></script>
+		
+		<link rel="stylesheet" href="../css/general.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/pagination.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/common.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/jquery-ui.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/Validform.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/jquery.mCustomScrollbar.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/widget.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/uniform.default.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/plugins.css" type="text/css"/>
+	</head>
+	<style>
+	#mask {display:none;z-index:9999;position:absolute;left:0;top:0;background:#666;opacity:0.7;filter:Alpha(opacity=70)}
+	</style>
+	<script type="text/javascript">
+	// 百度富文本编辑器上传根目录
+    window.UEDITOR_HOME_URL = "/PMC/ueditor/";
+	    $(document).ready(function(){
+	    	//$( "button").button();
+	    	//$("input, textarea, select, button").uniform();
+	    	$("input, textarea, select").uniform();
+	    	//$( "#body" ).tooltip();
+	    	wh = $(window).height();
+			ww = $(window).width();
+			dh = $(document).height();
+			if(wh > dh) hh = wh;
+			if(wh <= dh) hh = dh;
+		  	$('#mask').width(ww).height(hh).spin({color: '#fff'});
+	    });
+	    $(window).load(function(){
+	    	$("#container").css("visibility","visible");
+	    });
+	</script>
+	<body>
+		<div id="container" style="visibility:hidden;">
+		   <table width="100%" height="100%" cellspacing="0" cellpadding="0" style="padding: 0px;word-break:break-all">
+				<tr id="containerLayoutUl" >
+					
+					<td valign="top" style="padding: 0px;" class="main-column"><div id="mainContainer" class="divContainer">
+
+
+
+
+
+<div id="4be3265b-3457-452f-b9ae-ae55bb39a43b">
+	<div class="widget-head">
+		<span class="icon-list"></span>
+		<h2>设备列表</h2>
+	</div>
+	
+	<div class="widget">
+		
+			
+			
+				<table  class="table table-bordered table-striped table-hover" >
+					<thead>
+						<tr>
+							<th>设备名称</th>
+							<th class="w150">所属机构</th>
+							<th class="w100">设备标识</th>
+							<th class="center w60">编辑</th>
+							<th class="center w60">删除</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+							<tr>
+								<td>
+									上饶市妇幼保健院
+								</td>
+								<td>
+									上饶市妇幼保健院
+								</td>
+								<td>
+									492190575
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(23);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									上饶市第三人民医院
+								</td>
+								<td>
+									上饶市第三人民医院
+								</td>
+								<td>
+									492190516
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(4);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									鄱阳县人民医院
+								</td>
+								<td>
+									鄱阳县人民医院
+								</td>
+								<td>
+									49236052X
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(6);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									广丰区人民医院
+								</td>
+								<td>
+									广丰区人民医院
+								</td>
+								<td>
+									492300631
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(10);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									德兴市人民医院
+								</td>
+								<td>
+									德兴市人民医院
+								</td>
+								<td>
+									492270233
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(11);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									弋阳县人民医院
+								</td>
+								<td>
+									弋阳县人民医院
+								</td>
+								<td>
+									492341695
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(12);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									万年县人民医院
+								</td>
+								<td>
+									万年县人民医院
+								</td>
+								<td>
+									492370664
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(14);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									婺源县人民医院
+								</td>
+								<td>
+									婺源县人民医院
+								</td>
+								<td>
+									449238085
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(15);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									铅山县人民医院
+								</td>
+								<td>
+									铅山县人民医院
+								</td>
+								<td>
+									49232019X
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(16);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+							<tr>
+								<td>
+									横峰县人民医院
+								</td>
+								<td>
+									横峰县人民医院
+								</td>
+								<td>
+									492330267
+								</td>
+								<td class="center">
+									
+										<a  href="./p-0-equipmentmanager-edit.html"  class="uniIco editIco" title="编辑" ></a>
+									
+								</td>
+								<td class="center">
+									
+										<a  href="#"  onclick="deleteDevice(18);;return false;"  class="uniIco deleteIco" title="删除" ></a>
+									
+								</td>
+							</tr>
+						
+					</tbody>
+				</table>
+				<div class="datatable-footer">
+					<div class="dataTables_info">总共：19</div>
+					<div id="pagination4be3265b-3457-452f-b9ae-ae55bb39a43b" class="pagination pagination-small dataTables_paginate"></div>
+				</div>
+			
+		
+	</div>
+</div>
+
+
+	<button type="button" class="btn btn-primary" onclick="addDevice();">添加设备</button>
+
+
+<a class="btn" href="./p-0-equipmentmanager-1.html">刷新</a>
+
+<div id="deleteDevice-dialog-confirm4be3265b-3457-452f-b9ae-ae55bb39a43b" title="删除"  style="display: none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>确认要删除当前设备吗?</p>
+</div>
+	
+<script type="text/javascript">
+
+var deleteDeviceId = -1;
+
+function addDevice()
+{
+	document.location.href = './p-0-equipmentmanager-addequipment.html';
+}
+
+function deleteDevice(id)
+{
+	deleteDeviceId = id;
+	$( "#deleteDevice-dialog-confirm4be3265b-3457-452f-b9ae-ae55bb39a43b" ).dialog( "open" );
+	return false;
+}
+
+$(document).ready(function(){
+	
+	$( "#deleteDevice-dialog-confirm4be3265b-3457-452f-b9ae-ae55bb39a43b" ).dialog({
+		resizable: false,
+		height:160,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"删除": function() {
+				document.location.href = '/PMC/deviceManage/delete-action?deviceId='+ deleteDeviceId + '&searchOrganizationId=8730931';
+				$( this ).dialog( "close" );
+			},
+			"取消": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	
+	$("#pagination4be3265b-3457-452f-b9ae-ae55bb39a43b").pagination(19, {
+        items_per_page: 10,
+        current_page: 1-1,
+        num_display_entries:3,
+        num_edge_entries:2,
+        prev_text:"前一页",
+		next_text:"下一页",
+        callback: function(pageNo, container){
+            if((pageNo+1)!=1) {
+				document.location.href='/PMC/app/plugins/deviceManage/pages/deviceList?searchOrganizationId=8730931&pageNo=' + (pageNo+1);
+            }
+            return false;
+        }
+	});
+});
+</script></div></td>
+					
+				</tr>
+			</table>
+		</div>
+		
+		<div id="request-error-dialog-confirm" title="请求失败" style="display: none;">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>向服务器请求数据失败,请重试一次.</p>
+		</div>
+		<div id="request-success-dialog-confirm" title="成功" style="display: none;">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>数据更新成功.</p>
+		</div>
+		<div id="mask"></div>
+	</body>
+</html>
+
+<script language="javascript">
+		
+	$(document).ready(function(){
+		$( "#request-error-dialog-confirm" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		$( "#request-success-dialog-confirm" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		
+	});
+	
+</script>

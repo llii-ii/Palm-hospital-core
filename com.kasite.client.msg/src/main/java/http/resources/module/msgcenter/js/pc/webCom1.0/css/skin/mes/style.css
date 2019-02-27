@@ -1,0 +1,182 @@
+.children-page{
+	padding: 30px;
+}
+/*面包屑*/
+.mes .breadcrumb{
+	background-color: transparent;
+	padding-bottom: 20px;
+}
+.mes .breadcrumb li:last-child .divider{
+	display: none;
+}
+.mes .breadcrumb img{
+	width: 18px;
+	float: left;
+}
+.mes .breadcrumb .divider{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.mes .breadcrumb>li+li:before{
+	display: none;
+}
+
+/*按钮*/
+/*.mes .btn,.mes .btn:hover{
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	min-width: 80px;
+	min-height: 34px;
+	background-color: #3685ff;
+	color:#fff;
+	border:1px solid #3685ff;
+}*/
+.mes .form-horizontal .btn,.mes .form-horizontal .btn:hover{
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+}
+
+.mes .btn.btn-filter{
+	padding: 6px 27px;
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = '#94bdff', endColorstr = '#3685ff');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = '#94bdff', endColorstr = '#3685ff')";
+	background-image: -moz-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -ms-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -o-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -webkit-gradient(linear, left top, right top, from(#94bdff), to(#3685ff));
+	background-image: -webkit-linear-gradient(left, #94bdff, #3685ff);
+	background-image: linear-gradient(left, #94bdff, #3685ff);
+	border:0;
+}
+.mes .btn.btn-default{
+	border:1px solid #3685ff;
+	color: #3685ff;
+	background: #fff;
+	padding: 6px 27px;
+}
+.mes .btn.btn-success{
+	background: #00bc16;
+	border:1px solid #00bc16;
+}
+.mes .btn.btn-info{
+	background: #4ab4ff;
+	border:1px solid #4ab4ff;
+}
+.mes .btn.btn-white{
+	background: #fff;
+	border:1px solid #fff;
+	color: #999;
+}
+.mes .btn.btn-border{
+	background: #fff;
+	border:1px solid #3685ff;
+	color: #3685ff;
+}
+.mes .btn.btn-font{
+	background: transparent;
+	border:1px solid transparent;
+	color: #3685ff;
+}
+
+/*表格样式*/
+.mes .fixed-table-container{
+	padding: 4px 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px 6px 0 0;
+    -ms-border-radius: 6px 6px 0 0;
+    -o-border-radius: 6px 6px 0 0;
+    border: 1px solid #e6e6e6!important;
+    margin-bottom: 20px;
+}
+.mes .fixed-table-toolbar:after,.mes .fixed-table-pagination:after{
+	content: '';
+	display: block;
+	width: 100%;
+	height: 0;
+	clear: both;
+}
+.mes .fixed-table-toolbar .bs-bars{
+	line-height: 40px;
+}
+.mes .fixed-table-toolbar{
+	height: auto!important;
+	margin-bottom: 10px;
+}
+.mes .fixed-table-toolbar .form-group{
+	margin-bottom: 0!important;
+}
+.mes .fixed-table-toolbar .columns-right,
+.mes .fixed-table-toolbar .search{
+	display: none;
+}
+.mes .fixed-table-toolbar .bs-bars{
+	float: none!important;
+}
+.mes .fixed-table-container{
+    border: 1px solid #fff;
+}
+.mes .bootstrap-table .table tbody > tr > td{
+	background-color: #f5f5f5;
+}
+.mes .bootstrap-table .table,
+.mes .bootstrap-table .table > thead > tr > th,
+.mes .bootstrap-table .table > tbody > tr > td{
+    border-bottom: 1px solid #fff;
+}
+.mes .bootstrap-table .table > thead > tr > th,
+.mes .bootstrap-table .table > tbody > tr > td{
+	border-left: 0;
+}
+.mes .table-hover>tbody>tr>td{
+	position: relative;
+}
+.mes .table-hover>tbody>tr.active td:first-child:before{
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: #3685ff;
+}
+.mes .table-hover>tbody>tr.active td:last-child:after{
+	content: '';
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: #3685ff;
+}
+.mes .fixed-table-toolbar .pull-left .form-inline button{
+	float: none!important;	
+}
+.mes .fixed-table-pagination .btn.btn-default,
+.mes .fixed-table-pagination .page-fast input{
+	border:1px solid #bababa;
+	color: #bababa;
+	padding: 3px 10px;
+	min-width: auto;
+    min-height: auto;
+    height: auto;
+    position: relative;
+    top: -2px;
+}
+.mes .fixed-table-pagination .open .dropdown-toggle.btn-default{
+	background: #3685ff;
+	border:1px solid #3685ff;
+	color: #fff;
+}
+.mes .bootstrap-table .pagination{
+	margin: 0;
+}

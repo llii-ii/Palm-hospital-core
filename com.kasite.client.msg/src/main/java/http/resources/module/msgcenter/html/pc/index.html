@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>消息中心系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="skin" content="mes">
+    <!--[if lt IE 9]>
+    <script>setTimeout(function(){window.location.href="ie.html";},1000)</script>
+    <![endif]-->
+    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+     <link rel="shortcut icon" href="../../../../js/jquery-1.9.1.min.js"> 
+	<script type="text/javascript" src="../../../../module/backstage/commons/js/common.js"></script>
+	<script type="text/javascript" src="../../../../module/backstage/commons/js/jquery.jscrollpane.min.js"></script>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold">用户名</strong></span>
+                                <span class="text-muted text-xs block">超级管理员</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">消息</div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="javascript:void(0);"><i class="fa fa-bars"></i> </a>
+                        
+                    </div>
+                </nav>
+            </div>
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="./main.html">首页</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                </button>
+                <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="/module/backstage/login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="./main.html" frameborder="0" data-id="./main.html" seamless>
+                </iframe>
+            </div>
+            <div class="footer">
+                <div class="pull-right"><script>document.write('&copy; 2014-'+new Date().getFullYear());</script></div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+</body>
+
+</html>
+<script>
+	//所有的js执行程序必须在webReady执行之后才能执行
+	$(function(){
+		getMenuList();
+	})
+	//获取菜单列表
+ 	function getMenuList(){
+ 		var Service = {};
+		var page = {};
+		var code = 2006;
+		Service.UserName = Commonjs.getUserName();
+		var param = {};
+		var params = Commonjs.getParams(code,Service);//获取参数
+		param.params = Commonjs.jsonToString(params);
+		Commonjs.ajax('/backstage/getMenuList.do',param,function(d){
+			if(d.RespCode==10000){
+				perms = d.permissions;
+				initMenuList(d.menuList);
+			}else{
+				Commonjs.alert(d.RespMessage);
+			}
+		});
+ 	}
+	function initMenuList(menuList){
+ 		var token = Commonjs.getCookie("token");
+ 		if(!Commonjs.isEmpty(menuList) && menuList.length>0){
+ 			//遍历菜单
+ 			var html = '';
+ 			html+='<li class="nav-header">';
+ 	 		html+='<div class="dropdown profile-element">';
+ 	 		html+='<a data-toggle="dropdown" class="dropdown-toggle" href="#">';
+ 	 		html+='<span class="clear">';
+ 	 		html+='<span class="block m-t-xs"><strong class="font-bold">用户名</strong></span>';
+ 	 		html+='<span class="text-muted text-xs block">'+Commonjs.getUserName()+'</span>';
+ 	 		html+='</span>';
+ 	 		html+='</a>';
+ 	 		html+='</div>';
+ 	 		html+='<div class="logo-element">菜单</div>';
+ 	 		html+='</li>';
+ 	 		html = html+getMenuHtml(menuList,token)
+ 			$('#side-menu').empty().append(html);
+ 		}else{
+ 			$('#side-menu').empty().append('&nbsp;&nbsp;&nbsp;<font color=red>没有可操作的菜单!<br/><br/>&nbsp;&nbsp;&nbsp;请联系管理员开放菜单权限!</font>');
+ 		}
+ 	}
+	function getMenuHtml(menuList,token){
+ 		var html = '';
+ 		$.each(menuList,function(i,menu){
+ 				if(menu.type==0){
+ 					html += '<li class="active">';
+ 					html += '<a href="#" ><i class="fa fa-desktop"></i> <span class="nav-label">'+menu.name+'</span><span class="fa arrow"></span></a>';
+ 					html += '<ul class="nav nav-second-level collapse">';
+ 					html += getMenuHtml(menu.list);
+					html += '</ul>';
+					html += '</li>';
+				}else if(menu.type==1){
+					//菜单
+					if(!Commonjs.isEmpty(menu.url)){
+ 						var url = menu.url;
+ 	 					url = url.replace("{token}",token); 
+ 	 					html += '<li><a href="'+url+'?userId='+Commonjs.getUserID()+'&userName='+Commonjs.getUserName()+'"  class="J_menuItem">'+menu.name+'</a></li>';
+ 					}
+				}
+	 		});
+ 		return html;
+ 	}
+</script>

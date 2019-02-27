@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kasite.client.hospay.module.bill.dao.QlcBalanceDao">
+
+	<!-- 配置文件中有如下几条SQL需要特别注意
+	这条SQL为全流程汇总语句
+	1.mysqlSummaryQLCBalance（）
+		注意：这条语句中SELECT 中的子句主要特别注意
+	  	    orderId(用于标识当前全流程订单的唯一性)
+	  	    serviceId(系统内部针对不同服务的标记,例如:0代表预约挂号 007 代表门诊充值)
+			reserveId(目前系统当中使用当前字段来存储HisOrderId,不新增字段)
+			payUpdateKey(该字段存储的值为渠道供应商返回的订单唯一标识,目前渠道一般只有[100123 微信,100125 支付宝])
+
+	这条SQL为p_bill比p_qlcBalance表多出的订单数据
+	2.mysqlQueryChannelBillDiffQlcBill()
+		注意：AND (((q.payUpdateKey = p.refundOrderId and p.orderType='2' AND p.channel = '100125') OR ( p.orderType='1' AND p.channel = '100125' )) OR ((q.payUpdateKey = p.orderNo  AND p.channel = '100123')))
+			这个AND条件中包含了退款订单的关联条件和支付订单的关联条件,需要根据当前医院的具体实施情况来修改 -->
+    
+    <sql id="QLCBalanceList" >
+        orderId,serviceId,reserveId,priceName,price,orderMemo,cardNo,operator,operatorName,createDate,channelId,payUpdateKey,orderState
+    </sql>
+
+	<!-- 保存全流程账单数据-->
+	<insert id="insertQLCBalance">
+		INSERT INTO p_qlcBalance (orderId,serviceId,reserveId,priceName,price,orderMemo,cardNo,operator,operatorName,createDate,channelId,payUpdateKey,orderState)
+		VALUES
+		<foreach collection="list" item="qlcBalance" separator=",">
+			(#{qlcBalance.orderId,jdbcType=VARCHAR},
+			#{qlcBalance.serviceId,jdbcType=VARCHAR},
+			#{qlcBalance.reserveId,jdbcType=VARCHAR},
+			#{qlcBalance.priceName,jdbcType=VARCHAR},
+			#{qlcBalance.price,jdbcType=VARCHAR},
+			#{qlcBalance.orderMemo,jdbcType=VARCHAR},
+			#{qlcBalance.cardNo,jdbcType=VARCHAR},
+			#{qlcBalance.operator,jdbcType=VARCHAR},
+			#{qlcBalance.operatorName,jdbcType=VARCHAR},
+			#{qlcBalance.createDate},
+			#{qlcBalance.channelId,jdbcType=VARCHAR},
+			#{qlcBalance.payUpdateKey,jdbcType=VARCHAR},
+			#{qlcBalance.orderState,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+	<!-- 全流程表去重-->
+	<delete id="deleteQLCBalance">
+		delete from p_qlcBalance WHERE 1=1 AND createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 汇总全流程账单明细数据-->
+	<select id="summaryQlcBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.QLCBalance">
+      		SELECT oa.orderId,oa.serviceId,oa.reserveId,oa.priceName,oa.price,oa.orderMemo,oa.cardNo,oa.operator,oa.operatorName,oa.createDate,oa.channelId,oa.payUpdateKey,oa.orderState FROM
+				(
+				SELECT
+		         a.orderId,a.serviceId,a.PRESCNO reserveId,a.priceName,a.price  price,a.orderMemo,a.cardNo,a.OPERATORID  operator,a.operatorName,b.BEGINDATE createDate,(case b.payState when 2 then 1 end) orderState ,a.channelId channelId,b.TRANSACTIONNO payUpdateKey
+ 				FROM  o_payOrder  b LEFT JOIN o_order a on a.orderId = b.orderId
+					WHERE b.payState='2' and b.begin BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+				UNION ALL
+				SELECT
+					c.orderId,a.serviceId,a.PRESCNO reserveId ,a.priceName , c.REFUNDPRICE price ,a.orderMemo,a.cardNo,a.OPERATORID   operator,a.operatorName,c.BEGINDATE createDate,(case c.payState when 4 then 2 end) orderState,a.channelId channelId,c.REFUNDNO payUpdateKey
+				FROM  o_refundorder c LEFT JOIN o_order a on a.orderId = c.orderId
+					WHERE c.payState='4' AND c.BEGINDATE BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+				) oa
+    </select>
+
+	<!--查看p_bill比p_qlcBalance表多出的订单数据-->
+	<select id="queryChannelBillDiffQlcBill"
+			resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.QLCBalance">
+			SELECT p.OrderId orderId,q.serviceId,q.reserveId,q.priceName,CAST(p.REFUNDPRICE AS DECIMAL(10,2))*100 price,q.orderMemo,q.cardNo,q.operator,
+				   q.operatorName,p.transdate createDate,p.channelId channelId,p.merchno payUpdateKey,p.orderType orderState
+			FROM
+				p_bill p
+			LEFT JOIN p_qlcBalance q ON p.OrderId = q.orderId
+			AND (((q.payUpdateKey = p.merchno and p.orderType='2' AND p.channelId = '100125') OR ( p.orderType='1' AND p.channelId = '100125' )) OR ((q.payUpdateKey = p.merchno  AND p.channelId = '100123')))
+			AND p.orderType = q.orderState
+			WHERE
+				p.transdate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+			AND q.orderId IS NULL
+	</select>
+
+	<!-- 由于这边Order表字段可能存在不同，所以这边先用*好代替，上线时可以自行调整-->
+	<select id="queryOrderData" resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.Order">
+		SELECT * from O_Order o WHERE 1=1
+	  	<if test="balance.orderId != '' and balance.orderId != null">
+			AND o.orderId = #{balance.orderId,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+
+
+</mapper>

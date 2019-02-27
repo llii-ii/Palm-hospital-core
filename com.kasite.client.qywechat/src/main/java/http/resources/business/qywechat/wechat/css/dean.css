@@ -1,0 +1,154 @@
+/*院长页面*/
+.d-top{
+	position: relative;
+	color: #fff;
+	overflow: hidden;
+	background: url(../img/bg.png) no-repeat;
+	background-size: 100% 100%;
+	padding: 0.4rem 0.35rem 0 0.3rem;
+}
+.d-top .date{
+	text-align: center;
+}
+.d-top .rl{
+	width: 0.24rem;
+	height: 0.24rem;
+	margin-right: 0.3rem;
+}
+.d-top .bottom{
+	position: relative;
+	top: -0.055rem;
+	width: 0.22rem;
+	height: 0.12rem;
+	margin-left: 0.3rem;
+}
+.d-top .left{
+	float: left;
+	width: 50%;
+}
+.d-top .title{
+	font-size: 0.24rem;
+	margin-bottom: 0.35rem;
+	margin-top: 0.5rem;
+	padding-left: 0.2rem;
+}
+.d-top .info{
+	font-size: 0.64rem;
+	font-weight: bold;
+	padding-left: 0.2rem;
+}
+.d-top .info span{
+	font-size: 0.3rem;
+	margin-left: 0.4rem;
+}
+.d-top .detail{
+	position: absolute;
+	top: 1.6rem;
+	right: 0.35rem;
+	font-size: 0.24rem;
+	background: #2c85f0;
+	padding: 0.1rem 0.25rem;
+}
+.d-tab{
+	position: relative;
+	top: -0.5rem;
+	font-size: 0.24rem;
+	padding: 0 0.15rem;
+	border-radius: 0.06rem;
+	box-shadow: 0px 2px 8px rgb(66,154,253,.2);
+	margin: 0 0.3rem;
+	z-index: 10;
+	background: #fff;
+}
+.tab-1{
+	overflow: hidden;
+}
+.tab-1 li{
+	width: 33%;
+	float: left;
+	text-align: center;
+	padding: 0.55rem 0;
+	border-bottom: 1px solid #e6e6e6;
+}
+.tab-1 li .num{
+	color: #2988fc;
+	font-size: 0.36rem;
+	font-weight: bold;
+	margin-bottom: 0.34rem;
+}
+.tab-2{
+	overflow: hidden;
+	text-align: center;
+}
+.tab-2 li{
+	width: 50%;
+	float: left;
+	text-align: center;
+	padding: 0.55rem 0;
+}
+.tab-2 li .per{
+	width: 2rem;
+	height: 2rem;
+	line-height: 2rem;
+	color: #2988fc;
+	font-size: 0.36rem;
+	font-weight: bold;
+	background: url(../img/icon-circle.png) no-repeat;
+	margin: 0 auto 0.3rem auto;
+	background-size: 100% 100%;
+}
+.blue{
+	color: #3b95fd;
+}
+/*表格*/
+.d-list tr{
+	background: #fff;
+	text-align: center;
+	font-size: 0.26rem;
+}
+.d-list th{
+	color: #999;
+	height: 0.8rem;
+	border-bottom: 1px solid #f2f4f5;
+}
+.d-list td{
+	position: relative;
+	padding: 0.3rem 0;
+	border-bottom: 1px solid #f2f4f5;
+}
+.d-list .up:after{
+	content: '';
+	position: absolute;
+	top: 50%;
+	margin-top: -0.13rem;
+	left: 50%;
+	margin-left: -0.11rem;
+	width: 0.22rem;
+	height: 0.26rem;
+	background: url(../img/icon-up.png) no-repeat;
+	background-size: 100% 100%;
+}
+.d-list .un:after{
+	content: '';
+	position: absolute;
+	top: 50%;
+	margin-top: -0.13rem;
+	left: 50%;
+	margin-left: -0.11rem;
+	width: 0.22rem;
+	height: 0.26rem;
+	background: url(../img/icon-un.png) no-repeat;
+	background-size: 100% 100%;
+}
+.d-list .down:after{
+	content: '';
+	position: absolute;
+	top: 50%;
+	margin-top: -0.13rem;
+	left: 50%;
+	margin-left: -0.11rem;
+	width: 0.22rem;
+	height: 0.26rem;
+	background: url(../img/icon-down.png) no-repeat;
+	background-size: 100% 100%;
+}

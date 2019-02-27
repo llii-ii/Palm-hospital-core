@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>数据统计情况</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../../commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/index.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/safe.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/Pager.css" type="text/css"/>
+		<script type="text/javascript" src="../../commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.datetimepicker.js"></script>
+		<link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		<script type="text/javascript" src="../../commons/js/base.js?version=1.0"></script>
+        <script type="text/javascript" src="../../commons/js/common.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+		<script type="text/javascript" src="./js/statistics.js?version=1.0"></script>
+		<script type="text/javascript" src="../../commons/js/echarts.min.js"></script>		
+		<link rel="stylesheet" href="../../css/crawler.css" type="text/css" />
+    </head>
+    <body>
+    	<div class="main-tit"><h2>数据统计</h2></div>
+        <div class="p20">
+        	<div class="querybar clearfix">        	
+				<label class="fl mr10" style=" width:72px; text-align:right;">上报时间</label>
+					<div class="fl date-wrap mr10">
+						<input type="text" class="date-txt datetimepicker" value=""  id="date_timepicker_start" readonly/>
+                    </div>
+                    <label class="fl mr10">-</label>
+                    <div class="fl date-wrap mr20">
+                        <input type="text" class="date-txt datetimepicker" value=""  id="date_timepicker_end" readonly/>
+                    </div>
+					
+                    <span>
+                        <label class="fl mr10">医院名称</label>
+                        <input type="text" class="fl text w195 mr10" id="name"/>
+                        <input type="button" value="查询" class="fl btn-gray" onclick="queryWJData(1)" />
+                    </span> 
+             </div>
+        </div>          
+  		<div class="pl20 pr20">
+	        <table class="tb tb-hover" width="100%" id='dataList'>
+	        </table>
+	         <div class="pager_container">
+				<input id="pagenumber" type="hidden" value="1" />
+				<div id="pager"></div>
+			</div>
+		</div>
+		
+		
+    </body>
+</html>

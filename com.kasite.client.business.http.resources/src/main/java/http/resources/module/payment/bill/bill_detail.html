@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../css/print_bill.css" type="text/css" />
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+</head>
+<body>
+	<div class="com-title">
+	    对账明细<i class="icon icon-jt"></i><span class="c-828c91">交易详情</span>
+	    <a href="javascript:goBack();" class="com-back"><i class="icon icon-back"></i>返回</a>
+	</div>
+		<input type="hidden" name="orderId" id="orderId" value=""/>
+	   	<input type="hidden" name="orderNo" id="orderNo" value=""/>
+	   	<input type="hidden" name="refundOrderId" id="refundOrderId" value=""/>
+	   	<input type="hidden" name="billType" id="billType" value=""/>
+	  	<input type="hidden" name="billSingleType" id="billSingleType" value=""/>
+	  	<input type="hidden" name="channelId" id="channelId" value=""/>
+	  	<input type="hidden" name="refundPrice" id="refundPrice" value=""/>
+	  	<input type="hidden" name="price" id="price" value=""/>
+	  	<input type="hidden" name="reason" id="reason" value=""/>
+	  	<input type="hidden" name="checkState" id="checkState" value=""/>
+	  	<input type="hidden" name="merchNo" id="merchNo" value=""/>
+	  	<input type="hidden" name="hisOrderNo" id="hisOrderNo" value=""/>
+	  	<input type="hidden" name="billDate" id="billDate" value=""/>
+	<!--startprint-->
+	<div class="wrapper">
+	   
+	</div>
+	<!--endprint-->
+	
+	<!--冲正-->
+	<div class="c-hide" id="dCorre">
+		<div>
+	        <p class="c-f12 c-red"><i class="icon icon-tip"></i>预约挂号支付与医嘱处方支付，在对账详情中，无法进行冲正操作；</p>
+	    </div>
+	</div>
+	<!--确认登帐-->
+	<div class="c-hide" id="dAccount">
+		<div class="c-54545a">
+	    	<p>如若已经明确了短款责任方，且已经与责任方沟通了短款赔付事宜，可以通过财务登账将账调平；</p>
+	        <p class="c-f12 mt15 c-red"><i class="icon icon-tip"></i>注意！退款操作无法撤销，请谨慎操作！</p>
+	    </div>
+	</div>
+	<div class="c-hide" id="dRisk">
+		<div>
+	        <p>您正在进行高风险操作，为了确保操作安全，您需要在操作前设置您的支付密码；</p>
+	       <!-- <p class="mt15"><input type="password" class="input-text input-text-w350 input-text-large" placeholder="请输入您的登陆密码" id="login_key" /></p> -->
+	        <p class="mt15"><input type="password" class="input-text input-text-w350 input-text-large" placeholder="请设置您的支付密码" id="pay_key" /></p>
+	        <p class="mt15"><input type="password" class="input-text input-text-w350 input-text-large" placeholder="请重复您的支付密码" id="repeat_pay_key" /></p>
+	    </div>
+	</div>
+	<!--风控校验-->
+	<div class="c-hide" id="dRisk_">
+		<div>
+	        <p>您正在进行高风险操作，为了确保操作安全，请验证支付密码</p>
+	        <p class="mt15"><input type="password" class="input-text input-text-w350 input-text-large" placeholder="请输入您的支付密码" id="payKey" /></p>
+	    </div>
+	</div>
+	<!--交易日志-->
+	<div class="c-hide" id="dData">
+		<div class="c-54545a">
+	    	<table class="tb tb-l c-t-center" id="transation-log">
+	        	<tr>
+	            	<th width="160">时间</th>
+	            	<th>交易事务</th>
+	            	<th width="70">是否成功</th>
+	            </tr>
+	        </table>
+	    </div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+	<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+	<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+	<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+	<script type="text/javascript" src="../js/public.js"></script>
+	<script type="text/javascript" src="../commons/js/clipboard.min.js"></script>
+	<script type="text/javascript" src="../commons/js/jquery.md5.js"></script>
+	<script type="text/javascript" src="js/bill_detail.js"></script>
+</body>
+</html>

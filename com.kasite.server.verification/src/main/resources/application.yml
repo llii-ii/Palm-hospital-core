@@ -1,0 +1,24 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    compression: 
+        enabled: true
+        mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    port: 8666
+    context-path: /
+# spring
+spring:
+    #  dev|test|pro|local
+    profiles:
+        active: dev
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    http:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true

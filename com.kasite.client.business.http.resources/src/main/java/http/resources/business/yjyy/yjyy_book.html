@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>医技预约</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css"/>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"/>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/public.css" type="text/css" />
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/server.css" type="text/css" />
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/checkForm.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/iscroll.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="js/booking.js?v=201901152112"></script>
+</head>
+
+<body>
+    <div id="info">
+        <div class="patmess" id="infoid">
+            <ul>
+            </ul>
+        </div>
+        <div class="patmess mt10 bor_t" id="default">
+            <ul>
+                <li class="boxs bor_b" onclick="selectnum();"><div class="ptit">预约号源</div><span class="c909090" id="sapnNum">点击选择号源</span><i class="icon ihy"></i></li>
+            </ul>
+        </div>
+        <div class="combtn">
+            <a href="javascript:void(0);" onclick="BookService();" id="btnbook">确认预约</a></div>
+         <div style="text-align: center;">
+         </div>
+    </div>
+    <!--选择号源-->
+    <div class="dmtpop">
+        <span class="dmtadd">就诊时间 - 选择号源<i class="" onclick="modclose()"></i></span>
+        <div id="sorChoo">
+            <ul id="numlist">
+                
+            </ul>
+        </div>
+    </div>
+    <div class="pop_screen" style="display: none;" onclick="modclose();">
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>处方（支付）订单详情</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+<body>
+<div class="c-main pb15">
+    <div class="c-border-tb">
+    	<div class="order-head"><span class="fr c-0093ff" id ='serviceName'></span>订单类型<span class="c-0093ff" id ='orderNum'></span></div>
+        <div class="bor-t-f2" onclick="goToFeeDetail()">
+        	<ul class="visit-mess c-f13">
+            	<li>
+                	<div class="vm-key c-999">就诊人</div>
+                	<div class="vm-info" id="menberName"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">就诊卡</div>
+                	<div class="vm-info" id="cardNo"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">处方医生</div>
+                	<div class="vm-info" id="doctorName"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">处方编号</div>
+                	<div class="vm-info" id="prescNo"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">处方项目</div>
+                	<div class="vm-info" id="presc"></div>
+                </li>
+                <li>
+                	<div class="vm-key c-999">处方费用</div>
+                	<div class="vm-info" id="prescFee"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li>
+            	<div class="c-list-key c-999 pr15">订单金额</div>
+            	<div class="c-list-info c-t-right">￥<span class="c-ffac0b"  id="price"></span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+    		<li class="c-list-a">
+    			<a class="c-arrow-r" id="refundHref">
+            		<div class="c-list-key c-999 pr15">订单状态</div>
+            		<div class="c-list-info c-t-right"><span class="c-ffac0b"  id="orderState"></span></div>
+            	</a>
+            </li>
+        </ul>
+    </div>
+    <div>
+    	<table class="charges-detail">
+        	<thead>
+            	<tr>
+                	<td width="20%">项目</td>
+                	<td width="20%">数量</td>
+                	<td width="20%">单价(元）</td>
+                	<td width="20%">单位</td>
+                	<td width="20%">金额(元）</td>
+                </tr>
+            </thead>
+            <tbody id="content">
+            </tbody>
+        </table>
+    </div>
+    </div>   
+    <div class="flexbtn mt20 plr15" onclick="payNow()" style="display: none" id="payBtn">
+    	<a href="javascript:;" class="c-btn c-btn-blue">支付</a>
+    </div>
+ <!--    <div class="flexbtn mt20 plr15" onclick="cancelOrderPrescription()" style="display: none" id="cancelBtn">
+    	<a href="javascript:;" class="c-btn c-btn-blue">撤销</a>
+    </div> -->
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="js/orderPrescriptionInfo.js?v=201901152112"></script>
+</body>
+</html>

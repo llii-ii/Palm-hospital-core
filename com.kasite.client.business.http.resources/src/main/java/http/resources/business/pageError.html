@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>系统提示</title>
+    <style>
+    /* base
+-----------------------------------------------------------------------------*/
+.c-hide {display:none;}
+.c-hidden {overflow:hidden; zoom:1;}
+.c-boxs {-webkit-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.c-main {margin:0 auto;}
+.c-nowrap {max-width:100%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.c-nowrap-multi {display:-webkit-box; overflow:hidden; text-overflow:ellipsis; -webkit-box-orient:vertical; -webkit-line-clamp:2;}
+.c-break {word-break:break-all;}
+.c-block {display: block;}
+.c-abox {display: -webkit-box; display: box; width: 100%;}
+.c-pack {display: box; display: -webkit-box; -webkit-box-orient: vertical; -webkit-box-pack: center;}
+.nomess{ padding:3rem .5rem 1rem .5rem; text-align:center; color:#999; font-size:.7rem;}
+.nomess-tb{ display:inline-block; width:5.7rem; height:5.7rem; background:url('https://v1kstcdn.kasitesoft.com/common/images/nomess.png') no-repeat; background-size:100% 100%;}
+.nowifi-tb{ display:inline-block; width:5.575rem; height:4.85rem; background:url('https://v1kstcdn.kasitesoft.com/common/images/nowifi.png') no-repeat; background-size:100% 100%;}
+.nomess a{ color:#0093ff;}
+.mt20 { margin-top: 1rem;}.mt5 { margin-top: .25rem;}.mt10 { margin-top: 5rem;}
+    </style>
+</head>
+
+<body>
+<div class="c-main">
+    <div class="nomess">
+        <i class="nomess-tb"></i>
+        <p class="mt20">页面出错啦!</p>
+        <p class="mt5">错误码：<span id="errorcode"></span></p>
+        <p class="mt10" style="text-align:left">错误信息：<span id="msg"></span></p>
+        <p class="mt5" style="text-align:left">会话token：<span id="token"></span></p>
+        
+        
+         <p class="mt10"><a href="#">帮助</a></p>
+    </div>
+</div>
+</body>
+ 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+ 	<script>
+ 	
+	 	/**
+		 * 返回URL中的参数值，类似JSP中的request.getParamter('id'); 
+		 * 用法：var strGetQuery =document.location.search; var id = getQueryString(strGetQuery,'id');
+		 */
+		function getQueryString (url,name){
+			var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+			if (reg.test(url)){
+				return unescape(RegExp.$2.replace(/\+/g, " "));
+			}
+			return "";
+		}
+	   	function getDecodeUrlParam(val) {
+	   		var strGetQuery =document.location.search;
+			strGetQuery = decodeURIComponent(strGetQuery,true);//解码
+			return getQueryString(strGetQuery,val);
+		}
+	
+	 	//获取url中的参数
+	    function getUrlParam(name) {
+			var url = window.location;
+			return getDecodeUrlParam(name);
+ 	    }
+	 	
+	 	$(function(){
+	 		var code = getUrlParam("errorcode");
+			$("#errorcode").html(code);	 	
+			var strGetQuery = getUrlParam("msg");
+			var strGetQuery = decodeURI(strGetQuery,true);//解码
+			$("#msg").html(strGetQuery);		
+			var token = getUrlParam("token");
+			$("#token").html(token);	
+			
+	 	});
+ 		
+ 	</script>
+ 	
+</html>

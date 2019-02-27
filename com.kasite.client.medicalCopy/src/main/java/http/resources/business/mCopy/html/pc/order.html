@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>订单详情</title>
+		<style type="text/css">
+			.form-horizontal .form-group{
+				margin-left: 0;
+				margin-right: 0;
+			}
+			.form-group{
+				margin-right: 50px;
+			}
+			.form-group .btn{
+				margin-right: 15px;
+			}
+			.idcard{
+				width: 218px;
+				height: 137px;
+				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border:1px solid #e6e6e6;
+				padding: 6px;
+			}
+			.idcard img{
+				width: 100%;
+				height: 100%;
+			}
+			/*模态框*/
+			.modals{
+				background:rgba(0,0,0,.5);
+				width:100%;
+				height:100%;
+				position:fixed;
+				top:0;
+				left:0;
+				right:0;
+				z-index:2;
+				display:none;
+			}
+			.modals-con{
+				background:#fff;
+				width:600px;
+				padding-top:100px;
+				height:470px;
+				border-radius:4px;
+				-webkit-border-radius:4px;
+				-moz-border-radius:4px;
+				-ms-border-radius:4px;
+				-o-border-radius:4px;
+				margin:0 auto;
+				position:absolute;
+				top:50%;
+				left:50%;
+				margin-top:-235px;
+				margin-left:-300px;
+			}
+			.colse{
+				position:absolute;
+				top:22px;
+				right:24px;
+				width:20px;
+				height:20px;
+				z-index:3;
+				cursor:pointer;
+			}
+			.modals-con ul{
+				margin-bottom:66px;
+			}
+			.modals-con li{
+				list-style:none;
+				height:36px;
+				line-height:36px;
+			}
+			.left-con, .right-con{
+				float:left;
+				font-size:14px;
+			}
+			.left-con{
+				width:146px;
+				color:#999;
+			}
+			.right-con{
+				color:#333;
+				height:36px;
+			}
+			.yjdh{
+				border:1px solid #e6e6e6;
+				border-radius:6px;
+				-webkit-border-radius:6px;
+				-moz-border-radius:6px;
+				-ms-border-radius:6px;
+				-o-border-radius:6px;
+				width:240px;
+				height:30px;
+				margin-right:20px;
+			}
+			.page{
+				margin:0 auto;
+				height:32px;
+				text-align:center;
+				width:260px;
+			}
+			.page .active{
+				background:#3685ff;
+				color:#fff;
+			}
+			.num{
+				background:#fff;
+				color:#3685ff;
+				width:120px;
+				height:30px;
+				font-size:16px;
+				line-height:30px;
+				border:1px solid #3685ff;
+				border-radius:6px;
+				-webkit-border-radius:6px;
+				-moz-border-radius:6px;
+				-ms-border-radius:6px;
+				-o-border-radius:6px;
+				text-align:center;
+				float:left;
+				margin-right:10px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="wrapper-content">
+			<div class="stip-top">
+				<div component="breadcrumb"></div>
+				
+				<div id="toolbar3">
+					<form id="form3" component="form2">
+		            	<div class="form-inline" style="margin-bottom: 15px;">
+		            		<div class="form-group">
+				            	<button type="button" class="btn btn-info" onclick="printApplication()">打印申请单</button>
+				            	<button type="button" class="btn btn-info" onclick="printAddress()">打印邮寄信息</button>
+			            	</div>
+			            	<div class="form-group">
+				            	<button type="button" class="btn" onclick="openExpress()">单号录入</button>
+				            	<button type="button" class="btn" onclick="kdnSearch()">物流信息查询</button>
+			            	</div>
+			            	<button type="button" class="btn btn-success" onclick="sureApplication()">确认订单</button>
+		            	</div>
+					</form>
+			    </div>
+		    </div>
+			
+			<div class="ibox-content">
+				<form id="form3" style="width: 900px;" class="form-horizontal" component="form2">
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 147px;"><label class="control-label">申请单号：</label></div>
+							<div class="x-row-cols " style="margin-left:147px;">
+								<input  class="form-control" readonly type="text" name="" value="" placeholder="" id="orderId"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 147px;"><label class="control-label">订单状态：</label></div>
+							<div class="x-row-cols " style="margin-left:147px;">
+								<input class="form-control" readonly type="text" name="" value="" placeholder="" id="orderState"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">患者姓名：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="name"/>
+									</div>
+								</div>
+							</div>
+							<div class="x-row-cols " style="margin-left:50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;病案号：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="patientId"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">出院科室：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="outDeptName"/>
+									</div>
+								</div>
+							</div>
+							<div class="x-row-cols " style="margin-left:50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;住院天数：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="hospitalization"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">手术方式：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="operationName"/>
+									</div>
+								</div>
+							</div>
+							<div class="x-row-cols " style="margin-left:50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;出院日期：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="outHosDate"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">费用金额：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="totalMoney"/>
+									</div>
+								</div>
+							</div>
+							<div class="x-row-cols " style="margin-left:50%;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 147px;">
+										<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;复印份数：</label>
+									</div>
+									<div class="x-row-cols " style="margin-left:147px;">
+										<input class="form-control" readonly type="text" name="" value="" placeholder="" id="caseNumber"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 147px;">
+								<label class="control-label">身份信息：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:147px;">
+								<div class="x-row">
+									<div class="x-row-cols " style="width: 280px;">
+										<div class="idcard" id="side1" onclick="enlargeImg('side1')"></div>
+									</div>
+									<div class="x-row-cols " style="margin-left:280px;">
+										<div class="idcard" id="side2" onclick="enlargeImg('side2')"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">序号：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;">
+							<input class="form-control" readonly type="text" name="" value="1" placeholder="" />
+						</div>
+					</div>-->
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">邮寄单号：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;">
+							<div class="form-inline" id="courierNumber"></div>
+						</div>
+					</div>
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">邮寄公司：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;" id="courierCompany"></div>
+					</div>
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">收件人姓名：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;" id="yjAddressee"></div>
+					</div>
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">联系电话：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;" id="yjTelephone"></div>
+					</div>
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"><label class="control-label">收件地址：</label></div>
+						<div class="x-row-cols " style="margin-left:147px;" id="yjAddress"></div>
+					</div>
+					<div class="x-row form-group">
+						<div class="x-row-cols " style="width: 147px;"></div>
+						<div class="x-row-cols " style="margin-left:147px;">
+							<button type="button" class="btn"  onclick="javascript:history.back(-1);">返回</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modals" id="yjModals">
+            	<div class="modals-con fix">
+            		<div class="colse" style="background:url(../../img/wechat/close.png) no-repeat;" onclick="clos()"></div>
+            		<ul>
+            			<li>
+            				<div class="fix">
+            					<div class="left-con">邮寄单号：</div>
+            					<div class="right-con">
+            						<input disabled="disabled" class='yjdh' type="text" value="" id="yjdh"/>
+            						<span style="color:#3685ff;font-size: 16px; cursor:pointer;" onclick="correc()">修正</span>
+            					</div>
+            				</div>
+            			</li>
+            			<li>
+            				<div class="fix">
+            					<div class="left-con">邮寄公司：</div>
+            					<div class="right-con" id="yjgs"></div>
+            				</div>
+            			</li>
+            			<li>
+            				<div class="fix">
+            					<div class="left-con">收件人姓名：</div>
+            					<div class="right-con" id="yjsjr"></div>
+            				</div>
+            			</li>
+            			<li>
+            				<div class="fix">
+            					<div class="left-con">联系电话：</div>
+            					<div class="right-con" id="yjlxdh"></div>
+            				</div>
+            			</li>
+            			<li>
+            				<div class="fix">
+            					<div class="left-con">收件地址：</div>
+            					<div class="right-con" id="yjdz"></div>
+            				</div>
+            			</li>
+            		</ul>
+            		<div class="fix page">
+            			<div class="num active" onclick="saveCorrec()">保存</div>
+            			<div class="num" onclick="clos()">取消</div>
+            		</div>
+            	</div>
+            </div>
+
+<!--             <div class="modals" id="idCardImg">
+            	<div class="modals-con fix" id="enlargeImg" style="height:700px;top: 34%;">
+            		<div class="colse" style="background:url(../../img/wechat/close.png) no-repeat;" onclick="idCardImgClose()"></div>
+            	</div>
+            </div> -->
+            
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script src="../../js/pc/order.js"></script>

@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>新增模版</title>
+		<style type="text/css">
+		</style>
+	</head> 
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+    	<form class="form-horizontal">
+    		<div class="row">
+			  	<div class="col-sm-6">
+			  	<div class="form-group">
+				    	<label class="col-sm-2 control-label">渠道类型</label>
+				    	<div class="col-sm-10">
+				    		<select id="useChannel" class="form-control" >
+				    			<option value="100123">微信</option>
+				    			<option value="100125">支付宝</option>
+				    			<option value="sms">短信</option>
+				    		</select>
+				    	</div>
+				  	</div>
+				  	<div class="form-group" id="templateIdDiv">
+				    	<label class="col-sm-2 control-label">渠道模板</label>
+				    	<div class="col-sm-10">
+				    		<select name="" class="form-control" id="templateId">
+				    		</select>
+				    	</div>
+				  	</div>
+			  		<!-- <div class="form-group">
+				    	<label class="col-sm-2 control-label">模版ID</label>
+				    	<div class="col-sm-10">
+				      		<input type="text" class="form-control" placeholder="请输入" id="templateId"/>
+				    	</div> 
+				  	</div>-->
+			  	</div>
+			  	<div class="col-sm-6">
+			  		<div class="form-group">
+				    	<label class="col-sm-2 control-label">消息类型</label>
+				    	<div class="col-sm-10">
+				    		<select id="msgType" class="form-control" >
+				    			<option value="1">模板</option>
+				    			<option value="2">文本</option>
+				    		</select>
+				    	</div>
+				  	</div>
+			  		<div class="form-group">
+				    	<label class="col-sm-2 control-label">场景</label>
+				    	<div class="col-sm-10">
+				    		<select name="" class="form-control" id="modeType">
+				    		</select>
+				    	</div>
+				  	</div>
+			  	</div>
+			  	<div class="col-sm-6" id="templateUrlDiv">
+			  		<div class="form-group">
+				    	<label class="col-sm-2 control-label">模板消息跳转链接 </label>
+				    	<div class="col-sm-10">
+				    		<select id="templateUrl" class="form-control" >
+				    			<option value="1">网页</option>
+				    			<option value="2">小程序</option>
+				    		</select>
+				    	</div>
+				  	</div>
+			  	</div>
+		  	</div>
+		  	
+		  	<div class="row">
+			  	<div class="col-sm-12">
+			  		<div class="form-group">
+				    	<label class="col-sm-1 control-label" >内容</label>
+				    	<div class="col-sm-11">
+				      		<textarea class="form-control" name="" rows="10" cols="" readonly="true" id="modeContent" ></textarea>
+				    	</div>
+				  	</div>
+			  	</div>
+		  	</div>
+		  	<div class="row" id="optnone" style="display:none">
+			  	<div class="col-sm-12">
+				  		<div class="form-group">
+					    	<label class="col-sm-1 control-label" >第三方调用xml示例</label>
+					    	<div class="col-sm-11">
+					      		<textarea class="form-control" name="" rows="10" cols="" id="xmlDemo"></textarea>
+					    	</div>
+					  	</div>
+				  </div>
+		  	</div>
+		  	<div class="row" id="optnone2" style="display:none">
+			  	<div class="col-sm-12">
+				  		<div class="form-group">
+					    	<label class="col-sm-1 control-label" >pushMode</label>
+					    	<div class="col-sm-11">
+					      		<textarea class="form-control" name="" rows="10" cols="" id="pushMode"></textarea>
+					    	</div>
+					  	</div>
+				  </div>
+		  	</div>
+		  	<div class="row" id="modeParamDiv">
+			  	<div class="col-sm-12">
+			  		<div class="form-group">
+				    	<label class="col-sm-1 control-label" >模版参数</label>
+				    	<div class="col-sm-11">
+				      		<div class="row">
+							  	<div class="col-sm-4">
+							  		渠道参数名
+							  	</div>
+							  	<div class="col-sm-4">
+							  		填充值（注：可替代参数放<>中）
+							  	</div>
+							  	<div class="col-sm-4">
+							  		可替代参数集合用@分割
+							  	</div>
+						  	</div>
+						  	<div id="paramlist">
+					      		<!-- <div class="row item" style="margin-top:10px;">
+								  	<div class="col-sm-4">
+								  		<input type="text" class="form-control modeWxParam" placeholder="请输入 如：first" />
+								  	</div>
+								  	<div class="col-sm-4">
+								  		<input type="text" class="form-control modeVal" placeholder="请输入 如：<name>您好！您已成功预约<HospitalName>" />
+								  	</div>
+								  	<div class="col-sm-4">
+								  		<input type="text" class="form-control modeParam" placeholder="请输入 如：name@HospitalName" />
+								  	</div>
+							  	</div>
+							  	<div class="row addBtn">
+								  	<div class="col-sm-8">
+								  		<button type="button" onclick="add(this)" style="width: 100%;margin-top: 10px;" class="btn btn-w-m btn-primary">添加</button>
+								  	</div>
+						  		</div>
+						  		 -->
+						  	</div>
+						  	
+				    	</div>
+				  	</div>
+			  	</div>
+		  	</div>
+		  	<div class="form-group" id="savebtn">
+		    	<div class="col-sm-offset-2 col-sm-10">
+		      		<button type="button" class="btn btn-w-m btn-success" onclick="saveData()">保存</button>&nbsp;&nbsp;&nbsp;
+		    	</div>
+		  	</div>
+		  	<div class="form-group" id="updatebtn" style="display:none">
+		    	<div class="col-sm-offset-2 col-sm-10">
+		      		<button type="button" class="btn btn-w-m btn-success" onclick="updateData()">修改</button>&nbsp;&nbsp;&nbsp;
+		    	</div>
+		  	</div>
+		</form>
+	</body>
+	<script>
+		function saveData(){
+			var param = {};
+			var apiData = {};
+			apiData.useChannel = $("#useChannel").val();
+			apiData.modeType = $("#modeType").val();
+			apiData.modeUrl = '';
+			apiData.orgId = Commonjs.hospitalId();
+			apiData.operatorId = Commonjs.getUrlParam("userId");
+			apiData.operatorName = Commonjs.getUrlParam("userName");
+			apiData.state = 1;
+			apiData.modeContent = escape($("#modeContent").val());
+			apiData.msgType = $("#msgType").val();
+			apiData.pushMode = escape(createPushMode($("#msgType").val(),$("#useChannel").val()));
+			apiData.templateId = $("#templateId").val();
+			apiData.msgTempDemo = createDemo($("#msgType").val());
+			apiData.msgTempName = $("#modeType option:selected").text();
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/AddMsgTemp/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					window.location.href='msgTempList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		function updateData(){
+			var param = {};
+			var apiData = {};
+			param.api = '';
+			apiData.modeId = modeId;
+			apiData.pushMode = escape($("#pushMode").val());
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/EditMsgTemp/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					window.location.href='msgTempList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		var modeId = Commonjs.getUrlParam("modeId");
+		$(function(){
+			var opt = Commonjs.getUrlParam("opt");
+			if(opt==1){
+				$("#optnone").show();
+				$("#optnone2").show();
+				$("#modeParamDiv").hide();
+				$("#savebtn").hide();
+				$("input").attr("readonly",true);
+				$("select").attr("disabled",true);
+				$("textarea").attr("readonly",true);
+				$("#pushMode").attr("readonly",false);
+				$("#updatebtn").show();
+				queryList(modeId);
+			}
+			else{
+				querySceneList();
+				queryWeiXinTemp();
+			}
+			$("#useChannel").change(function (){
+				if($("#msgType").val()==1){//如果是模板消息
+					if($(this).val()=='100123'){
+						queryWeiXinTemp();
+					}
+					if($(this).val()=='100125'){
+						queryZfbTemp();
+					}
+				}
+				else{
+					$("#templateId").val("");
+					$("#templateIdDiv").hide();
+				}
+			})
+			if($("#msgType").val()==1){
+				$("#templateIdDiv").show();
+			}
+			else{
+				$("#templateId").val("");
+				$("#templateIdDiv").hide();
+			}
+			$("#msgType").change(function (){
+				if($("#msgType").val()==1){
+					$("#templateIdDiv").show();
+					$("#templateUrlDiv").show();
+					$(".modeWxParam").attr("readonly",false);
+					$(".modeWxParam").val("");
+				}
+				else{
+					$(".modeWxParam").attr("readonly",true);
+					$(".modeWxParam").val("Data");
+					$("#templateId").val("");
+					$("#modeContent").html("");
+					$("#templateIdDiv").hide();
+					$("#templateUrlDiv").hide();
+				}
+			})
+			$("#templateId").change(function(){
+				if($("#useChannel").val()=='100125'){
+					var param = {};
+					var apiData = {};
+					var modeId = $(this).val();
+					param.apiParam = Commonjs.getApiReqParams(apiData);
+					var url = '../../js/pc/data/zfb_2017102309469075.json';
+					Commonjs.ajax(url, param, function(d) {
+						$.each(d,function(index,val){
+							var t = val.template_id;
+							if(t == modeId){
+								$("#modeContent").html(val.content);
+							}
+						});
+					});
+				}
+				if($("#useChannel").val()=='100123'){
+					var param = {};
+					var apiData = {};
+					var modeId = $(this).val();
+					apiData.modeId=modeId;
+					param.api = '';
+					param.apiParam = Commonjs.getApiReqParams(apiData);
+					var url = '/wsgw/msg/QueryWxTemplateList/callApi.do';
+					Commonjs.ajax(url, param, function(d) {
+						if (d.RespCode == 10000) {
+							Commonjs.BaseForeach(d.Data, function(i,item){
+								$("#modeContent").html("");
+								$("#modeContent").html(item.content);
+								var DATAS = item.content.split("}}");
+								var list = '';
+								Commonjs.BaseForeach(DATAS, function(J,DATA){
+									if(DATA!=''){
+										var str = DATA.match(/{{(\S*).DATA/)[1];
+										list+='<div class="row item" style="margin-top:10px;">';
+										list+='<div class="col-sm-4">';
+										list+='<input type="text" class="form-control modeWxParam" readonly="true" value="'+str+'" />';
+										list+='</div>';
+										list+='<div class="col-sm-4">';
+										list+='<input type="text" class="form-control modeVal" placeholder="请输入 如：<name>您好！您已成功预约<HospitalName>" />';
+										list+='</div>';
+										list+='<div class="col-sm-4">';
+										list+='<input type="text" class="form-control modeParam" placeholder="请输入 如：name@HospitalName" />';
+										list+='</div>';
+										list+='</div>';
+									}
+								})
+								$("#paramlist").html(list);
+							})
+						} 
+					});
+				}
+			})
+		})
+		function queryZfbTemp(){
+			var param = {};
+			var apiData = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '../../js/pc/data/zfb_2017102309469075.json';
+			Commonjs.ajax(url, param, function(d) {
+				$.each(d,function(index,val){
+					var html = '';
+					html+='<option value="">请选择</option>';
+					Commonjs.BaseForeach(d, function(i,item){
+						html+='<option value="'+item.template_id+'">'+item.title+'</option>';
+					})
+					$("#templateId").html(html);
+				});
+			});
+		}
+		function queryWeiXinTemp(){
+			var param = {};
+			var apiData = {};
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/QueryWxTemplateList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					var html = '';
+					html+='<option value="">请选择</option>';
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						html+='<option value="'+item.template_id+'">'+item.title+'</option>';
+					})
+					$("#templateId").html(html);
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		function queryList(modeId){
+			var param = {};
+			var apiData = {};
+			apiData.modeId = modeId;
+			param.api = '';
+			apiData.orgId = Commonjs.hospitalId();
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgTempList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						$("#useChannel").val();
+						$("#modeContent").val(item.ModeContent);
+						$("#msgType").val(item.MsgType);
+						$("#templateId").val(item.TemplateId);
+						$("#xmlDemo").val(item.MsgTempDemo);
+						$("#pushMode").val(item.PushMode);
+						var html='';
+						html+='<option value="'+item.ModeType+'">'+item.MsgTempName+'</option>';
+						$("#modeType").html(html);
+					})
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		function querySceneList(){
+			var param = {};
+			var apiData = {};
+			apiData.state = 1;
+			param.api = '';
+			apiData.OrgId = Commonjs.hospitalId();
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgSceneList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					var html = '';
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						html+='<option value="'+item.ModeType+'">'+item.SceneName+'</option>';
+					})
+					$("#modeType").html(html);
+				} else {
+					alert('获取场景失败');// 错误提示
+				}
+			});
+		}
+		function add(o){
+			var _this = $(o);
+			var html = [];
+      		html.push('<div class="row item" style="margin-top:10px;">');
+			html.push('  	<div class="col-sm-4">');
+			html.push('  		<input type="text" class="form-control modeWxParam" placeholder="请输入如：first" />');
+			html.push('  	</div>');
+			html.push('  	<div class="col-sm-4">');
+			html.push('  		<input type="text" class="form-control modeVal" placeholder="请输入 如：<name>您好！您已成功预约<HospitalName>" />');
+			html.push('  	</div>');
+			html.push('  	<div class="col-sm-4">');
+			html.push('  		<input type="text" class="form-control modeParam" placeholder="请输入 如：name@HospitalName" />');
+			html.push('  	</div>');
+			html.push('  	<div class="col-sm-4">');
+			html.push('  		<button type="button" onclick="del(this)" class="btn btn-w-m btn-danger">删除</button>');
+			html.push('  	</div>');
+		  	html.push('</div>');
+		  	_this.parents('.addBtn').before(html.join(''));
+		}
+		
+		function del(o){
+			var _this = $(o);
+			System.confirm({
+				title:'',
+			  	text:'是否删除？',
+			  	type:'info',
+			  	callback:function(bool){
+			  		if(bool){
+						_this.parents('.item').remove();
+			  		}
+				}
+			})
+		}
+		function createPushMode(msgType,useChannel){//msgType 1模板 2文本 useChannel:100123微信
+			if(msgType==1&&useChannel=="100123"){
+				var pushMode = '{"touser":"<openId>","template_id":"<templateId>",'
+				if($("#templateUrl").val()==1){//跳转到网页
+					pushMode += '"url":"<URL>",';
+				}
+				if($("#templateUrl").val()==2){//跳转到小程序
+					pushMode+='"miniprogram":{';
+					pushMode+='"appid":"<miniAppId>",';
+					pushMode+='"pagepath":"<URL>"},';
+			            
+				}	
+					pushMode += '"data":{';
+				$(".item").each(function(){
+					var modeParam = $(this).find(".modeParam").val();
+					var modeWxParam = $(this).find(".modeWxParam").val();
+					var modeVal = $(this).find(".modeVal").val();
+					pushMode+='"'+modeWxParam+'":{"value":"'+modeVal+'"},';
+				});
+				pushMode = pushMode.substr(0, pushMode.length - 1);
+				
+				pushMode+='}}';
+				return pushMode
+			}
+			if(msgType==2&&useChannel=="100123"){
+				var pushMode = '{"touser":"<openId>","msgtype":"text",'
+					pushMode += '"text":{"content":"';
+				$(".item").each(function(){
+					var modeParam = $(this).find(".modeParam").val();
+					var modeVal = $(this).find(".modeVal").val();
+					pushMode+= modeVal;
+				});
+				pushMode+='"}}';
+				return pushMode
+			}
+			if(msgType==1&&useChannel=="100125"){
+				var pushMode = '{"to_user_id":"<openId>","template":{"template_id":"<templateId>",'
+					pushMode += '"context":{';
+				$(".item").each(function(){
+					var modeParam = $(this).find(".modeParam").val();
+					var modeWxParam = $(this).find(".modeWxParam").val();
+					var modeVal = $(this).find(".modeVal").val();
+					pushMode+='"'+modeWxParam+'":{"value":"'+modeVal+'"},';
+				});
+				pushMode += '"url":"<URL>"';
+				
+				pushMode+='}}}';
+				return pushMode
+			}
+			if(msgType==2&&useChannel=="100125"){
+				var pushMode = '{"to_user_id":"<openId>","msg_type":"text",'
+					pushMode += '"text":{"content":"';
+				$(".item").each(function(){
+					var modeParam = $(this).find(".modeParam").val();
+					var modeVal = $(this).find(".modeVal").val();
+					pushMode+=modeVal;
+				});
+				pushMode+='"}}';
+				return pushMode
+			}
+			
+		}
+		function createDemo(msgType){
+			var pushMode = '<Data_1>';
+			$(".item").each(function(){
+				var modeWxParam = $(this).find(".modeWxParam").val();
+				var modeParam = $(this).find(".modeParam").val();
+				modeParam+="@";
+				var strs= new Array(); //定义一数组
+				strs=modeParam.split("@"); //字符分割
+				for (i=0;i<strs.length-1 ;i++ )
+				{
+					if(strs[i]==''){
+						continue;
+					}
+					pushMode+='<'+strs[i]+'>'+'</'+strs[i]+'>';
+				} 
+				
+			});
+			if(msgType==1){
+				if($("#templateUrl").val()==1){
+					pushMode+="<URL>模板跳转地址，不跳转请滞空</URL>";
+				}
+				if($("#templateUrl").val()==2&&$("#useChannel").val()=='100123'){//微信支持跳转小程序
+					pushMode+="<miniAppId>传入小程序的appId</miniAppId>";
+					pushMode+="<URL>小程序地址</URL>";
+				}
+			}
+			pushMode+='</Data_1>';
+			return pushMode
+		}
+	</script>
+</html>

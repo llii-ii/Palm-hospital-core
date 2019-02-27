@@ -1,0 +1,462 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>预约详情</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="plr15 ptb5 c-t-center c-666 c-f13">订单状态：<span class="c-ffac0b" id="state"></span></div>
+    <div class="c-border-tb">
+    	<div class="order-head">预约信息</div>
+        <div class="bor-t-f2">
+        	<ul class="visit-mess c-f13">
+        		 <li>
+                	<div class="vm-key c-999">订单号</div>
+                	<div class="vm-info" id="orderId"></div>
+                </li>
+            	 <li>
+                	<div class="vm-key c-999">就诊人</div>
+                	<div class="vm-info" id="name"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">预约号源</div>
+                	<div class="vm-info" id="time"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">医生</div>
+                	<div class="vm-info" id="doctorName"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">科室</div>
+                	<div class="vm-info" id="deptName"></div>
+                </li>
+            	<li>
+                	<div class="vm-key c-999">门诊挂号费</div>
+                	 <div class="vm-info">￥<span class="c-ffac0b" id="fee"></span></div> 
+                </li>
+            	<li>
+                	<div class="vm-key c-999">就诊时间</div>
+                	<div class="vm-info" id="date"></div>
+                </li> 
+            </ul>
+        </div>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<!-- <li>
+            	<div class="c-list-key c-999 pr15">订单金额</div>
+            	<div class="c-list-info c-t-right">￥<span class="c-ffac0b"></span></div>
+            </li> -->
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<div class="order-head">取号地点</div>
+        <div class="c-f13 c-999 bgc-fff plr15 pb10" id="takeNoPalce"></div>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<div class="order-head">取号说明</div>
+        <div class="c-f13 c-999 bgc-fff plr15 pb10" id="takeNoDesc"></div>
+    </div>
+    <div id="refundId" class="mt10 c-border-tb" style="display: none">
+    	<ul class="c-list c-f15">
+        	<li class="c-list-a">
+             	<a id ='refundHref' class="c-arrow-r">
+                    <div class="c-list-key c-999 pr15">退款详情</div>
+                </a> 
+            </li>
+        </ul>
+    </div>
+    <div class="flexbtn mt20 plr15" id = "unYY" style="display: none">
+    	<a href="javascript:;" class="c-btn c-btn-0ddddd"  onclick="YYCancel()">取消挂号</a>
+    	<a id="_goToPay" href="javascript:;" class="c-btn c-btn-blue"  onclick="gotoDealOrder()">支付</a>
+    </div> 
+    <div class="flexbtn mt20 plr15" id="yycancel" style="display: none">
+    	 <a href="javascript:;" class="c-btn c-btn-blue"  onclick="doCancel()">退号</a> 
+    </div> 
+    <div class="flexbtn mt20 plr15" id="bookService" style="display: none">
+    	 <a href="javascript:;" class="c-btn c-btn-blue"  onclick="doBookService()">挂号</a> 
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript"   src="../../common/js/common.js?v=201901152112" ></script>
+<script type="text/javascript">
+var orderId;
+//var localRegFlag;
+var isOnlinePay;
+var bizState;
+var payState;
+var queryServiceId='';
+$(function(){
+	isOnlinePay = Commonjs.getUrlParam("isOnlinePay");//接收页面传过来的参数是否在线支付：1 是 2 否
+	if(isOnlinePay == 2){
+		$("#_goToPay").html("挂号");
+	}
+	orderId = Commonjs.getUrlParam("orderId");//接收页面传过来的参数
+	queryServiceId = Commonjs.getUrlParam("queryServiceId");//接收页面传过来的参数
+	//localRegFlag = Commonjs.getUrlParam("localRegFlag");//接收页面传过来的参数
+	queryDetails();
+});
+
+function doCancel(){
+	/* if(confirm('是否确认退号？')){
+//		myLayer.load("正在加载");
+		YYCancel();
+//		myLayer.clear();
+	} */
+	myLayer.confirm({
+		title:'',
+		con:'是否确认退号？',
+		cancel: function(){
+		},
+		cancelValue:'\u53d6\u6d88',
+		ok: function(){
+			if(!Commonjs.isEmpty(orderId)){
+				YYCancel();
+			}else{
+				myLayer.tip({
+					con:'未找到订单；该订单异常，请联系客服。'
+				});
+				return;
+			}
+		},
+		okValue:'\u786e\u5b9a'
+	});
+}
+
+//查询预约详情
+function queryDetails(){
+	var apiData = {};
+//	apiData.OpenId=Commonjs.getOpenId();
+	apiData.ChannelId=Commonjs.getClientId(); 
+	apiData.OrderId=orderId;
+//	apiData.ServiceId="0";
+//	var page = {};
+	var param = {};
+	param.api = 'QueryRegInfo'; 
+	param.apiParam =Commonjs.getApiReqParams(apiData,"");
+	Commonjs.ajax('../../wsgw/yy/QueryRegInfo/callApi.do',param,function(jsons){
+		if(!Commonjs.isEmpty(jsons)){
+			if(!Commonjs.isEmpty(jsons.RespCode)){
+				if(jsons.RespCode==10000){
+					if(Commonjs.ListIsNotNull(jsons.Data)){
+						Commonjs.BaseForeach(jsons.Data, function(i,item){
+							var week;
+							bizState = item.BizState;
+							payState = item.PayState;
+							var overState = item.OverState;
+							var regFlag = item.RegFlag;
+							if(bizState == 1 && regFlag == ""){
+								regFlag = 1;
+							}
+							if(bizState == 2 && regFlag == ""){
+								regFlag = 2;
+							}
+							if(bizState == 0 && payState ==0){
+								regFlag = 0; //锁号未 支付状态
+							}
+							//中间取消预约
+							if(overState == 5){
+								regFlag = 2;
+							} 
+							var orderId = item.OrderId;
+							var orderNum = item.OrderNum;
+							$("#orderId").html(orderNum);
+							$("#name").html(item.Name);
+							$("#time").html(item.CommendTime+"&nbsp;&nbsp;"+item.SqNo);
+							$("#doctorName").html(item.DoctorName);
+							$("#deptName").html(item.DeptName);
+							$("#fee").html(Commonjs.centToYuan(item.RegFee)+"元");
+							$("#takeNoPalce").html(item.TakeNoPalce);
+							$("#takeNoDesc").html(item.TakeNoDesc);
+							
+							var regFlagStr = Commonjs.getRegFlagStr(regFlag);
+							$("#yycancel").hide();
+							$("#unYY").hide();
+							$("#refundId").hide();
+							$("#state").html(regFlagStr);
+							if(regFlag==0){
+								$("#unYY").show();
+							}else if(regFlag==1){//根据参数判断订单状态//1正常，2退号，3停诊，4替诊 5，已取号  6 已就诊
+									$("#yycancel").show();
+							}else if(regFlag==2){
+								if(isOnlinePay == 1){
+									$("#refundId").show();
+								}
+								$("#refundHref").attr('href','/business/pay/refundDetail.html?orderId='+orderId);
+							}else{
+								//本地正在支付或者支付完成，his还未挂号的情况
+								$("#state").html("挂号中");
+							}
+							//同步状态
+							/* synLocalRegflag(item.RegFlag); */
+							//根据日期判断星期几
+							if(new Date(item.RegDate).getDay()==0){
+								week="周天";
+							}
+							if(new Date(item.RegDate).getDay()==1){
+								week="周一";
+							}
+							if(new Date(item.RegDate).getDay()==2){
+								week="周二";
+							}
+							if(new Date(item.RegDate).getDay()==3){
+								week="周三";
+							}
+							if(new Date(item.RegDate).getDay()==4){
+								week="周四";
+							}
+							if(new Date(item.RegDate).getDay()==5){
+								week="周五";
+							}
+							if(new Date(item.RegDate).getDay()==6){
+								week="周六";
+							}
+							if(item.TimeSlice==1 ){//根据参数判断就诊时段
+								$("#date").html(item.RegDate+"&nbsp;&nbsp;"+week+"&nbsp;&nbsp;"+"上午");
+							}else if(item.TimeSlice==2 ){
+								$("#date").html(item.RegDate+"&nbsp;&nbsp;"+week+"&nbsp;&nbsp;"+"下午");
+							}else if(item.TimeSlice==0){
+								$("#date").html(item.RegDate+"&nbsp;&nbsp;"+week+"&nbsp;&nbsp;"+"全天");
+							}
+							
+							/*目前不支持晚上时段
+							else if(item.TimeSlice==3){
+								$("#date").html(item.RegDate+"&nbsp;&nbsp;"+week+"&nbsp;&nbsp;"+"晚上");
+							} */
+						});
+					}
+				}else {
+					myLayer.alert(jsons.RespMessage,3000);
+					}
+			}else{
+				myLayer.alert("返回码为空");
+			}
+		}else{
+			//通信失败
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+		}
+    });
+};
+//退号
+function YYCancel(){
+	var apiData = {};
+	var param = {};
+	var openid = Commonjs.getOpenId();
+	apiData.OpenId= openid;
+	apiData.OrderId= orderId;
+	apiData.Reason= '取消预约';
+	apiData.OperatorId= openid;
+	apiData.OperatorName= openid;
+	param.apiParam =Commonjs.getApiReqParams(apiData,"");
+	//未执行业务 取消 则调用解锁即可
+	if(bizState == 0){
+		param.api = 'Unlock';
+		Commonjs.ajax("../../wsgw/yy/Unlock/callApi.do?t=" + new Date().getTime(),param,function(jsons){
+			if (Commonjs.ListIsNotNull(jsons)) {
+	            if (jsons.RespCode == 10000) {
+	            	isContinue = true;
+//	            	localStorage.removeItem("orderId");
+	            	Commonjs.removeLocalItem("orderId",false);
+	            	queryDetails();
+//					$(window).attr('location','yyghAppointmentList.html');
+					//执行完把弹出层clear掉
+					myLayer.alert("取消成功");
+	            }else{
+					myLayer.alert("取消失败，"+jsons.RespMessage);
+	            }
+	        } else {
+	        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+	        }
+			
+	    },{async:false});
+	}else{
+//		apiData.ServiceId="0";
+		param.api = 'YYCancel'; 
+		Commonjs.ajax('../../wsgw/yy/YYCancel/callApi.do',param,function(jsons){
+			if(!Commonjs.isEmpty(jsons)){
+				if(!Commonjs.isEmpty(jsons.RespCode)){
+					if(jsons.RespCode==10000){
+						//updateState(true);
+						myLayer.alert("退号成功");
+						window.location.href = Commonjs.goToUrl('/business/order/orderLocalList.html?queryServiceId=0');
+					}else {
+						myLayer.alert(jsons.RespMessage,3000);
+	            }
+				}else{
+					myLayer.alert("返回码为空");
+				}
+			}else{
+				//通信失败
+	        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+			}
+	    });
+	}
+	
+	
+};
+/* //退号成功，更新订单状态
+function updateState(isWarm){
+	var apiData = {};
+	apiData.OpenId=Commonjs.getOpenId();
+	apiData.ChannelId=Commonjs.getClientId();
+	apiData.OrderId=orderId;
+	var param = {};
+	param.api = 'BizForCancel'; 
+	param.apiParam =Commonjs.getApiReqParams(apiData,"");
+	Commonjs.ajax('../../wsgw/order/BizForCancel/callApi.do',param,function(jsons){
+		if(!isWarm){
+			localRegFlag = '';
+			return;
+		}
+		if(!Commonjs.isEmpty(jsons)){
+			if(!Commonjs.isEmpty(jsons.RespCode)){
+				if(jsons.RespCode==10000){
+					queryDetails();
+//					$(window).attr('location','yyghAppointmentList.html');
+					//执行完把弹出层clear掉
+					myLayer.alert("退号成功");
+				}else {
+					myLayer.alert(jsons.RespMessage,3000);
+				}
+			}else{
+				myLayer.alert("返回码为空");
+			}
+		}
+		else{
+			//通信失败
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+		}
+    },{async:false});
+	
+}; */
+
+function gotoDealOrder (){
+	if(isOnlinePay == 2){
+		//TODO 是否要支持 锁号后继续挂号
+		bookService();
+	}else{
+		window.location.href = "/business/pay/payment.html?orderId=" + orderId + "&toUrl=/business/pay/yyPaySuccess.html?orderId=" + orderId;
+	}
+}
+
+function cancelYY (){
+	var apiData = {};
+//	apiData.OpenId=Commonjs.getOpenId();
+//	apiData.ChannelId=Commonjs.channelId;
+	apiData.OrderId=orderId;
+	apiData.OperatorId=Commonjs.getOpenId(); 
+	apiData.OperatorName=Commonjs.getOpenId(); 
+	var param = {};
+//	param.api = 'BizForCancel';  
+	param.apiParam =Commonjs.getApiReqParams(apiData,"");
+	Commonjs.ajax('../../wsgw/order/BizForCancel/callApi.do',param,function(jsons){
+		if(!Commonjs.isEmpty(jsons)){
+			if(!Commonjs.isEmpty(jsons.RespCode)){
+				if(jsons.RespCode==10000){
+					myLayer.clear();
+					queryDetails()
+				}else {
+					myLayer.clear();
+					myLayer.alert(jsons.RespMessage,3000);
+				}
+			}else{
+				myLayer.alert("返回码为空");
+			}
+		}
+		else{
+			myLayer.clear();
+			//通信失败
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+		}
+    });
+	
+}
+/**
+ * 同步本地订单状态
+ 
+	这里查询的是his的状态，前面一个页面是查询我们本地的订单列表状态
+	如果订单列表中的状态 和 his那边的状态不一致的时候要做更新
+ */
+function synLocalRegflag(regFlag){
+	if(Commonjs.isEmpty(localRegFlag)||localRegFlag==regFlag){
+		return;
+	}
+	if(localRegFlag == '0' &&regFlag =='1'){
+		//本地未挂号his已挂号
+		addOrderOver(false);
+	}else if((localRegFlag == '0'||localRegFlag == '1') &&regFlag =='2'){
+		//本地未挂号或已挂号,his已退号
+		updateState(false);
+	}
+	
+}
+
+//添加业务状态信息
+function addOrderOver(isWarm) {
+	var apiData = {};
+	var param = {};
+	apiData.HosId=Commonjs.hospitalId();
+	apiData.OrderId=orderId;
+	apiData.OverState="1";
+	apiData.OperatorId=Commonjs.getOpenId();
+	apiData.OperatorName=name; 
+	param.api = 'BizForCompletion';
+	param.apiParam = Commonjs.getApiReqParams(apiData,"",6014);
+	Commonjs.ajax("../../wsgw/order/BizForCompletion/callApi.do?t=" + new Date().getTime(),param,function(jsons){
+		if(!isWarm){
+			localRegFlag = '';
+			return;
+		}
+		if (Commonjs.ListIsNotNull(jsons)) {
+          if (jsons.RespCode == 10000) {
+          	goToYYsuccess();
+          } else {
+          	myLayer.alert(jsons.RespMessage,3000);
+          }
+      } else {
+      	myLayer.alert('网络繁忙,请刷新后重试',3000);
+      }
+  });
+}
+
+//挂号操作
+function bookService() {
+	myLayer.clear();
+    var apiData = {};
+	var param = {};
+	apiData.HosId = Commonjs.getUrlParam("HosId");
+	apiData.OrderId = orderId;
+	apiData.OperatorId = Commonjs.getOpenId();
+	myLayer.load('正在挂号');
+	param.api = 'BookService';
+	param.apiParam = Commonjs.getApiReqParams(apiData,"",3003);
+	Commonjs.ajax("../../wsgw/yy/BookService/callApi.do?t=" + new Date().getTime(),param,function(jsons){
+		if (Commonjs.ListIsNotNull(jsons)) {
+//			console.log(jsons);
+            if (jsons.RespCode == 10000) {
+//            	addOrderOver();
+            	window.location.reload()
+            } else {
+            	myLayer.alert(jsons.RespMessage,3000);
+            }
+        } else {
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+        }
+    },{error:function(){
+    	//处理异常情况
+    	myLayer.alert('网络繁忙',3000);
+        location.href = yyghAppointmentDetailsUrl + '?orderId='+ orderId +'&localRegFlag=4';
+    }}); 
+}
+</script>
+</body>
+</html>

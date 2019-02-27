@@ -1,0 +1,153 @@
+<dict des="字典配置项目，配置所有的字典">
+<!-- certType start -->
+<dic type="certType" code="01" value="居民身份证"/>
+<dic type="certType" code="02" value="居民户口簿"/>
+<dic type="certType" code="03" value="护照"/>
+<dic type="certType" code="04" value="军官证"/>
+<dic type="certType" code="05" value="驾驶证"/>
+<dic type="certType" code="06" value="港澳居民来往内地通行证"/>
+<dic type="certType" code="07" value="台湾居民来往内地通行证"/>
+<dic type="certType" code="08" value="士兵证"/>
+<dic type="certType" code="09" value="返乡证"/>
+<dic type="certType" code="10" value="组织机构代码"/>
+<dic type="certType" code="11" value="港澳通行证"/>
+<dic type="certType" code="12" value="台湾通行证"/>
+<dic type="certType" code="13" value="户口簿"/>
+<dic type="certType" code="14" value="学生证"/>
+<dic type="certType" code="15" value="国际海员证"/>
+<dic type="certType" code="16" value="外国人永久居留证"/>
+<dic type="certType" code="17" value="旅行证"/>
+<dic type="certType" code="18" value="警官证"/>
+<dic type="certType" code="19" value="微信号"/>
+<dic type="certType" code="20" value="港澳居民来往内地通行证"/>
+<dic type="certType" code="21" value="台胞证"/>
+<dic type="certType" code="22" value="电子就医码"/>
+<dic type="certType" code="23" value="社会保障号码"/>
+<dic type="certType" code="99" value="其他法定有效证件"/>
+<!-- certType end -->
+
+<dic type="gender" code="0" value="未知的性别"/>
+<dic type="gender" code="1" value="男性"/>
+<dic type="gender" code="2" value="女性"/>
+<dic type="gender" code="9" value="未说明的性别"/>
+
+<dic type="payFeeType" code="01" value="城镇职工基本医疗保险"/>
+<dic type="payFeeType" code="02" value="城镇居民基本医疗保险"/>
+<dic type="payFeeType" code="03" value="新型农村合作医疗"/>
+<dic type="payFeeType" code="04" value="贫困救助"/>
+<dic type="payFeeType" code="05" value="商业医疗保险"/>
+<dic type="payFeeType" code="06" value="全公费"/>
+<dic type="payFeeType" code="07" value="全自费"/>
+<dic type="payFeeType" code="08" value="其他社会保险"/>
+<dic type="payFeeType" code="99" value="其他"/>
+<dic type="payFeeType" code="98" value="深圳基本医保一档(综合医保)"/>
+<dic type="payFeeType" code="97" value="深圳基本医保二档(住院医保)"/>
+<dic type="payFeeType" code="96" value="深圳基本医保三档(农民工/劳务工医保)"/>
+<dic type="payFeeType" code="95" value="少儿医疗保险"/>
+<dic type="payFeeType" code="94" value="少儿医保(自费)"/>
+<dic type="payFeeType" code="93" value="学生医疗保险"/>
+
+<dic type="medicalType" code="0" value="普通门诊"/>
+<dic type="medicalType" code="1" value="生育门诊"/>
+<dic type="medicalType" code="2" value="住院"/>
+<dic type="medicalType" code="3" value="生育住院"/>
+<dic type="medicalType" code="4" value="急诊"/>
+<dic type="medicalType" code="5" value="特病门诊"/>
+<dic type="medicalType" code="6" value="特需门诊"/>
+<dic type="medicalType" code="7" value="专家门诊"/>
+<dic type="medicalType" code="8" value="体检"/>
+<dic type="medicalType" code="9" value="预防接种"/>
+<dic type="medicalType" code="10" value="其他"/>
+
+<dic type="diagnosisType" code="1" value="出院诊断"/>
+<dic type="diagnosisType" code="10" value="并发症诊断"/>
+<dic type="diagnosisType" code="11" value="院内感染诊断"/>
+<dic type="diagnosisType" code="12" value="主要诊断"/>
+<dic type="diagnosisType" code="13" value="次要诊断"/>
+<dic type="diagnosisType" code="2" value="门诊诊断"/>
+<dic type="diagnosisType" code="3" value="入院初步诊断"/>
+<dic type="diagnosisType" code="4" value="术前诊断"/>
+<dic type="diagnosisType" code="5" value="术后诊断"/>
+<dic type="diagnosisType" code="6" value="尸检诊断"/>
+<dic type="diagnosisType" code="7" value="放射诊断"/>
+<dic type="diagnosisType" code="8" value="超声诊断"/>
+<dic type="diagnosisType" code="9" value="病理诊断"/>
+<dic type="diagnosisType" code="99" value="其他"/>
+
+<dic type="resultCode" code="1" value="治愈"/>
+<dic type="resultCode" code="2" value="好转"/>
+<dic type="resultCode" code="3" value="稳定"/>
+<dic type="resultCode" code="4" value="恶化"/>
+<dic type="resultCode" code="5" value="死亡"/>
+<dic type="resultCode" code="99" value="其他"/>
+
+<dic type="clinicChargeCode" code="01" value="西药"/>
+<dic type="clinicChargeCode" code="02" value="中成药"/>
+<dic type="clinicChargeCode" code="03" value="中草药"/>
+<dic type="clinicChargeCode" code="04" value="诊察费"/>
+<dic type="clinicChargeCode" code="05" value="检査费"/>
+<dic type="clinicChargeCode" code="06" value="化验费"/>
+<dic type="clinicChargeCode" code="07" value="放射费"/>
+<dic type="clinicChargeCode" code="08" value="治疗费"/>
+<dic type="clinicChargeCode" code="09" value="手术费"/>
+<dic type="clinicChargeCode" code="10" value="材料费"/>
+<dic type="clinicChargeCode" code="11" value="药事服务费"/>
+<dic type="clinicChargeCode" code="12" value="一般诊疗费"/>
+<dic type="clinicChargeCode" code="99" value="其他"/>
+<dic type="clinicChargeCode" code="98" value="挂号费"/>
+
+<dic type="billType" code="01" value="非社保"/>
+<dic type="billType" code="02" value="社保"/>
+
+<dic type="clinicCardType" code="1" value="社会保障卡"/>
+<dic type="clinicCardType" code="2" value="医保卡"/>
+<dic type="clinicCardType" code="3" value="新农合"/>
+<dic type="clinicCardType" code="4" value="发行正式卡"/>
+<dic type="clinicCardType" code="5" value="发行临时卡"/>
+<dic type="clinicCardType" code="9" value="其他卡类别"/>
+
+<dic type="recipeType" code="1" value="西药处方"/>
+<dic type="recipeType" code="2" value="中药处方"/>
+
+<dic type="isSingleRemedy" code="1" value="单方"/>
+<dic type="isSingleRemedy" code="2" value="复方"/>
+
+<dic type="itemLevel" code="1" value="甲类"/>
+<dic type="itemLevel" code="2" value="已类"/>
+<dic type="itemLevel" code="3" value="丙类"/>
+
+<dic type="isPrescription" code="0" value="否"/>
+<dic type="isPrescription" code="1" value="是"/>
+
+<dic type="isSeriousDrugs" code="0" value="否"/>
+<dic type="isSeriousDrugs" code="1" value="是"/>
+
+<dic type="extraRecipeFlg" code="1" value="非外带处方"/>
+<dic type="extraRecipeFlg" code="2" value="处方外带"/>
+
+<dic type="medItemCtg" code="01" value="药品"/>
+<dic type="medItemCtg" code="02" value="诊疗"/>
+<dic type="medItemCtg" code="03" value="医用耗材"/>
+<dic type="medItemCtg" code="04" value="其他"/>
+
+
+<dic type="settlementType" code="01" value="城镇职工基本医疗保险"/>
+<dic type="settlementType" code="02" value="城镇居民基本医疗保险"/>
+<dic type="settlementType" code="03" value="新型农村合作医疗"/>
+<dic type="settlementType" code="04" value="贫困救助"/>
+<dic type="settlementType" code="05" value="商业医疗保险"/>
+<dic type="settlementType" code="06" value="全公费"/>
+<dic type="settlementType" code="07" value="全自费"/>
+<dic type="settlementType" code="08" value="其他社会保险"/>
+<dic type="settlementType" code="99" value="其他"/>
+<dic type="settlementType" code="98" value="深圳基本医保一档(综合医保)"/>
+<dic type="settlementType" code="97" value="深圳基本医保二档(住院医保)"/>
+<dic type="settlementType" code="96" value="深圳基本医保三档(农民工/劳务工医保)"/>
+<dic type="settlementType" code="95" value="少儿医疗保险"/>
+<dic type="settlementType" code="94" value="少儿医保(自费)"/>
+<dic type="settlementType" code="93" value="学生医疗保险"/>
+	
+<dic type="firstVisit" code="0" value="初诊"/>
+<dic type="firstVisit" code="1" value="复诊"/>
+	
+</dict>

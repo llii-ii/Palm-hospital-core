@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+		<style type="text/css">
+			.index-widget-container {position:absolute;right:0;top:0;height:400px;width:150px;z-index:99;}
+.index-widget {margin-bottom:8px;cursor:pointer;}
+.index-widget:hover {opacity:0.8;}
+.index-widget-title {height:20px;text-align:center;color:#FFF;}
+.index-widget-body {height:85px;text-align:center;}
+.title-orange {background:#FF9326;}
+.title-green {background:#2FAA00;}
+.title-blue {background:#00A2C4}
+.body-orange {
+  background:#F90;
+  background: -moz-linear-gradient(top, #F37225, #F06227);
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#F37225), to(#F06227));
+  background: -webkit-linear-gradient(top, #F37225, #F06227);
+  background: -o-linear-gradient(top, #F37225, #F06227);
+  background: linear-gradient(to bottom, #F37225, #F06227);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F37225', endColorstr='#F06227', GradientType=0);
+}
+.body-light-yellow {background:#EFFFDF;}
+.body-light-blue {background:#DDF9FF;}
+.body-light-green {background:#E8FFF3;}
+.body-light-orange {background:#FFF0E1;}
+
+.score {font-family:"Georgia";font-size:50px;line-height:85px;color:#FFF;}
+.scale {font-family:"Georgia";font-size:40px;line-height:85px;color:#F08229;}
+.score-large {font-family:"Georgia";font-size:80px;line-height:150px;color:#FFF;text-align:center;}
+.mini-title {color:#333;text-align:center;margin:10px 20px;border-bottom:1px solid #999;padding:10px;}
+.mini-title-white {color:#FFF;text-align:center;margin:20px;border-bottom:1px solid #E0E0E0;padding:10px;}
+.ranking-widget {padding-top:5px;}
+
+
+.index-widget-content {display:none;position:absolute;right:160px;top:0;width:500px;height:550px;z-index:9999;}
+.index-widget-content-title {height:30px;line-height:30px;padding-left:30px;font-size:14px;text-align:center;color:#FFF;}
+.index-widget-content-title .widget-close {float:right;margin:0 7px;line-height:25px;}
+.index-widget-content-title .widget-close:hover {opacity:0.6;cursor:pointer;}
+
+.rank-list {margin:0;padding:20px;}
+.rank-list li {list-style:none;border-bottom:1px solid #F08229;height:40px;line-height:30px;padding:5px;}
+.rank-list li .num {display:block;float:left;text-align:center;margin:5px 6px 5px 0;width:20px;height:20px;line-height:20px;background:#F08229;color:#FFF;}
+.rank-list li .trend {float:right;}
+.rank-list li .score-small {float:right;}
+
+.online-status-list {margin:0 20px;height:240px;overflow-y:auto;}
+.online-status-list li {list-style:none;border-bottom:1px solid #CCC;height:40px;line-height:30px;padding:5px;}
+.online-status-list li .status {float:right;}
+
+.view-more {position:absolute;right:10px;bottom:10px;color:#0098CA;}
+		</style>
+	</head>
+	<body>
+		<div id="title" style="font-size:18px"><a class="priovence" style="cursor:pointer;font-size:18px">上饶市</a></div>
+		<div id="map" class="map"></div>
+		<div class="index-widget-container">
+		
+		<div class="index-widget">
+			<div class="index-widget-title title-orange">上报数据趋势</div>
+			<div class="index-widget-body body-light-orange" id="tiny-upload-trend" style="overflow: hidden; text-align: left;"><div style="position: relative;"><div style="overflow: hidden; position: relative; text-align: left; width: 150px; height: 85px; cursor: default;"><svg version="1.1" style="position: absolute; width: 150px; height: 85px;"><g><path cs="100,100" d="M0.5,0.5 L149.5,0.5 L149.5,84.5 L0.5,84.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><path cs="100,100" d="M0.5,0.5 L134.5,0.5 L134.5,69.5 L0.5,69.5 L0.5,0.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0" transform="translate(10,5)"></path></g><g><g transform="translate(10,5)"></g><g transform="translate(10,5)" visibility="visible"></g></g><g></g><g></g><g></g><g></g><g><g transform="translate(10,5)" opacity="1" visibility="visible"><g></g><g></g><g clip-path="url(#AmChartsEl-3)"><path cs="100,100" d="M10.5,67.5 L29.5,68.5 L48.5,68.5 L67.5,37.5 L86.5,9.5 L105.5,30.5 L124.5,68.5 M0,0 L0,0" fill="none" stroke-width="1" stroke-opacity="0" stroke="#F90"></path><path cs="100,100" d="M10.5,67.5 L29.5,68.5 L48.5,68.5 L67.5,37.5 L86.5,9.5 L105.5,30.5 L124.5,68.5 L124.5,69.5 L10.5,69.5 L10.5,67.5 Z" fill="#F90" stroke="#000" fill-opacity="0.6" stroke-width="1" stroke-opacity="0"></path></g><clipPath id="AmChartsEl-3"><rect x="0" y="0" width="136" height="71" rx="0" ry="0" stroke-width="0"></rect></clipPath></g></g><g clip-path="url(#AmChartsEl-2)"></g><g><g transform="translate(10,5)"></g><g transform="translate(10,5)" visibility="visible"></g></g><g><path cs="100,100" d="M0.5,69.5 L134.5,69.5 L134.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,5)"></path><path cs="100,100" d="M0.5,0.5 L134.5,0.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,74)"></path><path cs="100,100" d="M0.5,0.5 L0.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,5)" visibility="visible"></path></g><g><g transform="translate(10,5)" visibility="hidden"><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L0.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#CC0000" visibility="hidden"></path></g></g><g></g><g><g transform="translate(10,5)" opacity="1" visibility="visible"><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(10,67) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(29,68) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(48,68)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(67,37)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(86,9) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(105,30)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(124,68) scale(1)"></circle></g></g><g><g></g></g><g></g><g><g transform="translate(83,13)" visibility="hidden"><rect x="0.5" y="0.5" width="70" height="30" rx="0" ry="0" stroke-width="1" fill="#e5e5e5" stroke="#e5e5e5" fill-opacity="1" stroke-opacity="1" opacity="0" transform="translate(-8,-8)"></rect><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(0,8)"><tspan y="6" x="0">显示全部</tspan></text></g></g><g></g><clipPath id="AmChartsEl-2"><rect x="10" y="5" width="134" height="69" rx="0" ry="0" stroke-width="0"></rect></clipPath></svg><a href="http://www.amcharts.com/javascript-charts/" title="JavaScript charts" style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 140px; top: 10px;"> </a></div></div></div>
+		</div>
+		 
+		<div class="index-widget">
+			<div class="index-widget-title title-blue">设备在线比例</div>
+			<div class="index-widget-body body-light-blue"><div class="scale" id="rate">78.9% </div></div>
+		</div>
+		<div class="index-widget-content body-light-orange">
+			<div class="index-widget-content-title title-orange"><span class="widget-close"><img src="../images/widget-close.png"></span>上报数据趋势</div>
+			<div style="height:300px;" id="upload-trend"></div>
+		</div>
+		<div class="index-widget-content body-light-blue">
+			<div class="index-widget-content-title title-blue"><span class="widget-close"><img src="../images/widget-close.png"></span>设备在线比例</div>
+			<div style="height:200px;" id="online-rate"></div>
+			<div class="mini-title">设备状态明细</div>
+			<ul class="online-status-list" id="device-list" tabindex="5003" style="overflow: hidden; outline: none;">
+			</ul>
+		<div id="ascrail2003" class="nicescroll-rails" style="width: 7px; z-index: 9999; cursor: default; position: absolute; top: 0px; left: -7px; height: 240px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(204, 204, 204); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2003-hr" class="nicescroll-rails" style="height: 7px; z-index: 9999; top: 233px; left: 0px; position: absolute; cursor: default; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(204, 204, 204); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div></div>
+		
+	</div>
+	</body>
+	<script src="../js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../js/jquery.nicescroll.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.spin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/general.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/pie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/radar.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/echarts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/serial.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/map.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function tinyUploadTrend(uploadtrend1) {
+			if(uploadtrend1 == ''){
+				uploadtrend1 = {};
+			}
+			uploadtrend1 = typeof uploadtrend1!='object'?JSON.parse(uploadtrend1):uploadtrend1;
+			var chart;
+			if(uploadtrend1==''){
+				var str1 = uploadtrend1
+			}else{
+				if(uploadtrend1 instanceof Object){
+					var str1 = uploadtrend1
+				}else{
+					 var str1 = uploadtrend1; 
+				}
+			}
+			var chartData = str1;
+			/*
+			 [
+				{
+					"country": "10-01",
+					"visits": 720
+				},
+				{
+					"country": "10-02",
+					"visits": 650
+				},
+				{
+					"country": "10-03",
+					"visits": 660
+				},
+				{
+					"country": "10-04",
+					"visits": 710
+				},
+				{
+					"country": "10-05",
+					"visits": 850
+				},
+				{
+					"country": "10-06",
+					"visits": 780
+				},
+				{
+					"country": "10-07",
+					"visits": 660
+				}
+			];
+		   */
+		
+			// SERIAL CHART
+			chart = new AmCharts.AmSerialChart();
+			chart.dataProvider = chartData;
+			chart.categoryField = "country";
+			chart.startDuration = 1;
+			chart.marginTop = 5;
+			chart.marginRight = 5;
+			chart.marginBottom = 5;
+			chart.marginLeft = 5;
+		
+			// AXES
+			// category
+			var categoryAxis = chart.categoryAxis;
+			categoryAxis.labelRotation = 0;
+			categoryAxis.gridPosition = "start";
+			categoryAxis.gridAlpha = 0;
+			categoryAxis.axisAlpha = 0;
+			categoryAxis.labelsEnabled = false;
+		
+			// value
+			// in case you don't want to change default settings of value axis,
+			// you don't need to create it, as one value axis is created automatically.
+		
+			// GRAPH
+			var graph = new AmCharts.AmGraph();
+			graph.valueField = "visits";
+			graph.balloonText = "[[category]]<br><b>[[value]]</b> 笔";
+			graph.type = "line";
+			graph.lineAlpha = 0;
+			graph.lineColor = "#F90";
+			graph.fillAlphas = 0.6;
+			graph.bullet = "round";
+			chart.addGraph(graph);
+		
+			// value
+			var valueAxis = new AmCharts.ValueAxis();
+			valueAxis.tickLength = 0;
+			valueAxis.axisAlpha = 0;
+			valueAxis.labelsEnabled = false;
+			valueAxis.showFirstLabel = false;
+			valueAxis.showLastLabel = false;
+			valueAxis.gridAlpha = 0;
+			chart.addValueAxis(valueAxis);
+			
+			// CURSOR
+			var chartCursor = new AmCharts.ChartCursor();
+			chartCursor.cursorAlpha = 0;
+			chartCursor.zoomable = false;
+			chartCursor.categoryBalloonEnabled = false;
+			chart.addChartCursor(chartCursor);
+		
+			chart.creditsPosition = "top-right";
+		
+			chart.write("tiny-upload-trend");
+		}
+		function uploadTrend(temp3) {
+			var chart;
+			if(temp3==''){
+				var str1 = temp3
+			}else{
+				if(temp3 instanceof Object){
+					var str1 = temp3
+				}else{
+					 var str1 = JSON.parse(temp3); 
+				}
+			}
+			var chartData = str1;
+			/* 
+			[
+				{
+					"country": "10-01",
+					"visits": 720
+				},
+				{
+					"country": "10-02",
+					"visits": 650
+				},
+				{
+					"country": "10-03",
+					"visits": 660
+				},
+				{
+					"country": "10-04",
+					"visits": 710
+				},
+				{
+					"country": "10-05",
+					"visits": 850
+				},
+				{
+					"country": "10-06",
+					"visits": 780
+				},
+				{
+					"country": "10-07",
+					"visits": 660
+				}
+			];*/
+		
+		
+			// SERIAL CHART
+			chart = new AmCharts.AmSerialChart();
+			chart.dataProvider = chartData;
+			chart.categoryField = "country";
+			chart.startDuration = 1;
+		
+			// AXES
+			// category
+			var categoryAxis = chart.categoryAxis;
+			categoryAxis.labelRotation = 0;
+			categoryAxis.gridPosition = "start";
+			categoryAxis.gridAlpha = 0.1;
+			categoryAxis.axisAlpha = 1;
+			categoryAxis.labelRotation =45;
+			//categoryAxis.labelsEnabled = false;
+		
+			// value
+			// in case you don't want to change default settings of value axis,
+			// you don't need to create it, as one value axis is created automatically.
+		
+			// GRAPH
+			var graph = new AmCharts.AmGraph();
+			graph.valueField = "visits";
+			graph.balloonText = "[[category]]: <b>[[value]]</b> 笔";
+			graph.type = "line";
+			graph.lineAlpha = 0;
+			graph.lineColor = "#F90";
+			graph.fillAlphas = 0.6;
+			graph.bullet = "round";
+			chart.addGraph(graph);
+		
+			// value
+			var valueAxis = new AmCharts.ValueAxis();
+			valueAxis.tickLength = 0;
+			valueAxis.axisAlpha = 1;
+			valueAxis.gridAlpha = 0.1;
+			//valueAxis.labelsEnabled = false;
+			valueAxis.showFirstLabel = false;
+			valueAxis.showLastLabel = false;
+			chart.addValueAxis(valueAxis);
+			
+			// CURSOR
+			var chartCursor = new AmCharts.ChartCursor();
+			chartCursor.cursorAlpha = 0;
+			chartCursor.zoomable = false;
+			chartCursor.categoryBalloonEnabled = false;
+			chart.addChartCursor(chartCursor);
+		
+			chart.creditsPosition = "top-right";
+		
+			chart.write("upload-trend");
+		}
+		
+		function onlineRate(temp4){
+			chart = new AmCharts.AmPieChart();
+			legend = new AmCharts.AmLegend();
+			if(temp4==''){
+				var str1 = temp4
+			}else{
+				if(temp4 instanceof Object){
+					var str1 = temp4
+				}else{
+					 var str1 = JSON.parse(temp4); 
+				}
+			}
+			var info = str1;
+		
+				//[{"business":"在线","value":18},{"business":"离线","value":49}];
+			
+			// title of the chart
+			//chart.addTitle("Visitors countries", 16);
+			
+			//对于空和非空数据的处理,根据上报总数据量判断
+			//alert(total)
+			if(info) {
+				chart.dataProvider = info;
+				chart.colors = ["#2FAA00","#FF9326"];
+				legend.valueText = "[[[value]]]";
+				chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+			} else {
+				chart.dataProvider = [{"business":"无数据", "value":"1"}];
+				chart.colors = ["#CCC"];
+				legend.valueText = "";
+				chart.balloonText = "";
+			}
+			
+			chart.titleField = "business";
+			chart.valueField = "value";
+			chart.sequencedAnimation = true;
+			chart.innerRadius = "40%";
+			//add by wangn 2015-11-20 饼图精度
+			chart.adjustPrecision = true;
+			chart.percentPrecision = 1;
+			//add end
+			//chart.pieX = "45%";
+			//chart.pieY = "45%";
+			chart.labelText = "";
+			chart.startDuration = 0.5;
+			chart.radius = 80;
+			chart.labelRadius = 15;
+			chart.startEffect = "easeOutSine";
+			
+			// LEGEND
+			//legend.align = "right"
+			
+			//legend.addListener("showItem", alert(2));
+			//add by wangn 2015-11-04 屏蔽图例的点击事件
+			legend.switchable=true;
+			legend.addListener("showItem", showEquipment);
+			legend.addListener("hideItem", hideEquipment);
+			//legend.textClickEnabled=true;
+			//legend.listeners=[{"event":"rollOverMarker", "method":alert(1)}];
+			//legend.listeners=[{"event":"showItem", "method":alert(2)}];
+			//add end
+			legend.position = "absolute";
+			legend.top = 0;
+			legend.right = 20;
+			legend.width = 120;
+			legend.borderAlpha = 0;
+			legend.horizontalGap = 0;
+			//legend.forceWidth = true;
+		 	//legend.width = $(window).width();
+			//legend.labelWidth = $(window).width();
+			//legend.valueWidth = 150;
+			//legend.valueText = "";
+		 
+			chart.addLegend(legend);
+			// WRITE                                 
+			chart.write("online-rate");
+		}
+
+		function showEquipment(obj){
+		   var title = obj.dataItem.title;
+		   if(title=='在线'){
+		      
+		        $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='在线'){
+		           $(this).show();
+		         }
+		     
+		     });
+		
+		   }else if(title=='离线'){
+		       $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='离线'){
+		           //$(this).show();
+		          // $(this).css("visibility","");
+		           $(this).show();
+		         }
+		     
+		     });
+		   }
+		  
+		}
+		function hideEquipment(obj){
+		   var title = obj.dataItem.title;
+		   if(title=='在线'){
+		      $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='在线'){
+		           $(this).hide();
+		         }
+		     
+		     });
+		      var ulContent = $("#device-list").html();
+		      $("#device-list").html("&nbsp;");
+		      window.setTimeout(function(){
+		      	 $("#device-list").html(ulContent);
+		      },10)
+		   }else if(title=='离线'){
+		       $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		        if(status=='离线'){
+		        	$(this).hide();
+		         }
+		     });
+		     
+		     var ulContent = $("#device-list").html();
+		      $("#device-list").html("&nbsp;");
+		      window.setTimeout(function(){
+		      	 $("#device-list").html(ulContent);
+		      },10)
+		     
+		   }
+		   
+		}
+		function areaQuestAjax(name,type){
+			  $.ajax({
+			        async : false,
+			        cache : false,
+			        type : 'get',
+			        dataType : "json",
+//			        data:"name=" + encodeURIComponent(encodeURIComponent(name))+"&type="+type, 
+			        url : '../data/map/'+name+'.json',
+			        error : function() {
+			          hideMask();
+			          requestError();
+			          return checked;
+			        },
+			        success : function(data) {
+			          var result = JSON.parse(data);
+			          updateContent(result.uploadTrend,result.onlineRate,result.onlineInfo,result.rate,result.dataRangeMax);
+			        }
+			    });
+			
+		}
+		function updateContent(upload1,ratePie,rateInfo,rate1){
+			//上报趋势
+			upload=upload1;
+			tinyUploadTrend(upload);
+			//设备在线比例
+			if(rate1=='-1'){
+				$("#rate").html("0.0%");
+				$("#device-list").html("");
+				rateOnline="";
+			}else{
+				var tbody = "";
+				var obj = typeof rateInfo != 'object'?JSON.parse(rateInfo):rateInfo;
+				$.each(obj, function (n, value) {
+		            var trs = "";  
+		            //trs += "<tr><td>" + value.name + "</td> <td>" + value.score + "</td></tr>";  
+		            trs +="<li style='display: block'>";
+		
+		            if(value.state=='1'){
+		            	trs +="<span class='status color-green'>在线</span>";
+		            }else if(value.state=='0'){
+		            	trs +="<span class='status color-red'>离线</span>";
+		            } 
+		            tbody += trs+ "<a href=\"#\" onclick=\"hospitalSelected('"+value.id+"','"+value.name+"');\" >" + value.name+"</a></li>";  
+		               });
+				$("#device-list").html(tbody);
+				if(rate1=='0'){
+				  $("#rate").html(rate1+".0%");
+				}else if(rate1=='100'){
+				  $("#rate").html("100.0%");
+				}else{
+				  $("#rate").html(rate1+"%");
+				}
+				
+				rateOnline=ratePie;
+			}
+		}
+		
+		function hospitalSelected(hospitalId, hosptitalName)
+		{
+			$.ajax( {
+		        url: '/PMC/monitorMenu/getHostpitalInfoInMenu?hospitalId=' + hospitalId,
+		        type: "POST", 
+		        success: function(data){
+		    		//alert(data);
+		    		window.location = '/PMC/plugins/centralizemonitor/singlemonitor/summarystatistics';
+		        }
+			});
+			
+		}
+
+		
+		root =  '上饶市' ;
+		upload = [{"country":"2018-07-13","visits":380881},{"country":"2018-07-14","visits":298982},{"country":"2018-07-15","visits":175014},{"country":"2018-07-16","visits":6921253},{"country":"2018-07-17","visits":12987910},{"country":"2018-07-18","visits":8478909},{"country":"2018-07-19","visits":179982}]
+		rateOnline=[{"business":"在线","value":15},{"business":"离线","value":4}]
+		$(window).resize(function(){
+			$("#map").height($(window).height() - 120);
+		});
+		
+		$(function(){		
+			
+			$("#map").height($(window).height() - 120);
+			//$("#contentCenter").css("margin","0px");
+			//$(".page-content").addClass("map_b");
+			
+			//tinyScoreTrend();
+			//tinyScoreCompare();
+			tinyUploadTrend(upload);
+			
+			$(".online-status-list").niceScroll({cursorcolor:"#CCC"});
+			
+			
+			$(".widget-close").click(function(){
+				$(".index-widget-content").slideUp();
+			});
+			
+			$(".index-widget").click(function(){
+				var index = $(this).index();
+				$(".index-widget-content").hide(0);
+				$(".index-widget-content:eq("+index+")").slideDown();
+				switch(index){
+					case 0:
+						uploadTrend(upload);
+					case 1:
+						onlineRate(rateOnline);
+						 // $("ul#device-list > li").each(function(){
+		                // $(this).show();
+		                  //  });
+				}
+			});
+		
+			
+			
+			var myChart;
+			var domMain = document.getElementById('map');
+			var curTheme;
+			
+			function requireCallback(ec, defaultTheme) {
+				echarts = ec;
+				refresh();
+			}
+		
+			function refresh(isBtnRefresh) {
+				if (myChart && myChart.dispose) {
+					myChart.dispose();
+				}
+				myChart = echarts.init(domMain, curTheme);
+				loadMapData();
+				myChart.setOption(option, true)
+			}
+		
+			var echarts;
+			require.config({
+				paths : {
+					echarts : '../js/echarts'
+				}
+			});
+			var temp = '<a class="priovence" style="cursor:pointer;font-size:18px">'+root+'</a>';
+		    $("#title").html(temp);
+		    $(".priovence").live("click",function(){
+		    	var ssss = $(this).html();
+		    	var content = $("#title").html();
+		    	var temp = content.split('-&gt;');
+		    	var stringtemp = "";
+		  
+		    	 for (i = 0; i < temp.length; i++)
+			    {
+		              if(temp[i].indexOf(ssss)<0){
+		                  stringtemp = stringtemp+temp[i]+"->" ;  
+		              }else{
+		                  stringtemp = stringtemp+temp[i] ;  
+		                  break;
+		              } 
+			    }
+		    	returnLevel(ssss);
+		    	 $("#title").html(stringtemp);
+		    });
+			launchMap();
+			//loadOnlineChart();
+			var isLaunched;
+			function launchMap() {
+				if (isLaunched) {
+					return;
+				}
+				// 按需加载
+				isLaunched = 1;
+				require([ 'echarts', 'echarts/chart/map' ], requireCallback);
+			}
+			
+			function getJsonAsync1(url,name)
+			{
+				
+				var data1;
+				$.ajax({
+					  url: url+name+'.json',
+					  dataType: 'json',
+					  cache: false,
+					  async:false,
+//					  data:"name=" + encodeURIComponent(encodeURIComponent(name)), 
+					  success: function(o){
+					      var str1 = o; 
+					      //alert(str1);
+						    data1 = str1;
+					  },
+					  error: function (err) {
+			                alert("获取数据出错，请刷新页面!");
+			            }
+					});
+				return data1;
+			}
+			
+			function getJsonAsync(url)
+			{
+				var data;
+				$.ajax({
+					  url: url,
+					  dataType: 'json',
+					  contentType: "application/json; charset=utf-8",
+					  cache: false,
+					  async:false,
+					  success: function(o){
+						  data = o;
+					  },
+					  error: function (err) {
+			                alert("获取数据出错，请刷新页面!");
+			            }
+					});
+				return data;
+			}
+		  //add by wangn 返回上一级
+		  function returnLevel(mt){
+		     myChart.clear();
+		     myChart.showLoading()
+		     option.series[0].mapType = mt;
+			 option.series[0].geoCoord = getJsonAsync('../kml/cityGeo.json');
+					    //option.series[0].markPoint.data = getJsonAsync('../kml/areaScore.json');
+					     var obj = getJsonAsync1('../data/value/queryHospitalInfoByArea1',mt);
+			 option.series[0].markPoint.data = obj;
+					    //option.roamController.mapTypeControl = {'温州市': true};
+					    
+			 myChart.hideLoading(); 
+			 myChart.setOption(option, true);
+			 
+			 //add by wangn 2015-11-12
+			 $(".index-widget-content").hide(0);
+			 //add end
+			 if(mt==root){
+			    areaQuestAjax(mt,"1");
+			 }else{
+			    areaQuestAjax(mt,"2");
+			 }
+		     
+		  }
+		  //add end
+			function loadMapData() {
+				var curIndx = 0;
+				var mapType = [];
+				
+				var cityMap = getJsonAsync('../kml/cityMap.json');
+				var geoCoord = getJsonAsync('../kml/cityGeo.json');
+				//var areaScore = getJsonAsync('../kml/areaScore.json');
+				var areaScore = [{"name":"信州区","value":23613},{"name":"上饶县","value":43231},{"name":"广丰县","value":0},{"name":"鄱阳县","value":70877},{"name":"德兴市","value":40478},{"name":"弋阳县","value":0},{"name":"万年县","value":0},{"name":"婺源县","value":0},{"name":"铅山县","value":0},{"name":"余干县","value":0},{"name":"横峰县","value":13362},{"name":"玉山县","value":0}];
+				var mapGeoData = require('echarts/util/mapData/params');
+				for (var city in cityMap) {
+				    mapType.push(city);
+				    // 自定义扩展图表类型
+				       mapGeoData.params[city] = {
+				        getGeoJson: (function (c) {
+				            var geoJsonName = cityMap[c];
+				            return function (callback) {
+				                $.getJSON(encodeURI('../kml/' + geoJsonName + '.json'), callback);
+				            }
+				        }
+				   )(city)
+				    }
+				}
+				
+		
+				var ecConfig = require('echarts/config');
+				//var zrEvent = require('zrender/tool/event');
+		
+				myChart.on(ecConfig.EVENT.MAP_SELECTED, function(param) {
+					var mt = param.target;
+					var len = mapType.length;
+				    var f= false;
+				    for(var i = 0; i < len; i++){
+				        if(mt == mapType[i]){
+				               //if( mapType[i].indexOf(mt)>=0){
+				              f =true;
+				              //mt = mapType[i];
+				        }
+				     }
+				      //add by wangn 2015-11-12
+				    $(".index-widget-content").hide(0);
+				    //add end
+				   
+				   /* myChart.showLoading()
+				    if(option.series[0].mapType == mt)
+				    {
+				    	option.series[0].mapType = mapType[0];
+					    option.series[0].geoCoord = getJsonAsync('../kml/cityGeo.json');
+					    //option.series[0].markPoint.data = getJsonAsync('../kml/areaScore.json');
+					    option.series[0].markPoint.data = [{"name":"信州区","value":23613},{"name":"上饶县","value":43231},{"name":"广丰县","value":0},{"name":"鄱阳县","value":70877},{"name":"德兴市","value":40478},{"name":"弋阳县","value":0},{"name":"万年县","value":0},{"name":"婺源县","value":0},{"name":"铅山县","value":0},{"name":"余干县","value":0},{"name":"横峰县","value":13362},{"name":"玉山县","value":0}];
+					    //option.roamController.mapTypeControl = {'温州市': true};
+					    myChart.hideLoading(); 
+					    myChart.setOption(option, true);
+					    areaQuestAjax(mt,"1");
+				    }*/
+				   // else{
+				       if(f == true){
+				        myChart.clear();
+					    option.series[0].mapType = mt;
+					    
+					    //option.series[0].geoCoord = getJsonAsync('../kml/deivceGeo.json');
+					    //option.series[0].markPoint.data = getJsonAsync('../kml/childAreaScore.json');
+					    
+					    var obj = getJsonAsync1('../data/value/queryHospitalInfoByArea1',mt);
+					    if(obj==''){
+					        option.series[0].markPoint.data = [];
+					    }else{
+					      option.series[0].markPoint.data = obj;
+					      option.series[0].geoCoord = getJsonAsync1('../data/value/queryHospitalInfoByArea',mt);
+					    }
+					    myChart.hideLoading(); 
+					    myChart.setOption(option, true);
+					    areaQuestAjax(mt,"2");
+					    
+					    //option.roamController.mapTypeControl = JSON.parse("{\""+mt+"\":true}");
+				   // }	
+				    var temp = $("#title").html();
+				    
+				   if(temp.indexOf(mt)<0){
+				     
+				      $("#title").html(temp+"-><a class=\'priovence\' style=\'cursor:pointer\;font-size:18px\'>"+mt+"</a>");
+				   }
+					       
+				       } 
+				   
+				});
+				
+				option = {
+				   // backgroundColor: '#FFF',
+				   color: ['gold','aqua','lime'],
+				   /*
+				   title : {
+				        text: '温州数据质量评分',
+				        subtext:'数据纯属虚构',
+				        x:'center',
+				        padding: 15,
+				        textStyle : {
+				            color: '#fff'
+				        }
+				    },
+				    */
+				   
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: '{b}'
+				    },
+				 
+				    /*
+				    toolbox: {
+				        show : true,
+				        orient : 'vertical',
+				        x: 'right',
+				        y: 'center',
+				        feature : {
+				            mark : {show: true},
+				            dataView : {show: true, readOnly: false},
+				            restore : {show: true},
+				            saveAsImage : {show: true}
+				        }
+				    },
+				    */
+				    dataRange: {
+				    	x : 'left',
+				        min : 0,
+				        max : 80000,
+				        padding: 15,
+				        calculable : true,
+				        //color: ['#ff3333', 'orange', 'yellow','lime','aqua'],
+				        color: ['aqua','lime','yellow', 'orange', '#ff3333'],
+				        text:['高','低'],
+				        textStyle:{
+				            color:'#000'
+				        }
+				    },
+				    /*
+				    roamController: {
+				        show: true,
+				        x: 'left',
+				        padding: 15,
+				        mapTypeControl: {
+				            '温州市': true
+				        }
+				    },
+				    */
+					series : [ {
+						name : '区域地图',
+						type : 'map',
+						roam: true,
+						hoverable: false,
+						mapType : mapType[0],
+						selectedMode : 'single',
+						itemStyle : {
+							normal : {
+							   
+								label : {
+									show : true,
+									textStyle : {
+							            color: '#BBB'
+							        }
+								},
+								borderColor:'rgba(100,149,237,1)',
+				                borderWidth:0.5,
+				                areaStyle:{
+				                   color: '#006699'
+				                 }
+							},
+							emphasis: {
+								label : {
+									show : true,
+									textStyle : {
+							            color: '#333'
+							        }
+								},
+								borderColor:'rgba(255,255,255,1)',
+				                borderWidth:0.5,
+		                        color: '#32cd32',
+				                areaStyle:{
+				                   color: '#F5D529'
+				                 }
+				            }
+						},
+						data :[] /*areaScore*/,
+					    geoCoord:geoCoord,
+					    
+					markPoint : {
+		                symbol:'emptyCircle',
+		               /* symbolSize : function (v){
+		                    return 10 + v/10
+		                },*/
+		                effect : {
+		                    show: true,
+		                    shadowBlur : 0
+		                },
+		                itemStyle:{
+		                    normal:{
+		                        label:{show:false}
+		                    },
+		                    emphasis: {
+		                        label:{
+		                        	position:'top',
+		                        	textStyle: {
+		                        		fontSize : 20,
+		                        		fontFamily : "Open Sans"
+		                        	}
+		                        	
+		                        }
+		                    }
+		                },
+		                data :areaScore
+		            	}
+					}]
+				};
+			}
+			
+			
+		});
+
+	</script>
+</html>

@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../js/webCom1.0/component/chosen/css/chosen.css"/>
+		<title>发起人设置</title>
+		<style type="text/css">
+			.chosen-container-multi .chosen-choices{
+				padding-right: 50px;
+			}
+			.chosen-container-multi .fa{
+				font-size: 20px;
+			}
+			.chosen-container-btn{
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 34px;
+				text-align: center;
+				line-height: 37px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<p>
+		<div class="chosen-container chosen-container-multi" style="width: 100%;" title="">
+			<ul id="chosen-choices" class="chosen-choices">
+				<!-- <li class="search-choice"><sp  an>小明</span><a class="search-choice-close" data-option-array-index="9"></a></li> -->
+			</ul>
+			<div class="chosen-container-btn" onclick="cc()">
+				<i class="fa fa-plus-circle"></i>
+			</div>
+			<input id="checksId" type="hidden"  value="" >
+			<input id="checksName" type="hidden"  value="" >
+		</div>
+		</p>
+		<p class="text-right">
+			<button type="button" onclick="ok()" class="btn btn-primary">保存发起人</button>
+		</p>
+	</body>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script>
+		var memberType;
+		$(function(){
+			memberType = Commonjs.getUrlParam("memberType");
+			getPsList();
+		}); 
+		
+		//获取已有的发起人
+		function getPsList(){
+			var apiData = {};	
+            apiData.uid = "0";
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var values = [];
+					var names = '';
+					var ids = '';
+					for(var i = 0;i<dd.Data.length; i++){
+						var id = dd.Data[i].Memberid;
+						if(dd.Data[i].IsDept == 1){
+							id = "d_" + id;
+						}
+						var li = '<li class="search-choice"><span>'+dd.Data[i].Membername+'</span><a class="search-choice-close" onclick="deletePs(\''+id+'\',\''+dd.Data[i].Membername+'\')" data-option-array-index="9"></a></li>';
+						values.push(li);
+						names = names + dd.Data[i].Membername + ",";
+						ids = ids + id + ",";
+					}
+   	
+		        	$('#chosen-choices').html(values.join(''));
+		        	$("#checksName").val(names.substring(0,names.length-1));
+		        	$("#checksId").val(ids.substring(0,ids.length-1)); 
+    			}else{
+    				alert("暂无发起人");
+    			}
+    		},{async:false});		
+		}
+		
+		System.ready(function(){
+			$(document).on('click','.search-choice',function(){
+				var _this = $(this);
+				_this.remove();
+			})
+		})
+		
+		// 保存
+		function ok(){
+			if(Commonjs.isEmpty($("#checksId").val())){
+				alert("请选择发起人");
+				return false;
+			}
+			var apiData = {};	
+            apiData.uid = "0";
+            apiData.memberIds = $("#checksId").val();
+            apiData.memberNames = $("#checksName").val();
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					alert("发起人保存成功");
+    			}else{
+    				alert("发起人保存失败请联系管理员");
+    			}
+    		},{async:false});		
+    		System.closeThisWindow();
+		}
+		
+		//删除
+		function deletePs(id,name){
+			var arrIdList = $("#checksId").val().split(',');
+			var arrNameList = $("#checksName").val().split(',');
+			arrIdList.splice($.inArray(id+"",arrIdList),1);
+			arrNameList.splice($.inArray(name+"",arrNameList),1);
+			$("#checksId").val(arrIdList.join(','));
+        	$("#checksName").val(arrNameList.join(','));
+		}
+		
+		//定义全局的选中输入框对象
+         var cd = null;
+        function cc(){
+        	cd = $('#chosen-choices');
+        	var values = [];
+        	cd.find('.search-choice').each(function(){
+        		values.push($(this).text().Trim());
+        	})
+        	//把选中的项放到缓存
+        	window.localStorage.setItem('checksId',$("#checksId").val());
+        	window.localStorage.setItem('checksName',$("#checksName").val());
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'deptUser.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		} 
+		
+		//接收子页面传来的参数
+        function ccResult(checksId,checksName){
+        	console.log(checksId);
+        	console.log(checksName);
+        	$("#checksName").val(checksName);
+        	$("#checksId").val(checksId);
+        	var values = [];
+        	checksName.split(',').forEach(function(item,index){
+        		values.push('<li class="search-choice"><span>'+item+'</span><a class="search-choice-close" data-option-array-index="9"></a></li>');
+        	})
+        	cd.html('');
+        	cd.html(values.join(''));
+        } 
+        
+	</script>
+</html>

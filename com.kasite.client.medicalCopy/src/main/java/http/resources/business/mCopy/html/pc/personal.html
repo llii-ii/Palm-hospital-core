@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>帐号管理</title>
+		<style>
+			/* 清除浮 动*/
+			.fix { *zoom: 1; }
+			.fix:after { display: table; content: ''; clear: both; }
+			.mynm,.nm{
+				float:left;
+				font-size:14px;
+			}
+			.per-info{
+				margin-left:-40px;
+			}
+			.per-info li{
+				list-style:none;
+				line-height:34px;
+			}
+			.mynm{
+				width:150px;
+				color:#999;
+			}
+			.nm{
+				color:#333;
+			}
+			.redc{
+				color:#ff3c3c;
+				font-size:20px;
+				position:relative;
+				top:4px;
+				margin-left:18px;
+			}
+			.nm input{
+				width:230px;
+				line-height:30px;
+				line-height:30px;
+				border-radius:6px;
+				-webkit-border-radius:6px;
+				-moz-border-radius:6px;
+				-ms-border-radius:6px;
+				-o-border-radius:6px;
+				border:1px solid #e6e6e6;
+				outline:none;
+			}
+			.content-box2 li{
+				margin-bottom:16px;
+			}
+			.content-box2{
+				display:none;
+			}
+			.input-group button{
+				outline:none!important;
+				border:none!important;
+			}
+			/*模态框*/
+			.modals{
+				background:rgba(0,0,0,.5);
+				width:100%;
+				height:100%;
+				position:fixed;
+				top:0;
+				left:0;
+				right:0;
+				z-index:2;
+				display:none;
+			}
+			.modals-con{
+				background:#fff;
+				width:600px;
+				padding-top:100px;
+				height:470px;
+				border-radius:4px;
+				-webkit-border-radius:4px;
+				-moz-border-radius:4px;
+				-ms-border-radius:4px;
+				-o-border-radius:4px;
+				margin:0 auto;
+				position:absolute;
+				top:50%;
+				left:50%;
+				margin-top:-235px;
+				margin-left:-300px;
+			}
+			.colse{
+				position:absolute;
+				top:22px;
+				right:24px;
+				width:20px;
+				height:20px;
+				z-index:3;
+				cursor:pointer;
+			}
+			.modals-con ul{
+				margin-bottom:36px;
+			}
+			.modals-con li{
+				list-style:none;
+				height:36px;
+				line-height:36px;
+				margin-bottom:16px;
+			}
+			.left-con, .right-con{
+				float:left;
+				font-size:14px;
+			}
+			.left-con{
+				width:146px;
+				color:#999;
+			}
+			.right-con{
+				color:#333;
+				height:36px;
+			}
+			.yjdh{
+				border:1px solid #e6e6e6;
+				border-radius:6px;
+				-webkit-border-radius:6px;
+				-moz-border-radius:6px;
+				-ms-border-radius:6px;
+				-o-border-radius:6px;
+				width:240px;
+				height:30px;
+				margin-right:20px;
+			}
+			.page{
+				margin:0 auto;
+				height:32px;
+				text-align:center;
+				width:260px;
+			}
+			.page .active{
+				background:#3685ff;
+				color:#fff;
+			}
+			.num{
+				background:#fff;
+				color:#3685ff;
+				width:120px;
+				height:30px;
+				font-size:16px;
+				line-height:30px;
+				border:1px solid #3685ff;
+				border-radius:6px;
+				-webkit-border-radius:6px;
+				-moz-border-radius:6px;
+				-ms-border-radius:6px;
+				-o-border-radius:6px;
+				text-align:center;
+				float:left;
+				margin-right:10px;
+			}
+			.page button{
+				outline: none;
+				line-height:26px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="wrapper-content">
+			<div component="breadcrumb"></div>
+        	<!--<div class="input-group" style="margin-bottom: 15px;">
+        		<button type="button" class="btn">个人中心</button>&nbsp;&nbsp;&nbsp;
+        		<button type="button" class="btn btn-white">修改密码</button>
+        	</div>-->
+        	
+        	<div class="ibox-content">
+        		<div class="content-box content-box1">
+        			<ul class="per-info">
+        				<li class="fix">
+        					<div class="mynm">我的姓名：</div>
+        					<div class="nm">张三</div>
+        				</li>
+        				<li class="fix">
+        					<div class="mynm">我的角色：</div>
+        					<div class="nm">系统管理员</div>
+        				</li>
+        				<div style="margin-left:150px;margin-top:20px;">
+	        				<button type="submit" class="btn changepw" onclick="openExpress()">修改密码</button>
+	        			</div>
+        			</ul>
+        		</div>
+        		<!--弹窗-->
+	            <div class="modals">
+	            	<div class="modals-con fix">
+	            		<div class="colse" style="background:url(../../img/wechat/close.png) no-repeat;" onclick="clos()"></div>
+	            		<ul>
+	            			<li>
+	            				<div class="fix">
+	            					<div class="left-con">旧密码：</div>
+	            					<div class="right-con">
+	            						<div class="nm"><input type="text" /><span class="redc">*</span></div>
+	            					</div>
+	            				</div>
+	            			</li>
+	            			<li>
+	            				<div class="fix">
+	            					<div class="left-con">新密码：</div>
+	            					<div class="right-con">
+	            						<div class="nm"><input type="text" /><span class="redc">*</span></div>
+	            					</div>
+	            				</div>
+	            			</li>
+	            			<li>
+	            				<div class="fix">
+	            					<div class="left-con">确认新密码：</div>
+	            					<div class="right-con">
+	            						<div class="nm"><input type="text" /><span class="redc">*</span></div>
+	            					</div>
+	            				</div>
+	            			</li>
+	            		</ul>
+	            		<div class="fix page">
+	            			<button	type="submit" class="num active">确定</button>
+	            			<button	type="button" class="num" onclick="clos()">取消</button>
+	            		</div>
+	            	</div>
+	            </div>
+        	</div>
+		</div>
+	</body>
+</html>
+<script>
+	//关闭模态框
+	function clos(){
+		$('.modals').hide();
+	}
+	//点击修改密码
+	function openExpress(){
+		$('.modals').show();
+	}
+	$(document).on('click','.btn .changepw',function(){
+		var _this = $(this);
+//		if(_this.hasClass('btn-white')){
+//			_this.removeClass('btn-white').addClass('active');  //变蓝
+			_this.siblings().addClass('btn-white').removeClass('active');  //变白、
+//			alert(_this.html());
+//			if(_this.html()=='个人中心'){
+//				$('.content-box1').show();
+//				$('.content-box2').hide();
+//			}
+			if(_this.html()=='修改密码'){
+				$('.content-box2').show();
+				$('.content-box1').hide();
+			}
+//		}
+	});
+	
+	
+	//新增或修改用户信息
+	function saveOrUpdateUser(userId,userName,phone,name,password){
+		var Service = {};
+		var code = 2005;
+		Service.UserId = userId;
+		Service.UserName = userName;
+		Service.Phone = phone;
+		Service.Name = name;
+		Service.Password = password;
+		Service.HosId = Commonjs.hospitalId;
+		//param.Api = "SaveOrUpdateUser";
+		var param = Commonjs.makeParam("",code,Service,"","");
+		var d =Commonjs.ajaxJson("../../account/saveOrUpdateUser.do",param);
+		if(d.respCode=10000){
+			//如果修改的是当前用户信息更新最新信息到session中 ,已保持session中的用户信息正确
+			var session = Commonjs.getSession("../../login/getSession.do");
+			if(session.UserID==userId){
+				session.Phone =  phone;
+				session.Name = name;
+				session.UserName = userName;
+				Commonjs.updateSession(session,"../../login/updateSession.do");
+			}
+			console.log(d);
+			return d.data.UserId;
+		}else{
+			//异常提示
+			Commonjs.alert(d.respMessage);
+		}
+	}
+</script>

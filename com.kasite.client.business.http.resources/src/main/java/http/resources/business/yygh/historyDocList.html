@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>历史就诊医生</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main">
+	<div class="h45">
+    	<ul class="com-lab">
+        	<li><a href="javascript:gotoDeptSearch();">科室</a></li>
+        	<li class="curr"><a href="javascript:;">历史就诊医生</a></li>
+        </ul>
+    </div>
+    <div class="h40">
+    	<div class="searchhold">
+        	<div class="ser-into"><i class="sicon icon-search"></i>搜索科室或医生</div>
+        	<div class="ser-main c-hide">
+            	<i class="sicon icon-search"></i>
+                <input type="search" class="ser-input" placeholder="搜索科室或医生" id="searchName" />
+                 <a href="javascript:void(0)" onclick="goToDeptDoctorSearch()" class="ser-btn">搜索</a>
+            </div>
+        </div>
+    </div>
+    <div class="">
+    <h4 class="jzr-title">温馨提示：只能查询最近的10个就诊医生</h4>
+    </div>
+    <div class="mt10" id="doctors">
+    	<ul class="c-list c-border-tb">
+        </ul>
+        <!-- <div class="infinite-scroll" id="loading">
+        	<div class="infinite-preloader"></div>
+        	正在加载
+        </div> -->
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="js/historyDocList.js?v=201901152112"></script>
+
+</body>
+</html>

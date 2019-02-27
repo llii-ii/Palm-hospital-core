@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>缴费记录列表</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main">
+    <div class="mt10" id="listPart">
+    	 <ul class="order-list" id="orderlist">
+        	
+        </ul> 
+        <div class="infinite-scroll" style="display: none">
+        	<div class="infinite-preloader" ></div>
+        	正在加载
+        </div>
+        <div class="nomess" style="display: none">
+        	<i class="nomess-tb"></i>
+            <p class="mt10">暂无数据</p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+</body>
+<script>
+
+$(function(){
+	//获取二维码信息Id
+	var hisMemberId = Commonjs.getUrlParam("hisMemberId");
+	getInHospitalInfo(hisMemberId);
+});
+
+/**
+ * 查询住院缴费列表
+ * @returns
+ */
+function getInHospitalInfo(hisMemberId){
+	var apiData = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	var param = {};
+	param.api = 'callHis';
+	var listHtml='查询异常，请联系管理员';
+	apiData._HisMemberId = hisMemberId;//"27197168";//"1900873";
+	//@PostMapping("/{diyUrl}/{diyModule}/{api}/{callType}/{soapReturnFormat}/{format}/callApi.do")
+	param.apiParam = Commonjs.getApiReqParams(apiData, page);
+	Commonjs.ajax('../../wsgw/His_GetZyxxs_Url/His_GetZyJfjl/queryRechargeDetailInfo/soap2/ret/json/callApi.do', param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			if(!Commonjs.isEmpty(jsons.RespCode)) {
+				if(jsons.RespCode == 10000) {
+					if(Commonjs.isNotNull(jsons.result)) {
+						var result = jsons.result;
+						var resultJson = $.parseJSON(result);
+						if(resultJson.code == 200){
+							listHtml = '';							
+			  				if(Commonjs.ListIsNotNull(resultJson.data)){
+			  					Commonjs.BaseForeach(resultJson.data, function(i,item){
+	  								listHtml +='<li>'+'<a  class=\"c-arrow-r\" ><h4>';
+		  							var orderStateName = "已缴费";
+		  							listHtml+='<span class=\"fr c-ffac0b\" id=\"state\">'+ orderStateName +'</span>';
+		  							//result: "{"msg":"查询成功！","code":"200","data":[
+		  								//{"ZFFSMC":"银行卡","DJH000":68453033,"JFJE00":0.1,"JFCZY0":4678,"JFRQ00":"20170802","BRID00":20233637},
+		  								//{"ZFFSMC":"银行卡","DJH000":68442376,"JFJE00":0.1,"JFCZY0":4678,"JFRQ00":"20170802","BRID00":20233637},
+		  							var channelName = item.ZFFSMC;//缴费渠道
+			  						var orderNum = item.DJH000;//订单号
+			  						var fee = item.JFJE00;//金额
+			  						var day = item.JFRQ00;//缴费日期
+			  						listHtml+= '缴费日期：'+day + '</h4>'+
+			  						'<div class=\"ui-grid ol-mess\">'+
+			  						'<div class=\"ui-col-1 pr10\">【'+ channelName +'】充值 '+
+			  						'订单号：<span class=\"ml10\">'+ orderNum +'</span> '+
+			  						//'<span class=\"ml10 c-f12 c-999\">'+ doctorTitle +'</span>'+
+			  						'<div class=\"ui-col-0 c-pack\">￥'+ fee +'元</div>'+
+			  						'</div></div></a></li>';
+			  					});
+			  					loading=false;
+		  					}
+						}else{
+	  						listHtml ='<li>'+'<a  class=\"c-arrow-r\" >'+resultJson.msg +' </a></li>';
+						}
+					}
+					$("#orderlist").append(listHtml);
+	  				myLayer.clear();
+				} else {
+					myLayer.alert(jsons.RespMessage, 3000);
+				}
+			} else {
+				myLayer.alert("返回码为空");
+			}
+		} else {
+			//通信失败
+			myLayer.alert('网络繁忙,请刷新后重试', 3000);
+		}
+	},{async:false});
+}
+
+</script>
+
+
+</html>

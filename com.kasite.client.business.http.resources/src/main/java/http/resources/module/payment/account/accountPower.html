@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../../plugin/layui/css/layui.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <link rel="stylesheet" href="../../commons/css/setup.css" type="text/css" />
+    <link rel="stylesheet" href="../../commons/css/base.css" type="text/css" />
+</head>
+<body>
+	<div class="com-title">用户管理</div>
+	<div class="wrapper">
+	    <div class="mt20"><a href="javascript:addUser();" class="c-btn c-btn-blue" style="font-size: 12px;"><i class="icon icon-add"></i>新增用户</a></div>
+	    <div class="mt20">
+	        <table class="tb tb-l c-t-center" id="userList">
+	        </table>
+	        <div class="page-hold" id="pager">
+	        	<input id="pagenumber" type="hidden" value="1" />
+	        	<input id="totalcount" type="hidden" value="0" />
+	        </div>
+	    </div>
+	</div>
+	<!--新增用户-->
+	<div class="c-hide" id="addUerBox">
+		<div class="blend-mess">
+	    	<div class="mt15 ml65"><font color="red">*</font>&nbsp;用户账号:&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="userName2"/></div>
+	        <div class="mt15 ml65"><font color="red">*</font>&nbsp;实名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="name2"/></div>
+	    	<div class="mt15 ml65">电话号码:&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="mobile2"/></div>
+	        <div class="mt15 ml65"><font color="red">*</font>&nbsp;登录密码:&nbsp;&nbsp;<input type="password" class="input-text input-text-w180 mr10" id="password2"/></div>
+	        <div class="mt15 ml65"><font color="red">*</font>&nbsp;选择职务:&nbsp;&nbsp;
+	        	<div class="select-office-wrap">
+	             	<div class="select-office" onclick="showorhide(this);">
+	             		<input type="hidden" name="roleId2" id="roleId2"> 
+	                     <span class="nowrap" id="selectOffice2">门办</span>
+	                     <i class="icon icon-office" style="margin-right: 55px;"></i>
+	                 </div>
+	                 <div class="select-office-box jspScrollable"  id='selectOfficeBox2' >
+	                     
+	                 </div>
+	             </div>
+	        </div>
+	    </div>
+	</div>
+	<!--编辑用户-->
+	<div class="c-hide" id="updateUerBox">
+		<div class="pt5">
+	    	<div class="mt15 ml65"><font color="red">*</font>&nbsp;用户账号:&nbsp;&nbsp;<input type="input" readonly="readonly" class="input-text input-text-w180 mr10" id="userName1"/></div>
+	        <div class="mt15 ml65"><font color="red">*</font>&nbsp;实名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="name1"/></div>
+	    	<div class="mt15 ml65">电话号码:&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="mobile1"/></div>
+	    	<div class="mt15 ml65">重置密码:&nbsp;&nbsp;<div class="my-switch-box red" id="resetPassword"><span></span></div></div>
+	        <div class="mt15 ml65" id="resetTr" style="display: none;">登录密码:&nbsp;&nbsp;<input type="input" class="input-text input-text-w180 mr10" id="password1"/></div>
+	        <div class="mt15 ml65">选择职务:&nbsp;&nbsp;
+	        	<div class="select-office-wrap">
+	             	<div class="select-office" onclick="showorhide(this);">
+	             		<input type="hidden" name="roleId1" id="roleId1"> 
+	                     <span class="nowrap" id="selectOffice1">门办</span>
+	                     <i class="icon icon-office" style="margin-right: 55px;"></i>
+	                 </div>
+	                 <div class="select-office-box jspScrollable" id="selectOfficeBox1">
+	                    
+	                 </div>
+	             </div>
+	        </div>
+	    </div>
+	</div>
+	<!----------------------------------- 新增职务 ----------------------------------------->
+	<div class="c-hide" id="newRol" style="display:none">
+         <div class="office-box-fl fl">
+			<table class="table-form">
+				<tr>
+					<td class="t"><sub>&lowast;</sub> 职务名称</td>
+					<td><input type="text" class="text" id="roleName" /></td>
+				</tr>
+				<tr>
+					<td class="t">职务描述</td>
+					<td><input type="text" class="text" id="roleDesc" /></td>
+				</tr>
+				<tr>
+					<td class="t">职务标识</td>
+					<td><input type="text" class="text" id="roleMark" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="office-box-fr fr">
+			<h2>设置菜单</h2>
+			<div class="office-box-list" id="menuDiv">
+				<form class="layui-form">
+					<div id="xtree" class="xtree_contianer"></div>
+				</form>
+				 <table id="menuTb">
+					
+				</table> 
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="../../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript" src="../../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript" src="../../commons/js/jquery.md5.js"></script>
+<script type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+<script type="text/javascript" src="../../commons/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="../../plugin/layui/layui.js"></script>
+<script type="text/javascript" src="../../plugin/js/xtree.js"></script>
+<script type="text/javascript" src="js/accountPower.js"></script>

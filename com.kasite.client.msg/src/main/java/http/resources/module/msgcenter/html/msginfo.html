@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	    <title>已知晓</title>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+	</head>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript"   src="../../../../common/js/common.js" ></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			myLayer.confirm({
+				title:'',
+				con:'您已知晓通知!',
+				ok: function(){
+					ok();
+				},
+				okValue:'\u786e\u5b9a'
+			});
+		})
+		function ok(){
+			var param = {};
+			var apiData = {};
+			apiData.msgId =  Commonjs.getUrlParam("msgId");
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/ReadMsg/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					WeixinJSBridge.call('closeWindow');
+				}
+			})
+			
+		}
+		
+	</script>
+</html>

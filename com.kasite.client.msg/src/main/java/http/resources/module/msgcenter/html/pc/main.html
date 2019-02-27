@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>主页</title>
+		<style type="text/css">
+			.ccc{
+				padding: 30px 0;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>摘要 <small class="m-l-sm"></small></h5>
+                <div class="ibox-tools">
+			  		<div class="row" style="display: inline-block;">
+					  	<div class="col-sm-6">
+					  		<input id="beginTime" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'yyyy-MM-dd ',maxDate:'#F{$dp.$D(\'d5222\')}'})" style="width:100%;"  class="form-control" placeholder="开始时间">
+					  	</div>
+					  	<div class="col-sm-6">
+					  		<input id="endTime" type="text" name="endTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd ',minDate:'#F{$dp.$D(\'d5221\')}'})" class="form-control" style="width:100%;" placeholder="结束时间">
+					  	</div>
+					</div>
+			  		<div class="btn-group pull-right" id="selDateType">
+                        <button class="btn btn-primary" type="button" id="Yesterday">昨天</button>
+                        <button class="btn btn-white" type="button" id="week">一周</button>
+                        <button class="btn btn-white" type="button" id="month">一月</button>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+				  	<div class="col-sm-4 text-center ccc">
+				  		<h2>微信</h2>
+				  		<h1 id="chn100123"></h1>
+				  	</div>
+				  	<div class="col-sm-4 text-center ccc">
+				  		<h2>支付宝</h2>
+				  		<h1 id="chn100125"></h1>
+				  	</div>
+				  	<div class="col-sm-4 text-center ccc">
+				  		<h2>短信</h2>
+				  		<h1 id="chnsms"></h1>
+				  	</div>
+				</div>
+            </div>
+            
+            <div class="ibox-title" style="margin-top: 30px;">
+                <h5>发送排行 <small class="m-l-sm"></small></h5>
+            </div>
+            <div class="ibox-content">
+            	<div class="row">
+				  	<div class="col-sm-6">
+				  		<ul class="list-group" id="order_2">
+		                </ul>
+				  	</div>
+				  	<div class="col-sm-6">
+				  		<ul class="list-group" id="order_3">
+		                   
+		                </ul>
+				  	</div>
+				</div>
+            </div>
+        </div>
+	</body>
+	<script>
+	var startTime = "";
+	var endTime = "";
+	$(function(){
+		$("#beginTime").val(GetDateStr(-1));
+		$("#endTime").val(GetDateStr(0));
+		init();
+		$("#beginTime").change(function(){
+			init();
+		})
+		$("#endTime").change(function(){
+			init();
+		})
+		$("#month").click(function(){
+			$(this).removeClass("btn-white");
+			$("#Yesterday").removeClass("btn-primary");
+			$("#week").removeClass("btn-primary");
+			$(this).removeClass("btn-white");
+			$(this).addClass("btn-primary");
+			$("#beginTime").val(GetDateStr(-30));
+			$("#endTime").val(GetDateStr(0));
+			init();
+		})
+		$("#Yesterday").click(function(){
+			$(this).removeClass("btn-white");
+			$("#month").removeClass("btn-primary");
+			$("#week").removeClass("btn-primary");
+			$(this).removeClass("btn-white");
+			$(this).addClass("btn-primary");
+			$("#beginTime").val(GetDateStr(-1));
+			$("#endTime").val(GetDateStr(-1));
+			init();
+		})
+		$("#week").click(function(){
+			$(this).removeClass("btn-white");
+			$("#month").removeClass("btn-primary");
+			$("#Yesterday").removeClass("btn-primary");
+			$(this).removeClass("btn-white");
+			$(this).addClass("btn-primary");
+			$("#beginTime").val(GetDateStr(-7));
+			$("#endTime").val(GetDateStr(0));
+			init();
+		})
+		
+	})
+	function init(){
+		$("#chn100123").html("0");
+		$("#chn100125").html("0");
+		$("#chnsms").html("0");
+		$("#order_2").html("");
+		$("#order_3").html("");
+		queryList("1");
+		queryList("2");
+		queryList("3");
+	}
+	function queryList(type){
+		var param = {};
+		var apiData = {};
+		var startTime =  $("#beginTime").val();
+		var endTime =  $("#endTime").val();
+		apiData.startTime = startTime;
+		apiData.endTime = endTime;
+		apiData.type = type;
+		apiData.OrgId = Commonjs.hospitalId();
+		param.api = '';
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/MsgCenterMainCount/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				initHtml(d.Data,type)
+			} else {
+				alert(d.RespMessage);// 错误提示
+			}
+		});
+	}
+	function initHtml(d,type){
+		var html = '';
+			if(type==1){
+				Commonjs.BaseForeach(d, function(i,item){
+					if(item.channelId=="100123"){
+						$("#chn100123").html(item.countNum);
+					}
+					if(item.channelId=="100125"){
+						chn100123 = item.countNum;
+						$("#chn100125").html(item.countNum);
+					}
+					if(item.channelId=="sms"){
+						$("#chnsms").html(item.countNum);
+					}
+				})
+				
+				
+			}
+			if(type==2){
+				var html='';
+				var  order = 1;
+				html+='<li class="list-group-item">';
+				html+='<div class="x-row">';
+				html+='<div class="x-row-cols " style="width: 50px;">排名</div>';
+				html+='<div class="x-row-cols " style="width: 300px;">'+'来源'+'</div>';
+				html+='<div class="x-row-cols " style="margin-left:160px;">'+'发送次数'+'</div>';
+				html+='</div>';
+				html+='</li>';
+				Commonjs.BaseForeach(d, function(i,item){
+					html+='<li class="list-group-item">';
+					html+='<div class="x-row">';
+					html+='<div class="x-row-cols " style="width: 50px;">'+order+'</div>';
+					html+='<div class="x-row-cols " style="width: 300px;">'+item.operatorId+'</div>';
+					html+='<div class="x-row-cols " style="margin-left:160px;">'+item.countNum+'</div>';
+					html+='</div>';
+					html+='</li>';
+					order++;
+				})
+				$("#order_2").html(html);
+			}
+			if(type==3){
+				var html='';
+				var  order = 1;
+				html+='<li class="list-group-item">';
+				html+='<div class="x-row">';
+				html+='<div class="x-row-cols " style="width: 50px;">排名</div>';
+				html+='<div class="x-row-cols " style="width: 300px;">'+'场景'+'</div>';
+				html+='<div class="x-row-cols " style="margin-left:160px;">'+'发送次数'+'</div>';
+				html+='</div>';
+				html+='</li>';
+				Commonjs.BaseForeach(d, function(i,item){
+					html+='<li class="list-group-item">';
+					html+='<div class="x-row">';
+					html+='<div class="x-row-cols " style="width: 50px;">'+order+'</div>';
+					if(item.scenename==undefined){
+						html+='<div class="x-row-cols " style="width: 300px;">'+item.modeType+'</div>';
+					}
+					else{
+						html+='<div class="x-row-cols " style="width: 300px;">'+item.scenename+'</div>';
+					}
+					
+					html+='<div class="x-row-cols " style="margin-left:160px;">'+item.countNum+'</div>';
+					html+='</div>';
+					html+='</li>';
+					order++;
+				})
+				$("#order_3").html(html);
+			}
+	}
+	function GetDateStr(AddDayCount) {
+	    var dd = new Date();
+	    dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+	    var y = dd.getFullYear();
+	    var m = dd.getMonth() + 1;//获取当前月份的日期
+	    var d = dd.getDate();
+	    if (d < 10) {
+	        d = "0" + d;
+	    }
+	    if (m < 10) {
+	        m = "0" + m;
+	    }
+	    return y + "-" + m + "-" + d;
+	}
+	</script>
+</html>

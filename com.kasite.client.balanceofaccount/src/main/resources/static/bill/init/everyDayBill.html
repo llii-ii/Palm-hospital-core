@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>每日账单</title>
+    <link rel="stylesheet" href="../../balanceofaccount/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/page.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/artDialog/4.1.7/css/artDialog.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/datetimepicker/2.1.9/css/jquery.datetimepicker.css" type="text/css" />
+
+</head>
+<body>
+<div class="container-wrap"><div class="comtop"><i class="cicon icon-duizhang"></i>对账管理</div>
+    <div class="scroll-pane jspScrollable" style="top: 0px;">
+        <div class="ptb10 plr5" >
+            <div class="tabs tabs-four">
+                <div class="tabs-hd clearfix">
+                    <a id="everyDayBill" href="everyDayBill.html" class="curr"><span>每日账单</span></a>
+                    <a id="everyDayBillDetail" href="everyDayBillDetail.html"><span>账单列表</span></a>
+                    <a id="classifySummaryBill" href="classifySummaryBill.html"><span>分类汇总账单</span></a>
+                    <a id="alwaysRefund" href="alwaysRefund.html"><span>实时退款</span></a>
+                </div>
+                <div class="tabs-bd p10">
+                    <div class="form-layout form-inline">
+                        <div class="control-group">
+                            <label class="control-label mr10">对账日期</label>
+                            <div class="control-form mr10">
+                                <input type="text" placeholder="请输入" class="input-text input-text-w110" id="date_timepicker_start">
+                            </div>
+                            <label class="control-label mr10">至</label>
+                            <input type="text" placeholder="请输入" class="input-text input-text-w110" id="date_timepicker_end">
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label mr10">核对结果</label>
+                            <div class="control-form">
+                                <div class="form-select">
+                                    <select class="select select-w125" id="checkState">
+                                        <option value="">-请选择-</option>
+                                        <option value="1">正常</option>
+                                        <option  value="-1">异常</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" onclick="loadData();" class="c-btn c-btn-gray">查询</a>
+                        <a href="javascript:;" class="c-btn c-btn-gray" id="showChart"><i class="cicon icon-qushi"></i>查看趋势图</a>
+                        <a href="javascript:download();" class="c-btn c-btn-gray ml10"><i class="cicon icon-daochu"></i>导出xsl</a>
+                        <a href="javascript:dataShow(1);" class="c-btn c-btn-gray ml10"><i class="cicon icon-duizhang"></i>下载HIS账单</a>
+                        <a href="javascript:dataShow(2);" class="c-btn c-btn-gray ml10"><i class="cicon icon-duizhang"></i>汇总全流程账单</a>
+                        <a href="javascript:dataShow(3);" class="c-btn c-btn-gray ml10"><i class="cicon icon-duizhang"></i>汇总三方账单</a>
+                        <a href="javascript:dataShow(4);" class="c-btn c-btn-gray ml10"><i class="cicon icon-duizhang"></i>汇总每日账单</a>
+                    </div>
+                    <div class="c-t-right">
+
+                    </div>
+                    <div class="pb40">
+                        <table id="billTable" class="cell-border hover c-t-center c-f14" cellspacing="0" width="100%">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../../balanceofaccount/common/cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/js/base.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/js/common.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/datetimepicker/2.1.9/js/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/jscrollpane/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/cross/js/cross.ui.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/echarecharts/js/echarts.min.js"></script>
+<script type="text/javascript" src="js/everyDayBill.js"></script>
+</body>
+</html>

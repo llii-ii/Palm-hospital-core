@@ -1,0 +1,60 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } ,
+	         "patientId": {
+				"type": "keyword"
+			},
+			 "clinicNum": {
+				"type": "keyword"
+			},
+			 "medicalNum": {
+				"type": "keyword"
+			},
+			 "receiptNum": {
+				"type": "keyword"
+			},
+			 "fee": {
+				"type": "keyword"
+			},
+			 "insuranceDeduct": {
+				"type": "integer"
+			},
+			 "underwayCriterion": {
+				"type": "integer"
+			},
+			 "baseInsurance": {
+				"type": "integer"
+			},
+			 "complementarityInsurance": {
+				"type": "integer"
+			},
+			 "selfPay": {
+				"type": "integer"
+			},
+			 "selfFee": {
+				"type": "integer"
+			},
+			 "lastmodify": {
+			"format": "YYYY-MM-dd HH:mm:ss",
+				"type": "date"
+			}
+
+     	 }
+    }
+  }
+}

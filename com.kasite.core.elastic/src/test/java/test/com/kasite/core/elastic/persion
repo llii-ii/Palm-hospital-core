@@ -1,0 +1,82 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        },
+         "patientId": {
+						"type": "keyword"
+					},
+					 "name": {
+						"type": "keyword"
+					},
+					 "certType": {
+						"type": "keyword"
+					},
+					 "certNum": {
+						"type": "keyword"
+					},
+					 "idCardId": {
+						"type": "keyword"
+					},
+					 "birthday": {
+						"type": "keyword"
+					},
+					 "guardianName": {
+						"type": "keyword"
+					},
+					 "guardianIdNo": {
+						"type": "keyword"
+					},
+					 "guardianIdType": {
+						"type": "keyword"
+					},
+					 "guardianGender": {
+						"type": "keyword"
+					},
+					 "guardianBirthday": {
+						"type": "keyword"
+					},
+					 "mobilePhone": {
+						"type": "keyword"
+					},
+					 "gender": {
+						"type": "keyword"
+					},
+					 "race": {
+						"type": "keyword"
+					},
+					 "ssNum": {
+						"type": "keyword"
+					},
+					 "allergies": {
+						"type": "keyword"
+					},
+					 "socialhistory": {
+						"type": "keyword"
+					},
+					 "historyOfpastillness": {
+						"type": "keyword"
+					},
+					 "historyPresentIllness": {
+						"type": "keyword"
+					},
+					 "pastDiseaseHistory": {
+						"type": "keyword"
+					}
+      }
+    }
+  }
+}

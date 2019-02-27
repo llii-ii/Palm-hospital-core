@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<script type="text/javascript" src="../commons/js/backstage-all.js">
+</script>
+		<script type="text/javascript" src="js/dictionary.js">
+</script>
+	</head>
+	<body>
+		<div class="container-wrap">
+			<div class="main-header">
+				<div class="fr mt10 main-header-btns">
+					<a href="javascript:;" class="btn-add"
+						onclick="addDictionary()" perm="dict:insert">新增字典</a>
+				</div>
+				<ul class="clearfix">
+					<li class="last">
+						<span><a href="dictionary.html" class="curr">字典配置</a>
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="scroll-pane jspScrollable">
+				<br />
+				<div class="setup-content pl20 pr20">
+					<input id='totalcount' type="hidden" />
+					<table class="tb pt0 mt0" width="100%" id='dataList'>
+						<tr>
+							<th>
+								字典键
+							</th>
+							<th>
+								字典值
+							</th>
+							<th>
+								上级ID
+							</th>
+							<th>
+								字典类型
+							</th>
+							<th>
+								状态
+							</th>
+							<th class="w200p last">
+								操作
+							</th>
+						</tr>
+					</table>
+					<div class="pager_container clearfix">
+						<input id="totalcount" type="hidden" value="0" />
+						<input id="pagenumber" type="hidden" value="1" />
+						<div id="pager"></div>
+					</div>
+				</div>
+			</div>
+			<div class="office-box1 clearfix" id="editDictionary" style="display:none">
+                            <div class="office-box-fl fl">
+                                <table class="table-form">
+                                  <tr>
+                                        <td class="t">
+                                                                                                        上级ID
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="upId"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                                                                                       字典类型
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="dicType"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                            <sub>&lowast;</sub> 字典键
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="key"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                                                                                        字典值
+                                        </td>
+                                        <td>
+                                           <textarea rows="10" cols="30" id='value'></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+		</div>
+	</body>
+</html>

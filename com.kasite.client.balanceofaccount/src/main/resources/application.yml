@@ -1,0 +1,39 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8182
+    context-path: /
+# spring
+spring:
+    #  dev|test|pro|local
+    profiles:
+        active: dev-mysql
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    http:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true
+
+management: # Actuator 在 spring boot 2.0 版本后，默认只暴露了两个端点，这里开放所有端点
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+  security: #管理端点安全 spring-boot 1.5.2之后严格执行安全策略，所以需要配置这个为false
+    enabled: false
+
+#file的路径根据实际项目部署的tomcat路径下的bin目录来设置,不然无法记录日志
+logging:
+  file: E:\Client\Tomcat-8.0.53-balanceofaccount\bin\logs\logback\all.log
+  level:
+    com.kasite.client.hospay.module.bill.dao: info
+

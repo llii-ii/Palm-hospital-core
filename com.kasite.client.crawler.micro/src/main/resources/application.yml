@@ -1,0 +1,28 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    servlet:
+        context-path: /guard
+# spring
+spring:
+    #  dev|test|pro|local
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    http:
+        multipart:
+            enabled: true
+
+management: # Actuator 在 spring boot 2.0 版本后，默认只暴露了两个端点，这里开放所有端点
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+  security: #管理端点安全 spring-boot 1.5.2之后严格执行安全策略，所以需要配置这个为false
+    enabled: false

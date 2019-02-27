@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>投票问卷</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.vote4{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.vote-list{
+				line-height: 1.4;
+				padding-top: 0.2rem;
+				margin-top: 1rem;
+			}
+			.vote-list li{
+				padding: 0.3rem;
+				margin-bottom: 0.2rem;
+				background: #fff;
+			}
+			.vote-list h2{
+				font-size: 0.3rem;
+				color: #1a1a1a;
+				margin-bottom: 0.14rem;
+				margin-top: 0;
+			}
+			.vote-list p{
+				font-size: 0.26rem;
+				margin-bottom: 0.1rem;
+				margin-top: 0;
+				color: #999;
+				overflow: hidden;
+			}
+			.vote-list p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .01rem;
+			}
+			.vote-list-status{
+				width: 1.04rem;
+				height: 1.04rem;
+				line-height: 1.04rem;
+				text-align: center;
+				font-size: 0.28rem;
+				color: #2988fc;
+				background: #f2f9ff;
+				border-radius: 100%;
+				-webkit-border-radius: 100%;
+				position: absolute;
+				right: 0.3rem;
+			}
+			.vote-list-status.img{
+				line-height: 1.2;
+			}
+			.vote-list-status img{
+				width: 0.35rem;
+				display: block;
+				margin: .15rem auto 0;
+			}
+			.vote-list-status img2{
+				width: 0.35rem;
+				display: block;
+				margin: .15rem auto 0;
+			}
+			.active .vote-list-status{
+				color: #999;
+				background: #f2f4f5;
+			}
+			.x-row{
+				position: relative;
+			}
+			.vote4-search{
+				height: 1rem;
+				line-height: 1rem;
+				background: #fff;
+				position: fixed;
+				z-index: 2;
+				left: 0;
+				top: 0;
+				right: 0;
+				padding-left: 0.2rem;
+				border-bottom: 1px solid #e6e6e6;
+			}
+			.vote4-search-btn{
+				text-align: center;
+				color: #fff;
+				height: 0.66rem;
+				width: 0.8rem;
+				font-size: 0.25rem;
+				background: #2988fc;
+				line-height: .66rem;
+				border-radius: 0.05rem;
+				-webkit-border-radius: 0.05rem;
+				margin-top: 0.15rem;
+				margin: 0.15rem auto;
+			}
+			.vote4-search input{
+				border-radius: 0.05rem;
+				-webkit-border-radius: 0.05rem;
+				border: 1px solid #e6e6e6;
+				height: 0.66rem;
+				padding-left: 0.65rem;
+				padding-right: 0.15rem;
+				display: block;
+				width: 100%;
+				margin-top: 0.15rem;
+				background-image: url(../../img/icon-vote-12.png);
+				background-position: 0.24rem;
+				background-repeat: no-repeat;
+				background-size: 0.28rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote4">
+	        	<div class="vote4-search" style="display: none">
+	        		<div class="x-row dr" >
+						<div class="x-row-cols " style="width: 1.28rem;">
+							<div class="vote4-search-btn" >搜索</div>
+						</div>
+						<div class="x-row-cols " style="margin-right:1.28rem;">
+							<input type="search" name="" id="title" value="" placeholder="关键字" />
+						</div>
+					</div>
+	        	</div>
+	        	<ul class="vote-list" id="vote-list">
+				</ul>
+				<div class="infinite-scroll" style="display: none">
+		        	<div class="infinite-preloader" ></div>
+		        		正在加载
+		        </div>
+		        <div class="nomess" style="display: none;text-align:center">
+		        	<i class="nomess-tb"></i>
+		            <p class="mt10">暂无数据</p>
+		        </div>
+	        </div>
+		</div>
+		
+		<div id="add" style="display: none" class="btn" onclick="window.location.href = 'add.html';">＋&nbsp;新增投票</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		 var loading = false;
+		 var pIndex = 0;//分页页数全局变量
+		 var power;	
+		 $(function(){
+		 	qwQueryPower();
+		 	
+		 	//分页
+			$(document.body).infinite().on("infinite", function() {
+				if(loading) {
+					return;
+				}
+				loading = true;
+				pIndex += 1;
+				setTimeout(function() {
+					$(".nomess").css("display", "none");
+					QueryList();
+				}, 300);
+			});
+		}) 
+		
+		//搜索
+		$('.vote4-search-btn').on('click', function() {
+			$("#vote-list").empty();
+			pIndex=0;
+			QueryList();
+		});
+		
+		
+		//查询列表
+		function QueryList(){
+			$(".nomess").css("display", "none");
+			var title = $("#title").val();
+			var page = {};
+			page.PIndex = pIndex;
+			page.PSize = 5;
+			var apiData = {};
+			apiData.themeType = 0;
+			apiData.tag = "QY";
+			apiData.power = power+"";
+			apiData.Page = page;
+			if(!Commonjs.isEmpty(title)){
+				apiData.title=title;
+			}
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryVoteQuestionList/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				 var html = '';
+    				 if (Commonjs.ListIsNotNull(dd.Data)) {
+			            Commonjs.BaseForeach(dd.Data,
+			            function(i, item) {
+			            	var status='';
+			            	if(item.Status=='1'){
+			            		status='进行中'
+			            	}
+			            	if(item.Voted>0){
+			            		status='已投票';
+			            	}
+			            	if(item.Status=='2'){
+			            		status='已结束'
+			            	}
+			            	if(item.Status=='0'){
+			            		status='未发布'
+			            	}
+			            	/* if(!power){
+			            		html = html + '<li onclick="detail(\''+item.Voted+'\',\''+item.Id+'\',\''+item.Uid+'\')">';
+			            	}else{ */
+			            		html = html + '<li>';
+			            	//}
+							html = html + '<div class="x-row dr">';
+							if(!power){
+								html = html + '<div class="vote-list-status">'+status+'</div>';
+							}else{
+								if(item.OperatorId == Commonjs.getOpenId()){
+									if(item.Status=='0'){
+					            		html = html + '<div class="vote-list-status img" onclick="window.location.href = \'edit.html?id='+item.Id+'\';"><img src="../../img/icon-vote-7.png" />修改</div>';
+					            	}else{
+					            		html = html + '<div class="vote-list-status img" onclick="window.location.href = \'editEndTime.html?id='+item.Id+'\';"><img src="../../img/icon-vote-14.png" />截止</div>';
+					            		/* html = html + '<div class="vote-list-status">'+status+'</div>';  */
+					            	}
+								}
+							}
+							html = html + '<div class="x-row-cols " style="margin-right:1.04rem;" onclick="detail(\''+item.Voted+'\',\''+item.Id+'\',\''+item.Uid+'\',\''+item.Status+'\')">'+
+								'<h2 class="ell">'+item.Title+'</h2>'+
+								'<p><img src="../../img/icon-vote-0.png"/> '+item.Count+'人参与</p>'+
+								'<p><img src="../../img/icon-vote-1.png"/>  '+item.EndTime+'截止  '+status+'</p>'+
+								'</div>'+
+								'</div>'+
+								'</li>';
+						   
+			    		 });
+         			  	loading=false;
+         			 }else{
+						if(pIndex==0){//第一页就没有数据,则显示无数据样式
+							$(".nomess").css("display", "block");
+						}else{
+							$(".nomess").css("display", "none");
+						}
+						loading=true;
+  					 }
+         			 $("#vote-list").append(html);
+    			}else{
+    				myLayer.alert(res.RespMessage,3000);
+    			}
+    		});
+		}
+		
+		//发起人权限
+		function qwQueryPower(){
+			var apiData = {};	
+			apiData.memberType = 7;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QwQueryPower/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				power = true;
+    				$("#add").show();
+    				$(".vote4-search").show();
+    				$("#titleLabel").text("投票设置");
+    			}else { 
+    				power = false;
+    				$("#add").hide();
+    				$(".vote4-search").hide();
+    				$(".vote-list").css("margin-top","0rem");
+    				$("#titleLabel").text("投票问卷");
+    			}
+    			QueryList();
+    		},{async:false});
+		}
+		
+		function detail(voted,id,uid,status){
+			//待发布 -> 预览
+			if(status=="0"){
+				window.location.href = 'view.html?themeid='+id+'&from=index';;
+				return;
+			}
+			//已投票 有权限 ->统计页
+			if(voted>0 || power || status=="2"){
+				window.location.href = 'detail.html?themeid='+id+'&power='+power;;
+			}else{
+				//未投票->投票
+				window.location.href = 'submit.html?themeid='+id;
+			}		
+		}
+		
+	</script>
+</html>

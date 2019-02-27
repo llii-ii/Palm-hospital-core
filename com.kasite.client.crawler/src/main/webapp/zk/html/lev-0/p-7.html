@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-signal"></i> 执行效率趋势
+			</div>
+			<div class="title-right-filter mui-pull-right">
+				<form class="form-inline">
+				  	<!--<div class="form-group has-feedback">
+					    <label >数据筛选:</label>
+					    <select class="form-control selector">
+						  	<option>1</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>-->
+				  	<span class="pull-left" style="padding:7px 0;">机构选择：</span>
+				  	<a class="pull-left " style="padding:7px 15px 7px 7px;" href="#" onclick="showOrgTree();"><img src="../../img/ico_chead_edit.png" title="机构选择" alt="机构选择"></a>
+				  	<!--<div class="form-group has-feedback">
+					    <select class="form-control selector">
+						  	<option value="">全部状态</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>-->
+				  	<div class="form-group has-feedback">
+					    <input class="form-control" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" >
+					    <!--<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>-->
+				  	</div>
+				  	<div class="form-group has-feedback">
+				  		<label >-</label>
+					    <input class="form-control" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" >
+					    <!--<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>-->
+				  	</div>
+				  	<div class="form-group has-feedback">
+					    <select class="form-control selector">
+						  	<option value="">上报</option>
+						  	<option>2</option>
+						  	<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						</select>
+				  	</div>
+				  	<button type="submit" class="btn btn-primary">查询</button>
+				</form>
+			</div>
+		</div>
+		<div class="row-fluid">
+	        <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+	    </div>
+
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/serial.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function showOrgTree(){
+			//页面层
+			layer.open({
+			  type: 2,
+			  skin: 'layui-layer-rim', //加上边框
+			  area: ['420px', '240px'], //宽高
+			  content: 'http://www.baidu.com'
+			});
+		}
+		
+		
+		var chart;
+		var chartData = [{"aver":806.42,"上饶市第三人民医院":883.08,"上饶市妇幼保健院":813.33,"上饶市第二人民医院":479.0,"date":"2018-07-19"}];//绘制图表数据
+		
+		function jobEffic(chartData,hospitalList) {
+			$("#chartdiv").empty();
+			var dataStruct = chartData[0];
+			// SERIAL CHART
+		    chart = new AmCharts.AmSerialChart();
+		    chart.dataProvider = chartData;
+		    chart.categoryField = "date";
+		    chart.startDuration = 0.5;
+		    chart.balloon.color = "#000000";
+		
+		    // AXES
+		    // category
+		    var categoryAxis = chart.categoryAxis;
+		    categoryAxis.fillAlpha = 1;
+		    categoryAxis.fillColor = "#FAFAFA";
+		    categoryAxis.gridAlpha = 0;
+		    categoryAxis.axisAlpha = 0;
+		    categoryAxis.gridPosition = "start";
+		    //categoryAxis.position = "top";
+		
+			// aver graph
+		    var graph = new AmCharts.AmGraph();
+		    graph.title = "平均";
+		    graph.type = "column";
+		    graph.fillColors = "#999";
+		    graph.fillAlphas = 0.7;
+		    graph.lineColor = "#666";
+		    graph.valueField = "aver";
+		    graph.balloonText = "平均数：[[value]] 条/秒";
+		    chart.addGraph(graph);    
+		    
+			//数据少，减少柱的宽度
+			if(chartData.length <= 5) {
+				graph.columnWidth = 0.2;
+			} else if (chartData.length > 5 && chartData.length < 12) {
+				graph.columnWidth = 0.5;
+			} else {
+				// AXES
+			    // category
+			    var categoryAxis = chart.categoryAxis;
+			    categoryAxis.labelRotation = 45;
+			    categoryAxis.gridPosition = "start";
+			}
+			
+			/***********************
+			//根据条件筛选json，获取符合条件的各个医院信息
+			$.each(hospitalList,function(i,field){
+				var graph = new AmCharts.AmGraph();
+			    graph.title = hospitalList[i];
+			    graph.valueField = hospitalList[i];
+			    //graph.hidden = true; // this line makes the graph initially hidden           
+			    graph.balloonText = "[[value]]";
+			    graph.lineAlpha = 1;
+			    graph.bullet = "round";
+			    chart.addGraph(graph);
+			});
+			*******************/
+			
+			
+			//遍历json中的所有键值，获取各个医院信息
+			var hospitalNum = 0;
+			for (var prop in dataStruct){
+				if(!(prop == "date" || prop == "aver")) {
+					hospitalNum++;//获取医院数量
+				}
+			}
+			//循环绘制医院数据曲线
+			var i = 0
+			for (var prop in dataStruct){
+				if(!(prop == "date" || prop == "aver")) {
+					var graph = new AmCharts.AmGraph();
+				    graph.title = prop;
+				    graph.valueField = prop;
+				    //graph.hidden = true; // this line makes the graph initially hidden           
+				    graph.balloonText = "";
+				    graph.lineAlpha = 1;
+				    graph.bullet = "round";
+				    //if(hospitalNum <= 20) {
+				    	graph.balloonText = "[[title]]：[[value]] 条/秒";//统计数的医院少于20家，提供指向数据显示功能，超过20家，数据容器盛放不下
+				    //} else {
+				        graph.animationPlayed = true;//超过20家医院，关闭曲线加载动画效果
+				    //}
+				    chart.addGraph(graph);
+				     //add by wangn 2015-10-23
+				     if(i>=5){
+				      graph.hidden = true; 
+				    }
+				    //add end
+				    i++;
+				}
+			}
+			//根据医院数量调整容器高度    
+		    if(i < 10){
+				$("#chartdiv").height(400);
+			} else if (i >= 10 && i < 20) {
+				$("#chartdiv").height(500);
+				//sizePane();
+			} else if (i >= 20 && i < 30) {
+				$("#chartdiv").height(600);
+				//sizePane();
+			} else if (i >= 30 && i < 40) {
+				$("#chartdiv").height(700);
+				//sizePane();
+			} else if (i >= 40 && i < 50) {
+				$("#chartdiv").height(800);
+				//sizePane();
+			} else if (i >= 50 && i < 60) {
+				$("#chartdiv").height(900);
+				//sizePane();
+			} else if (i >= 60 && i < 70) {
+				$("#chartdiv").height(1000);
+				//sizePane();
+			} else {
+				$("#chartdiv").height(1500);
+				//sizePane();
+			}
+		    
+		    // CURSOR
+		    var chartCursor = new AmCharts.ChartCursor();
+		    chartCursor.cursorPosition = "mouse";
+		    chartCursor.zoomable = false;
+		    chartCursor.cursorAlpha = 0;
+		    chart.addChartCursor(chartCursor);                
+		
+		    // LEGEND
+		    var legend = new AmCharts.AmLegend();
+		    legend.useGraphSettings = true;
+		    chart.addLegend(legend);
+		
+		    // WRITE
+		    chart.write("chartdiv");
+		}
+		
+		AmCharts.ready(function () {
+		    jobEffic(chartData);
+		  
+		});
+//		$(document).ready(function(){
+//		    
+//		     $( "#startdate" ).datepicker({
+//				defaultDate: "-1w",
+//				changeMonth: true,
+//				onClose: function( selectedDate ) {
+//					var maxD = new Date(selectedDate);
+//					maxD.setTime(maxD.getTime() + 30 * 24 * 60 * 60 * 1000); 
+//					maxD = maxD.format('yyyy-MM-dd'); 
+//					
+//					$( "#enddate" ).datepicker( "option", "minDate", selectedDate);
+//					//$( "#endDate" ).datepicker( "option", "maxDate", maxD);
+//					var endDateValue = $( "#enddate" ).val();
+//					if(dateCompare(endDateValue, maxD))
+//					{
+//						$( "#enddate" ).val(maxD);
+//					}
+//				}
+//		    });
+//		    $( "#enddate" ).datepicker({
+//				changeMonth: true,
+//				onClose: function( selectedDate ) {
+//					var minD = new Date(selectedDate);
+//					minD.setTime(minD.getTime() - 30 * 24 * 60 * 60 * 1000); 
+//					minD = minD.format('yyyy-MM-dd'); 
+//					
+//		        	$( "#startdate" ).datepicker( "option", "maxDate", selectedDate );
+//		        	//$( "#startDate" ).datepicker( "option", "minDate", minD );
+//		        	var startDateValue = $( "#startdate" ).val();
+//					if(dateCompare(minD, startDateValue))
+//					{
+//						$( "#startdate" ).val(minD);
+//					}
+//				}
+//		    });
+//			
+//		    /*
+//		     var grade = 1;
+//			 iniSelector();
+//			 var flag = 0;
+//			if(flag == '0'){
+//				iniSelectList(grade);//初始化
+//			}
+//			else{
+//			    var select1 = '17,8,c';
+//			    //setSelectList(select1);
+//			    getSelectList(select1,0);
+//			}*/
+//			 var grade = 1;
+//			//--iniSelector();
+//			//mod by wangn 2015-07-27
+//			//iniSelectList(grade);//初始化
+//			//--var select1 = '17,8,c';
+//			//--getSelectList(select1,0);
+//		    //mod end
+//			
+//			
+//		});
+		    function iniSelectList(grade,code,t_this,total) {
+			if(t_this) {
+				selectValue = t_this.attr("tempValue");
+			} else {
+				selectValue = -1;
+			}
+			if(!code) code = "-1";
+			$("div[id*=grade]").each(function(index, element) {
+				var selectId = $(this).attr("id");
+				selectId = selectId.substr(5,selectId.length);
+				if(selectId >= grade) {
+					$(this).remove();
+				}
+			});
+			if(code) {
+				$.ajax({
+					async : false,
+		            cache : false,
+		            type : 'POST',
+		            dataType : "json",
+		            data : "code=" + code+"&userType=-1",
+		            url : "/PMC/deviceManage/orgsearch",
+					error: function(data){
+						//alert('加载出错');
+					},
+					success: function(data1){
+						var data = eval("(" + data1 + ")");
+					    data = data.select;
+						if(data.length > 0 && total != 1) {
+							var selectorFrag = $('<div class="selector" id="grade'+grade+'" tempValue="'+selectValue+'all" style="margin-right:4px">');
+							grade++;
+							var optionHtml = '<span>全部</span>'
+							optionHtml += '<ul>'
+							optionHtml += '<li tempValue="'+selectValue+'all" onclick="iniSelectList('+grade+',\''+selectValue+'all\',$(this),1)">全部</li>';//选择全部时使用上一级Select选中的值
+							$.each(data, function(i, field){
+								//定义各个组件
+								var	areaCode = field.areaCode,
+									areaName = field.areaName;
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))">' + areaName + '</li>';
+							});
+							optionHtml += '</ul>';
+							selectorFrag.append(optionHtml);
+							selectorFrag.appendTo("#selector-container");
+						}
+					}
+				});
+			}
+		}
+		
+		
+		//var areaList = "110000,210000,210000";
+		
+		function getSelectList(areaList,i) {
+			areaListArray = areaList.split(",");
+			var areaLength = areaListArray.length;
+			var defaultAreaCode = areaListArray[i];
+			var grade = i + 1;
+			if(i > 0) {
+				j = i - 1;
+				var prevAreaCode = areaListArray[j];
+			}
+			i++;
+			$.ajax({
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : "code=" + defaultAreaCode+"&userType=-1",
+				url : "/PMC/deviceManage/orgsearch/echo",
+				error: function(data){
+					//alert('加载出错');
+				},
+				success: function(data1){
+					var data = eval("(" + data1 + ")");
+					    data = data.select;
+					if(data.length > 0) {
+						grade++;
+						var defaultValue = "";
+						var optionHtml = "<ul>"
+						if(prevAreaCode) {
+							if(prevAreaCode + "all" == defaultAreaCode) {
+								defaultValue = prevAreaCode + "all";
+								defaultValueTxt = "全部";
+								optionHtml += '<li tempValue="'+prevAreaCode+'all" onclick="iniSelectList('+grade+',\''+prevAreaCode+'all\',$(this),1)" selected="selected">全部</li>';
+							} else {
+								optionHtml += '<li tempValue="'+prevAreaCode+'all" onclick="iniSelectList('+grade+',\''+prevAreaCode+'all\',$(this),1)">全部</li>';
+							}
+						} else {
+							if(defaultAreaCode == "-1all") {
+								defaultValueTxt = "全部";
+								defaultValue = "-1all"
+							}
+							optionHtml += '<li tempValue="-1all" onclick="iniSelectList('+grade+',\'-1all\',$(this),1)">全部</li>';
+						}
+						
+						$.each(data, function(i, field){
+							//定义各个组件
+							var	areaCode = field.areaCode,
+								areaName = field.areaName;
+							if(defaultAreaCode == areaCode) {
+								defaultValue = areaCode;
+								defaultValueTxt = areaName;
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))" selected="selected">' + areaName + '</li>';
+							} else {
+								optionHtml += '<li tempValue="'+areaCode+'" onclick="iniSelectList('+grade+','+areaCode+',$(this))">' + areaName + '</li>';
+							}
+						});
+						optionHtml += '</ul>'
+						grade--;
+						var selectorFrag = $('<div class="selector" id="grade'+grade+'" tempValue="'+defaultValue+'" style="margin-right:4px">');
+						var spanFrag = '<span>'+defaultValueTxt+'</span>';
+						selectorFrag.append(spanFrag);
+						selectorFrag.append(optionHtml);
+						selectorFrag.appendTo("#selector-container");
+						if(i < areaLength) {
+							getSelectList(areaList,i);
+						}
+					}
+				}
+			});
+		}
+		function submitForm(){
+		    //  var selectArray = [];
+			//$("div[id*=grade]").each(function(index, element) {
+			//	selectArray.push($(this).attr("tempValue"));
+			//});
+			//$("#selectValue").val(selectArray);
+			$('#searchForm').submit();
+		}
+		
+//		function showOrgTree(){
+//		
+//			callJquerySelector("/PMC/app/plugins/centralizemonitor/pages/organization/selector?selectChildType=1&requestTask=efficiencytrend",document.searchForm,800,570,selectOrganizationNode, '机构选择');
+//		}
+		
+		function selectOrganizationNode(form, ra){
+			var selectValue = '';
+			var orgType = '';
+			
+			if (typeof (ra) == 'object') {
+				selectValue = ra[0];
+				orgType = ra[1];
+				
+				if(selectValue == '' || orgType == ''){
+					return;
+				}
+				
+				selectValue = 'fromTree' + ',' + selectValue;
+				$("#selectValue").val(selectValue);
+		
+			}
+			else{
+				return;
+			}
+			
+			$('#searchForm').submit();
+		}
+
+		
+		
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

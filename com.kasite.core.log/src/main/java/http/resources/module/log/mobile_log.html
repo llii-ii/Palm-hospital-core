@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>系统日志</title>
+    <link rel="stylesheet" href="common/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="common/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="common/css/jvm.css" type="text/css" />
+    <link rel="stylesheet" href="common/iconfont/iconfont.css" type="text/css" />
+	<link rel="stylesheet" href="common/widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/datetimepicker/2.1.9/css/jquery.datetimepicker.css" type="text/css" />
+    <link rel="stylesheet" href="common/widget/jsonFormat/1.0/css/jsonFormat.min.css" type="text/css"/>
+    
+    <style>
+		html {
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+		/** 列表细节展示表格 */
+		.dv-table {
+			font-size: 12px;
+			word-break: break-all;
+			width: 360px;
+			border: 0;
+			border-spacing: 0px 4px;
+		}
+		
+		.dv-table td {
+			border: 1px solid #ddd;
+		}
+		
+		.dv-label {
+			font-weight: bold;
+			color: #15428B;
+			width: 100px;
+		}
+	</style>
+        
+</head>
+
+<body>
+
+	<!-- 面包屑 -->
+   	<div id="menuTitle"></div>
+    
+    <!-- 查询条件 -->
+    <div class="jvm-content">
+    	<div class="plr5 personnel-manage-search">
+	    	<div class="form-layout form-inline">
+	    		<div class="control-group">
+	            	<label class="control-label c-t-right">用户ID：</label>
+	            	<div class="control-form">
+	                	<input type="text" id="p_appName" placeholder="请输入应用名称查询" class="input-text input-text-w200">
+	            	</div>
+	        	</div>
+	        	
+	    		<div class="control-group">
+	            	<label class="control-label c-t-right">模块名称：</label>
+	            	<div class="control-form">
+	                	<input type="text" id="p_moduleName" placeholder="请输入模块名称查询" class="input-text input-text-w200">
+	            	</div>
+	        	</div>
+	        	
+	        	<div class="control-group">
+	            	<label class="control-label c-t-right">日志等级：</label>
+	            	<div class="control-form">
+	            		<div class=" cus-sel cus-sel-w150 cus-sel-h33" id="levelFormSelect">
+	                       <div class="cus-sel-chosed">
+	                           <input id="p_level" type="text" class="c-hide">
+	                           <span class="cus-sel-chosed-txt" data-value="">-请选择-</span>
+	                           <span class="jselect-icon"></span>
+	                       </div>
+	                       <div class="cus-sel-list c-hide">
+	                           <ul>
+	                           </ul>
+	                       </div>
+	                   </div>
+	            	</div>
+	        	</div>
+	    		
+	    		<div class="control-group">
+	               <label class="control-label c-t-right">时间:</label>
+	               <div class="control-form">
+					   <div class="date-wrap w180">
+							<input type="text" value="" class="date-txt datetimepicker" 
+								id="p_startTime" onfocus="WdatePicker({doubleCalendar:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> 
+							<span class="add-on"> <i class="icon-remove"></i></span> 
+						</div>
+						<span class="mlr10">--</span>
+						<div class="date-wrap w180">
+							<input type="text" value="" class="date-txt datetimepicker" 
+								id="p_endTime" onfocus="WdatePicker({doubleCalendar:false,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/> 
+							<span class="add-on"> <i class="icon-remove"></i></span> 
+						</div>
+	               </div>
+	             </div>
+	             
+	            <div class="control-group">
+	                 <a href="javascript:query();" class="c-btn form-btn c-btn-blue"><i class="iconfont">&#xe610;</i>查询</a>
+	                 <span class="mlr10"></span>
+	                 <a href="javascript:showMore(1);" id="showMore" class="c-btn form-btn c-btn-blue"><i class="iconfont">&#xe60f;</i>更多</a>
+	                   <a href="javascript:showMore(2);" id="closeMore" class="c-btn form-btn c-btn-blue"><i class="iconfont">&#xe60e;</i>收起</a>
+	             </div>
+	    	</div>
+	    	
+	    	<div id="otherQueryId">
+	       		<div class="form-layout form-inline">
+	         		<div class="control-group">
+	             		<label class="control-label c-t-right">字段:</label>
+	             		<div class="control-form">
+	                		<div class=" cus-sel cus-sel-w150 cus-sel-h33" id="pNameFormSelect">
+	                    		<div class="cus-sel-chosed">
+	                        		<input id="p_name_1" type="text" class="c-hide">
+	                        		<span class="cus-sel-chosed-txt" data-value="">-请选择-</span>
+	                        		<span class="jselect-icon"></span>
+	                    		</div>
+			                    <div class="cus-sel-list c-hide">
+			                        <ul>
+			                        </ul>
+			                    </div>
+	                		</div>
+	                		<div class="cus-sel cus-sel-w105 cus-sel-h33" id="p_select_1" data-toggle="formSelect">
+	                    		<div class="cus-sel-chosed">
+	                        		<input type="text" class="c-hide">
+	                        		<span class="cus-sel-chosed-txt" data-value="">=</span>
+	                        		<span class="jselect-icon"></span>
+	                    		</div>
+	                    		<div class="cus-sel-list c-hide">
+	                        		<ul>
+	                        			<li><a href="javascript:;" data-value="">=</a></li>
+										<li><a href="javascript:;" data-value="UNE">!=</a></li>
+	                        		</ul>
+	                    		</div>
+	                		</div>
+	                		<span class="mlr10">值:</span>
+	                		<input type="text" id="p_value_1" placeholder="请输入值" class="input-text input-text-w170">
+	                		<span id="s_value_1" class="c-hide">--
+	    						<input type="text" id="p_value_1_2" placeholder="" class="input-text input-text-w170">
+	    					</span>
+	            		</div>
+	          		</div>
+	           		<div class="control-group">
+	              		<a href="javascript:addInput();" class="c-btn form-btn c-btn-blue"><i class="iconfont">&#xe622;</i></a>
+	          		</div>
+	         	</div>
+	         	<div id="queryMore"></div>
+	        </div>
+	    	
+	    </div>
+	
+	    <div class="dataTables_wrapper">    
+	    	<table id="groupDataTable" class="cell-border display box-table" cellspacing="0" width="100%">
+	            <thead>
+	                <tr>
+	                   	<th style="width:10%">用户ID</th>
+	                	<th style="width:10%">会话ID</th>
+	                	<th style="width:8%">模块名称</th>
+	                    <th style="width:7%">日志等级</th>
+	                    <th style="width:30%">类名</th>
+	                    <th style="width:13%">记录时间</th>
+	                    <th style="width:7%">查看详情</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            </tbody>
+	        </table>
+	    </div>
+    </div>
+     
+ <!-- 重试弹框  start -->
+        <div id="add_dictType" style="display:none;" style="max-height:350px; overflow:auto;">
+        
+	        <label class="control-label"><strong>入参：</strong></label>
+        	<div id="jsonFormat" class="jsonformat-box"></div>
+        	 
+             
+         </div>
+        <!-- 重试弹框  end -->
+ 
+    <div id="footer"></div>
+
+
+<script type="text/javascript" src="common/cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="common/cross/js/cross.ui.js"></script>
+<script type="text/javascript" src="common/widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="common/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="common/widget/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="common/app/js/common.js"></script>
+<script type="text/javascript" src="common/app/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="common/widget/jsonFormat/1.0/js/jsonFormat.min.js"></script>
+<script type="text/javascript" src="common/widget/nicescroll/3.6.0/js/nicescroll.min.js"></script>
+<script type="text/javascript" src="js/urlParameter.js"></script>
+
+<script type="text/javascript">
+	var isBreadcrumb = $_GET['isBreadcrumb']; //值为1时显示面包屑连接
+	var licensekey = "";
+	var token = "";
+	var artLoading = null;
+	var flagVal = 1;//更多条件 组件下标
+	//查询条件
+	var params = {};
+	
+	var pNameArr = new Array();
+	pNameArr["_classname"] = "_classname";
+	pNameArr["_sessionkey"] = "_sessionkey";
+	pNameArr["_appname"] = "_appname";
+	pNameArr["_configkey"] = "_configkey";
+	pNameArr["_clientid"] = "_clientid";
+	pNameArr["content"] = "日志体";
+	
+	var levelArr = new Array();
+	levelArr[""] = "-请选择-";
+	levelArr["DEBUG"] = "DEBUG";
+	levelArr["ERROR"] = "ERROR";
+	levelArr["FATAL"] = "FATAL";
+	levelArr["WARN"] = "WARN";
+	levelArr["INFO"] = "INFO";
+
+	//获取当前系统时间
+	var day = new Date();
+	var dayYear = day.getFullYear();
+	var dayMonth = day.getMonth() + 1 < 10 ? "0" + (day.getMonth() + 1) : day.getMonth() + 1;
+	var dayDate = day.getDate() < 10 ? "0" + day.getDate() : day.getDate();
+	var dayTime = dayYear + "-" + dayMonth + "-" + dayDate + " 00:00:00";
+	
+    $(function(){
+    	//读取cookie
+    	licensekey = $.cookie('lincenKey');
+
+    	token =  $.cookie('token');
+    	//默认显示更多按钮
+    	showMore();
+    	
+    	//设置查询开始时间默认当天
+    	$('#p_startTime').val(dayTime);
+    	
+    	//设置更多查询条件字段下拉框值
+    	$('#pNameFormSelect').formSelect({
+            jsonData:pNameArr,
+        }, null, function(dom,text,value){//点击某个选项
+    		chg(1);
+    	});
+    	
+    	//设置日志等级下拉框值
+    	$('#levelFormSelect').formSelect({
+            jsonData:levelArr,
+        }, null, function(dom,text,value){//点击某个选项
+    	});
+    	
+		//初始化表格
+		initTable();
+		
+		//显示面包屑
+		var html = "";
+    	if (isBreadcrumb != undefined && isBreadcrumb == 1) {
+    		html += "<div class='content-nav clearfix'>";
+    		html += "<div class='fl nav-crumbs'>";
+    		html += "<a href='#'>控制台</a><span>/</span>";
+    		html += "<a href='#'>日志查询</a><span>/</span>";
+    		html += "<a href='#'>自定义日志</a></div></div>";	
+    	}
+    	$("#menuTitle").html(html);
+		
+    	/* //获取底部标签
+		$("#footer").load("footer.html", function(){
+		}); */
+    	
+    });
+    
+    //初始化表格
+    var table = null;
+    function initTable() {
+		table = $('#groupDataTable').DataTable({
+			"bServerSide": true,//是否启用服务器处理数据源，必须sAjaxSource指明数据源位置
+			"bprocessing": true,//是否启用进度显示，进度条等等，对处理大量数据很有用处。
+			"sAjaxSource": jkzl.common.path+"/api/querySliceDiyLogByPager.do",//数据源位置
+	        "aoColumns": [//列设置，表有几列，数组就有几项
+	            {"mDataProp": function(obj){
+	            	if (obj._sign != undefined && obj._sign != null) {
+	 					return "<div style='word-break:break-all;'>"+obj._sign+"</div>";
+	 				}
+	            }},
+                {"mDataProp": function(obj){
+     				if (obj._sessionkey != undefined && obj._sessionkey != null) {
+     					return "<div style='word-break:break-all;'>"+obj._sessionkey+"</div>";
+     				}
+     			}},
+     			{"mDataProp": function(obj){
+     				if (obj._modulename != undefined && obj._modulename != null) {
+     					return "<div style='word-break:break-all;'>"+obj._modulename+"</div>";
+     				}
+     			}},
+	 			{"mDataProp": function(obj){
+	 				if (obj._level != undefined && obj._level != null) {
+	 					return "<div style='word-break:break-all;'>"+obj._level+"</div>";
+	 				}
+	 			}},
+	 			{"mDataProp": function(obj){
+	 				if (obj._classname != undefined && obj._classname != null) {
+	 					return "<div style='word-break:break-all;'>"+obj._classname+'.'+obj._methodname+"</div>";
+	 				}
+	 			}},
+/* 	 			{"mDataProp": function(obj){
+	 				if (obj._methodname != undefined && obj._methodname != null) {
+	 					return "<div style='word-break:break-all;'>"+obj._methodname+"</div>";
+	 				}
+	 			}}, */
+	 			{"mDataProp": function(obj){
+	 				if (obj._inserttime != undefined && obj._inserttime != null) {
+	 					return "<div style='word-break:break-all;'>"+obj._inserttime+"</div>";
+	 				}
+	 			}},
+	 			{"mDataProp": function(obj){
+	 				return  "<a href='javascript:;' id='a1'>查看详情</a>"; 
+	 			}}
+	 		],
+	 		"columnDefs": [{
+	 			sDefaultContent: '',
+				aTargets: [ '_all' ]
+	 		}],
+		    "fnServerData": function (sSource, aoData, fnCallback) {
+		    	aoData.push( { "name": "token", "value":token}); 
+		    	$.ajax({
+		    		"dataType": 'json',
+		    		"type": 'POST',
+		    		"url": sSource,
+			        "data" : aoData, 
+			        "success" : function(data){
+			        	var d = JSON.parse(data.aaData);
+			        	data.aaData = d;
+			        	fnCallback(data);
+			        },
+			        "complete": function (XMLHttpRequest, textStatus){
+			        	artLoading.close();
+						var json = eval("(" + XMLHttpRequest.responseText + ")");
+						if(json.code == 500){
+							ask(json.msg);
+						}
+						if(json.Code != 1){
+							if (json.Code == 999) {
+								ask("每次查询限制每天前10000条，可调整查询条件查询被限制内容。");
+							} else if (json.Code == -1000) {
+								window.parent.parent.location.href = "app/appLogin.html";
+							} else {
+								ask(json.Message);
+							}
+						}
+					}
+		    	});
+		    	
+		    	artLoading=art.dialog({lock: true,	content: '<img src="widget/artDialog/4.1.7/images/loading.gif" class="mr10" />数据加载中，请稍候...', tips:true});
+		     },
+			"fnServerParams": function(aoData) {//多条件查询
+				aoData.push( { "name": "licensekey", "value":licensekey});
+				aoData.push( { "name": "p_appName", "value":$('#p_appName').val()});
+				aoData.push( { "name": "p_moduleName", "value":$('#p_moduleName').val()});
+				aoData.push( { "name": "p_level", "value":$('#p_level').val()});
+				aoData.push( { "name": "p_startTime", "value":$('#p_startTime').val()});
+				aoData.push( { "name": "p_endTime", "value":$('#p_endTime').val()});
+				//拼接更多查询条件		
+				if (JSON.stringify(params) != "{}") {
+					for(key in params){
+						aoData.push( { "name": key, "value":params[key]});
+					}
+				}
+			 },    			      
+			"fnDrawCallback" : function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+				artLoading.close();
+			},
+			"fnCreatedRow" : function(nRow, aData, iDataIndex ){	//创建行得时候的回调函数
+				$(nRow).attr('class','tr-list');
+			}
+		});
+		
+		//点击查询详情
+		$('#groupDataTable').on( 'click', 'a', function () {
+			//得到table对象
+			table=$('#groupDataTable').DataTable();
+			//获取选中行数据
+	       	var data = table.row( $(this).parents('tr') ).data();
+			//获取选中行行数
+			var rowIndex = table.row( $(this).parents('tr') ).data().length;
+			Process(JSON.stringify(data.content),"jsonFormat");
+			
+			if($(this)[0].id=="a1"){
+				var cacheHtml = {};
+		    	var cacheI = 1
+				var str1 = "<table class=\"dv-table\"><tr><td colspan=\"2\" class=\"dv-label\">日志头</td></tr>";
+				var str2 = "<table class=\"dv-table\"><tr><td colspan=\"2\" class=\"dv-label\">日志体</td></tr>";
+				$.each(data,function(i,v){
+						if(i=="content"){
+							if(isJsonObj(v)){
+								$.each(v,function(ii,vv){
+									if(ii=="old_value"||ii=="value"){
+										vv = "<xmp>"+vv+"</xmp>";//XML
+									}
+									var cacheHtmlIndex = "cacheHtml_"+rowIndex+"_"+cacheI;
+									str2 += "<tr><td class=\"dv-label\" style=\"width:100px;\">"+ii+"</td><td id="+cacheHtmlIndex+"></td></tr>";
+									cacheHtml[cacheHtmlIndex] = vv;
+									cacheI++;
+								});	
+							}else{
+								str2 += "<tr><td class=\"dv-label\">"+v+"</td></tr>";
+							}
+					} else{
+						str1 += "<tr><td class=\"dv-label\" style=\"width:100px;\">"+i+"</td><td>"+v+"</td></tr>";
+					}
+				});							
+				str1 += "</table>";
+				str2 += "</table>";
+				var strHtml = "<table><tr><td align=\"center\" valign=\"top\">"+str1+"</td><td align=\"center\" valign=\"top\">"+str2+"</td></tr></table>";
+				strHtml += "<div class='control-group mt5 c-t-center'><a href='javascript:' onclick=\"showDictType('"+data.content+"');\" class='c-btn form-btn c-btn-blue'><i class='iconfont'>&#xe68c;</i>JSON格式化</a></div>"
+				art.dialog({
+					lock : true, 
+					artIcon : 'edit', 
+					opacity : 0.4, 
+					width : 800,
+					height : 420,
+					overflow:true,
+					title : '详细信息', 
+					fixed : false,
+					content : strHtml, 
+					ok : null, 
+					cancel : null, 
+					quickClose : true
+				});
+				
+				//显示日志体对应ID内容
+				for(var c in cacheHtml){
+					$("#"+c).html(cacheHtml[c]);
+			    }
+				
+			}
+		});
+	}
+  //添加应用分类
+    function showDictType(contents){
+   	  var param = JSON.stringify(contents);
+ 	  var content=$('#jsonFormat').get(0);
+ 	  popAddSub= art.dialog({
+         lock: true,
+         artIcon:'add',
+         opacity:0.4,
+         width: 700,
+		 overflow:true,
+         fixed : false,
+         title:'JSON格式化',
+         content: content,
+         ok : null,
+         cancel : null
+      });
+    }
+  	//显示更多查询条件
+    function showMore(flag){
+    	if(flag==1){
+    		$('#showMore').hide();
+    		$('#closeMore').show();
+    		$('#otherQueryId').show();
+    		moreFlg=true;
+    	}else{
+    		$('#showMore').show();
+    		$('#closeMore').hide();
+    		$('#otherQueryId').hide();
+    		moreFlg=false;
+    	}
+    }
+  
+  	//条件查询
+    function query(){
+    	if(moreFlg){
+    		params = {};
+    		for(var k=1;k<=flagVal;k++){
+    			var p_name = "";
+    			var p_value = "";
+    			try {//异常处理，有可能组件删除不存在了
+    				p_name = $.trim($("#p_name_"+k).val());
+    				p_select = $.trim($("#p_select_"+k).val());
+    				p_value = $.trim($("#p_value_"+k).val());
+    				if(p_name == "_linenumber"){
+    					var p_value2 = $.trim($("#p_value_"+k+"_2").val());
+    					if(p_value!="" || p_value2!=""){
+    						p_value += (","+p_value2);
+    					}
+    				}
+    			} catch (e) {
+    				continue;
+    			}
+    			if(p_name!="" && p_value!=""){
+    				var pn = eval("params.DYN_"+p_select+p_name);
+    				if(pn=="undefined" || pn==undefined){
+    					eval("params.DYN_"+p_select+p_name+"=\""+p_value+"\"");
+    				}else{
+    					var a;
+    					if(pn == undefined || pn=="undefined"){
+    						a = new Array();
+    					}else{
+    						a = pn.split("\\|");
+    					}
+    					a.push(p_value);
+    					eval("params.DYN_"+p_select+p_name+" = a.join('|')");
+    				}
+    			}
+    		}
+    	} else {
+    		params = {};
+    	}
+    	
+    	table.ajax.reload();
+    }
+  	
+  	//增加显示更多查询条件
+    function addInput() {
+    	flagVal++;
+    	var inputStr = "<div class='form-layout form-inline' id='queryMore"+flagVal+"'>";
+    	inputStr += "<div class='control-group'>";
+    	inputStr += "<label class='control-label c-t-right'>字段:</label>";
+    	inputStr += "<div class='control-form'>";
+    	inputStr += "<div class='cus-sel cus-sel-w150 cus-sel-h33' id='pNameFormSelect"+flagVal+"'>";
+    	inputStr += "<div class='cus-sel-chosed'>";
+    	inputStr += "<input id='p_name_"+flagVal+"' type='text' class='c-hide'>";
+    	inputStr += "<span class='cus-sel-chosed-txt' data-value=''>-请选择-</span>";
+    	inputStr += "<span class='jselect-icon'></span></div>";
+    	inputStr += "<div class='cus-sel-list c-hide'><ul></ul></div></div>";
+    	
+    	inputStr += "<span>&nbsp;</span>";
+    	inputStr += "<div class='cus-sel cus-sel-w105 cus-sel-h33' id='p_select_"+flagVal+"' data-toggle='formSelect'>";
+    	inputStr += "<div class='cus-sel-chosed'>";
+    	inputStr += "<input type='text' class='c-hide'>";
+    	inputStr += "<span class='cus-sel-chosed-txt' data-value=''>=</span>";
+    	inputStr += "<span class='jselect-icon'></span></div>";
+    	inputStr += "<div class='cus-sel-list c-hide'>";
+    	inputStr += "<ul><li><a href='javascript:;' data-value=''>=</a></li>";
+    	inputStr += "<li><a href='javascript:;' data-value='UNE'>!=</a></li></ul></div></div>";
+    	
+    	inputStr += "<span class='mlr10'>&nbsp;值:&nbsp;</span>";
+    	inputStr += "<input type='text' id='p_value_"+flagVal+"' placeholder='请输入值' class='input-text input-text-w170'>";
+    	
+    	inputStr += "<span id='s_value_"+flagVal+"' class='c-hide'>--";
+    	inputStr += "<input type='text' id='p_value_"+flagVal+"_2' placeholder='' class='input-text input-text-w170'></span></div></div>"
+     	
+    	
+    	inputStr += "<div class='control-group'>";
+    	inputStr += "<a href='javascript:addInput();' class='c-btn form-btn c-btn-blue'><i class='iconfont'>&#xe622;</i></a>";
+    	inputStr += "<span class='mlr5'></span>";
+    	inputStr += "<a href='javascript:removeInput("+flagVal+");' class='c-btn form-btn c-btn-blue'><i class='iconfont'>&#xe626;</i></a></div></div>";
+    	
+    	$("#queryMore").append(inputStr);
+    	//设置字段下拉框
+    	$('#pNameFormSelect'+flagVal).formSelect({
+            jsonData:pNameArr,
+        }, null ,function(dom,text,value){//点击某个选项
+        	chg(flagVal);
+    	});
+    }
+
+    //移除更多查询
+    function removeInput(flagVal) {
+    	$("#queryMore"+flagVal).remove();
+    }
+
+    //是否显示
+    function chg(i){
+    	var record = $('#p_name_'+i).val();
+    	if(record == "_linenumber"){
+    		$('#s_value_'+i).show();
+    	}else{
+    		$('#s_value_'+i).hide();
+    	}
+    }
+    
+    function  isJsonObj(obj){
+    	var isjson = typeof(obj) == "object" 
+    		&& (Object.prototype.toString.call(obj).toLowerCase() == "[object object]" 
+    		|| Object.prototype.toString.call(obj).toLowerCase() == "[object array]")
+    		&& !obj.length; 
+    	var isarray = typeof(obj) == "object" 
+    		&& Object.prototype.toString.call(obj).toLowerCase() == "[object array]"; 
+    	return (isjson||isarray);
+    }
+    
+  	//提示
+    function ask(message){
+    	art.dialog({
+    		lock : true,
+    		artIcon : 'ask',
+    		opacity : 0.4,
+    		width : 250,
+    		title : '提示',
+    		content : message,
+    		ok : function() {
+
+    		}
+    	});
+    }
+    
+</script>
+</body>
+</html>

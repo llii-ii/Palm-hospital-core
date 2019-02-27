@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+.index_welcome_box{color:#fff;width:40%;position:absolute;left:50px;top:20%;}
+.index_welcome_box .name{font-size:48px;padding-bottom:25px;}
+.index_welcome_box p{font-size:14px;line-height:24px;}
+.index_pic_box{width:60%;margin-left:40%;height:100%;padding-top:15%;position:relative;}
+.index_pic_box .pic{width:201px;height:218px;margin-left:20px;position:absolute;}
+.index_pic_box .pic.min_w{width:30.33%;height:auto;}
+.index_pic_box .pic img{width:100%;height:100%;}
+.index_pic_box .pic.min_w.p_01{left:0;}
+.index_pic_box .pic.min_w.p_02{left:33.33%;}
+.index_pic_box .pic.min_w.p_03{left:66.33%;}
+.index_pic_box .pic.p_01{left:0;top:30%;}
+.index_pic_box .pic.p_02{left:221px;top:30%;}
+.index_pic_box .pic.p_03{left:442px;top:30%;}

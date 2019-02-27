@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>账单明细</title>
+    <link rel="stylesheet" href="../cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../css/page.css" type="text/css" />
+</head>
+<body>
+<div>
+	<div class="comtop"><i class="cicon icon-duizhang"></i>对账管理</div>
+    <div class="ptb20 plr25">
+        <div class="tabs tabs-four">
+            <div class="tabs-hd clearfix">
+                <a href="对账管理-每日账单.html"><span>每日账单</span></a>
+                <a href="对账管理-账单明细.html"><span>账单明细</span></a>
+                <a href="对账管理-单笔查询.html" class="curr"><span>单笔查询</span></a>
+                <a href="对账管理-财务简报.html"><span>财务简报</span></a>
+            </div>
+            <div class="tabs-bd p30">
+                <div class="form-layout form-inline">
+                    <div class="control-group">
+                        <label class="control-label mr10">订单类型</label>
+                        <div class="control-form">
+                            <div class="form-select">
+                                <select class="select select-w125">
+                                    <option>-请选择-</option>
+                                    <option>医院his</option>
+                                </select>
+                            </div>
+                            <input type="text" placeholder="请输入订单号" class="input-text input-text-w200 ml10">
+                        </div>
+                    </div>
+                    <a href="#" class="c-btn c-btn-gray">查询</a>
+                </div>
+                <div>
+                    <table id="example" class="cell-border hover c-t-center c-f14" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>交易时间</th>
+                                <th>业务类型</th>
+                                <th>业务内容</th>
+                                <th>业务状态</th>
+                                <th>应收款</th>
+                                <th>收款状态</th>
+                                <th>已收款</th>
+                                <th>支付渠道</th>
+                                <th>支付终端</th>
+                                <th>财务核验</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HS8282</td>
+                                <td>2016-12-29 13:43</td>
+                                <td>住院</td>
+                                <td>预交金</td>
+                                <td><span class="c-4dcd70">已完成</span></td>
+                                <td>100.00</td>
+                                <td><span class="c-4dcd70">已收款</span></td>
+                                <td>100.00</td>
+                                <td>支付宝</td>
+                                <td>MINI设备</td>
+                                <td><span class="c-4dcd70">正常</span></td>
+                                <td><a href="对账管理-账单明细-详细.html" class="alinks-unline alinks-blue mlr5">详情</a></td>
+                            </tr>
+                            <tr>
+                                <td>HS8282</td>
+                                <td>2016-12-29 13:43</td>
+                                <td>住院</td>
+                                <td>预交金</td>
+                                <td><span class="c-4dcd70">已完成</span></td>
+                                <td>100.00</td>
+                                <td><span class="c-4dcd70">已收款</span></td>
+                                <td>100.00</td>
+                                <td>支付宝</td>
+                                <td>MINI设备</td>
+                                <td><span class="c-4dcd70">正常</span></td>
+                                <td><a href="对账管理-账单明细-短款.html" class="alinks-unline alinks-blue mlr5">详情</a></td>
+                            </tr>
+                            <tr>
+                                <td>HS8282</td>
+                                <td>2016-12-29 13:43</td>
+                                <td>住院</td>
+                                <td>预交金</td>
+                                <td><span class="c-4dcd70">已完成</span></td>
+                                <td>100.00</td>
+                                <td><span class="c-4dcd70">已收款</span></td>
+                                <td>100.00</td>
+                                <td>支付宝</td>
+                                <td>MINI设备</td>
+                                <td><span class="c-4dcd70">正常</span></td>
+                                <td><a href="对账管理-账单明细-长款.html" class="alinks-unline alinks-blue mlr5">详情</a><a href="javascript:Refund();" class="alinks-unline alinks-blue mlr5">退款</a></td>
+                            </tr>
+                            <tr>
+                                <td>HS8282</td>
+                                <td>2016-12-29 13:43</td>
+                                <td>住院</td>
+                                <td>预交金</td>
+                                <td><span class="c-f00">已关闭</span></td>
+                                <td>100.00</td>
+                                <td><span class="c-4dcd70">已收款</span></td>
+                                <td>100.00</td>
+                                <td>支付宝</td>
+                                <td>MINI设备</td>
+                                <td><span class="c-f00">异常</span></td>
+                                <td><a href="对账管理-账单明细-退款订单.html" class="alinks-unline alinks-blue mlr5">详情</a><a href="javascript:Refund();" class="alinks-unline alinks-blue mlr5">退款</a></td>
+                            </tr>
+                            <tr>
+                                <td>HS8282</td>
+                                <td>2016-12-29 13:43</td>
+                                <td>住院</td>
+                                <td>预交金</td>
+                                <td><span class="c-f00">已关闭</span></td>
+                                <td>100.00</td>
+                                <td><span class="c-4dcd70">已收款</span></td>
+                                <td>100.00</td>
+                                <td>支付宝</td>
+                                <td>MINI设备</td>
+                                <td>已退款</td>
+                                <td><a href="对账管理-账单明细-退款订单.html" class="alinks-unline alinks-blue mlr5">详情</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+<script type="text/javascript" src="../cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="../cross/js/cross.ui.js"></script>
+<link rel="stylesheet" href="../widget/datetimepicker/2.1.9/css/jquery.datetimepicker.min.css" type="text/css" />
+<script type="text/javascript" src="../widget/datetimepicker/2.1.9/js/jquery.datetimepicker.min.js"></script>
+<link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.min.css" type="text/css" />
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.min.js"></script>
+<link rel="stylesheet" href="../widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+<script type="text/javascript" src="../widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#date_timepicker_start').datetimepicker({
+		format:'Y-m-d',
+		onShow:function( ct ){
+			this.setOptions({
+				maxDate:$('#date_timepicker_end').val()?$('#date_timepicker_end').val():false
+			})
+		},
+		timepicker:false
+	});
+	$('#date_timepicker_end').datetimepicker({
+		format:'Y-m-d',
+		onShow:function( ct ){
+			this.setOptions({
+				minDate:$('#date_timepicker_start').val()?$('#date_timepicker_start').val():false
+			})
+		},
+		timepicker:false
+	});
+	
+	//表格
+	$('#example').DataTable();
+});
+
+function Refund(){
+	art.dialog({
+		lock: true,
+		artIcon:'edit',
+		opacity:0.4,
+		width: 400,
+		title:'提示',
+		content: '<span class="c-333 c-f14">该订单是否已经人工核实确认可以退款？</span>',
+		ok: function () {
+			
+		},
+		cancel: true
+	});
+}
+</script>
+</body>
+</html>

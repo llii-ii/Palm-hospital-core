@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>autoSignIn</title>
+</head>
+<body>
+<div id = 'sign'>
+	
+</div>
+</body>
+<script src="js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+<script type="text/javascript" src="../commons/js/common.js"></script>
+<script type="text/javascript">
+
+	var hash = window.location.hash;
+	if(hash.indexOf("#access_token")>=0) {
+	    var tokenString = hash.substring(1,hash.indexOf("&"));
+	
+		var token = tokenString.substr(hash.indexOf("="));
+	    var clientId = Commonjs.getUrlParam("clientId");
+	    $.ajax({
+			url: "../online/validToken.do",
+			type:'POST',
+			data: {
+					"clientId" : clientId,
+					"accessToken" : token
+				  },
+			//dataType: 'json',
+			success: function(data){
+				if(data == "success"){
+					document.location.href='index.html';
+				}else if(data == "fail"){
+					$("#sign").html('自动登录失败!');
+				}
+				},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	    
+	} else {
+	    $("#sign").html('参数有误，自动登录失败!');
+	}
+</script>
+</html>

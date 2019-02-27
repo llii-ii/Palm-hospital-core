@@ -1,0 +1,10 @@
+{ "index" : { "_index" : "test", "_id" : "171b" } }
+{ "b" : "333333333" }
+{ "create" : { "_index" : "test", "_id" : "172" } }
+{ "a" : "create" }
+{ "index" : { "_index" : "test"} }
+{ "b" : "555555555" }
+{ "index" : { "_index" : "test",  "_id" : "Ajsfgioewqutgioerjmnwuoeitu54iojtyiorejgioru85276-84021u94jfiojsefoherut427u4hZ" } }
+{ "a" : "3w5345" }
+{ "create" : { "_index" : "test",  "_id" : "175aaa" } }
+{ "b" : "create" }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>创建问卷</title>
+     	<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+    	<script type="text/javascript" src="./js/myd-wjtj.js"></script>
+		<script src="./highcharts/js/highcharts.js"></script>
+		<script src="./highcharts/js/exporting.js"></script>
+		<script src="./highcharts/js/highcharts-3d.js"></script>
+	</head>
+    <body>
+      <div class="main-tit" style="height: 34px;"><h2>结果统计
+      <a href="javascript:;" class="btn  btn-gray fr" id="backBtn" onclick="window.history.back(-1)" style="margin: 10px;"><i class="icon icon-back"></i>返回</a>
+      </h2>         </div>
+      <div class="p20">
+          <div class="stat-tit" id='title'></div>
+                    <div class="mt20" id='divCount'>
+              <div class="relative mb10 f12">共计 <span class="c-org" id='allCount'></span> 份数据
+              <a   class="btn btn-gray btn-w65 ml15" value="导出" onclick="downLoadFile(this)">导出</a>
+              <a href="javascript:;" class="absolute" onclick="detailMsg()" style="right:0;top:0">答案详情</a></div>
+             
+             <div id="chartDiv"></div>
+           		
+     	 	<div id="a1"></div>
+              </div>
+          </div>
+          
+      	 
+	  	<div class="mask" style="display: none"></div>
+		<div class="popbox popbox-w600" id="setting3"  style="display: none" >
+		    <div class="pop-header">设置<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting3')"></a></div>
+		    <input type="hidden" id='setting3_itemCount' />
+		    <input type="hidden" id='setting3_questionID' />
+		  	<input type="hidden" id='setting3_allFlowsItemIds' />
+		    <div class="pop-con-box">
+		        <div class="pop-con">
+                     <table class="tb tb-border" width="100%" id='otherAnswer'>
+                         <tr >
+                             <th style="background-color: #D8D8D8" id='otherAnswerTitle'></th>
+                         </tr>
+                     </table>
+		        </div>
+		    </div>
+		    <div class="pop-footer t-right">
+			    <input type="button" class="btn btn-gray btn-w100" value="关闭" onclick="closepop('setting3')"/>
+		    </div>
+		</div>
+          
+    </body>
+    <script type="text/javascript">
+    	/*弹窗事件*/
+		function showpop(id){
+		    $('#'+id).prev('.mask').show().end().fadeIn();
+		}
+		
+		function closepop(id){
+		    $('#'+id).prev('.mask').hide().end().fadeOut();
+		}
+		
+		/* 弹窗弹出时设置弹窗垂直居中 */
+		function setPopAlign(id){
+		    var winClientHeight= $(window).height();
+		    var popboxCon=$("#"+id).find(".pop-con-box").eq(0);
+		    var popboxConHeight=$("#"+id).find(".pop-con").eq(0).outerHeight();
+		    var popboxHeader=$("#"+id).find(".pop-header").eq(0);
+		    var popboxHeaderHeight=popboxHeader.outerHeight();
+		    var popboxFooter=$("#"+id).find(".pop-footer").eq(0);
+		    var popboxFooterHeight=popboxFooter.outerHeight();
+		
+		    var popboxHeight=popboxConHeight+popboxHeaderHeight+popboxFooterHeight;
+		
+		    if(popboxHeight>=winClientHeight) {
+		        popboxCon.height(winClientHeight-popboxHeaderHeight-popboxFooterHeight).css({"overflow-y":"auto"}).find(".pop-con").css({paddingRight:0}); 
+		        $("#"+id).css({marginTop:"-"+winClientHeight/2+"px"});
+		    }
+		    else {
+		        popboxCon.css({height:"auto","overflow-y":""}).find(".pop-con").css({paddingRight:20}); 
+		        // popboxHeight=popboxHeight; 
+		        // alert(popboxHeight);
+		        $("#"+id).css({marginTop:"-"+popboxHeight/2+"px"});
+		    }
+		}
+	 	
+    </script>
+</html>

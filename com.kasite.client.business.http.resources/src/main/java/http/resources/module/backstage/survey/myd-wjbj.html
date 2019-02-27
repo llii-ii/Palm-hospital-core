@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>问卷编辑</title>
+      	<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+    	<script type="text/javascript" src="./js/myd-wjbj.js"></script>
+    </head>
+    <body>
+		<div class="main-tit"><h2>问卷编辑</h2><div class="absolute myd-step-1" style="right:20px; top:20px;"></div></div>
+	    <div class="add-ctrl" id="addCtrl">
+	        <ul class="clearfix">
+	            <li onclick='javascript:add_tx(1);'><i class="icon icon-add"></i>单选题</li>
+	            <li onclick='javascript:add_tx(2);'><i class="icon icon-add"></i>多选题</li>
+	            <li onclick='javascript:add_tx(3);'><i class="icon icon-add"></i>填空题</li>
+	            <li onclick='javascript:add_tx(4);'><i class="icon icon-add"></i>矩阵单选题</li>
+	            <li onclick='javascript:add_tx(5);'><i class="icon icon-add"></i>矩阵多选题</li>
+	        </ul>
+	    </div>
+	    <div class="qa-wrap">
+	        <div class="qa-tit">
+	            <div class="qa-tit-txt" id='SubjectTitle' onblur="updateSubjectTitle(this)">&nbsp;</div>
+	            <div class="qa-edit-tools">
+	                <i class="icon icon-edit"></i>
+	            </div>
+	        </div>
+	        <div class="qa-desc">
+	            <div class="qa-desc-txt" id='BeginIntro' onblur="updateBeginIntro(this)"></div>
+	            <div class="qa-edit-tools">
+	                <i class="icon icon-edit"></i>
+	            </div>
+	        </div>
+	      
+	      <div id='areaDiv'>
+	      
+	      </div>
+	      
+ 	<div class="mask" style="display: none"></div>
+	<div class="popbox popbox-w600" id="setting1"  style="top:30%;display: none" >
+	    <div class="pop-header">设置<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting1')"></a></div>
+	     <input type="hidden" id='setting1_questionID' />
+	    <div class="pop-con-box">
+	        <div class="pop-con">
+	            <div class="f12"><label class="valign-m-chk">
+	            	<input id='setting1_dxt_noAnswer' type="checkbox" class="chkbox" />该题可跳过不回答</label>
+	            </div>
+	        </div>
+	    </div>
+	     <div class="pop-footer t-right"><input type="button" class="btn btn-w100 mr10" value="保存" onclick="saveNoAnswerSet()"/>
+	    	<input type="button" class="btn btn-gray btn-w100" value="取消" onclick="closepop('setting1')" />
+	    </div>
+	</div>
+	
+	<div class="mask" style="display: none"></div> 
+	<div class="popbox popbox-w600" id="setting2" style="top:30%;display: none">
+	    <div class="pop-header">设置<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting2')"></a></div>
+	  	<input type="hidden" id='setting2_itemCount' />
+	    <input type="hidden" id='setting2_questionID' />
+	    <input type="hidden" id='setting2_count' />
+	    <div class="pop-con-box">
+	        <div class="pop-con">
+	            <div class="f12"><label class="valign-m-chk">
+	            	<input id='setting2_dxt_noAnswer' type="checkbox" class="chkbox" />该题可跳过不回答</label></div>
+	            <div class="pop-divider"></div>
+	            <div class="f12">最少选<input onkeyup="this.value=this.value.replace(/\D/g,'')" 
+	            		onafterpaste="this.value=this.value.replace(/\D/g,'')"
+	            	 id="setting2_les" type="text" class="input-text input-text-s ml5 mr5" />项</div>
+	            <div class="mt10 f12">最多选<input onkeyup="this.value=this.value.replace(/\D/g,'')" 
+	            	onafterpaste="this.value=this.value.replace(/\D/g,'')" id="setting2_mor" type="text" 
+	            	class="input-text input-text-s ml5 mr5" />项</div>
+	        </div>
+	    </div>
+	    <div class="pop-footer t-right"><input type="button" class="btn btn-w100 mr10" value="保存" onclick="saveMoreAnswerSet()"/>
+	    <input type="button" class="btn btn-gray btn-w100" value="取消" onclick="closepop('setting2')" /></div>
+	</div>
+	
+	<!-- 单选题 -->
+ 	<div class="mask" style="display: none"></div>
+	<div class="popbox popbox-w600" id="setting3"  style="top:30%;display: none" >
+	    <div class="pop-header">设置<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting3')"></a></div>
+	    <input type="hidden" id='setting3_itemCount' />
+	    <input type="hidden" id='setting3_questionID' />
+	  	<input type="hidden" id='setting3_allFlowsItemIds' />
+	    <div class="pop-con-box">
+	        <div class="pop-con">
+	            <div class="f12"><label class="valign-m-chk">
+	            	<input type="checkbox" class="chkbox" id='setting3_dxt_noAnswer' />该题可跳过不回答</label></div>
+	            <div class="pop-divider"></div>
+	            <div class="c-222">跳转条件</div>
+	            <div id='dxtFlowDiv' style="height: auto;">
+	            	<div class="f12 mt15" id='selectModel' style="display: none">
+		            	如果本题选项中<select name="dxtSelect" id="" class="inp-sel ml10 mr10" style="width:120px;">
+		            		<option value=""></option>
+		            	</select>则跳转到
+		            	<select name="dxtSelectLink" id="" class="inp-sel ml10 mr10" style="width:120px;">
+		            		<option value=""></option>
+		            	</select>
+		            	<i class="icon icon-del" onclick="delDxtSelect(this)"></i>
+	         		</div>
+	            </div>
+	            <div class="mt15">
+	                <a href="javascript:;" class="btn" onclick="addDxtQuestionFlowSelect()"><i class="icon icon-add-w"></i>添加</a>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="pop-footer t-right">
+		    <input type="button" class="btn btn-w100 mr10" value="保存" onclick="saveDxtFlow()" />
+		    <input type="button" class="btn btn-gray btn-w100" value="取消" onclick="closepop('setting3')"/>
+	    </div>
+	</div>
+	
+		
+		
+       <div class="qa-ending">
+           <div class="qa-ending-txt" id='EndingIntro' onblur="updateEndingIntro(this)"></div>
+           <div class="qa-edit-tools">
+               <i class="icon icon-edit"></i>
+           </div>
+       </div>
+       <div class="mt30">
+           <a href="javascript:;" onclick="nextEdit()" class="btn mr20">下一步</a><a href="javascript:;" onclick="showModel()" class="btn btn-gray">问卷预览</a>
+<!--            <a href="javascript:;" class="btn btn-w-auto btn-gray" id="backBtn" onclick="window.history.back(-1)" style="margin: 10px;"><i class="icon icon-back"></i>返回</a>-->
+       </div>
+   </div>
+	 <a name="maodian" id="maodian"></a>
+	
+	
+<script type="text/javascript">
+/*编辑按钮事件*/
+$('.icon-edit').live('click',function(){
+    if($(this).closest('.qa-tit').length) $(this).closest('.qa-tit').addClass('editable').find('.qa-tit-txt').attr('contenteditable',true);
+    if($(this).closest('.qa-desc').length) $(this).closest('.qa-desc').addClass('editable').find('.qa-desc-txt').attr('contenteditable',true);
+    if($(this).closest('.qa-ending').length) $(this).closest('.qa-ending').addClass('editable').find('.qa-ending-txt').attr('contenteditable',true);
+    if($(this).closest('.qa-item-wrap').length && !($(this).closest('.qa-item-wrap').hasClass('juzhen'))) $(this).closest('.qa-item-wrap').addClass('editable').find('.q-tit-txt').attr('contenteditable',true).end().find('.radio-opt-txt').attr('contenteditable',true);
+})
+/*弹窗事件*/
+function showpop(id){
+    $('#'+id).prev('.mask').show().end().fadeIn();
+}
+
+function closepop(id){
+    $('#'+id).prev('.mask').hide().end().fadeOut();
+}
+
+/* 弹窗弹出时设置弹窗垂直居中 */
+function setPopAlign(id){
+    var winClientHeight= $(window).height();
+    var popboxCon=$("#"+id).find(".pop-con-box").eq(0);
+    var popboxConHeight=$("#"+id).find(".pop-con").eq(0).outerHeight();
+    var popboxHeader=$("#"+id).find(".pop-header").eq(0);
+    var popboxHeaderHeight=popboxHeader.outerHeight();
+    var popboxFooter=$("#"+id).find(".pop-footer").eq(0);
+    var popboxFooterHeight=popboxFooter.outerHeight();
+
+    var popboxHeight=popboxConHeight+popboxHeaderHeight+popboxFooterHeight;
+
+    if(popboxHeight>=winClientHeight) {
+        popboxCon.height(winClientHeight-popboxHeaderHeight-popboxFooterHeight).css({"overflow-y":"auto"}).find(".pop-con").css({paddingRight:0}); 
+        $("#"+id).css({marginTop:"-"+winClientHeight/2+"px"});
+    }
+    else {
+        popboxCon.css({height:"auto","overflow-y":""}).find(".pop-con").css({paddingRight:20}); 
+        // popboxHeight=popboxHeight; 
+        // alert(popboxHeight);
+        $("#"+id).css({marginTop:"-"+popboxHeight/2+"px"});
+    }
+}
+
+
+/*滚动时设置添加问题栏浮动*/
+$(function(){
+    var addCtrl = $('#addCtrl'),
+        addCtrlLeft = addCtrl.offset().left,
+        addCtrlTop = addCtrl.offset().top,
+        addCtrlWidth = addCtrl.outerWidth(),
+        addCtrlHeight = addCtrl.outerHeight();
+    $(window).scroll(function(){
+        if($(this).scrollTop()>=addCtrlTop) {
+            addCtrl.css({'position':'fixed',left:addCtrlLeft,top:0,width:addCtrlWidth,zIndex:2});
+            $('.qa-wrap').css({marginTop:addCtrlHeight});
+        }
+        else {
+            addCtrl.css({'position':'static',width:'auto'});
+             $('.qa-wrap').css({marginTop:0});
+        }
+    })
+})
+</script>
+    </body>
+</html>

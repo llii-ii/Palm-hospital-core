@@ -1,0 +1,470 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>mini扫码付</title>
+	<script type="text/javascript" src="../../../common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+</head>
+
+<body>
+<div class="c-main pb15" style="border:1px solid #00F">
+	<div>第三方登录</div>
+	<div>渠道ID（clientId）:<input type="text"  id="clientId" value="minipay" width="200px" /></div>
+	<div>渠道ConfigKey（ConfigKey）:<input type="text" id="configKey" value="WX1000001"  /></div>
+	<div>机构代码（orgCode）:<input type="text" id="orgCode" value="59" /></div>
+	<div>加密串（encrypt）:<input type="text" id="encrypt" value="S0FTSVRFLUNMSUVOVC1BTkRST0lELU1JTklQYXkuNTksNGE3NWEzZDdmNyw1OSwyMDE4LTA5LTEyIDIwOjA3OjA1" /></div>
+	<div>应用ID（appId）:<input type="text" id="appId" value="KASITE-CLIENT-ANDROID-MINIPay.59" /></div>
+	<!-- {clientId}/{configKey}/{orgCode}/getToken2.do -->
+	<div><button onClick="getToken()">登录获取TOKEN</button></div>
+	<div>获取到的结果:<div id="resultGetToken"></div></div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><div><h3>校验实体卡</h3></div>
+		<div id="checkEntityCard">
+			<div>卡号（CardNo）:<input type="text"  id="CardNo" value="A2131091FFFF8115FFFFFFFFFFFFFFFFFFFFFFFFFFD27600000400FFFFFFFFFF" width="200px" /></div>
+			<div><input type="button" value="校验实体卡" onClick="checkEntityCard()"/></div>
+			<div>获取到的结果:<div id="resultCheckEntityCard"></div></div>
+		</div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><div><h3>生成支付二维码</h3></div>
+		<div id="createPayQRCode">
+			<div>卡号类型（CardType）:<input type="text"  id="CardType" value="14" width="200px" /></div>
+			<div>卡号（CardNo）:<input type="text"  id="CardNo" value="1741325" width="200px" /></div>
+			<div>业务类型（ServiceId）:<input type="text"  id="ServiceId" value="007" width="200px" /></div>
+			<div>扫码时是否自动绑定用户（AutoBindUser：1自动绑定，0 非自动绑定）:<input type="text"  id="AutoBindUser" value="1" width="200px" /></div>
+			<div>充值类型（Subject）:<input type="text"  id="Subject" value="门诊充值" width="200px" /></div>
+			<div>设备码（UsageType）:<input type="text"  id="UsageType" value="WD" width="200px" /></div>
+			<div>设备类型（EqptType）:<input type="text"  id="EqptType" value="2" width="200px" /></div>
+			<div><input type="button" value="生成支付二维码" onClick="createPayQRCode('createPayQRCode','resultCreatePayQRCode','CreateWristBandCodePay')"/></div>
+			<div>获取到的结果:<div id="resultCreatePayQRCode"></div></div>
+		</div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><div><h3>mini 生成二维码</h3></div>
+		<div id="minipay">
+			<div>卡号类型（CardType）:<input type="text"  id="CardType" value="1" width="200px" /></div>
+			<div>卡号（CardNo）:<input type="text"  id="CardNo" value="A13232028" width="200px" /></div>
+			<div>用户名（MemberName）:<input type="text"  id="MemberName" value="测试用户1" width="200px" /></div>
+			<div>金额（TotalFee）:<input type="text"  id="TotalFee" value="1" width="200px" /></div>
+			<div>充值类型（Subject）:<input type="text"  id="Subject" value="门诊充值" width="200px" /></div>
+			<div>业务类型（ServiceId）:<input type="text"  id="ServiceId" value="006" width="200px" /></div>
+			<div>是否线上付费（IsOnlinePay）:<input type="text"  id="IsOnlinePay" value="1" width="200px" /></div>
+			<div>设备类型（EqptType）:<input type="text"  id="EqptType" value="2" width="200px" /></div>
+			<div>操作人ID（OperatorId）:<input type="text"  id="OperatorId" value="00000904ZT123175000008" width="200px" /></div>
+			<div>操作人名称（OperatorName）:<input type="text"  id="OperatorName" value="KS8123" width="200px" /></div>
+			<div>设备码（UsageType）:<input type="text"  id="UsageType" value="MINICASHIER" width="200px" /></div>
+			<div><input type="button" value="获取mini付二维码" onClick="getQrCode()"/></div>
+			<div>获取到的结果:<div id="resultMiniPay"></div></div>
+		</div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><h3>当面付测试</h3></div>
+	<div>请先调用获取TOKEN后再使用此功能</div>
+	<div style="border:1px solid #00F;margin-left: 10px;">
+		<div>his订单号（HisOrderId）:<input type="text" id="hisOrderId2" value="" style="width: 270px;" /><input type="button" value="自动生成UUID" onClick="genUUID('hisOrderId2')"/></div>
+		<div>扫码金额（TotalFee）:<input type="text" id="totalFee2" value="1" />(分)</div>
+		<div>订单标题（Subject）:<input type="text" id="subject2" value="测试当面付"  /></div>
+		<div>订单描述（OrderMemo）:<input type="text" id="orderMemo2" value="测试当面付" /></div>
+		<div>设备信息（DeviceInfo）:<input type="text" id="deviceInfo2" value="测试扫码枪" /></div>
+		<div>扫码二维码（AuthCode）:<input type="text" id="authCode2" value="" style="width: 270px;"/></div>
+		<div>卡号（CardNo）:<input type="text" id="cardNo2" value="test123" /></div>
+		<div>卡类型（CardType）:<input type="text" id="cardType2" value="1" /></div>
+		<div>操作人（OperatorId）:<input type="text" id="operatorId2" value="testOperatorId" /></div>
+		<div>操作人姓名（OperatorName）:<input type="text" id="operatorName2" value="testOperatorName" /></div>
+		<div>业务类型（ServiceId）:<input type="text" id="serviceId2" value="006" /></div>
+		<div>设备类型（EqptType）:<input type="text" id="eqptType2" value="5" readonly="readonly" /></div>
+		<div><input type="button" value="扫码收款" onClick="sweepCodePay()"/></div>
+		<div>获取到的结果:<div id="sweepCodePayResult"></div></div>
+	</div>
+	<div style="border:1px solid #00F;margin-left: 10px;margin-top: 10px;">
+		<div>订单号（OrderId）:<input type="text" id="orderId2" value="" style="width: 270px;" /></div>
+		<div><input type="button" value="查询当面扫码结果" onClick="queryOrderState();"/></div>
+		<div>获取到的结果:<div id="queryOrderStateResult"></div></div>
+	</div>
+	<div style="border:1px solid #00F;margin-left: 10px;margin-top: 10px;">
+		<div>订单号（OrderId）:<input type="text" id="revokeOrderId2" value="" style="width: 270px;" /></div>
+		<div>操作人（OperatorId）:<input type="text" id="revokeOperatorId2" value="testOperatorId" /></div>
+		<div>操作人姓名（OperatorName）:<input type="text" id="revokeOperatorName2" value="testOperatorName" /></div>
+		<div><input type="button" value="撤销当面付订单" onClick="revokeOrder();"/></div>
+		<div>获取到的结果:<div id="revokeOrderResult"></div></div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><h3>卡面付测试</h3></div>
+	<div>请先调用获取TOKEN后再使用此功能</div>
+	<div style="border:1px solid #00F;margin-left: 10px;">
+		<div>卡类型（CardType）:<input type="text" id="cardPayCardType" value="1" readonly="readonly"/></div>
+		<div>卡类型名称（CardTypeName）:<input type="text" id="cardPayCardTypeName" value="就诊卡" /></div>
+		<div>卡号（CardNo）:<input type="text" id="cardPayCardNo" value="" /></div>
+		<div>姓名（Name）:<input type="text" id="cardPayName" value="" /></div>
+		<div>手机号（Mobile）:<input type="text" id="cardPayMobile" value="" /></div>
+		<div>性别（Sex）:<input type="text" id="cardPaySex" value="1" /></div>
+		<div>身份证（IdCardNo）:<input type="text" id="cardPayIdCardNo" value="" /></div>
+		<div>出生日期（BirthDate）:<input type="text" id="cardPayBirthDate" value="" /></div>
+		<div>地址（Address）:<input type="text" id="cardPayAddress" value="" /></div>
+		<div>医保卡（McardNo）:<input type="text" id="cardPayMcardNo" value="" /></div>
+		<div>出生编号（BirthNumber）:<input type="text" id="cardPayBirthNumber" value="" /></div>
+		<div>是否婴儿（IsChildren）:<input type="text" id="cardPayIsChildren" value="0" /></div>
+		<div>二维码用途（UsageType）:<input type="text" id="cardPayUsageType" value="4" readonly="readonly"/></div>
+		<div>HIS就诊人唯一ID（HisMemberId）:<input type="text" id="cardPayHisMemberId" value="" /></div>
+		<div><input type="button" value="生成卡面付二维码" onClick="createCardPayQRCode();"/></div>
+		<div>获取到的结果:<div id="createCardPayQRCodeResult"></div></div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><h3>腕带付测试</h3></div>
+	<div>请先调用获取TOKEN后再使用此功能</div>
+	<div style="border:1px solid #00F;margin-left: 10px;">
+		<div>卡类型（CardType）:<input type="text" id="wristbandPayCardType" value="14" readonly="readonly"/></div>
+		<div>卡类型名称（CardTypeName）:<input type="text" id="wristbandPayCardTypeName" value="住院号" /></div>
+		<div>卡号（CardNo）:<input type="text" id="wristbandPayCardNo" value="C123456" /></div>
+		<div>姓名（Name）:<input type="text" id="wristbandPayName" value="测试病人" /></div>
+		<div>手机号（Mobile）:<input type="text" id="wristbandPayMobile" value="" /></div>
+		<div>项目名称（Subject）:<input type="text" id="subject" value="1" /></div>
+		<div>性别（Sex）:<input type="text" id="wristbandPaySex" value="1" /></div>
+		<div>身份证（IdCardNo）:<input type="text" id="wristbandPayIdCardNo" value="350421198808050028" /></div>
+		<div>出生日期（BirthDate）:<input type="text" id="wristbandPayBirthDate" value="1988-08-05" /></div>
+		<div>地址（Address）:<input type="text" id="wristbandPayAddress" value="" /></div>
+		<div>医保卡（McardNo）:<input type="text" id="wristbandPayMcardNo" value="" /></div>
+		<div>出生编号（BirthNumber）:<input type="text" id="wristbandPayBirthNumber" value="" /></div>
+		<div>是否婴儿（IsChildren）:<input type="text" id="wristbandPayIsChildren" value="0" /></div>
+		<div>二维码用途（UsageType）:<input type="text" id="wristbandPayUsageType" value="2" readonly="readonly"/></div>
+		<div>HIS就诊人唯一ID（HisMemberId）:<input type="text" id="wristbandPayHisMemberId" value="" /></div>
+		<div><input type="button" value="生成腕带付二维码" onClick="createWristbandPayQRCode();"/></div>
+		<div>获取到的结果:<div id="createWristbandPayQRCodeResult"></div></div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><h3>处方付测试</h3></div>
+	<div>请先调用获取TOKEN后再使用此功能</div>
+	<div style="border:1px solid #00F;margin-left: 10px;">
+		<div>患者姓名（MemberName）:<input type="text" id="prescPayMemberName" value="测试病人" /></div>
+		<div>处方医生（DoctorName）:<input type="text" id="prescPayDoctorName" value="测试医生" /></div>
+		<div>患者身份证（IdCardNo）:<input type="text" id="prescPayIdCardNo" value="350421198808050028" /></div>
+		<div>his订单号（HisOrderId）:<input type="text" id="prescHisOrderId" value="" style="width: 270px;" /><input type="button" value="自动生成UUID" onClick="genUUID('prescHisOrderId')"/></div>
+		<div>处方号（PrescNo）:<input type="text" id="prescPayPrescNo" value="" /></div>
+		<div>患者卡号（CardNo）:<input type="text" id="prescPayCardNo" value="" /></div>
+		<div>患者卡类型（CardType）:<input type="text" id="prescPayCardType" value="1" readonly="readonly"/></div>
+		<div><input type="button" value="生成处方付二维" onClick="createPrescPayCode();"/></div>
+		<div>获取到的结果:<div id="createPrescPayCodeResult"></div></div>
+	</div>
+</div>
+<br>
+<div style="border:1px solid #00F">
+	<div><h3>订单重试（冲正订单）<h3></div>
+	<div style="color:red;">说明：请谨慎操作。如果有上线对账平台，请使用对账平台的功能。<br>
+		 要求：该订单支付成功；需要调用HIS；P_MERCHANT_NOTIFY表存在对应的调用失败的数据；
+	</div>
+	<div>全流程订单id（orderId）:<input type="text" id="orderId"/></div>
+	<div><button onClick="orderCallBackRery()">冲正</button></div>
+	<div>订单重试结果:<div id="orderCallBackReryResult"></div></div>
+	<div><button onClick="queryOrderDetail()">查询订单详情</button></div>
+	<div>查询订单详情结果:<div id="queryOrderDetailResult"></div></div>
+</div>
+<script type="text/javascript">
+
+$(function(){
+	$("#isShowCall").hide();
+});
+function checkEntityCard(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	var inputs = $("#checkEntityCard").find("input");
+	$.each(inputs,function(index,val){
+		if(val.id.length >0 ){
+			apiData[val.id] = val.value;		
+		}
+	});
+	param.api = 'CheckEntityCard';
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	Commonjs.ajax('../../../wsgw/basic/CheckEntityCard/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			$("#resultCheckEntityCard").html(Commonjs.jsonToString(jsons));
+		} else {
+			myLayer.alert("不存在需要支付的订单！", 3000);
+		}
+		myLayer.clear();
+	});
+	
+}
+
+function createPayQRCode(fId,rId,api){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	var inputs = $("#"+fId).find("input");
+	$.each(inputs,function(index,val){
+		if(val.id.length >0 ){
+			apiData[val.id] = val.value;		
+		}
+	});
+	param.api = api;
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	Commonjs.ajax('../../../wsgw/smartPay/'+api+'/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			$("#"+rId).html(Commonjs.jsonToString(jsons));
+		}
+		myLayer.clear();
+	});
+}
+
+function getQrCode(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	var inputs = $("#minipay").find("input");
+	$.each(inputs,function(index,val){
+		if(val.id.length >0 ){
+			apiData[val.id] = val.value;		
+		}
+	});
+	param.api = 'CreatePayQRCode';
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	Commonjs.ajax('../../../wsgw/smartPay/CreatePayQRCode/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			$("#resultMiniPay").html(Commonjs.jsonToString(jsons));
+		} else {
+			myLayer.alert("不存在需要支付的订单！", 3000);
+		}
+		myLayer.clear();
+	});
+}
+
+//获取订单详细信息
+function getToken() {
+	var apiData = {};
+	
+	var clientId = $("#clientId").val();
+	var configKey = $("#configKey").val();
+	var orgCode = $("#orgCode").val();
+	
+	var appId = $("#appId").val();
+	var encrypt = $("#encrypt").val();
+	
+	apiData.appId = appId;
+	apiData.encrypt = encrypt;
+	apiData.orgCode = orgCode;
+	Commonjs.ajax('../../../wsgw/'+clientId+'/'+ configKey +'/'+ orgCode +'/getToken2.do?t=' + new Date().getTime(), apiData, function(jsons) {
+		myLayer.clear();
+		if(jsons.RespCode == 10000){
+			$("#isShowCall").show();
+			Commonjs.setCookie("token",jsons.token);
+		}
+		$("#resultGetToken").html(Commonjs.jsonToString(jsons));
+	});
+	
+
+}
+
+function sweepCodePay(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	apiData.HisOrderId = $("#hisOrderId2").val();
+	apiData.TotalFee = $("#totalFee2").val();
+	apiData.Subject = $("#subject2").val();
+	apiData.OrderMemo = $("#orderMemo2").val();
+	apiData.DeviceInfo = $("#deviceInfo2").val();
+	apiData.AuthCode = $("#authCode2").val();
+	apiData.CardNo = $("#cardNo2").val();
+	apiData.CardType = $("#cardType2").val();
+	apiData.OperatorId = $("#operatorId2").val();
+	apiData.OperatorName = $("#operatorName2").val();
+	apiData.ServiceId = $("#serviceId2").val();
+	apiData.EqptType = $("#eqptType2").val();
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	$("#sweepCodePayResult").empty();
+	Commonjs.ajax('/wsgw/smartPay/SweepCodePay/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#sweepCodePayResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+function queryOrderState(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	apiData.OrderId = $("#orderId2").val();
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	$("#queryOrderStateResult").empty();
+	Commonjs.ajax('/wsgw/order/QueryOrderState/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#queryOrderStateResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+function revokeOrder(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	apiData.OrderId = $("#revokeOrderId2").val();
+	apiData.OperatorId = $("#revokeOperatorId2").val();
+	apiData.OperatorName = $("#revokeOperatorName2").val();
+	apiData.IsRevokeMerchantOrder = 1;
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	$("#revokeOrderResult").empty();
+	Commonjs.ajax('/wsgw/order/RevokeOrder/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#revokeOrderResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+function createCardPayQRCode(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	apiData.CardType = $("#cardPayCardType").val();
+	apiData.CardTypeName = $("#cardPayCardTypeName").val();
+	apiData.CardNo = $("#cardPayCardNo").val();
+	apiData.Name = $("#cardPayName").val();
+	apiData.Mobile = $("#cardPayMobile").val();
+	apiData.Sex = $("#cardPaySex").val();
+	apiData.IdCardNo = $("#cardPayIdCardNo").val();
+	apiData.Address = $("#cardPayAddress").val();
+	apiData.BirthDate = $("#cardPayBirthDate").val();
+	apiData.McardNo = $("#cardPayMcardNo").val();
+	apiData.BirthNumber = $("#cardPayBirthNumber").val();
+	apiData.IsChildren = $("#cardPayIsChildren").val();
+	apiData.HisMemberId = $("#cardPayHisMemberId").val();
+	apiData.UsageType = $("#cardPayUsageType").val();
+	param.apiParam = Commonjs.getApiReqParams(apiData);
+	$("#createCardPayQRCodeResult").empty();
+	Commonjs.ajax('/wsgw/smartPay/CreatePatientQRCode/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#createCardPayQRCodeResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+function createWristbandPayQRCode(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	apiData.CardType = $("#wristbandPayCardType").val();
+	apiData.CardTypeName = $("#wristbandPayCardTypeName").val();
+	apiData.CardNo = $("#wristbandPayCardNo").val();
+	apiData.Name = $("#wristbandPayName").val();
+	apiData.Mobile = $("#wristbandPayMobile").val();
+	apiData.Subject = $("#subject").val();
+	apiData.Sex = $("#wristbandPaySex").val();
+	apiData.IdCardNo = $("#wristbandPayIdCardNo").val();
+	apiData.Address = $("#wristbandPayAddress").val();
+	apiData.BirthDate = $("#wristbandPayBirthDate").val();
+	apiData.McardNo = $("#wristbandPayMcardNo").val();
+	apiData.BirthNumber = $("#wristbandPayBirthNumber").val();
+	apiData.IsChildren = $("#wristbandPayIsChildren").val();
+	apiData.HisMemberId = $("#wristbandPayHisMemberId").val();
+	apiData.UsageType = $("#wristbandPayUsageType").val();
+	apiData.ServiceId = '007';
+	apiData.EqptType = 5;
+	param.apiParam = Commonjs.getApiReqParams(apiData);
+	$("#createWristbandPayQRCodeResult").empty();
+	Commonjs.ajax('/wsgw/smartPay/CreateWristBandCodePay/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#createWristbandPayQRCodeResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+function createPrescPayCode(){
+	var apiData = {};
+	var param = {};
+	var page = {};
+	apiData.MemberName = $("#prescPayMemberName").val();
+	apiData.DoctorName = $("#prescPayDoctorName").val();
+	apiData.IdCardNo = $("#prescPayIdCardNo").val();
+	apiData.HisOrderId = $("#prescHisOrderId").val();
+	apiData.PrescNo = $("#prescPayPrescNo").val();
+	apiData.CardNo = $("#prescPayCardNo").val();
+	apiData.CardType = $("#prescPayCardType").val();
+	apiData.Address = $("#wristbandPayAddress").val();
+	apiData.BirthDate = $("#wristbandPayBirthDate").val();
+	apiData.McardNo = $("#wristbandPayMcardNo").val();
+	apiData.BirthNumber = $("#wristbandPayBirthNumber").val();
+	apiData.IsChildren = $("#wristbandPayIsChildren").val();
+	apiData.HisMemberId = $("#wristbandPayHisMemberId").val();
+	apiData.UsageType = $("#wristbandPayUsageType").val();
+	param.apiParam = Commonjs.getApiReqParams(apiData);
+	$("#createWristbandPayQRCodeResult").empty();
+	Commonjs.ajax('/wsgw/smartPay/CreatePrescriptionQrCode/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#createPrescPayCodeResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+
+function uuid() {
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "";
+ 
+    var uuid = s.join("");
+    return uuid;
+}
+
+function genUUID(id){
+	$("#"+id).val(uuid());
+}
+ function orderCallBackRery(){
+	var r=confirm("请慎重使用！确认冲正订单？");
+	if( r ){
+		var orderId = $("#orderId").val();
+		var apiData = {};
+		var param = {};
+		var page = {};
+		page.PIndex = 0;
+		page.PSize = 1;
+		apiData.OrderId = orderId;
+		apiData.OrderType = 1;
+		param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+		Commonjs.ajax('/wsgw/order/ForceCorrectOrderBiz/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+			$("#orderCallBackReryResult").html(Commonjs.jsonToString(jsons));
+			myLayer.clear();
+		});
+	}
+}
+
+function queryOrderDetail(){
+	var orderId = $("#orderId").val();
+	var apiData = {};
+	var param = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	apiData.OrderId = orderId;
+	param.apiParam = Commonjs.getApiReqParams(apiData, page, 6003);
+	Commonjs.ajax('/wsgw/order/OrderDetailLocal/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		$("#queryOrderDetailResult").html(Commonjs.jsonToString(jsons));
+		myLayer.clear();
+	});
+}
+
+</script>
+</body>
+</html>

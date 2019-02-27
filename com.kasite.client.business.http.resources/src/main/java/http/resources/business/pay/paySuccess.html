@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>支付成功</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="mt5 c-border-tb" style="margin:5 auto;text-align:center">
+    	<ul>
+        	<li class="mt10"><div id="logoImgHtml"></div></li> 
+        	<li class="mt10"><div style="font-size:15px;"><span id="orgNameSpan"></span></div></li>
+            <li class="mt10"><div class="c-999" style="font-size:12px;"><span id="zhifuNameSpan"></span></div></li>
+        </ul>
+    </div>
+    <div class="result-box mt10 c-border-tb">
+    	<p><img src="https://v1kstcdn.kasitesoft.com/common/images/success.png" alt="" class="result-tb" /></p>
+        <p class="c-f15 mt10">支付成功</p>
+        <p class="c-f13 c-999 mt15">系统充值中，过程大约需要3-5分钟</p>
+    </div>
+    <div class="result-bot-hold">
+    	<div id="showTopMain" class="result-bot">
+        	<h4><label></label></h4>
+            <ul>
+            	<li><a href="/business/index/clinicTab.html"><i class="sicon icon-bindex"></i><p>回到首页</p></a></li>
+            </ul>
+        </div>
+        <div id="showClose" class="result-bot" >
+        	<h4><label></label></h4>
+            <ul>
+            	<li><a onclick="closeWindow();"><i class="icon-order-close"></i><p>关闭页面</p></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript">
+
+function closeWindow(){
+	var userAgent = navigator.userAgent.toLowerCase();
+	if(userAgent.indexOf("alipay")>-1){
+		AlipayJSBridge.call('closeWebview'); 
+	}else{
+		WeixinJSBridge.call('closeWindow');
+	}
+}
+
+var serviceId='';
+$(function(){
+	var logoUrl = Commonjs.getLogoUrl();
+	var logohtml = '<img width="50px" height="50px" src="'+logoUrl+'" id="icon">';
+	$("#logoImgHtml").html(logohtml);
+	var session = Commonjs.getSession();
+	var orgName = session.orgName;
+	$("#orgNameSpan").html(orgName);
+	var clientId = Commonjs.getUrlParam("clientId");
+	if(!Commonjs.isEmpty(clientId)){
+		var clientIdName = Commonjs.getChannelIdName(clientId);
+		if(!Commonjs.isEmpty(clientIdName)){
+			$("#zhifuNameSpan").html(clientIdName);
+		}
+	}
+	var showClose = Commonjs.getUrlParam("showClose");
+	if(!Commonjs.isEmpty(showClose)){
+		$("#showTopMain").hide();
+		$("#showClose").show();
+	}else{
+		$("#showTopMain").show();
+		$("#showClose").hide();
+	}
+	$('.c-main').css('min-height',$(window).height() - 30);
+	$(window).resize(function(){
+		$('.c-main').css('min-height',$(window).height() - 30);
+	});
+	serviceId = Commonjs.getUrlParam("ServiceId");
+	if(!Commonjs.isEmpty(serviceId)&&'007'==serviceId){
+		//住院缴费充值成功回到首页跳到住院首页
+		$(".result-bot ul li a").attr("href","/business/index/hospitalizationTab.html");
+	}
+}); 
+
+</script>
+</body>
+</html>

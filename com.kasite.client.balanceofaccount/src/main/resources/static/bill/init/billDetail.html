@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>账单明细</title>
+    <link rel="stylesheet" href="../common/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../common/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../common/cross/css/page.css" type="text/css" />
+    <link rel="stylesheet" href="../common/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="../common/widget/artDialog/4.1.7/css/artDialog.min.css" type="text/css" />
+    <link rel="stylesheet" href="../common/widget/datetimepicker/2.1.9/css/jquery.datetimepicker.css" type="text/css" />
+</head>
+<body>
+<div>
+<div class="container-wrap">
+<div class="scroll-pane jspScrollable" style="top: 0px;">
+	<div class="comtop"><a href="dailyBillDetail.html?return=1" class="comback fr"><i class="cicon icon-back"></i>返回</a>订单详情</div>
+    <div class="ptb20 plr25">
+        <div class="tabs tabs-four">
+            <div class="tabs-hd clearfix">
+                <a href="everyDayBill.html"><span>每日账单</span></a>
+                <a href="everyDayBillDetail.html" class="curr"><span>账单明细</span></a>
+                <!--  <a href="singleBill.html"><span>单笔查询</span></a>
+                <a href="billBriefing.html"><span>财务简报</span></a> -->
+            </div>
+            <div class="tabs-bd p30">
+            	<div class="c-t-right" id="divRefund" style="display: none;"><a href="javascript:;" class="c-btn c-btn-green minw50" id="refund">退款</a></div>
+            	<table class="tb tb-b width-100 c-f14 mt20">
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">his订单号</td>
+                        <td class="pl20" id="hisOrderId"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">微信支付订单号</td>
+                        <td class="pl20" id="merchNo"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">全流程订单号</td>
+                        <td class="pl20" id="orderId"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">提交时间</td>
+                        <td class="pl20" id="beginDate"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">支付完成时间</td>
+                        <td class="pl20" id="transDate"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">就诊卡号</td>
+                        <td class="pl20" id="cardNo"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">就诊人</td>
+                        <td class="pl20" id="memberName"></td>
+                    </tr>
+                    <!--<tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">业务类型</td>
+                        <td class="pl20" id="">门诊缴费</td>
+                    </tr> -->
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">业务内容</td>
+                        <td class="pl20" id=serviceName></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">业务状态</td>
+                        <td class="pl20" id="hisBizState"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">应收款</td>
+                        <td class="pl20" id="receivableMoney"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">收款状态</td>
+                        <td class="pl20" id="payState"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">已收款</td>
+                        <td class="pl20" id="receivedMoney"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">付款渠道</td>
+                        <td class="pl20" id="channelName"></td>
+                    </tr>
+                    <!--<tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">支付方式及金额</td>
+                        <td class="pl20">银行卡扣款：10.00元<span class="ml30">余额扣款：0.00元</span></td>
+                    </tr>
+                     <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">支付银行</td>
+                        <td class="pl20">建设银行</td>
+                    </tr> -->
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">核对状态</td>
+                        <td class="pl20" ><span class="c-4dcd70" id="orderState"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">异常说明</td>
+                        <td class="pl20" id="exceptionDesc"></td>
+                    </tr>
+                </table>
+                
+                <table id="dealBillTable" class="tb tb-b width-100 c-f14 mt15" style="display: none;">
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">处理人</td>
+                        <td class="pl20" id="operatorName"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">账号</td>
+                        <td class="pl20" id="operatorId"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">处理时间</td>
+                        <td class="pl20"id="updateDate"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc-f3f3f3 c-t-right pr20" width="150">处理结果</td>
+                        <td class="pl20" id="remark"></td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+	</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="../common/cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="../common/js/common.js"></script>
+<script type="text/javascript" src="../common/widget/datetimepicker/2.1.9/js/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../common/widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../common/widget/jscrollpane/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="../common/cross/js/cross.ui.js"></script>
+<script type="text/javascript" src="../common/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../common/widget/echarecharts/js/echarts.min.js"></script>
+<script type="text/javascript" src="../js/billDetail.js"></script>
+</body>
+</html>

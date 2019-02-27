@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>详情</title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body class="children-page">
+		<table id="exampleTablePagination" 
+	    	data-toggle="table" 
+	    	data-url="../js/data/bootstrap_table_test.json" 
+	    	data-mobile-responsive="true" 
+	    	data-pagination="true" 
+	    	data-toolbar="#toolbar"
+	    	>
+            <thead>
+                <tr>
+                    <!--<th data-field="state" data-checkbox="true"></th>-->
+                    <th data-field="name" data-align="center">姓名</th>
+                    <th data-field="name" data-align="center">职务</th>
+                    <th data-field="name" data-align="center">部门</th>
+                    <th data-field="name" data-align="center">留言内容</th>
+                    <th data-field="time" data-align="center">留言时间</th>
+                </tr>
+            </thead>
+        </table>
+	</body>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript">
+        function formatter(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:bj(\''+index+'\');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');
+			html.push('<a href="javascript:sc();" style="color:#3685ff;font-size:12px;padding:0 6px;">删除</a>');
+			return html.join('')
+		}
+        
+        function formatter1(value, row, index){
+			var html = [];
+			if(index == 0){
+				html.push('单选');
+			}else if(index == 1){
+				html.push('多选');
+			}else if(index == 2){
+				html.push('问答');
+			}else if(index == 3){
+				html.push('打分');
+			}else{
+				html.push('单选');
+			}
+			return html.join('')
+		}
+        
+		function clo(){
+			System.closeThisWindow()
+		}
+	</script>
+</html>

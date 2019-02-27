@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<!-- import CSS -->
+<!-- 引入样式 -->
+<link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/SyntaxHighlighter/3.0.83/styles/shCoreDefault.min.css" rel="stylesheet">
+<title>系统路由查看</title>
+</head> 
+<body>
+	<div id="app">
+	  	<el-container>
+	  	  <el-header height="20px"></el-header>
+  	      <el-container>
+		    <el-aside width="240px">
+		    	<el-tree :props="props" :load="loadNode" lazy
+				  @node-click="handleNodeClick" @node-expand="node_expand"> </el-tree>
+			</el-aside>
+		    <el-main style="padding:0px;">
+		    		<el-button type="text"  icon="el-icon-edit" @click="showEdit">编 辑</el-button>
+		    		<el-dialog title="编辑路由" :visible.sync="dialogFormVisible" width="90%"  top="5vh">
+					  <el-form :model="form">
+					    <el-form-item>
+					      <el-input type="textarea" v-model="form.routeXml"  :rows="15" auto-complete="off"></el-input>
+					    </el-form-item>
+					  </el-form>
+					  <div slot="footer" class="dialog-footer">
+					    <el-button @click="dialogFormVisible = false">取 消</el-button>
+					    <el-button type="primary" @click="editRoute">确 定</el-button>
+					  </div>
+					</el-dialog>
+					<div id="routeXml"> 
+					</div>
+			</el-main>
+		  </el-container>
+		</el-container>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+<!-- 引入组件库 -->
+<script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+<!-- 代码高亮显示 xml显示为代码 -->
+<script src="https://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+<script src="https://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+<script>
+	SyntaxHighlighter.all();
+   var vm = new Vue({
+      el: '#app', 
+      data: function() {
+        return { 
+        	props: {
+                label: 'name',
+                children: 'zones',
+                isLeaf:'isLeaf'
+              },
+            count: 1, 
+            orgList:[],
+            appList:[],
+            selectRoute:{},
+            
+            dialogFormVisible: false,
+            form: {
+            	routeXml: '',
+                id: '',
+                orgCode:'',
+                nickName:''
+              },
+             formLabelWidth: '120px',
+             orgVo:{}
+              
+        }
+      },
+      
+      methods: { 
+    	  editRoute(){
+    		  dialogFormVisible = false;
+    		  var param={};
+    		  param = this.form;
+    		  var vo = this.orgVo;
+    		  param.orgCode = vo.id;
+    		  var selectRoute = this.selectRoute;
+    		  param.nickName = selectRoute.appNickName;
+    		  param.appId = selectRoute.appId;
+    		  $.post("/web/base/addRoute", param, function(result) {
+  				if (result.code == 0) {
+					var routeXml = param.routeXml;
+					var content = routeXml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					var c = "<pre class='toolbar:false;brush:xml'>"+ content +"</pre>";
+					$("#routeXml").html(c);
+					SyntaxHighlighter.highlight();
+					vm.dialogFormVisible = false
+					$.each(vm.appList,function(index,v){
+						if(v.data && v.data.id == selectRoute.id){
+							v.data.routeXml = routeXml;
+							return;
+						}
+					});
+					
+  					vm.$message({
+                         message: "修改成功", 
+                         type: 'success'
+	                         });
+  					
+  				} else {
+  					 vm.$message({
+                           message: result.msg,
+                           type: 'error'
+	                         });    					
+  				}
+  			 });
+    		  
+    	  },
+    	  showEdit(){
+	    		this.dialogFormVisible = true;
+	    		var d = this.selectRoute;
+	    		this.form.routeXml = d.routeXml;
+	    		this.form.id = d.id;
+    	  },
+    	  queryBaseList(resolve){
+    		  var param = {};
+    		  var vm = this;
+    		  $.post("/web/base/queryAllOrgListTree", param, function(result) {
+    				if (result.code == 0) {
+    					var data = result.result;
+    					vm.orgList = data;
+    					resolve(data);
+    				} else {
+    					 vm.$message({
+                             message: result.msg,
+                             type: 'error'
+                           });    					
+    				}
+    			}
+    		 );
+    	  },
+    	  queryAppList(id,resolve){
+    		  var param = { orgCode : id };
+    		  var vm = this;
+    		  $.post("/web/app/queryAppTreeByOrgCode", param, function(result) {
+    				if (result.code == 0) {
+    					var data = result.result;
+    					vm.appList = data;
+    					resolve(data);
+    				} else {
+    					 vm.$message({
+                             message: result.msg,
+                             type: 'error'
+                           });    					
+    				}
+    			}
+    		);
+    	  },
+    	  /*
+    	  共三个参数，依次为：传递给 data 属性的数组中该节点所对应的对象、节点对应的 Node、节点组件本身
+    	  */
+    	  	  node_expand(data, checked, indeterminate) {
+    	        console.log(data, checked, indeterminate);
+    	      },
+    	      handleNodeClick(data) {
+					var d = data.data;
+					this.selectRoute = d;
+					var content = '';
+					if(d && d.routeXml){
+						var routeXml = d.routeXml;
+						content = routeXml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					}
+					var c = "<pre class='toolbar:false;brush:xml'>"+ content +"</pre>";
+					$("#routeXml").html(c);
+					SyntaxHighlighter.highlight();
+    	      },
+    	      loadNode(node, resolve) {
+    	        if (node.level === 0) {
+    	          //加载树列表
+    	          return this.queryBaseList(resolve);
+    	        }
+    	        var data = node.data;
+    	        var id = data.id;
+    	        this.orgVo = data;
+    	        if(data.isLeaf == false){
+   	        		return this.queryAppList(id,resolve);	
+    	        }else{
+    	        	return resolve([]);
+    	        }
+    	      }
+    	        
+        }, 
+        created: function () {
+        }
+    })
+  </script>
+</html>

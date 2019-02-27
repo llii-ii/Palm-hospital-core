@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>统计</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 200px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>姓名：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="name" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:200px;">
+						<span style="padding-left: 20px;">
+						<button type="button" class="btn btn-primary" onclick="refresh()">查询</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<p>
+				<p id="toolbar">已报名人数：0人</p>
+			</p>
+			
+			<table id="activityStatistics" >
+
+	        </table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script>
+	var acid = Commonjs.getUrlParam("id");
+	var acUUid = Commonjs.getUrlParam("acUUid");
+	$(function(){
+		activityStatistics();
+	});
+	
+	//查询活动列表
+	function activityStatistics(){
+		$('#activityStatistics').bootstrapTable({
+			url: '/wsgw/qyWeChat/ActivityStatistics/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 10,                     //每页的记录行数（*）
+	        queryParams : function (params) {
+	        	var apiData = {};
+	        	apiData.uid = acUUid;
+	        	apiData.memberType = 2;
+	        	apiData.membername = $("#name").val();
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	        {
+	            field: 'Membername',
+	            title: '姓名',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Deptname',
+	            title: '部门',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Inserttime',
+	            title: '报名时间',
+	            align: 'center',
+	            valign: 'middle',
+	        }],
+	        responseHandler: function(res) {
+	       		if(res.Data == undefined){
+	       			return [];
+	       		}else{
+	       			$("#toolbar").text('已报名人数：'+res.Data.length+'人');
+	       			return res.Data;
+	       		}
+	        },
+	        onLoadSuccess: function (result) {
+	        	
+	        },
+	        onLoadError: function () {
+	            //alert("数据加载失败！");
+	        },
+		});
+	}	
+	
+	function refresh(){
+		$("#activityStatistics").bootstrapTable('destroy');
+		activityStatistics();
+	}
+	
+	</script>
+</html>

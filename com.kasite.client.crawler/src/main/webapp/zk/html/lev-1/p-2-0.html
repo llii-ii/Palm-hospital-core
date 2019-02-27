@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget">
+			<div class="widget-head"><!-- <a class="head-return" href="/PMC/plugins/rangecriterion/main/edit/back?pageno=1">返回</a> --> <a class="head-return" href="/PMC/plugins/rangecriterion/mainview?pageNo=1">返回</a>
+				<div class="widget-head-title">
+				<i class="fa fa-list-alt"></i>  值域标准集 &gt; 健康之路数据字典V1.50</div>
+			</div>
+			<div class="widget">
+				<form id="searchForm0" name="searchForm0" class="form-horizontal" action="/PMC/plugins/rangecriterion" method="post">
+				   <input type="hidden" value="1" name="id" id="id">
+				   <input type="hidden" value="1" name="pageno" id="pageno">
+					<table class="table table-bordered">
+						<tbody><tr>
+							<td>值域标准名称</td>
+							<td>
+								<label>
+									<input type="text" name="tableName" id="tableName" datatype="search-slimt1-32" class="input-large text" errormsg="值域标准名称为0-32字符,且不能包含^.,/<>!@#$%&amp;*()=+|{}[]:;\?" value="">
+								</label>
+							</td>
+							<!--  
+							<td>状态</td>
+							<td>
+							    <select name="type" id="type">
+								   <option value="" >全部</option>	
+								   <option value="1" >已更新</option>
+								   <option value="0" >未更新</option>		
+							   </select>
+							</td>-->
+							<td>
+							    
+										
+										
+			
+											  <div class="checker" id="uniform-state"><span><input type="checkbox" id="state" value="false" name="state" style="opacity: 0;"></span></div>已更新
+										
+								
+							</td>
+							<td class="w120 right">
+								<button type="button" id="search-submit-form64d8f900-177d-4a83-b18e-bf97e8edf5be" class="btn btn-primary">查询</button>
+							</td>
+						</tr>
+					</tbody></table>
+				</form>
+			</div>
+			<div class="widget-body">
+				
+					
+						<div class="alert">没有任何值域标准!</div>
+					
+					
+				
+				<button class="btn btn-primary" onclick="addRangeCriterion();">新增</button>
+				<button type="button" class="btn btn-primary" onclick="callJquerySelector()">
+				导入</button>
+				<!--  <button  class="btn btn-primary" onclick="exportAllStandard();">导出</button>-->
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+		function addRangeCriterion(){
+			document.location.href="./p-2-1-1.html";
+		}
+		function callJquerySelector(){
+			document.location.href='./p-2-0.html';
+		}
+	</script>
+</html>

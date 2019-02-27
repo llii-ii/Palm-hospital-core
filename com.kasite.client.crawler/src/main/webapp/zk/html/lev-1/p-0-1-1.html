@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget">
+			<div class="widget-head">
+				<div class="widget-head-title">
+					<i class="fa fa-pencil-square-o"></i>
+					新增数据标准
+				</div>
+			</div>
+			<div class="widget-body">
+				<form id="businessForm" name="businessForm" class="form-horizontal" action="/PMC/resourcemanage/platformcriterion/criterionsave" method="post">
+					<input type="hidden" value="1" name="type">
+					<input type="hidden" value="" name="id">
+					<input type="hidden" value="2" name="collectId">
+					<input type="hidden" value="" name="version">
+					<input type="hidden" value="" name="version">
+					<input type="hidden" value="" name="tableNameSearch">
+					<input type="hidden" value="" name="categorySearch">
+					<input type="hidden" value="false" name="statusSearch">
+					<div class="widget row-fluid">
+						<div class="well">
+						<div class="control-group">
+								<label class="control-label" for="businessName">标准名称： <span class="required">*</span> </label>
+								<div class="controls">
+									
+										
+										
+											<input id="businessName" name="businessName" class="input-xlarge text" type="text" value="" datatype="*1-256" errormsg="标准名称为1-256个字符 " nullmsg="必填项">
+										
+									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="tableName">数据表名： <span class="required">*</span> </label>
+								<div class="controls">
+									
+										
+										
+											<input id="tableName" name="tableName" class="input-xlarge text" type="text" value="" datatype="allowminundlimt1-256" errormsg="数据表名为1-256个字符 " nullmsg="必填项">
+										
+									
+								</div>
+							</div>
+							
+							<div class="control-group">
+								<label class="control-label" for="category">类别： <span class="required">*</span> </label>
+								<div class="controls">
+									
+										
+										
+											<input id="category" name="category" class="input-xlarge text" type="text" value="" datatype="*1-256" errormsg="类别为1-256个字符" nullmsg="必填项" autocomplete="off">
+										
+									
+								</div>
+							</div>
+		
+							<div class="control-group">
+								<label class="control-label" for="category">标准文件：</label>
+								<div class="controls">
+									<div class="uploader" id="uniform-select-file"><input type="file" id="select-file" name="file" class="input-medium" onchange="checkFile('select-file')" size="14.8" style="opacity: 0;"><span class="filename">选择文件</span><span class="action">select file</span></div>
+									<span>（请选择规则文件xls文件）</span>
+								</div>
+							</div>
+		
+							<!--
+							<div class="control-group">
+									<label class="control-label">发布状态： <span
+									class="required">*</span></label>
+									<div class="controls">
+										<select name="status" id="status">
+											<option value="" >请选择 </option>
+											<option value="1" >已发布</option>
+											<option value="0" >未发布</option>
+											<option value="2" >更新</option>
+										</select>
+									</div>
+							</div>
+							-->
+						</div>
+					</div>
+					<div>
+						<button type="button" onclick="saveBefore();" class="btn btn-primary">
+							保存
+						</button>
+						<a class="btn" href="./p-0-1.html">返回</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+	<script src="../../../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

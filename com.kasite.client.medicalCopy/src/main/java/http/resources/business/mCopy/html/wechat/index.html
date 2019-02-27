@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>病历复印</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/wechat/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/wechat/index.css"/>
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/tab.css" type="text/css" />
+		<style>
+			.copyright > div {
+				font-size: 0.3rem;
+			}
+			.phone {
+			    color: #2a0de8;
+			    font-size: 0.3rem;
+			    text-align: center;
+			}
+			p {
+			    color: #1b1b1b;
+			}
+			.i-tip p {
+			    font-size: 0.3rem;
+			}
+		</style>
+	</head>
+	<body style = "font-size: .6rem;">
+		<div class="mui-content">
+			<div class="i-logo"><img src="../../img/wechat/logo.png"/></div>
+			<div class="i-input">
+				<img src="../../img/wechat/icon-1.png"/>姓名
+				<input type="text" name="name" id="name" value="" maxlength="11" placeholder="请输入查询的姓名"/>
+			</div>
+			<div class="i-input">
+				<img src="../../img/wechat/icon-2.png"/>病案号
+				<input type="text" name="number" id="number" value="" placeholder="请输入查询的病案号"/>
+			</div>
+			<div class="i-tip" style="color: #1b1b1b;font-size: 0.3rem;">
+				<div class="i-tip-title" >温馨提示</div>
+<!-- 				<p>1、患者出院2周后方能申请复印病历；</p>
+				<p>2、已出院2周的患者，我们将在缴费成功后的2个工作日内进行办理；</p>
+				<p>3、如办理成功后>10天未收到，请联系我们；</p>
+				<p>4、西藏及新疆患者因快递因素，请致电联系我们办理；</p> -->
+				<p>1、我院将在患者出院14天后办理（节假日除外），申请成功后，医院将在3个工作日内寄出，如超过14天未收到，请致电联系。（>30天未咨询者，视同已收到，不再受理）谢谢配合！</p>
+				<p>2、西藏及新疆患者因快递因素，请致电联系我们办理。</p>
+			</div>
+			<div class="phone">咨询电话：400-888-4027（全国免长途费）</div>
+			<div class="btn-1" onclick="getCaseList()">病历复印申请</div>
+			<div class="btn-2" onclick="window.location.href = '../../orderList.html'">复印记录查询</div>
+
+		</div>
+		<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/common.js"></script>
+		<script type="text/javascript" src="../../js/wechat/index.js"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

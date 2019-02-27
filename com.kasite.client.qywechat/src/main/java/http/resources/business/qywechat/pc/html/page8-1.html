@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>设定时间</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width:auto;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 180px;">
+					<label><span class="red">*</span>选择定时发送的时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:180px;">
+					<input type="text" value="" component="dateTime" class="form-control form-group datatime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="width:140px!important;"  class="form-control form-group" placeholder="时间">
+					<input type="text" value="" component="dateTime" class="form-control form-group datatime" onFocus="WdatePicker({dateFmt:'H:mm'})" style="width:90px!important;"  class="form-control form-group" placeholder="时间">
+					<input type="text" value="" component="dateTime" class="form-control form-group datatime" onFocus="WdatePicker({dateFmt:'H:mm'})" style="width:90px!important;"  class="form-control form-group" placeholder="时间">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 180px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:180px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="clo()">发送</button>
+				</div>
+			</div>
+			<p class="text-right" style="padding-top: 5px;">该消息将于 今天 15:00 发送</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function clo(){
+			System.closeThisWindow()
+		}
+	</script>
+</html>

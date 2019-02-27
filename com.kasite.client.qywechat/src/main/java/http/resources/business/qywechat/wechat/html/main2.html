@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta name="skin" content="yqw">
+<title>主页</title>
+<style type="text/css">
+body, div, p, h1, h2, h3, h4, h5, h6, ol, ul, li, dl, dt, dd, th, tr, td,
+	hr, caption, table, form, img, input, legend, fieldset {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	overflow: hidden;
+}
+
+ul {
+	list-style: none;
+}
+
+#box {
+	position: relative;
+	margin: 20px auto;
+	width: 640px;
+	height: 640px;
+	border: 1px solid #eee;
+}
+
+#box li {
+	position: absolute;
+	width: 200px;
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
+	background: #eee;
+}
+
+#box .active {
+	z-index: 1;
+	color: #fff;
+	background: blue;
+}
+</style>
+</head>
+<body>
+	<ul id="box">
+		<li><a href="http://127.0.0.1:8670/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fdean%2findex.html" >管理驾驶舱</a></li>
+		<li><a href="http://127.0.0.1:8670/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fwarn%2findex.html" >危急值提醒</a></li>
+		<li><a href="http://127.0.0.1:8670/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2ffault%2findex.html" >故障报修</a></li>
+		<li><a href="http://chenjieyu.51vip.biz:45681/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fmeeting%2findex.html" >会议管理</a></li>
+		<li><a href="http://chenjieyu.51vip.biz:45681/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fvote%2findex.html" >投票</a></li>
+		<li><a href="http://chenjieyu.51vip.biz:45681/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fask%2findex.html" >问卷</a></li>
+		<li><a href="http://chenjieyu.51vip.biz:45681/qywechat/200001/1000006/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2factivity%2findex.html" >活动邀请</a></li>
+		<li><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwda4e2c1313550d93&redirect_uri=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fmain.html&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect" >用户code</a></li>
+		<li><a href="http://127.0.0.1:8670/qywechat/200001/1000004/gotoOauth.do?toUrl=http%3a%2f%2fchenjieyu.51vip.biz%3a45681%2fbusiness%2fqywechat%2fwechat%2fhtml%2fvote%2findex.html" >网页授权</a></li>
+		<li><img alt="image" id="avatar" class="img-circle"  src="../../pc/js/webCom1.0/img/a2.jpg" /></li>
+		<li><img alt="image" id="avatar" class="img-circle"  src="../../pc/js/webCom1.0/img/a3.jpg" /></li>
+		<li><img alt="image" id="avatar" class="img-circle"  src="../../pc/js/webCom1.0/img/a4.jpg" /></li>
+		<script type="text/javascript" src="../../common/js/common.js"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+		<script src="../../wechat/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../common/js/base.js"></script>
+	</ul>
+	<a id="code"></a>
+	
+</body>
+<script>
+
+	$(function(){
+		//getWxConfig();
+	});
+	
+	//获取微信配置	
+	function getWxConfig(){
+		var apiData = {};	
+		apiData.url = location.href.split('#')[0];
+		apiData.wxkey = "1000004"
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('../../../../wsgw/qyWeChat/GetQyWxConfigInfo/callApi.do',param,function(dd){
+			if(dd.RespCode==10000){
+				var data = JSON.parse(dd.RespMessage);
+				wx.config({
+				    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+				    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: data.appId, // 必填，企业微信的corpID
+				    timestamp: data.timestamp, // 必填，生成签名的时间戳
+				    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+				    signature: data.signature,// 必填，签名，见 附录-JS-SDK使用权限签名算法
+				    jsApiList: [
+						    'selectEnterpriseContact',
+					    	'chooseImage',
+					    	'uploadImage',
+					    	'openLocation',
+					    	'getLocation',
+					    	'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			}else{
+				alert("获取企业微信配置异常！");
+			}
+		},{async:false});
+	}
+	// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+	wx.ready(function(){
+		//openContact();
+		address()
+	});
+	// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+	wx.error(function(res){
+	
+	});
+	
+	//定位
+	function address(){
+		wx.getLocation({
+		    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+		    success: function (res) {
+		        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+		        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+		        var speed = res.speed; // 速度，以米/每秒计
+		        var accuracy = res.accuracy; // 位置精度
+		        //alert(latitude + ","+longitude+","+speed+","+accuracy);
+		        wx.openLocation({
+				    latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+				    longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+				    name: '', // 位置名
+				    address: '', // 地址详情说明
+				    scale: 25, // 地图缩放级别,整形值,范围从1~28。默认为16
+				});
+		    }
+		});
+	}
+	
+	//打开通讯录
+	var memberIds = "";
+	var memberNames = "";
+	var memberAvatars = "";
+	function openContact(){	
+		wx.invoke("selectEnterpriseContact", {
+		                "fromDepartmentId": -1,// 必填，表示打开的通讯录从指定的部门开始展示，-1表示自己所在部门开始, 0表示从最上层开始
+		                "mode": "multi",// 必填，选择模式，single表示单选，multi表示多选
+		                "type": ["department","user"],// 必填，选择限制类型，指定department、user中的一个或者多个
+		                "selectedDepartmentIds": ["1","2"],// 非必填，已选部门ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+		                "selectedUserIds": ["WUFADONG"]// 非必填，已选用户ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+		        },function(res){
+		                if (res.err_msg == "selectEnterpriseContact:ok") {
+		                        if(typeof res.result == 'string'){
+		                                res.result = JSON.parse(res.result) //由于目前各个终端尚未完全兼容，需要开发者额外判断result类型以保证在各个终端的兼容性
+		                        }
+		                        // 已选的部门列表 选择限制类型为user时无部门数据
+		                      /*   var selectedDepartmentList = res.result.departmentList;
+		                        for (var i = 0; i < selectedDepartmentList.length; i++){
+		                                var department = selectedDepartmentList[i];
+		                                if(department!=null){
+			                                var departmentId = department.id;// 已选的单个部门ID
+			                                var departemntName = department.name;// 已选的单个部门名称
+			                                alert(departmentId+","+departemntName);
+			                                
+		                                }
+		                        } */
+		                        var selectedUserList = res.result.userList; // 已选的成员列表
+		                        for (var i = 0; i < selectedUserList.length; i++){
+		                                var user = selectedUserList[i];
+		                                if(user!=null){
+		                                	var userId = user.id; // 已选的单个成员ID
+			                                var userName = user.name;// 已选的单个成员名称
+			                                var userAvatar= user.avatar;// 已选的单个成员头像
+			                                //alert(userId +","+userName+","+userAvatar);
+			                                memberIds += userId+",";
+											memberNames += userName+",";
+											memberAvatars += userAvatar+",";
+		                                }
+		                               
+		                        }
+		                        alert(memberIds);
+		                        alert(memberNames);
+		                        alert(memberAvatars);
+		                        
+		                }
+		        }
+		);
+	}
+	
+	//测试用户CODE
+	var code=Commonjs.getUrlParam('code');
+	document.getElementById('code').innerHTML=code;
+	
+	window.onload = function() {
+		var oBox = document.getElementById('box');
+		var aLi = oBox.children;
+		for (var i = 0; i < aLi.length; i++) {
+			// 布局
+			aLi[i].style.left = 210 * (i % 3) + 10 + 'px';
+			aLi[i].style.top = 210 * Math.floor(i / 3) + 10 + 'px';
+			// 添加拖拽功能
+			aLi[i].index = i;
+			aLi[i].onmousedown = function(ev) {
+				var e = ev || window.event;
+				var iX = e.clientX - this.offsetLeft;
+				var iY = e.clientY - this.offsetTop;
+				if (this.setCapture) {
+					this.setCapture();
+				}
+				var oThat = this;
+
+				// 添加class名称
+				this.className = 'active';
+				document.onmousemove = function(ev) {
+					var e = ev || window.event;
+					var iL = e.clientX - iX;
+					var iT = e.clientY - iY;
+
+					oThat.style.left = iL + 'px';
+					oThat.style.top = iT + 'px';
+
+					// 交换位置的条件
+					for (var j = 0; j < aLi.length; j++) {
+						if (oThat != aLi[j]
+							&& oThat.offsetLeft + oThat.offsetWidth > aLi[j].offsetLeft + aLi[j].offsetWidth / 2
+							&& oThat.offsetTop + oThat.offsetHeight > aLi[j].offsetTop + aLi[j].offsetHeight / 2
+							&& oThat.offsetLeft < aLi[j].offsetLeft + aLi[j].offsetWidth / 2
+							&& oThat.offsetTop < aLi[j].offsetTop + aLi[j].offsetHeight / 2) {
+							var iCurIndex = oThat.index;
+							// 交换位置
+							aLi[j].style.left = 210 * (iCurIndex % 3) + 10 + 'px';
+							aLi[j].style.top = 210 * Math.floor(iCurIndex / 3) + 10 + 'px';
+
+							// 交换下标
+							oThat.index = aLi[j].index;
+							aLi[j].index = iCurIndex;
+							break;
+						}
+					}
+				};
+				document.onmouseup = function() {
+					document.onmousemove = null;
+					document.onmouseup = null;
+
+					if (oThat.releaseCapture) {
+						oThat.releaseCapture();
+					}
+
+					// 去掉class名称
+					oThat.className = '';
+
+					// 重置当前拖拽元素的位置
+					oThat.style.left = 210 * (oThat.index % 3) + 10 + 'px';
+					oThat.style.top = 210 * Math.floor(oThat.index / 3) + 10 + 'px';
+				};
+
+				return false;
+			};
+
+		}
+					
+	};
+	
+</script>
+</html>

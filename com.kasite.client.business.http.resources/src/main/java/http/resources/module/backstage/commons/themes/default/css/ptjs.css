@@ -1,0 +1,14 @@
+
+.cr-xred { color:#ff7a7a; }
+
+/*满意度调查*/
+.w350 { width:350px; }
+.tit-blue,.tit-green { width:100%; height:36px; line-height:36px; color:#fff; font-size:16px; background:#4aacc5; }
+.tit-green { background:#65ab49; }
+
+/*微官网*/
+.cr-wgre { font-size:18px; color:#689b10; font-family:"微软雅黑"; }
+.ico-what { width:24px; height:24px; font-size:0; background:url(../images/ptjs/icon-what.gif) no-repeat; display:inline-block; }
+
+.cr-blue { color:#2c87cd; }
+.lh20 { line-height:20px; }

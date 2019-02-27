@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>病例复印</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="skin" content="zhengxie">
+    <!--[if lt IE 9]>
+    <script>setTimeout(function(){window.location.href="ie.html";},1000)</script>
+    <![endif]-->
+    <link rel="shortcut icon" href="../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg mini-navbar" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+            <a id="bafyzd" class="navbar-minimalize" href="javascript:void(0);" style="position: absolute;font-size: 20px;z-index: 3;right:0;top:0;padding:6px 10px;display:none;"><i class="fa fa-bars" ></i></a>
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <h2>病例复印</h2>
+                    </li>
+                    <li class="active">
+                        <a class="J_menuItem" id="bafy" style="display:none;"><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-1.png" /> </i> <span class="nav-label">病历复印</span></a>
+                        <ul class="nav nav-second-level collapse">
+		                    <li class="active">
+		                        <a class="J_menuItem" href="./copy.html"><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-2.png" /> </i> <span class="nav-label">订单查询</span></a>
+		                    </li>
+                    		<li>
+                    			<a class="J_menuItem"><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-3.png" /> </i> <span class="nav-label">复印价格管理</span></a>
+                    			<ul class="nav nav-third-level">
+	                                <li><a class="J_menuItem"  href="./price.html" ><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-3.png" /> </i> 科室价格管理</a></li>
+	                                <li><a class="J_menuItem"  href="./shoushuprice.html" ><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-3.png" /> </i> 手术价格管理</a></a></li>
+	                            </ul>
+                    		</li>
+		                    <li>
+		                        <a class="J_menuItem" href="./acount.html"><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-3.png" /> </i> <span class="nav-label">费用对账管理</span></a>
+		                    </li>
+                		</ul>
+                    </li>
+<!--                     <li>
+                        <a class="J_menuItem" href="./personal.html"><i ><img src="../../js/pc/webCom1.0/css/skin/zhengxie/img/nav/icon-4.png" /> </i> <span class="nav-label">帐号管理</span></a>
+                    </li> -->
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row content-tabs">
+            	<button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="./copy.html">订单查询</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                </button>
+<!--                 <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div> -->
+<!--                 <div class="roll-nav roll-right">
+                	<a href="javascript:;" class="J_tabAvatar">
+	                   <img class="img-circle" src="../../js/pc/webCom1.0/css/skin/zhengxie/img/avatar.png"/> 您好，<span>系统管理员</span>
+	                </a>
+                	<a href="${base}/admin/logout.jsp" class="J_tabExit">退出</a>
+                </div> -->
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="./copy.html" frameborder="0" data-id="./copy.html" seamless></iframe>
+            </div>
+            <div class="footer">
+                <div class="pull-right"><script>document.write('&copy; 2014-'+new Date().getFullYear());</script></div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script>
+	//所有的js执行程序必须在webReady执行之后才能执行
+	var webReady = function(){
+		
+	}
+	
+	//注册监听事件
+	var i = 1 ;
+	System.addEventListener("changeIndexAvatar",function(){
+		i++;
+		if(i>9){
+			i=1;
+		}
+		$('#avatar').attr('src','/leBase/webCom1.0/img/a'+i+'.jpg');
+	})
+</script>

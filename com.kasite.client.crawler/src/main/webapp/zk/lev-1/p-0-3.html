@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget">
+			<div class="widget-head">
+				<div class="widget-head-title"><i class="fa fa-pencil-square-o"></i> 编辑数据标准集</div>
+			</div>
+			<div class="widget-body">
+				<div class="form-horizontal" >
+					<div class="widget row-fluid">
+						<div class="well">
+							<div class="control-group">
+								<label class="control-label" for="tableName">标准集名称： <span class="required">*</span> </label>
+								<div class="controls">
+									<input id="name" name="name" class="input-xlarge text" type="text" value="" datatype="*1-32" errormsg="标准集名称为1-32个字符 " nullmsg="必填项">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="description">描述：</label>
+								<div class="controls">
+									<textarea id="description" name="description" style="width:50%;" datatype="#slimt0-1024" errormsg="请输入0~1024个字符，不能包含^./_^<>!@#$%&amp;*()-=+|\{}[]'&quot;:;\?" rows="4" class="uniform"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<button onclick="saveBefore()" type="button" class="btn btn-primary">
+							保存
+						</button>
+						<button onclick="returnFirst()" type="button" class="btn btn-primary">
+							返回
+						</button>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+  	<script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+	<script type="text/javascript" src="../../commons/js/common.js"></script>
+	<script type="text/javascript">
+		var id = Commonjs.getUrlParam("id");
+		var type = Commonjs.getUrlParam("type");
+		var oldName = "";
+		$(document).ready(function(){
+			$.ajax({
+				type: 'POST',
+				url: '../../standard/getStandardById',
+				data: {"id" : id},
+				timeout : 8000,
+				dataType: 'json',
+				success: function(d){
+					$("#name").val(d.name);
+					oldName = d.name;
+					$("#description").val(d.standard_describe);
+	 			}
+			});
+		});
+		function saveBefore(){
+			$.ajax({
+				type: 'POST',
+				url: '../../standard/updateStandard.do',
+				data: {"name" : $("#name").val(),
+					   "oldName" : oldName,
+					   "describe" : $("#description").val(),
+					   "id" : id},
+				timeout : 8000,
+				dataType: 'json',
+				success: function(data){
+		        	art.dialog({
+						lock : true,
+						opacity : 0.4,
+						width : 250,
+						title : '提示',
+						time : 3,
+						content : "编辑成功",
+						ok : function() {
+							returnFirst();
+						}
+					}); 
+	 			}
+			});
+		}
+		function returnFirst(){
+			if(type == 1){
+				document.location.href='./p-0.html';
+			}
+			if(type == 2){
+				document.location.href='./p-2.html';
+			}			
+		}
+	</script>
+</html>

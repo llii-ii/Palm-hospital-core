@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>电话调研</title>
+        <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+    </head>
+    <body>
+    <div class=" clearfix">
+            <div class="main-tit"><h2>电话调研</h2></div>
+            <div class="p30">
+                <div class="">全国首家建立外呼团队，有十数年的经验，拥有专业化的外呼人员，能够快速高效的完成电话调研，目前已与数十家医院建立电话调研合作关系</div>
+                <div class="mt30 c-222">只需五步即可轻松完成：</div>
+                <div class="ml15 mt30"><img src="images/dhdylc.png" height="323" width="640" alt="" /></div>
+                <div style="margin:70px 0 0 235px;">
+                    <a href="myd-dhdy-check.html"><input type="button" class="btn btn-w-auto mr20" value="开始设置调研问卷" /></a><a href="myd-dhdy-list.html" class="btn btn-w-auto btn-gray" id="backBtn" style="display:none;"><i class="icon icon-back"></i>返回</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+    var look=YihuUtil.queryString('look');
+    $( function() {
+	if(look!=null&&look!=''){
+	$("#backBtn").css("display","");
+	}
+});
+    </script>
+</html>

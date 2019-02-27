@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-store">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="commons/css/index.css" type="text/css" />
+        <script type="text/javascript" src="commons/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="commons/js/base.js"></script>
+        <script type="text/javascript" src="commons/js/common.js?time=New Date()"></script>
+		<script type="text/javascript" src="commons/js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="commons/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="commons/js/jquery.datetimepicker.js"></script>
+		<link rel="stylesheet" href="commons/css/jquery.datetimepicker.css" type="text/css" />
+		<script type="text/javascript" src="commons/js/jquery.artDialog.js"></script>
+		<link rel="stylesheet" href="commons/css/artDialog.css" type="text/css" />
+		
+		
+		<script type="text/javascript" src="index.js?time=New Date().getTime()"></script>
+		<title></title>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+    <div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+    <div class="aside"><!-- aside-collapsed  -->
+        <i class="aside-ctrl"></i>
+        <div class="logo-wrap" >
+        	<a href="javascript:;" class="curr">数据采集质控系统</a>
+        	<a href="javascript:;"><img src="commons/images/hos-logo.jpg" alt="" /></a>
+        </div>
+        <div class="a-menu-wrap">
+            <div class="scroll-pane jspScrollable">
+                <div class="pt35" id="aMenus" >
+                   <div class="a-menu"><span class="arrow arrowL"></span><div class="a-menu-tit">
+					<i class="icon icon-aside-3"></i>数据采集</div>
+					<div class="a-menu-list"><ul>					
+					<li><a href="javascript:;" onclick="linkMenu('/business/online/online.html','')">设备在线情况</a></li>
+					<li><a href="javascript:;" onclick="linkMenu('/business/report/report.html','')">数据占比</a></li>
+					<li><a href="javascript:;" onclick="linkMenu('/business/statistics/statistics.html','')">数据统计情况</a></li>
+					<li><a href="javascript:;" onclick="linkMenu('/business/standard/standard.html','')">标准信息管理</a></li>
+					<li><a href="javascript:;" onclick="linkMenu('/business/sendsql/sendsql.html','')">执行SQL语句</a></li>
+					</ul></div></div><div class="a-divider"></div>
+          		</div>
+       		</div> 
+   		</div>   
+    </div>
+    <div class="main">
+        <!--header-->
+        <div class="header clearfix" >
+            <div class="fr">
+                <div class="fl header-member" >
+                   <!--  <div class="fl header-member-login">
+                        <a href="javascript:;">您好<span id="usernameid"></span>
+                     </div> -->
+                </div>
+               <!-- <div class="fl header-home"><a href="javascript:;" onclick="linkMenu('../business/basic/basic-hospital.html')"><i class="icon icon-home"></i>首页</a></div> -->
+                <!-- <div class="fl header-logout"><a href="javascript:;" onclick="doLogout()"><i class="icon icon-logout"></i>退出</a></div> -->
+            </div>
+        </div>
+        <!--/header-->
+        
+        <!--main content-->
+		<!-- 框架 -->
+		<div id="main-frame-wrap">
+			<iframe id='mainFrame' src="" width="100%"  height="100%" frameborder="0"></iframe>
+		</div>
+		</div>
+    </body>
+</html>

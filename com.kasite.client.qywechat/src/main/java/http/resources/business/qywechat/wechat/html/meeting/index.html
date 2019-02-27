@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>会议查询</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.act{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.act-list{
+				line-height: 1.4;
+				padding-top: 2.04rem;
+			}
+			.act-list li{
+				padding: 0.3rem;
+				margin-bottom: 0.2rem;
+				background: #fff;
+				overflow: hidden;
+			}
+			.act-list h2{
+				font-size: 0.3rem;
+				color: #1a1a1a;
+				margin-bottom: 0.14rem;
+				margin-top: 0;
+			}
+			.act-list p{
+				float: left;
+				width: 50%;
+				font-size: 0.26rem;
+				margin-bottom: 0.1rem;
+				margin-top: 0;
+				color: #999;
+				overflow: hidden;
+			}
+			.act-list p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .01rem;
+			}
+			.act-list-status{
+				width: 1.04rem;
+				height: 1.04rem;
+				line-height: 1.04rem;
+				text-align: center;
+				font-size: 0.28rem;
+				color: #2988fc;
+				background: #f2f9ff;
+				border-radius: 100%;
+				-webkit-border-radius: 100%;
+				position: absolute;
+				right: 0;
+				top: 50%;
+				margin-top: -0.52rem;
+			}
+			.act-list-status.img{
+				line-height: 1.2;
+			}
+			.active .act-list-status{
+				color: #999;
+				background: #f2f4f5;
+				line-height: 1.04rem;
+			}
+			.act-list-status img{
+				width: 0.35rem;
+				display: block;
+				margin: .15rem auto 0;
+			}
+			.x-row{
+				position: relative;
+			}
+			.act-top{
+			    position: fixed;
+			    z-index: 100;
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    height: 2.04rem;
+			    background: #f2f4f5;
+			}
+			.act-search{
+				height: 1rem;
+				line-height: 1rem;
+				background: #fff;
+				position: fixed;
+				z-index: 2;
+				left: 0;
+				top: 0;
+				right: 0;
+				padding-left: 0.2rem;
+				border-bottom: 1px solid #e6e6e6;
+			}
+			.act-search-btn{
+				text-align: center;
+				color: #fff;
+				height: 0.66rem;
+				width: 0.8rem;
+				font-size: 0.25rem;
+				background: #2988fc;
+				line-height: .66rem;
+				border-radius: 0.05rem;
+				-webkit-border-radius: 0.05rem;
+				margin-top: 0.15rem;
+				margin: 0.15rem auto;
+			}
+			.act-search input{
+				border-radius: 0.05rem;
+				-webkit-border-radius: 0.05rem;
+				border: 1px solid #e6e6e6;
+				height: 0.66rem;
+				padding-left: 0.65rem;
+				padding-right: 0.15rem;
+				display: block;
+				width: 100%;
+				margin-top: 0.15rem;
+				background-image: url(../../img/icon-vote-12.png);
+				background-position: 0.24rem;
+				background-repeat: no-repeat;
+				background-size: 0.28rem;
+			}
+			.act-tab{
+				position: fixed;
+				top: 1rem;
+				margin-top: 0.2rem;
+				background: #fff;
+				height: 0.8rem;
+				line-height: 0.8rem;
+				cursor: pointer;
+			}
+			.act-tab .x-row-cols{
+				position: relative;
+				text-align: center;
+				font-weight: bold;
+				cursor: pointer;
+			}
+			.act-tab .x-row-cols.cur{
+				color: #2988fc;
+			}
+			.act-tab .x-row-cols.cur:after{
+				content: '';
+				position: absolute;	
+				bottom: 0;
+				left: 50%;
+				margin-left: -0.5rem;
+				width: 1rem;
+				height: 0.08rem;
+				background: #2988fc;
+				border-radius: 0.1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="act">
+	        	<div class="act-top">
+	        		<div class="act-search">
+		        		<div class="x-row dr">
+							<div class="x-row-cols " style="width: 1.28rem;">
+								<div class="act-search-btn" onclick="queryList()">搜索</div>
+							</div>
+							<div class="x-row-cols " style="margin-right:1.28rem;">
+								<input type="search" name="" id="title" value="" placeholder="关键字" />
+							</div>
+						</div>
+		        	</div>
+		        	<div class="x-row boxflex act-tab">
+						<div class="x-row-cols cur">将参加</div>
+						<div class="x-row-cols">进行中</div>
+						<div class="x-row-cols">已结束</div>
+						<div class="x-row-cols">我发布的</div>
+					</div>
+	        	</div>
+	        	<ul class="act-list" id="meetingList">
+
+				</ul>
+	        </div>
+	        <div id="applyMeeting" class="btn" onclick="window.location.href = 'add.html'" style="display:none;">发起会议</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			qwQueryPower();
+			//$("#applyMeeting").show();
+			$(document).on('click','.act-tab .x-row-cols',function(e){
+				$('.x-row-cols').removeClass('cur');
+				$(this).addClass('cur');
+				var cur = $(this).text();
+				if(cur == '将参加'){
+					qwQueryMeeting(1);
+				}else if(cur == '已结束'){
+					qwQueryMeeting(2);
+				}else if(cur == '我发布的'){
+					qwQueryMeeting(3);
+				}else if(cur == '进行中'){
+					qwQueryMeeting(4);
+				}
+			}); 
+			qwQueryMeeting(1);
+		})
+		
+		//会议发起权限
+		function qwQueryPower(){
+			var apiData = {};	
+			apiData.memberType = 6;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QwQueryPower/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				$("#applyMeeting").show();
+    			}else {
+    				$("#applyMeeting").hide();
+    			}
+    		},{async:false});
+		}
+		
+		//查询会议列表
+		function qwQueryMeeting(type){
+			var myDate = new Date();
+			$("#meetingList").html('');
+			var apiData = {};	
+			apiData.title = $("#title").val();
+			apiData.meetingDate = myDate.format("yyyy-MM-dd");
+			apiData.timeStart = myDate.format("hh:mm");
+			apiData.timeEnd = myDate.format("hh:mm");
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.type = type;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QwQueryMeeting/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				var html = '';
+    				for(var i = 0;i < dd.Data.length;i++){
+        				html += '<li onclick="detail('+dd.Data[i].Id+')">';
+        				html += '<h2 class="ell">'+dd.Data[i].Title+'</h2>';
+        				html += '<p><img src="../../img/icon-vote-1.png"/>'+dd.Data[i].Timestart+'-'+dd.Data[i].Timeend+'</p>';
+        				html += '<p><img src="../../img/icon-vote-13.png"/>'+dd.Data[i].Address+'</p>';
+        				html += '</li>';					
+    				}
+    				$("#meetingList").append(html);
+    			}
+    		},{async:false});
+		}
+		
+		//详情
+		function detail(id){
+			var url = 'detail.html?meetingId='+id;
+		    location.href = Commonjs.goToUrl(url); 
+		}
+		
+		//查询
+		function queryList(){
+			var cur = $("[class='x-row-cols cur']").text();
+			if(cur == '将参加'){
+				qwQueryMeeting(1);
+			}else if(cur == '已结束'){
+				qwQueryMeeting(2);
+			}else if(cur == '我发布的'){
+				qwQueryMeeting(3);
+			}else if(cur == '进行中'){
+				qwQueryMeeting(4);
+			}
+		}
+		
+		//时间格式转换
+		Date.prototype.format = function (format) {
+			var args = {
+				"M+": this.getMonth() + 1,
+				"d+": this.getDate(),
+				"h+": this.getHours(),
+				"m+": this.getMinutes(),
+				"s+": this.getSeconds(),
+				"q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+				"S": this.getMilliseconds()
+			};
+			if (/(y+)/.test(format))
+				format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var i in args) {
+			    var n = args[i];
+			    if (new RegExp("(" + i + ")").test(format))
+			    	format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+			}
+			return format;
+		};
+	</script>
+</html>

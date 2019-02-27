@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<meta name="skin" content="mes">
+		<script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>编辑</title>
+		<style type="text/css">.addimg{ margin-bottom: 5px; } .addimg-has, .addimg-has-text{display: none;} .addimg-no, .addimg-has{ position: relative; cursor: pointer; width: 300px; height: 167px; text-align: center; border:1px dashed #e5e6e7; border-radius: 5px; -webkit-border-radius: 5px; overflow: hidden; } .addimg-has{ border: 1px solid #e5e6e7; } .addimg-no input[type="file"], .addimg-has input[type="file"]{ cursor: pointer; position: absolute; opacity: 0; left: 0; top: 0; right: 0; bottom: 0; z-index: 2; } .addimg-no img{ width: 40px; margin: 30px auto 10px auto; display: block; } .addimg-has img{ display: block; width: 100%; height: 100%; } .addimg-no span, .addimg-has-text span{ font-size: 16px; font-weight: bold; margin-bottom: 5px; display: block; } .addimg-no p, .addimg-has-text p{ color: #e5e6e7; } .addimg.active .addimg-has, .addimg.active .addimg-has-text{ display: block; } .addimg.active .addimg-no{ display: none; } .form-control{ margin-bottom: 5px; }</style></head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 600px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>参与人员：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input id="parter" type="text" onfocus="cc(this)" value="" class="form-control" placeholder="请选择">
+					<input id="checksId" type="hidden" value="">
+					<input id="checksName" type="hidden" value="">
+					<input id="checksId_old" type="hidden" value="">
+					<input id="checksName_old" type="hidden" value="">
+					<input id="uid" type="hidden" value="">
+					<input id="id" type="hidden" value=""></div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label id="titleLabel">
+						<span class="red">*</span>投票标题：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="text" id="title" class="form-control" value="" /></div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>封面图片：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="hidden" id="attachmentUrl" name="attachmentUrl" value="" />
+					<input type="hidden" id="attachmentName" name="attachmentUrl" value="" />
+					<input type="hidden" id="attachmentUrl_old" name="attachmentUrl_old" value="" />
+					<input type="hidden" id="attachmentName_old" name="attachmentUrl_old" value="" />
+					<div class="addimg">
+						<div class="addimg-no">
+							<input type="file" name="newsFile" id="attachment" onchange="upload('attachment')" accept="image/jpg,image/png" value="" />
+							<img id="imgView" src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+							<span>点击上传图片</span>
+							<p>建议使用900x500像素的图片</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>首语：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<textarea name="beginintro" id="beginintro" rows="5" style="width: 100%;resize: none;" class="form-control" cols=""></textarea>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>尾语：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<textarea name="endingintro" id="endingintro" rows="5" style="width: 100%;resize: none;" class="form-control" cols=""></textarea>
+				</div>
+			</div>
+		</div>
+		<p id="toolbar">
+			<button type="button" onclick="addQuestion()" class="btn btn-primary">添加题目</button>
+			<button type="button" onclick="deleteQuestionPL()" class="btn btn-danger">删除</button></p>
+		<table id="orderTable"></table>
+		<div class="form-inline" style="max-width: 600px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>
+						<span class="red">*</span>截至日期：</label></div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input type="text" id="endtime" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" value="" /></div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="updateVote(1,true)">发布</button>
+					<button type="button" class="btn btn-w-m btn-info" onclick="updateVote(0,false)">预览</button>
+					<button type="button" class="btn btn-w-m btn-border" onclick="updateVote(0,true)">存为草稿</button></div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br /></body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script type="text/javascript" src="../js/webCom1.0/component/dateTime/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../../../module/backstage/commons/upload/upload.js"></script>
+	<script type="text/javascript">var id;
+		var type;
+		$(function() {
+			id = Commonjs.getUrlParam("id");
+			type = Commonjs.getUrlParam("type");
+			if (type == 1) {
+				$("#titleLabel").text("问卷标题：");
+			}
+			getVoteById(id);
+		});
+
+		//根据ID获取投票信息
+		function getVoteById(id) {
+			if (Commonjs.isEmpty(id)) {
+				alert("投票ID不能为空！");
+				return;
+			}
+
+			var apiData = {};
+			apiData.id = id;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/GetVoteQuestionInfoById/callApi.do', param,
+			function(dd) {
+				console.log("dd.RespCode=");
+				if (dd.RespCode == 10000) {
+					if (dd.Data.length > 0) {
+						var result = dd.Data[0];
+						$("#id").val(result.Id);
+						$("#uid").val(result.Uid);
+						$("#parter").val(result.MemberNames);
+						$("#checksId").val(result.MemberIds);
+						$("#checksName").val(result.MemberNames);
+						//旧成员
+						$("#checksId_old").val(result.MemberIds);
+						$("#checksName_old").val(result.MemberNames);
+						$("#title").val(result.Title);
+						//空时 显示上传图片
+						if (!Commonjs.isEmpty(result.AttachmentUrl)) {
+							//展示图片
+							$("#imgView").attr("src", result.AttachmentUrl);
+							$("#imgView").css("width", "300px");
+							$("#imgView").css("height", "167px");
+							//保存文件名和URL
+							$("#attachmentUrl").val(result.AttachmentUrl);
+							$("#attachmentName").val(result.AttachmentName);
+							//旧附件
+							$("#attachmentUrl_old").val(result.AttachmentUrl);
+							$("#attachmentName_old").val(result.AttachmentName);
+						}
+						$("#beginintro").val(result.BeginIntro);
+						$("#endingintro").val(result.EndingIntro);
+						$("#endtime").val(result.EndTime);
+						//查询问题列表
+						console.log("uid=" + result.Uid);
+						GetQuestionList(result.Uid);
+					}
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+
+		//预览
+	    function view(){
+	    	var apiData = {};
+			apiData.id = id;
+			apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			if (type == 1) {
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('WJDC');
+			}else{
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('TPGL');
+			}
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/GetVoteQuestionQRCode/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					showQRcode(dd.Data[0].QrPicUrl);
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+	    }
+		
+		//展示二维码
+        function showQRcode(qrPicUrl){
+			System.openWindow({
+				id:'votequestionQRcode2',
+				title:'请使用企业微信扫码预览',
+				url: qrPicUrl,
+				width:'400',
+				height:'450',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+
+		//修改
+		function updateVote(status,isclose) {
+			//成员
+			var checksId = $("#checksId").val();
+			var checksName = $("#checksName").val();
+			var checksId_old = $("#checksId_old").val();
+			var checksName_old = $("#checksName_old").val();
+			//附件、图片
+			var attachmentUrl = $("#attachmentUrl").val();
+			var attachmentName = $("#attachmentName").val();
+			var attachmentUrl_old = $("#attachmentUrl_old").val();
+			var attachmentName_old = $("#attachmentName_old").val();
+			var title = $("#title").val();
+			var attachment = $("#attachment").val();
+			var beginintro = $("#beginintro").val();
+			var endingintro = $("#endingintro").val();
+			var endtime = $("#endtime").val();
+			var uid = $("#uid").val();
+			var id = $("#id").val();
+			if (Commonjs.isEmpty(checksName)) {
+				alert("请选择参与人员！");
+				return;
+			}
+			if (Commonjs.isEmpty(title)) {
+				alert("请输入投票标题！");
+				return;
+			}
+			if (Commonjs.isEmpty(endtime)) {
+				alert("请输入截止日期！");
+				return;
+			}
+			var apiData = {};
+			apiData.id = id;
+			apiData.uid = uid;
+			apiData.status = status;
+			apiData.themeType = 0;
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.operatorName = Commonjs.getOpenId();
+			//添加页面参数
+			apiData.title = title;
+			apiData.beginIntro = beginintro;
+			apiData.endingIntro = endingintro;
+			apiData.endTime = endtime;
+			//判断是否成员、附件是否有变更
+			if (checksId != checksId_old) {
+				apiData.memberIds = checksId;
+				apiData.memberNames = checksName;
+			}
+			if (attachmentUrl != attachmentUrl_old) {
+				apiData.attachmentUrl = attachmentUrl;
+				apiData.attachmentName = attachmentName;
+			}
+			apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			if (type == 1) {
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('WJDC');
+			}else{
+				apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('TPGL');
+			}
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/UpdateVoteQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if(isclose){
+						alert("修改成功");
+						//调用父窗口的刷新查询方法
+						parent.refresh();
+						System.closeThisWindow();
+					}else{
+						view();
+					}
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+
+		//删除问题
+		function deleteQuestionById(id) {
+			if (Commonjs.isEmpty(id)) {
+				alert("问题ID不能为空！");
+				return;
+			}
+			var apiData = {};
+			apiData.id = id;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/DeleteQuestionById/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					refresh();
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+
+		function formatter(value, row, index) {
+			var html = [];
+			html.push('<a href="javascript:editQuestion(\'' + row.Id + '\');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');
+			html.push('<a href="javascript:deleteQuestion(\'' + row.Id + '\');" style="color:#3685ff;font-size:12px;padding:0 6px;">删除</a>');
+			return html.join('')
+		}
+
+		function formatterQuesttype(value, row, index) {
+			var html = [];
+			if (value == 0) {
+				html.push('单选');
+			} else if (value == 1) {
+				html.push('多选');
+			} else if (value == 2) {
+				html.push('问答');
+			} else if (value == 3) {
+				html.push('打分');
+			} else {
+				html.push('单选');
+			}
+			return html.join('')
+		}
+
+		function clo() {
+			System.closeThisWindow()
+		}
+
+		//添加问题
+		function addQuestion() {
+			var uid = $("#uid").val();
+			System.openWindow({
+				id: 'vote_question_add',
+				title: '添加',
+				url: 'vote_question_add.html?uid=' + uid,
+				width: '800px',
+				height: '500px',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+},
+				closed: function() {
+
+}
+			});
+		}
+
+		//编辑问题
+		function editQuestion(id) {
+			System.openWindow({
+				id: 'vote_question_edit',
+				title: '编辑',
+				url: 'vote_question_edit.html?id=' + id,
+				width: '800px',
+				height: '500px',
+				maxmin: false,
+				scrollbar: false,
+				onload: function() {
+
+},
+				closed: function() {
+
+}
+			});
+		}
+
+		//删除问题
+		function deleteQuestion(id) {
+			System.confirm({
+				title: '',
+				text: '是否删除该题目？',
+				type: 'info',
+				callback: function(bool) {
+					if (bool) {
+						deleteQuestionById(id);
+					}
+				}
+			})
+		}
+
+		//批量删除问题
+		function deleteQuestionPL() {
+			System.confirm({
+				title: '',
+				text: '是否批量删除该题目？',
+				type: 'info',
+				callback: function(bool) {
+					if (bool) {
+						var row = $.map($('#orderTable').bootstrapTable('getSelections'),
+						function(row) {
+							return row;
+						});
+						var ids = "";
+						Commonjs.BaseForeach(row,
+						function(i, item) {
+
+							ids = item.Id + "," + ids;
+						});
+						deleteQuestionById(ids);
+					}
+				}
+			})
+		}
+
+		//上传图片
+		function upload(id) {
+			var filePath = $("#" + id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.') + 1, filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\') + 1, filePath.length);
+			if (type.toLowerCase() != 'jpg' && type.toLowerCase() != 'png') {
+				alert('图片格式必须为.jpg|.png');
+				return;
+			}
+			var arrID = [id];
+			$.yihuUpload.ajaxFileUpload({
+				url: '/upload/uploadFile.do',
+				// 用于文件上传的服务器端请求地址
+				secureuri: false,
+				// 一般设置为false
+				fileElementId: arrID,
+				// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token=' + Commonjs.getToken(),
+				dataType: 'json',
+				// 返回值类型 一般设置为json
+				success: function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host + "/" + uri;
+					//展示图片
+					$("#imgView").attr("src", uri_target);
+					$("#imgView").css("width", "300px");
+					$("#imgView").css("height", "167px");
+					//保存文件名和URL
+					$("#attachmentUrl").val(uri_target);
+					$("#attachmentName").val(filename);
+					console.log("attachmentUrl=" + $("#attachmentUrl").val());
+					//解决onchange只触发一次的问题
+					$("#" + id).replaceWith('<input type="file" name="newsFile" id="' + id + '" onchange="upload(\'' + id + '\')" accept="image/jpg,image/jpeg,image/gif,image/png" value="" />');
+				},
+				error: function(data, status, e) {
+					alert("图片上传失败：建议您选择不超过1M的图片且在良好的网络环境下继续上传");
+				}
+			});
+		}
+
+		//定义全局的选中输入框对象
+		var cd = null;
+		function cc(o) {
+			cd = $(o);
+			//把选中的项放到缓存
+			window.localStorage.setItem('checksId', $("#checksId").val());
+			window.localStorage.setItem('checksName', $("#checksName").val());
+			System.openWindow({
+				id: 'vote',
+				title: '请选择',
+				url: 'deptUser.html',
+				width: '600',
+				height: '600',
+				maxmin: false,
+				onload: function() {
+
+},
+				closed: function() {
+
+}
+			});
+		}
+
+		//接收子页面传来的参数
+		function ccResult(checksId, checksName) {
+			cd.val(checksName);
+			$("#checksName").val(checksName);
+			$("#checksId").val(checksId);
+		}
+
+		//查询问题列表       
+		function GetQuestionList(id) {
+			$('#orderTable').bootstrapTable({
+				url: '/wsgw/qyWeChat/GetQuestionList/callApi.do',
+				//请求后台的URL（*）
+				method: 'POST',
+				//请求方式（*）
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				pagination: true,
+				//是否显示分页（*）
+				pageNumber: 1,
+				//初始化加载第一页，默认第一页,并记录
+				pageSize: 10,
+				//每页的记录行数（*）
+				queryParams: function(params) {
+					var page = {};
+					page.PIndex = 0;
+					page.PSize = 10;
+					var apiData = {};
+					apiData.Page = page;
+					apiData.id = id;
+					var temp = {
+						rows: params.limit,
+						//页面大小
+						page: (params.offset / params.limit) + 1,
+						//页码
+						sort: params.sort,
+						//排序列名  
+						sortOrder: params.order,
+						//排位命令（desc，asc） 
+						token: Commonjs.getToken(),
+						apiParam: Commonjs.getApiReqParams(apiData)
+					};
+					return temp;
+				},
+				columns: [{
+					checkbox: true,
+					visible: true //是否显示复选框  
+				},
+				{
+					field: 'Sortnum',
+					title: '题号',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					field: 'Questname',
+					title: '标题',
+					align: 'center',
+					valign: 'middle',
+				},
+				{
+					field: 'Questtype',
+					title: '类型',
+					align: 'center',
+					valign: 'middle',
+					formatter: formatterQuesttype
+				},
+				{
+					field: '',
+					title: '操作',
+					align: 'center',
+					valign: 'middle',
+					formatter: formatter
+				}],
+				responseHandler: function(res) {
+					if (res.RespCode == 401) {
+						alert(res.RespMessage);
+						top.location = "http://" + window.location.host;
+					} else {
+						if (res.Data == undefined) {
+							return [];
+						} else {
+							return res.Data;
+						}
+					}
+				},
+				onLoadSuccess: function(result) {
+
+},
+				onLoadError: function() {
+					alert("数据加载失败！");
+				},
+			});
+		}
+
+		//查询刷新
+		function refresh() {
+			$("#orderTable").bootstrapTable('destroy');
+			GetQuestionList($("#uid").val());
+		}</script>
+
+</html>

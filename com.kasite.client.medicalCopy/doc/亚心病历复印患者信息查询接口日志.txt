@@ -1,0 +1,66 @@
+入参：
+<data>
+  <funCode>Mu003</funCode>
+  <dataset>
+    <row>
+      <cardNo>1000002604</cardNo>
+      <cardType>6</cardType>
+      <orgCode>AH01</orgCode>
+      <inPara1>
+      </inPara1>
+      <inPara2>
+      </inPara2>
+      <inPara3>
+      </inPara3>
+      <inPara4>
+      </inPara4>
+      <inPara5>
+      </inPara5>
+      <inPara6>
+      </inPara6>
+    </row>
+  </dataset>
+</data>
+
+出参：
+<data>
+  <rspcode>0</rspcode>
+  <rspmsg>
+  </rspmsg>
+  <dataset>
+    <row>
+      <cardno>999999990</cardno>
+      <name>徐昕</name>
+      <gender>男</gender>
+      <birthday>1986-06-16</birthday>
+      <idtype>6</idtype>
+      <idcode>1000002604</idcode>
+      <patientid>1000002604</patientid>
+      <chargetype>
+      </chargetype>
+      <identity>
+      </identity>
+      <phone>17607180420</phone>
+      <balance>789.95</balance>
+      <outpara1>032</outpara1>
+      <outpara2>420106198606168413</outpara2>
+      <outpara3>
+      </outpara3>
+      <outpara4>
+      </outpara4>
+      <outpara5>
+      </outpara5>
+      <outpara6>
+      </outpara6>
+    </row>
+  </dataset>
+</data>
+
+
+
+
+
+
+
+--
+

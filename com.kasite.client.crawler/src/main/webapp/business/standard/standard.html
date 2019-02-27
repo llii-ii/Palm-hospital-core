@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>数据标准管理</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../../commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/index.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/safe.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/Pager.css" type="text/css"/>
+        <link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		
+		<script type="text/javascript" src="../../commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.datetimepicker.js"></script>
+		<script type="text/javascript" src="../../commons/js/common_survey.js"></script>
+		<script type="text/javascript" src="../../commons/js/base.js?version=1.0"></script>
+        <script type="text/javascript" src="../../commons/js/common.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+		<script type="text/javascript" src="./js/standard.js?version=1.0"></script>
+		<script type="text/javascript" src="../../commons/upload/upload.js"></script>
+		
+		<link rel="stylesheet" href="../../css/crawler.css" type="text/css" />
+    </head>
+    <body>
+    	<div class="main-tit">
+    		<h2>数据标准集</h2>
+    		<a href="javascript:void(0);" onclick="insertStandard();" class="btn fr mr40" style="margin-top: -26px;">新增</a>
+    	</div>
+        
+  		<div class="pl20 pr20">
+	        <table class="tb tb-hover" width="100%" id='dataList'>
+	        	<tr>
+	                <th width="30%">标准集名称</th>
+	                <th width="40%">描述</th>
+	                <th width="10%">版本</th>
+	                <th width="10%">发布</th>
+	                <th width="10%">删除</th>
+	            </tr>
+	        </table>
+	         <div class="pager_container">
+				<input id="pagenumber" type="hidden" value="1" />
+				<div id="pager"></div>
+			</div>
+		</div>
+		
+		<div id="newReplay" style="display:none;">
+		    <table class="table-form pop-manage-form">
+		        <tr>
+					<td class="t"><sub>&lowast;</sub>标准集</td>
+		            <td><input type="file" id="uploadFile" /></td>
+		        </tr>
+		        <tr>
+		        	<td class="t"><sub>&lowast;</sub>版本号</td>
+		            <td><input type="text" id="version" class="text w150 mr10" /></td>
+		        </tr>
+		        <tr>
+		            <td class="t">描述</td>
+		            <td colspan="2" rowspan="2">
+						<div class="box mt20">
+		                	<textarea rows="4" cols="50" id='describe'></textarea>
+		            	</div>
+		            </td>
+		        </tr>
+		    </table>
+		</div>	
+		
+		<div id="release" style="display:none;">
+			<sub id="subRule">&lowast;</sub>所发医院
+		    <div class="box">
+	        	<select class="select w150" id='formmatchrule'>
+	        		<option value=''>--请选择--</option>
+	        	</select> 
+            </div>
+		</div>	
+    </body>
+</html>

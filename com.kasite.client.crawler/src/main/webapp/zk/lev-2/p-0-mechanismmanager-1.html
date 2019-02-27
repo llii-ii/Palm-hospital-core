@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" href="../css/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+		<script src="../js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+		<style>
+			.widget label, span {
+			    font-size: 12px;
+			    position: relative;
+			}
+			h1, .h1, h2, .h2, h3, .h3{
+				margin-top:30px;
+			}
+			.widget {
+			    margin-bottom: 15px;
+			}
+			.btn{
+				font-size:12px;
+			}
+			.well{
+				background:#FEFEFE;
+				border:1px solid #d5d5d5;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="widget-head">
+			<span class="icon-edit"></span>
+			<h2>添加/更新机构</h2>
+		</div>
+		<form id="organizationForm" name="organizationForm" class="form-horizontal" action="/PMC/organization/manager/form-action" method="post">
+		<div class="widget">
+			<button id="addChildOrganization" type="button" class="btn btn-primary" onclick="addzogr()">
+				添加子机构
+			</button>
+			<button type="button" class="btn"
+				onclick="viewOrganizationUser();">
+				机构下的用户
+			</button>
+
+			<input id="encryptId" name="encryptId" type="hidden" value="8730931"/>
+			<input id="parentId" name="parentId" type="hidden" value="1"/>
+		</div>
+		<div class="widget row-fluid">
+			<div class="well">
+				<div class="control-group">
+					<label class="control-label" for="name">机构名称 <span class="required">*</span>
+					</label>
+					<div class="controls">
+						<input id="name" name="name" style="width:350px;" type="text" value="上饶市" dataType="*2-32" errormsg="机构名称为2-32个字符" nullmsg="机构名称不能为空"/>
+						<a style="padding-left: 5px;padding-right: 5px;" href="javascript:void(0)"
+							onclick="checkOrganization();">检查机构
+						</a>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="order">机构排序<span class="required">*</span>
+					</label>
+					<div class="controls">
+						<input id="order" name="order" type="text" value="0" dataType="n1-5" errormsg="机构排序只能为1-5位数字" nullmsg="请输入机构排序"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for=showCode>机构编码<span class="required">*</span>
+					</label>
+					<div class="controls">
+						<input id="showCode" name="showCode" type="text" value="361100" dataType="*2-32" errormsg="机构编码为2-32个字符" nullmsg="机构编码不能为空"/>
+						<span class="help-block">机构唯一编码</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="tempcolumn01">医疗机构
+					</label>
+					<div class="controls">
+					    <input type="checkbox" name="checkbox"  value="" id="checkbox99"  />
+					</div>
+				</div>
+				<div class="control-group" id="hospitalType" style="display:none">
+					<label class="control-label" for="column01">
+					机构类型<span class="required">*</span> </label>
+					<div class="controls">
+						<select name="column01" id="column01" >
+						    
+						       
+						        <option value="1" >医院</option>
+						   
+						       
+						        <option value="11" >社区卫生服务中心</option>
+						   
+						       
+						        <option value="12" >社区卫生服务站</option>
+						   
+						       
+						        <option value="13" >乡镇卫生院</option>
+						   
+						       
+						        <option value="14" >村卫生室</option>
+						   
+						       
+						        <option value="15" >妇幼保健院(所、站)</option>
+						   
+						       
+						        <option value="999" >其他</option>
+						   
+						   <!--  
+							<option value="1" >医院</option>
+							<option value="11" >社区卫生服务中心</option>
+							<option value="12" >社区卫生服务站</option>
+							<option value="13" >乡镇卫生院</option>
+							<option value="14" >村卫生室</option>
+							<option value="15" >妇幼保健院(所、站)</option>
+							<option value="99" selected="true">其他</option>-->
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="desc">描述
+					</label>
+					<div class="controls">
+						<textarea id="desc" name="desc" style="width:350px;" dataType="#*2-64" errormsg="机构描述为2到64个字符">上饶市</textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+			<button type="submit"  class="btn btn-primary">
+				保存
+			</button>
+		
+		
+			
+				<button id="deleteOrganization" type="button"  class="btn btn-danger"
+					onclick="delete_Organization('8730931');">
+					删除
+				</button>
+			
+		
+		<input id="encryptId" name="encryptId" type="hidden" value="8730931"/>
+		<input id="parentId" name="parentId" type="hidden" value="1"/>
+	</form>
+
+
+	</body>
+	
+	<script src="../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../js/jquery.spin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.uniform.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/general.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.ztree.all-3.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		    //add by wangn 2015-10-26 
+		    var d = new Date();
+		    var str = d.getFullYear();
+		    $("#copy-date").html('2004-'+str);
+		    //add end
+			App.init(); // initlayout and core plugins
+			$("input, textarea").uniform();
+		  	$("select").uniform();
+		  	
+		  	$("#checkbox99").click(function() {
+				if($(this).attr("checked")) {
+					$("#hospitalType").show()
+				} else {
+					$("#hospitalType").hide()
+				}
+			});
+
+		 })
+
+		function addzogr(){
+			window.location.href="./p-0-mechanismmanager-addmechan1.html";
+		}
+		//点击机构下的用户
+		function viewOrganizationUser(){
+			window.location.href="./p-0-mechanismmanager-orgUser.html";
+		}
+		//点击检查机构
+		function checkOrganization(){
+			  layer.open({
+				  type: 2,
+				  skin: 'layui-layer-rim', //加上边框
+				  btn:['确定'],
+				  area: ['300px', '156px'], //宽高
+				  title:'检查',
+				  content: './p-0-mechanismmanager-tan.html'
+			});
+		}
+	</script>
+</html>

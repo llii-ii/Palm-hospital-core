@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>身份认证</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/wechat/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/wechat/index.css"/>
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/tab.css" type="text/css" />
+		<style type="text/css">
+			.i-tip{margin-top: 0;}
+			.copyright > div {
+			    line-height: 3rem;
+			    font-size: 0.3rem;
+			    z-index: -1;
+			}
+		</style>
+	</head>
+	<body style = "font-size: .3rem;">
+		<div class="mui-content">
+			<div class="auth">
+				<div class="auth-title" onclick="window.location.href = 'auth-tip.html'">拍摄/上传您的身份证 <img src="../../img/wechat/icon-8.png"/></div>
+				<div class="auth-pic" onclick="OCRIDCard(1)" id="side1">
+					<img src="../../img/wechat/icon-6.png"/>
+					<div class="info1">身份证正面</div>
+					<div class="info2">点击上传</div>
+				</div>
+				<div class="auth-pic" onclick="OCRIDCard(2)" id="side2">
+					<img src="../../img/wechat/icon-6.png"/>
+					<div class="info1">身份证背面</div>
+					<div class="info2">点击上传</div>
+				</div>
+			</div>
+			<div class="auth-phone">
+				<input type="number" name="code" id="code" value="" placeholder="请输入手机验证码"/>
+				<div class="getCode" onclick="getPCId()">获取验证码</div>
+			</div>
+			<div class="i-tip" id="phone" style="color:red;font-size:0.3rem"></div>
+		</div>
+		<div class="i-footer">
+			<div class="b-1" onclick="gotoAddress()">上一步</div>
+			<div class="b-2" onclick="gotoPay()">下一步</div>
+		</div>
+		<div class="mask">
+			<div class="pic-box">
+				<ul>
+					<li>拍摄</li>
+					<li>从相册选择</li>
+				</ul>
+			</div>
+		</div>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+		<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/common.js"></script>
+		<script type="text/javascript" src="../../js/wechat/auth.js"></script>
+		<script type="text/javascript">
+/* 			mui.ready(function(){
+				mui('body').on('tap','.auth-pic',function(){
+				  	$('.mask').show();
+				}) 
+				mui('body').on('tap','.mask',function(){
+					$('.mask').hide();
+				}) 
+			}) */
+		</script>
+	</body>
+</html>

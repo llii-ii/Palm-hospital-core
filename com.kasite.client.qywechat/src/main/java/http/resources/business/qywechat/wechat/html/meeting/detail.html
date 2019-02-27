@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>会议详情</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	   	<link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.act2{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.act2-top{
+				padding: 0.5rem;
+				background: url(../../img/bg.png) no-repeat;
+				background-size: cover;
+				color: #fff;
+				text-align: center;
+			}
+			.act2-top h2{
+				font-size: 0.42rem;
+				margin-top: 0;
+				margin-bottom: 0.2rem;
+				margin-top: 0;
+			}
+			.act2-top p{
+				font-size: 0.28rem;
+			}
+			.act2-top-info{
+				border-top: 1px solid #fff;
+			}
+			.act2-top-info p{
+				padding-top: 0.26rem;
+				padding-bottom: 0;
+				margin-top: 0;
+				text-align: left;
+				margin-bottom: 0;
+			}
+			.act2-top-info p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .05rem;
+			}
+			.act2-title{
+				position: relative;
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .55rem;
+				padding-top: .3rem;
+				padding-bottom: .3rem;
+				font-weight: bold;
+			}
+			.act2-title:before{
+				content: '';
+				display: block;
+				width: 0.06rem;
+				height: 0.3rem;
+				background-color: #2988fc;
+				position: absolute;
+				left: 0.38rem;
+				top: 50%;
+				margin-top: -.15rem;
+				border-radius: 0.06rem;
+				-webkit-border-radius: 0.06rem;
+			}
+			.act2-title span{
+				float: right;
+				color: #999;
+				font-weight: normal;
+				padding-right: 0.38rem;
+			}
+			.act2-person{
+				background: #fff;
+				padding:0 0.54rem 0.2rem 0.54rem;
+			}
+			.act2-person li{
+				position: relative;
+				float: left;
+				display: block;
+				padding: 0 0.17rem 0 0.4rem;
+				font-size: 0.28rem;
+				line-height: 0.46rem;
+				color: #333;
+				background: #f7fbff;
+				border-radius: 0.1rem;
+				-webkit-border-radius: 0.1rem;
+				margin-right: 0.56rem;
+				margin-bottom: 0.1rem;
+			}
+			.act2-person li img{
+				width: .46rem;
+				height: .46rem;
+				position: absolute;
+				z-index: 1;
+				left: -.2rem;
+				top: 0;
+			}
+			.act2-content{
+				position: relative;
+				background: #fff;
+				font-size: 0.26rem;
+				padding: 0 0.5rem 0.2rem 0.5rem;
+			}
+			.act2-content label{
+				display: inline-block;
+				width: 1.4rem;
+				color: #2988fc;
+				margin-bottom: 0.2rem;
+			}
+			.act2-scan{
+				position: absolute;
+				top: -0.1rem;
+				right: 0.7rem;
+			}
+			.act2-scan img{
+				width: 1rem;
+				height: 1rem;
+			}
+			.act2-detail{
+				color: #2988fc;
+				background: #fff;
+				text-align: center;
+				font-size: 0.26rem;
+				padding: 0.25rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="act2">
+	        	<div class="act2-top">
+	        		<h2 id="title"></h2>
+	        		<p id="operatorName1"></p>
+	        		<div class="act2-top-info">
+	        			
+	        			<p><img src="../../img/icon-vote-3.png"/><span id="credits"></span></p>
+	        			<p id="fileName"></p> 
+	        			<p><img src="../../img/icon-vote-4.png"/><span id="meetingTime"></span></p>
+	        			<p><img src="../../img/icon-vote-11.png"/><span id="address"></span></p>
+	        		</div>
+	        	</div>
+	        	
+	        	<p class="act2-title">会议议题</p>
+	        	<div class="act2-content" id="meetingContent"></div>
+	        	
+	        	<p class="act2-title" style="margin-top: 0.2rem;">参会人<span id="partMeeting"></span></p>
+	        	<ul class="ell act2-person" id="allNum">
+	        	</ul>
+	        	<div class="act2-detail" onclick="signInDetail();">查看详情>></div>
+	        	<p class="act2-title" style="margin-top: 0.2rem;">会议签到</p>
+	        	<div class="act2-content">
+	        		<div><label>签到方式：</label><span id="signin"></span></div>
+	        		<div><label>负责人：</label><span id="operatorName2"></span></div>
+	        	<!-- 	<div class="act2-scan" ><img src="../../img/icon-scan.png"/></div> -->
+	        	</div>
+	        </div>
+	        <div class="x-row boxflex foot">
+				<div style="display:none;" class="x-row-cols left" onclick="leave();">请假</div>
+				<div style="display:none;" class="x-row-cols right" onclick="partMeeting();">参加</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	
+	<script type="text/javascript">
+	var meetingId = Commonjs.getUrlParam("meetingId");
+	var meetingUUid = '';
+	var memberName = '';
+	var meetingTitle = '';
+	var partAllNum = 0;//会议总人数
+	var partNum = 0;//参加人数
+	var leaveNum = 0;//请假人数
+	var meetingStatus = 0;
+	
+	$(function(){
+		qwQueryMeeting();
+		//queryMeetingInfo();
+		getPeopleList(0);//获取所有参与人
+		getPeopleList(2);//获取参与人
+		getPeopleList(3);//获取请假人
+		if(meetingStatus == 3){
+			$("#partMeeting").text(partNum + "人参加 " + leaveNum + "人请假 " + (partAllNum-partNum-leaveNum) + "人缺席 ");
+		}else{
+			$("#partMeeting").text(partNum + "人参加 " + leaveNum + "人请假 " + (partAllNum-partNum-leaveNum) + "人待定 ");
+		}
+		
+		isleave();
+	});
+	
+	//将参加的会议列表(是否显示请假，参加按钮)
+	function qwQueryMeeting(){
+		var myDate = new Date();
+		var apiData = {};	
+		apiData.meetingDate = myDate.format("yyyy-MM-dd");
+		apiData.timeStart = myDate.format("hh:mm");
+		apiData.type = 1;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QwQueryMeeting/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				if(dd.Data != undefined){
+					for(var i = 0;i < dd.Data.length;i++){
+						if(dd.Data[i].Id == meetingId){
+							$("[class = 'x-row-cols left']").show();
+							$("[class = 'x-row-cols right']").show();
+							break;
+						}					
+					}
+				}
+				queryMeetingInfo();
+			}
+		},{async:false});
+	}
+	
+	
+    //获取会议信息
+	function queryMeetingInfo(){
+		var apiData = {};	
+		apiData.id = meetingId;
+		apiData.status = -1;
+ 		var param = {};
+ 		param.apiParam = Commonjs.getApiReqParams(apiData);
+ 		Commonjs.ajax('/wsgw/qyWeChat/QueryMeeting/callApi.do',param,function(dd){
+ 			if(dd.RespCode == 10000){
+ 				if(dd.Data[0].FileName != null && dd.Data[0].FileName != '' && dd.Data[0].FileName != undefined){
+ 					$("#fileName").html('<img src="../../img/icon-vote-3.png"/><span>'+dd.Data[0].FileName+'</span>');
+ 				}else{
+ 					$("#fileName").hide();
+ 				}
+ 				memberName = dd.Data[0].LoginMemberName;
+ 				meetingTitle = dd.Data[0].Title;
+ 				meetingStatus = dd.Data[0].Status;
+ 				$("#title").text(meetingTitle);
+ 				meetingUUid = dd.Data[0].Meetingid;	
+ 				if(dd.Data[0].Content != null && dd.Data[0].Content != ''){
+ 					$("#meetingContent").html(dd.Data[0].Content);
+ 				}else{
+ 					$("#meetingContent").html("暂无议题");
+ 				}
+ 				$("#operatorName1").text(dd.Data[0].Operatorname);
+ 				$("#operatorName2").text(dd.Data[0].Operatorname);
+ 				$("#credits").text(dd.Data[0].Credits+"分");
+ 	        	$("#meetingTime").text(dd.Data[0].Meetingdate + " " + dd.Data[0].Timestart + "~" + dd.Data[0].Timeend);
+ 	        	$("#address").text(dd.Data[0].Address); 
+ 	        	if(dd.Data[0].Signin == 0){
+ 	        		$("#signin").text("不签到");
+ 	        		$(".act2-scan").hide();
+ 	        	}else if(dd.Data[0].Signin == 2){
+ 	        		$("#signin").text("扫码签到");
+ 	        	}else if(dd.Data[0].Signin == 1){
+ 	        		$("#signin").text("定位签到");
+ 	        		$(".act2-scan").hide();
+ 	        	}
+ 	        	
+ 			}else {
+ 				myLayer.alert('获取会议信息失败请联系管理员！');
+ 			}
+ 		},{async:false});
+    }
+    
+    
+	//获取已有的参与人/记录人
+	function getPeopleList(memberType){
+		var apiData = {};	
+        apiData.uid = meetingUUid;
+        apiData.memberType = memberType;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				if(memberType == 0){	//所有会议参与人
+					var openId = Commonjs.getOpenId();
+					var html = '';
+					for(var i = 0;i<dd.Data.length; i++){
+						var id = dd.Data[i].Memberid;
+						if(dd.Data[i].IsDept == 1){
+							getDeptMembers(id);
+							html += '<li><img src="../../img/icon-active-1.png"/>'+dd.Data[i].Membername+'</li>';	
+						}else if(dd.Data[i].IsDept == 0){
+							partAllNum++;
+							if(dd.Data[i].MemberAvatar == ''){
+								html += '<li><img src="../../img/icon-active-0.png"/>'+dd.Data[i].Membername+'</li>';	
+							}else {
+								html += '<li><img src="'+dd.Data[i].MemberAvatar+'"/>'+dd.Data[i].Membername+'</li>';	
+							}
+						}
+					}
+					$("#allNum").append(html);
+				}else if(memberType == 2){
+					if(dd.Data != undefined){
+						partNum = dd.Data.length;
+						for(var i = 0;i < partNum;i++){
+							if(dd.Data[i].Memberid == Commonjs.getOpenId() && dd.Data[i].IsDept == 0){
+								$("[class = 'x-row-cols left']").hide();
+								$("[class = 'x-row-cols right']").hide();
+								break;
+							}					
+						}
+					}
+				}else if(memberType == 3){
+					if(dd.Data != undefined){
+						leaveNum = dd.Data.length;
+						for(var i = 0;i < leaveNum;i++){
+							if(dd.Data[i].Memberid == Commonjs.getOpenId() && dd.Data[i].IsDept == 0){
+								//$("[class = 'x-row-cols left']").hide();
+								$("[class = 'x-row-cols right']").hide();
+								break;
+							}					
+						}
+					}
+				}
+			}
+		},{async:false});		
+	}
+    
+	//请假
+	function leave(){
+		var url = 'leave.html?meetingUUid='+meetingUUid+'&memberName='+memberName+'&title='+meetingTitle;
+	    location.href = Commonjs.goToUrl(url); 
+	}
+	
+	//参加
+	function partMeeting(){
+		var apiData = {};	
+        apiData.uid = meetingUUid;
+        apiData.memberIds = Commonjs.getOpenId();
+        apiData.memberNames = memberName;
+        apiData.memberType = 2;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				myLayer.alert('参加成功');
+       			window.location.href = 'index.html';
+			}else{
+				myLayer.alert(dd.RespMessage,3000);
+			}
+		},{async:false});		
+	}
+	
+	
+	//签到详情
+	function signInDetail(){
+		var url = 'signDetail.html?meetingUUid='+meetingUUid;
+	    location.href = Commonjs.goToUrl(url); 
+	}
+	
+	//获得部门成员
+	function getDeptMembers(deptId){
+		var apiData = {};	
+		apiData.department = deptId;
+		apiData.wxkey = Commonjs.getQyWeChatConfigKey('HYGL');
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryUser/callApi.do',param,function(dd){
+			var json = JSON.parse(dd.RespMessage);
+			partAllNum = parseInt(partAllNum) + json.length;
+		},{async:false});
+	}
+	
+	//时间格式转换
+	Date.prototype.format = function (format) {
+		var args = {
+			"M+": this.getMonth() + 1,
+			"d+": this.getDate(),
+			"h+": this.getHours(),
+			"m+": this.getMinutes(),
+			"s+": this.getSeconds(),
+			"q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+			"S": this.getMilliseconds()
+		};
+		if (/(y+)/.test(format))
+			format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		for (var i in args) {
+		    var n = args[i];
+		    if (new RegExp("(" + i + ")").test(format))
+		    	format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+		}
+		return format;
+	};
+	
+	
+	//请假是否已经审批
+	function isleave(){
+		var apiData = {};	
+        apiData.meetingId = meetingUUid;
+        apiData.memberId = Commonjs.getOpenId();
+        apiData.status = -1;
+        apiData.id = -1;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingApproval/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				if(dd.Data != undefined){
+					if(dd.Data[0].Status == 0){
+						$("[class = 'x-row-cols left']").text('请假(审批中)');
+					}else {
+						$("[class = 'x-row-cols left']").text('请假(已审批)');
+					}
+				}else{
+					$("[class = 'x-row-cols left']").text('请假');
+				}
+			}else {
+				myLayer.alert(dd.RespMessage,3000);
+			}
+			
+		},{async:false});
+	}
+	</script>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta content="telephone=no" name="format-detection" />
+<title>就诊人列表</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/server.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/public.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/member.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/demo.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+<style type="text/css">
+.labhold1 {
+	height: 41px;
+}
+
+.lablist1 {
+	width: 100%;
+	height: 41px;
+	overflow: hidden;
+	position: fixed;
+	top: 45;
+	left: 0;
+	background: #fff;
+	z-index: 500;
+}
+
+.lablist1:before {
+	content: '';
+	display: block;
+	width: 50%;
+	height: 18px;
+	top: 11px;
+	left: 0;
+	border-right: 1px solid #ddd;
+	position: absolute;
+	z-index: 400;
+}
+
+.lablist1 a {
+	display: block;
+	width: 50%;
+	height: 38px;
+	line-height: 38px;
+	border-bottom: 3px solid #fff;
+	float: left;
+	text-align: center;
+	position: relative;
+	z-index: 500;
+}
+
+.lablist1 a.hit {
+	border-bottom: 3px solid #00A1D8;
+	color: #00A1D8;
+}
+</style>
+</head>
+<body>
+	<div class="h45">
+		<div class="topdiv boxs">
+			<div class="tleft">就诊人列表</div>
+			<div class="tmid"></div>
+			<div class="tright">
+				<a href="JavaScript:goBack()"><input type="button" value="返回" style="border: none; background: #fff; color: #00a1d8; width: 46px; height: 28px; border-radius: 5px 5px 5px 5px;" /></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="labhold1">
+		<div class="lablist1 bor_b" id="divTab">
+
+			<a href="javascript:location.href=Commonjs.goToUrl(\'/business/member/memberList.html\');" class="hit">门诊卡号</a> <a href="hosnumlist.html">住院号</a>
+
+		</div>
+	</div>
+	<div class="mpat_box1 mt20" id="dvInfo">
+		<ul id="ulMemberList">
+		</ul>
+	</div>
+	<div class="getmore" style="display: none;" style="text-align: center;">
+		<a href="javascript:more()" onclick="">点击查看更多</a>
+	</div>
+	<div class="nomess" style="display: none;">
+		<i class="icon"></i>当前暂无数据
+	</div>
+	<div class="combtn" style="display: none; text-align: center;">
+		<a href="javascript:addMember();">添加就诊人</a>
+	</div>
+	<div id="openDiv"></div>
+
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="js/memberList.js?v=201901152112"></script>
+
+</body>
+</html>

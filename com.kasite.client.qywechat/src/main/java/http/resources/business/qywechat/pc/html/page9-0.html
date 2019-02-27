@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>发布公告</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+			.addimg{
+				margin-bottom: 5px;
+			}
+			.addimg-has,
+			.addimg-has-text{display: none;}
+			.addimg-no,
+			.addimg-has{
+				position: relative;
+				cursor: pointer;
+				width: 300px;
+				height: 167px;
+				text-align: center;
+				border:1px dashed #e5e6e7;
+				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				overflow: hidden;
+			}
+			.addimg-has{
+				border: 1px solid #e5e6e7;
+			}
+			.addimg-no input[type="file"],
+			.addimg-has input[type="file"]{
+				cursor: pointer;
+				position: absolute;
+				opacity: 0;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 2;
+			}
+			.addimg-no img{
+				width: 40px;
+				margin: 30px auto 10px auto;
+				display: block;
+			}
+			.addimg-has img{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.addimg-no span,
+			.addimg-has-text span{
+				font-size: 16px;
+				font-weight: bold;
+				margin-bottom: 5px;
+				display: block;
+			}
+			.addimg-no p,
+			.addimg-has-text p{
+				color: #e5e6e7;
+			}
+			.addimg.active .addimg-has,
+			.addimg.active .addimg-has-text{
+				display: block;
+			}
+			.addimg.active .addimg-no{
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>可见范围：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input type="text" onfocus="cc(this)" value="" class="form-control" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;padding-bottom: 5px;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>开讲内容：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<textarea id="editor" component="editor" style="width:100%;height:300px;">我是uditor</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 160px;">
+					<label>封面图片：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:160px;">
+					<div class="addimg">
+						<!--没有图片-->
+						<div class="addimg-no">
+							<input type="file" name="" id="" onchange="upimg(this)" accept="image/jpeg,image/gif,image/png" value="" />
+							<img src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+							<span>点击上传图片</span>
+							<p>建议使用1055x455像素的图片</p>
+						</div>
+						
+						<!--有图片-->
+						<div class="addimg-has">
+							<input type="file" name="" id="" onchange="upimg(this)" accept="image/jpeg,image/gif,image/png" value="" />
+							<img src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+						</div>
+						<div class="addimg-has-text">
+							<p>建议使用1055x455像素的图片</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>摘要：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 160px;">
+							<label><span class="red">*</span>作者：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:160px;">
+							<input type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 160px;">
+					<label><span class="red">*</span>分享设置：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:160px;">
+					<div style="padding-top: 8px;">
+						<div class="radio i-checks">
+	                        <label><input type="radio" checked="" value="option1" name="a"> <i></i> 仅限在企业内分享</label>
+	                    </div>
+	                    <div class="radio i-checks">
+	                        <label><input type="radio" value="option2" name="a"> <i></i> 可对外分享</label>
+	                    </div>
+	                    <div class="radio i-checks">
+	                        <label><input type="radio" value="option2" name="a"> <i></i> 不能分享且内容显示水印</label>
+	                    </div>
+                    </div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 160px;">
+					
+				</div>
+				<div class="x-row-cols text-center" style="margin-left:160px;">
+					<button type="button" class="btn btn-primary btn-w-m">发送</button>
+					<button type="button" class="btn btn-info btn-w-m" onclick="st()">定时发送</button>
+					<button type="button" class="btn btn-info btn-w-m">存为草稿</button>
+					<button type="button" class="btn btn-warning btn-w-m">预览</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		$(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+        
+        //定义全局的选中输入框对象
+        var cd = null;
+        function cc(o){
+        	cd = $(o);
+        	//把选中的项放到缓存
+        	window.localStorage.setItem('persons',cd.val());
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'tree2.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+        
+        //接收子页面传来的参数
+        function ccResult(str){
+        	cd.val(str);
+        }
+        
+        function upimg(o){
+			//获取文件
+    		var file = o.files[0];
+			//创建读取文件的对象
+		    var reader = new FileReader();
+		 
+		    //创建文件读取相关的变量
+		    var imgFile;
+		 
+		    //为文件读取成功设置事件
+		    reader.onload=function(e) {
+		        imgFile = e.target.result;
+		        $('.addimg').addClass('active');
+		        $('.addimg-has img').attr('src',imgFile);
+		    };
+		 
+		    //正式读取文件
+		    reader.readAsDataURL(file);
+		}
+        
+        function st(){
+			System.openWindow({
+				id:'page9-1',
+				title:'设定时间',
+				url:'page9-1.html',
+				width:'600',
+				height:'200',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+        }
+	</script>
+</html>

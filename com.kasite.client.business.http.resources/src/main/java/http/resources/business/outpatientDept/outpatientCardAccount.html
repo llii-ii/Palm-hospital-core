@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>就诊卡账户</title>
+  	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css"></link>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css"type="text/css"></link>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"></link>
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="jzr-head c-pack">
+    	<p id="account">就诊卡余额(元)</p>
+        <p class="c-f30" id="balance"></p>
+    </div>
+    <div class="c-border-b">
+    	<ul class="c-list c-f14 pt10">
+        	<li class="c-list-a">
+            	<a href="#" class="c-arrow-r">
+                    <div class="c-list-key c-666 pr15"><i class="sicon icon-memtb1"></i>就诊人</div>
+                    <div class="c-list-info c-t-right c-f15" id="memberPicker_name">
+                    	
+                    </div>
+                    <input type="text" id="filter-jzr" class="filtertext" />
+            	</a>
+            </li>
+        	<li>
+            	<div class="c-list-key c-666 pr15"><i class="sicon icon-memtb2"></i>就诊卡号</div>
+            	<div class="c-list-info c-t-right" id="memberPicker_cardNo"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb" id="rechargeDiv" style="display: none;">
+    	<ul class="c-list c-f14" id="btnPay">
+        	<li class="c-list-a">
+            	<a href="#" class="c-arrow-r" id="recharge">
+                    <div class="c-list-key c-666"><i class="sicon icon-memtb3"></i>在线充值</div>
+            	</a>
+            </li>
+        	
+        </ul>
+    </div>
+  	<div class="mt10 c-border-tb" >
+    	<ul class="c-list c-f14" id="btnUserSelfServiceRefund">
+        	<li class="c-list-a">
+            	<a href="#" class="c-arrow-r">
+                    <div class="c-list-key c-666"><i class="sicon icon-memtb4"></i>用户自助退费</div>
+            	</a>
+            </li>
+        	
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="../../common/js/memberpicker.js"></script>
+<script type="text/javascript" src="js/outpatientCardAccount.js?v=201901152112"></script>
+</body>
+</html>

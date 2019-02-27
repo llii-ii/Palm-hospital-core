@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>kasite</groupId>
+		<artifactId>com.kasite.core</artifactId>
+		<!-- <version>1.0.0-RELEASES</version> -->
+		<version>1.0.0-RELEASES</version>
+	</parent>
+	<artifactId>com.kasite.core.util</artifactId>
+	<packaging>jar</packaging>
+	<name>util</name>
+	<description>公用帮助类</description>
+	<properties>
+   		<maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.lingala.zip4j</groupId>
+			<artifactId>zip4j</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+	</dependencies>
+</project>

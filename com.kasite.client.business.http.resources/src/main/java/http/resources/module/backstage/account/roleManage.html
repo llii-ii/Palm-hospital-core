@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <link rel="stylesheet" href="../commons/css/base.css" type="text/css"></link>
+	    <link rel="stylesheet" href="../commons/css/setup.css" type="text/css"></link>
+		<link rel="stylesheet" href="../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../commons/css/artDialog.css" type="text/css" />
+        <link rel="stylesheet" href="../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../commons/css/Pager.css" type="text/css"/>
+         <script type="text/javascript" src="../commons/js/common.js"></script>
+	    <script type="text/javascript" src="../commons/js/business-all.js"></script>
+    	<script type="text/javascript" src="js/roleManage.js"></script>
+      <script language="javascript" type="text/javascript" src="../commons/js/jquery.pager.js"></script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <!--main content-->
+        <div class="container-wrap">
+        	<div class="main-header">
+                <ul class="clearfix">
+                    <li class="last"><span><a  href="javascript:window.location.href='accountPower.html';">用户管理</a></span></li>
+                    <li><span><a class="curr" href="javascript:window.location.href='roleManage.html';">职务管理</a></span></li>
+                	<li class="last"><span><a href="javascript:window.location.href='menuManage.html';">菜单管理</a></span></li>
+                	<!--<li class="last"><span><a href="javascript:window.location.href='buttonManage.html';">功能管理</a></span></li>
+                --></ul>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                    <div class="setup-content m20">
+                    	<a href="javascript:;" class="btn-add office-btns">新增职务</a>
+                        <div class="office-box clearfix" style="display:none">
+                        	<div class="office-box-fl fl">
+                        		<input type="hidden" name="roleId" id="roleId"> 
+                            	<table class="table-form">
+                                    <tr>
+                                        <td class="t">
+                                            <sub>&lowast;</sub> 职务名称
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="roleName"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t">
+                                          	&nbsp;&nbsp;&nbsp;职务描述
+                                        </td>
+                                        <td>
+                                            <input type="text" class="text" id="roleDesc"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="office-box-fr fr" >                            	
+                                <h2><sub>&lowast;</sub>设置菜单</h2>
+                                <div class="office-box-list">
+                                <table id="menuTb">
+                                    <tr>
+                                        <td class="w">账户权限</td>
+                                        <td>
+                                            <div class="custom-checkbox"><input type="checkbox" /><label for="action" class="">编辑</label></div>
+                                            <div class="custom-checkbox"><input type="checkbox" /><label for="action" class="">查看</label></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="last">
+                                        <td class="w">我的账号</td>
+                                        <td>
+                                            <div class="custom-checkbox"><input type="checkbox" /><label for="action" class="">编辑</label></div>
+                                            <div class="custom-checkbox"><input type="checkbox" /><label for="action" class="">查看</label></div>
+                                        </td>
+                                    </tr>
+                                </table> 
+                                </div>                               
+                            </div>
+                        </div>
+                        <table class="tb" width="100%" id="tb">
+                        </table>
+                        <div class="pager_container" >
+                                <input id="totalcount" type="hidden" value="0" />
+                                <input id="pagenumber" type="hidden" value="1" />
+                                <div id="pager"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/main content-->
+</body>
+</html>

@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kasite</groupId>
+    <artifactId>com.kasite.core</artifactId>
+    <version>1.0.0-RELEASES</version>
+  </parent>
+  <name>com.kasite.client.rf</name>
+  <artifactId>com.kasite.client.rf</artifactId>
+  <dependencies>
+  		<dependency>
+			<groupId>kasite</groupId>
+			<artifactId>com.kasite.core.serviceinterface</artifactId>
+			<version>1.0.0-RELEASES</version>
+		</dependency>
+		<dependency>
+			<groupId>kasite</groupId>
+			<artifactId>com.kasite.core.common</artifactId>
+			<version>1.0.0-RELEASES</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>设备在线情况</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../../commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/index.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/safe.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/Pager.css" type="text/css"/>
+		<script type="text/javascript" src="../../commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.datetimepicker.js"></script>
+		<link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		<script type="text/javascript" src="../../commons/js/base.js?version=1.0"></script>
+        <script type="text/javascript" src="../../commons/js/common.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+		<script type="text/javascript" src="./js/online.js?version=1.0"></script>
+
+		<link rel="stylesheet" href="../../css/crawler.css" type="text/css" />
+    </head>
+    <body>
+    	<div class="main-tit"><h2>连接状态</h2></div>
+        <div class="p20">
+        	<div class="querybar clearfix">
+				<label class="fl mr10" style=" width:72px; text-align:right;">设备状态</label>
+					<select name="" id="state" class="fl select mr20">
+						<option value=''>--请选择--</option>
+							<option value='0'>在线</option>
+	                        <option value='1'>离线</option>
+                    </select>
+                    <span>
+                        <label class="fl mr10">关键字</label>
+                        <input type="text" class="fl text w195 mr10" id="name"/>
+                        <input type="button" value="查询" class="fl btn-gray" onclick="queryWJData(1)" />
+                    </span> 
+             </div>
+        </div>               
+  		<div class="pl20 pr20">
+	        <table class="tb tb-hover" width="100%" id='dataList'>
+	            <tr>
+	                <th width="9%">序号</th>
+	                <th width="35%">设备名称</th>
+	                <th width="12%">状态</th>
+	                <th width="12%">统计天数</th>
+	                <th width="12%">得分(在线天数)</th>
+	                <th width="20%">操作</th>
+	            </tr>
+	        </table>
+	         <div class="pager_container" >
+				<input id="pagenumber" type="hidden" value="1" />
+				<div id="pager"></div>
+			</div>
+		</div>
+		
+	<div class="absolute trend-detail">
+        <div class="sec-header"><h5>上线断线明细</h5></div>
+        <div class="sec-con p20" style="padding-top:0;">
+	        <table class="tb tb-hover" width="100%" id="alltableid">
+				<tr>
+	            	<th width="35%">设备名称</th>
+	            	<th width="30%">状态</th>
+	            	<th width="35%">时间</th>
+	            </tr>
+	        </table>
+	        <div class="pager_container" >
+				<!-- <input id="totalcount" type="hidden" value="0" /> -->
+				<input id="pagenumber_del" type="hidden" value="1" />
+				<div id="pager_del"></div>
+			</div>
+        </div>
+        <a href="javascript:;" class="btn-hidedetail" onclick="hideDetail()"></a>
+	</div>
+	
+    </body>
+</html>

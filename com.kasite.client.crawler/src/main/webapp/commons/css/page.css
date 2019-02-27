@@ -1,0 +1,26 @@
+/*page*/
+.page-box-h { padding:5px 0;}
+.page-box-h.p15 { padding:15px 0;}
+.page-box-h a { display:inline-block; width:24px; height:24px; margin:0 2px; line-height:24px; border:1px solid #ccc; color:#4493df; background-color:#fff; cursor:pointer; vertical-align:middle; text-align:center; *display:inline; *zoom:1;}
+.page-box-h a.cur, .page-box-h a:hover { background-color:#3e90cf; color:#fff;}
+.page-box-h .prev, .page-box-h .next { width:60px;}
+.arr-prev { display:inline-block; width:0; height:0; margin-right:5px; margin-left:-5px; border-color:transparent #4493df transparent transparent; border-style:dashed solid dashed dashed; border-width:5px; vertical-align:middle; line-height:0;}
+.arr-next { display:inline-block; width:0; height:0; margin-left:5px; margin-right:-5px; border-color:transparent transparent transparent #4493df; border-style:dashed dashed dashed solid; border-width:5px; vertical-align:middle; line-height:0;}
+.page-box-h a.disable { color:#555;}
+.page-box-h a.disable .arr-prev { display:inline-block; width:0; height:0; margin-right:5px; margin-left:-5px; border-color:transparent #ccc transparent transparent; border-style:dashed solid dashed dashed; border-width:5px; vertical-align:middle; line-height:0;}
+.page-box-h a.disable .arr-next { display:inline-block; width:0; height:0; margin-left:5px; margin-right:-5px; border-color:transparent transparent transparent #ccc; border-style:dashed dashed dashed solid; border-width:5px; vertical-align:middle; line-height:0;}
+.page-box-h a.disable:hover { cursor:text; color:#555; background-color:#fff;}
+.page-box-h .prev:hover .arr-prev { border-color:transparent #fff transparent transparent;}
+.page-box-h .next:hover .arr-next { border-color:transparent transparent transparent #fff;}
+.page-box-h .prev.disable:hover .arr-prev { border-color:transparent #ccc transparent transparent;}
+.page-box-h .next.disable:hover .arr-next { border-color:transparent transparent transparent #ccc;}
+.page-box-h .total { display:inline-block; margin:0 5px; vertical-align:middle; *display:inline; *zoom:1;}
+.page-to { display:inline-block; width:25px; height:24px; padding:0 5px; margin:0 2px; border:1px solid #ccc; vertical-align:middle;}
+
+.mt20 { margin-top:20px; }
+.fl{ display:inline; float:left;}
+.fr{ display:inline; float:right; }
+.hidden { overflow:hidden; _zoom:1; }
+/*input CSS*/
+.bor-01{border:3px solid #f1ca7f; border-radius:3px; background:#fefed3; color:#000; }
+.bor-wrong{border:3px solid #f1ca7f; border-radius:3px; background:#fefed3; color:#000; }

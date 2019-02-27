@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>样式</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--[if lt IE 9]>
+    <script>setTimeout(function(){window.location.href="ie.html";},1000)</script>
+    <![endif]-->
+    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="children-page">
+	<div class="wrapper-content">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<h2>按钮</h2>
+			<button type="button" class="btn">btn</button>
+			<button type="button" class="btn btn-filter">btn-warning</button>
+			<button type="button" class="btn btn-info">btn-info</button>
+			<button type="button" class="btn btn-border">btn-border</button>
+			<button type="button" class="btn btn-success">btn-success</button>
+			<button type="button" class="btn btn-white">btn-white</button>
+			<button type="button" class="btn btn-font">btn-font</button>
+		</div>
+	</div>
+</body>
+
+</html>
+<script src="../../js/pc/webCom1.0/css/skin/zhengxie/js/mydata.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	//所有的js执行程序必须在webReady执行之后才能执行
+	var webReady = function(){
+		
+	}
+	
+	/*格式显示编写*/
+	function operateFormatter(value, row, index) {
+	    return [
+	        '<a class="like" href="javascript:void(0)" title="Like">',
+	        '<i class="glyphicon glyphicon-heart"></i>',
+	        '</a>  ',
+	        '<a class="remove" href="javascript:void(0)" title="Remove">',
+	        '<i class="glyphicon glyphicon-remove"></i>',
+	        '</a>'
+	    ].join('');
+	}
+	function numberFormatter(value, row, index){
+		return [
+	        '13859002783'
+	    ].join('');
+	}
+	
+	//当文件上传成功时触发
+	function uploadSuccess(file,response){
+		console.log(response);
+		$('#files').append('<li data-id="'+file.id+'" data-path="'+response.data+'"><img class="icon" src="'+realPath+'/css/skin/zhengxie/img/icon-file.png" />'+file.name+'&nbsp;&nbsp;<a href="javascript:deleteFile(\''+file.id+'\',\''+file.name+'\');">删除</a></li>');
+		getFilePath();
+	}
+	
+	function getFilePath(){
+		var path = [];
+		$('#files li').each(function(){
+			path.push($(this).attr('data-path'));
+		})
+		$('#filePath').val(path.join(','));
+	}
+	
+	function deleteFile(id,name){
+		System.confirm({
+			title:'删除确认',
+			text:'确定删除文件'+name+'?',
+			callback:function(bool){
+				if(bool){
+					$('[data-id="'+id+'"]').remove();
+					getFilePath();
+				}
+			}
+		})
+	}
+</script>

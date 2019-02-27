@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>学分管理</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>参会情况：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control">
+									<option value="">请选择</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>签到情况：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control">
+									<option value="">请选择</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:660px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>签退情况：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control">
+									<option value="">请选择</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>姓名：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:660px;">
+						<button type="button" class="btn btn-primary pull-right">查询</button>
+					</div>
+				</div>
+			</div>
+			<table id="exampleTablePagination" 
+		    	data-toggle="table" 
+		    	data-url="../js/data/bootstrap_table_test.json" 
+		    	data-mobile-responsive="true" 
+		    	data-pagination="true" 
+		    	data-toolbar="#toolbar"
+		    	>
+	            <thead>
+	                <tr>
+	                    <!--<th data-field="state" data-checkbox="true"></th>-->
+	                    <!--<th data-field="id" >ID</th>-->
+	                    <th data-field="name" data-align="center">姓名</th>
+	                    <th data-field="name" data-align="center">部门</th>
+	                    <th data-field="name" data-align="center">参会情况</th>
+	                    <th data-field="name" data-align="center">请假原因</th>
+	                    <th data-field="name" data-align="center">签到</th>
+	                    <th data-field="name" data-align="center">签到时间</th>
+	                    <th data-field="name" data-align="center">签到地点</th>
+	                    <th data-field="name" data-align="center">退签</th>
+	                    <th data-field="name" data-align="center">退签时间</th>
+	                    <th data-field="name" data-align="center">退签地点</th>
+	                </tr>
+	            </thead>
+	        </table>
+		</div>
+	</body>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		
+	</script>
+</html>

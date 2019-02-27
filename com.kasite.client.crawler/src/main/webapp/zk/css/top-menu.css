@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+/* top-menu.css created by zhaoboy 2014--1-20 */
+
+/****顶部****/
+#top {height:55px;background:#34383C;/*border-bottom:2px solid #D14836;*/position:relative;margin-bottom:38px;}
+#top a.logo {display:block;float:left;}
+
+/****顶部导航****/
+ul.main-nav {float:right;margin-right:30px;top:0;color:#CCC;}
+ul.main-nav > li {float:left;position:relative;background:url(../images/bg_mainnav_down.png) right center no-repeat;height:55px;line-height:55px;padding:0 20px 0 10px;}
+ul.main-nav > li > a {color:#CCC;text-decoration:none;padding-left:20px;display:block;line-height:55px;height:55px;background-position:left center;background-repeat:no-repeat;}
+
+ul.main-nav > li.selected {position:static;background-color:#555;color:#EEE;}
+ul.main-nav > li.selected a {color:#EEE;text-decoration:none;}
+
+ul.main-nav > li.hovered {position:reletive;background-color:#555;color:#EEE;}
+ul.main-nav > li.hovered a {color:#FFF;text-decoration:none;}
+
+/*
+ul.main-sub-nav {display:none;position:absolute;left:-275px;top:46px;background:#F0F0F0;}
+ul.main-sub-nav li {float:left;height:40px;line-height:40px;padding:0 15px;border:none;border-right:1px solid #CCC;background:none;color:#333;}
+ul.main-sub-nav li.selected {height:40px;line-height:40px;border:none;border-right:1px solid #CCC;background:#DDD;}
+*/
+
+ul.main-sub-nav {display:none;position:absolute;left:0;top:55px;background:#555;z-index:999;}
+ul.main-sub-nav li {float:none;width:200px;height:35px;line-height:35px;padding:0 15px;border:none;background:none;color:#FFF;}
+ul.main-sub-nav li.selected {height:35px;line-height:35px;border:none;background:#D14836;color:#FFF;}
+
+ul.main-sub-nav-fixed {position:absolute;left:0;top:55px;background:#F0F0F0;border-bottom:1px solid #DDD;}
+ul.main-sub-nav-fixed li {float:left;height:29px !important;line-height:29px;padding:0 15px;margin:4px 0;border:none;border-right:1px solid #DDD;background:none;color:#333;}
+ul.main-sub-nav-fixed li.selected {border:none;line-height:29px;border-right:1px solid #DDD;background:#DDD;color:#333;}
+ul.main-sub-nav-fixed li a, ul.main-sub-nav-fixed li.selected a {color:#666 !important;}
+
+/****顶部右侧功能菜单****/
+ul.top-menu {float:right;color:#CCC;}
+ul.top-menu li {float:left;padding:0 18px 0 22px;line-height:55px;}
+ul.top-menu li.member {background:url(../images/ico_top_menu_member.png) left center no-repeat;}
+ul.top-menu li.log {background:url(../images/ico_top_menu_log.png) left center no-repeat;}
+ul.top-menu li.config {background:url(../images/ico_top_menu_config.png) left center no-repeat;}
+ul.top-menu li.logout {background:url(../images/ico_top_menu_logout.png) left center no-repeat;}
+ul.top-menu li.signup {background:url(../images/ico_top_menu_signup.png) left center no-repeat;}
+ul.top-menu li.login {background:url(../images/ico_top_menu_login.png) left center no-repeat;}
+
+ul.top-menu li a:link, ul.top-menu li a:visited {color:#CCC;text-decoration:none;}
+ul.top-menu li a:hover {color:#FFF;text-decoration:none;}
+
+.search-container {position:absolute;right:10px;bottom:-40px;}
+.search-text {float:left;background:#FFF;border:1px solid #DADADA;padding:8px 7px;display:inline-block;margin:3px 0;width:150px;}
+.search-button {width:32px !important;height:30px;border:none;background: url(../images/ico_top_search.png) center center no-repeat #2E363F;cursor:pointer;float:left;margin:3px 0;}
+
+
+/****顶部右侧功能菜单(新增下拉功能)****/
+.top_login_info {float:right;color:#EEE;padding:1px 8px;}
+.drop {position:relative;padding-right:20px !important;background:url(../images/ico_drop_white.png) no-repeat right center;padding-right:20px;cursor:pointer;}
+.drop_down_menu {position:absolute;right:0;top:55px;display:none;z-index:999;}
+.drop_down_menu .list_item  {width:120px;height:35px;line-height:35px;padding:0 10px 0 30px;color:#333;cursor:pointer;background-color:#FFF;background-repeat:no-repeat;background-position:10px center;}
+.drop_down_menu .list_item:hover {background-color:#EEE;}
+.drop_down_menu .logout {background:url(../images/ico_top_menu_logout.png) 10px center no-repeat #333;}
+
+/****右侧提醒，新发现值域和异常调度****/
+.right-tips {float:right;color:#FFF;line-height:44px;margin-right:5px;}
+.right-tips li {position:relative;width:40px;float:left;text-align:center;height:44px;}
+.right-tips li:hover {background:#444;}
+.right-tips li img {position:absolute;left:11px;top:12px;}
+.right-tips li .badge {position:absolute;left:2px;top:5px;height:16px;background:#080;border-radius:8px;padding:0 5px;color:#FFF;text-align:center;font-weight:normal;line-height:16px;}
+.right-tips li .sec_alert {background:#F00;}
+
+.top_tip {display:none;position:absolute;right:0;top:39px;z-index:999999;height:42px;text-align:center;padding:0 10px;line-height:46px;cursor:pointer;color:#FFF;min-width:110px;background:url(../images/bg_top_tips.png) right top no-repeat;}
+

@@ -1,0 +1,193 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } 
+ 		,"patientId": {
+			"type": "keyword"
+		}
+ 		,"inHospitalNum": {
+			"type": "keyword"
+		}
+ 		,"receiptNum": {
+			"type": "keyword"
+		}
+ 		,"hospitalChargeCode": {
+			"type": "keyword"
+		}
+ 		,"hospitalChargeName": {
+			"type": "keyword"
+		}
+ 		,"ssItemCode": {
+			"type": "keyword"
+		}
+ 		,"ssItemName": {
+			"type": "keyword"
+		}
+ 		,"eventTime": {
+			"format": "YYYY-MM-dd HH:mm:ss",
+			"type": "date"
+		}
+ 		,"medItemCtg": {
+			"type": "keyword"
+		}
+ 		,"itemCode": {
+			"type": "keyword"
+		}
+ 		,"itemName": {
+			"type": "keyword"
+		}
+ 		,"price": {
+			"type": "integer"
+		}
+ 		,"size": {
+			"type": "keyword"
+		}
+ 		,"amount": {
+			"type": "integer"
+		}
+ 		,"spec": {
+			"type": "keyword"
+		}
+ 		,"unit": {
+			"type": "keyword"
+		}
+ 		,"selfPayRatio": {
+			"type": "keyword"
+		}
+ 		,"selfPay": {
+			"type": "integer"
+		}
+ 		,"selfFee": {
+			"type": "integer"
+		}
+ 		,"compliantSign": {
+			"type": "keyword"
+		}
+ 		,"compliantPrice": {
+			"type": "integer"
+		}
+ 		,"SettlementType": {
+			"type": "keyword"
+		}
+ 		,"updateBy": {
+			"type": "keyword"
+		}
+ 		,"itemNo": {
+			"type": "keyword"
+		}
+ 		,"itemLevel": {
+			"type": "keyword"
+		}
+ 		,"singleUseSize": {
+			"type": "keyword"
+		}
+ 		,"minDosageUnit": {
+			"type": "keyword"
+		}
+ 		,"everyDaySize": {
+			"type": "keyword"
+		}
+ 		,"useDaySize": {
+			"type": "keyword"
+		}
+ 		,"isSingleRemedy": {
+			"type": "keyword"
+		}
+ 		,"isPrescription": {
+			"type": "keyword"
+		}
+ 		,"herbalSize": {
+			"type": "keyword"
+		}
+ 		,"drugDeliverType": {
+			"type": "keyword"
+		}
+ 		,"doctorFunction": {
+			"type": "keyword"
+		}
+ 		,"taboo": {
+			"type": "keyword"
+		}
+ 		,"isSeriousDrugs": {
+			"type": "keyword"
+		}
+ 		,"seriousDrugs": {
+			"type": "keyword"
+		}
+ 		,"drugFlag": {
+			"type": "keyword"
+		}
+ 		,"chineseMedicineNo": {
+			"type": "keyword"
+		}
+ 		,"registerNo": {
+			"type": "keyword"
+		}
+ 		,"brand": {
+			"type": "keyword"
+		}
+ 		,"projectEnglishName": {
+			"type": "keyword"
+		}
+ 		,"insurantInnerOut": {
+			"type": "keyword"
+		}
+ 		,"manufacturer": {
+			"type": "keyword"
+		}
+ 		,"medlimitedPrice": {
+			"type": "integer"
+		}
+ 		,"examinationHint": {
+			"type": "keyword"
+		}
+ 		,"referenceRanges": {
+			"type": "keyword"
+		}
+ 		,"examinationResult": {
+			"type": "keyword"
+		}
+ 		,"extraRecipeFlg": {
+			"type": "keyword"
+		}
+ 		,"hosBearMoney": {
+			"type": "integer"
+		}
+ 		,"constituent": {
+			"type": "keyword"
+		}
+ 		,"departmentName": {
+			"type": "keyword"
+		}
+ 		,"departmentCode": {
+			"type": "keyword"
+		}
+ 		,"doctorId": {
+			"type": "keyword"
+		}
+ 		,"doctorName": {
+			"type": "keyword"
+		}
+ 		,"lastmodify": {
+			"format": "YYYY-MM-dd HH:mm:ss",
+			"type": "date"
+		}
+
+     	 }
+    }
+  }
+}

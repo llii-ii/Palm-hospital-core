@@ -1,0 +1,18 @@
+<Response>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalizationFreeSummary">
+		<baseInsurance>265762.0000</baseInsurance>
+		<complementarityInsurance>0.0000</complementarityInsurance>
+		<fee>472473.00</fee>
+		<inHospitalNum>20139762</inHospitalNum>
+		<insuranceDeduct>0</insuranceDeduct>
+		<patientId>34221</patientId>
+		<receiptNum></receiptNum>
+		<selfFee>206711.00</selfFee>
+		<selfPay>206711.0000</selfPay>
+		<underwayCriterion>0</underwayCriterion>
+	</Data>
+	<Message>成功</Message>
+	<Code>10000</Code>
+	<total>0</total>
+</Response>

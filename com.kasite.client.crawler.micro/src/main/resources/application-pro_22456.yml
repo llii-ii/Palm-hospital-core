@@ -1,0 +1,44 @@
+#卡斯特配置中心连接配置。默认是不开启，读取本地配置文件 数据采集子系统
+kasite:
+    #系统日志模块配置信息
+    log:
+        #是否启用ES保存日志
+        esLog: true
+        #es库地址
+        esUrl: 127.0.0.1:9200
+    appConfig:
+        isConnectionKastieCenter: true
+        centerUrl: https://verification.kasitesoft.com,http://verification2.kasitesoft.com
+        appId: KASTIE-CLIENT-CRAWLER.MICRO.22456
+        appSecret: fcbee7a03ec1
+        orgCode: 22456
+        orgName: 达州市中心医院(守护程序)
+        configPath: /Users/daiyanshui/Desktop/Config
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqAxebq2faqMocfEWSbOF2R0gvccPAmUb8px0ybHlP0vLDTGdBT8bneMAH+k/Bi42ZbdMbIAxbtqiGCQlkoQHyX93LNPulgWjlZCGL2AZ6mE1KnuMps9ZhBaqlOmCHx0uiSLRV5Omo/NUUCNyowHrxsI4nQGPCBa0gsIbwcOcF4xXl6WneLtxlmNR0dKlJ0c49QsYfBs43t7nPez0T1eQXrjz/obWRfnck8qK8iJXfnK7FjMOcTawlvAJ7qlf9yH+4D9zWdVRIsBZbdjKg3tnkjw3uog6CwjXu+JpaWSvVcifqg+CtfGLhefMjZbXocefJHCGww5QvqK0ywWk8sB/swIDAQAB
+        privateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAM9WVLbSeMir1Xfxy8wh9MeDQv2uRHLMnLZseEJCJ9u4lKPHalMcT7WJAHgKJlU6mN3G/O+fv5cH2hm46cfCA9MkDCTQiSmUfLFWHcesjlSkQipx7jM9LsoAGGFQkMmhDz2AhpsVZss0SJRRaI8azL5vDLav80c7Nli6FKQ0uk2PAgMBAAECgYBHkYdAbDphGl9fPcmZNwdlbvvK0UKzVcmqdpq0VF2pzHcSaZ1b/uPMx/Ove+FrfgSSWUOp+zyJB57TTi70UxY6Rf2HDm3L4Yl0sFy4qkPOS+fTrIqWsuTNfNGz4bd/6XhBpGkTrw2SKIsxkN3EmZoR5G1wAjno7TcLscNyQCIJsQJBAPwrDciL5Hsd3q0OAJ7/9+Zl60cpsuRnTFlnxl/EoLAFhXtapoyKzyzjtHx6OH/m0eWEdsCQtNOwG0yjMYIXIPUCQQDSfOHvYLcQHv7o3snZJ9/bX0XihUYYgfVcSEKLF7CdS2jMOCc7Dln5+uf6mX5sYU0g6ICUCjNEDxzws2CYptHzAkEAjwgIsGkQ9vhxVq1rksRTo37J3jp7uuwQtWGUdru7/TuUg+xeLbeKXcbml/hnVbzh75KcHQu3VZ89TNIAAe8GhQJAQvvrCrrEhyTWClWb9rdxzeYr30J6ZCI3av6z7n/DfMsatqLIGUsf5yWp3V4rlWIBoY9cG8CDQA1vMEplWy77cQJBAK70J7ky+19Mj82wbH+G+OjLDQOImAguYk/vKYJJwdRYqQoS30+EBD75hj8ZCgl9tqetIQvEOLmMaWV8yke5Tig=
+
+#请填写医院HosId
+info:
+    orgCode: 22456
+
+spring:
+    #SpringAdmin 的配置
+    boot:
+      admin:
+        client:
+          read-timeout: 30000
+          connect-timeout: 30000
+          instance:
+            #客户端要显示的工程名 医院全称+统一对账系统
+            name: 达州市中心医院日志系统
+            #客户端的工程部署地址 http://外网ip+端口或域名/项目名/bill/[threeParty] or [twoParty]/everyDayBill.html
+            service-url: http://221.237.207.110:8080/guard/module/log/apiCallLog.html
+            # http://外网ip+端口或域名/项目名/actuator
+            management-url: http://221.237.207.110:8080/guard/actuator
+            # http://外网ip+端口或域名/项目名/actuator/health
+            health-url: http://221.237.207.110:8080/guard/actuator/health
+            #正式线URL地址 https://springadmin.kasitesoft.com 默认配置开发线，记得修改
+            # 开发线线URL地址 http://119.23.210.15:9999
+          url: https://springadmin.kasitesoft.com #向服务端注册的地址
+          username: admin #登录服务端的用户名、密码
+          password: kst.2018

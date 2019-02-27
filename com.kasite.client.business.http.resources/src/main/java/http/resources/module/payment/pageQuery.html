@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <title>数据库查询</title>
+</head>
+
+<body>
+	<div class="c-main" >
+		<div style="width:500px;float:left;">
+		<div>
+			<input type='text' name="db" id="db" placeholder="请输入要查询的库" value="hos" /> 1天只能查询 50次 查询超过 50次 请隔天查询
+		</div>
+		<div>
+			<textarea style="width:450px;height: 300px" name="sqlStr" id="sqlStr" placeholder="请输入要sql语句 只支持查询类"></textarea>
+		</div>
+		<!-- <div id="query_div0">
+			<p>查询表名:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="tableName" id="tableName" placeholder="请输入要查询的表名" value="" /><font color='red'>*</font></p>
+	    	<p>查询key:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="query_column" placeholder="请输入条件查询列" value="" /></p>
+	    	<p>查询value:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="query_value" placeholder="请输入数值" value="" /><font size="2" color='red'>注意:多个值请以逗号(英文下)隔开</font></p>
+	    </div>
+	    <p>
+	    	成立条件:&nbsp;&nbsp;<select id='relation'>
+	    		<option value='_eq_'>等于</option>
+	    		<option value='_neq_'>不等于</option>
+	    		<option value='_gt_'>大于</option>
+	    		<option value='_lt_'>小于</option>
+	    		<option value='_gte_'>大于等于</option>
+	    		<option value='_lte_'>小于等于</option>
+	    	</select>
+	    </p>
+    	<p><button id="addQueryColumnbtn" style="background: #ffee88;">新增查询条件列</button></p>
+    	<p>结果集列名:&nbsp;&nbsp;&nbsp;&nbsp;
+    		<input type='text' name="result_column" id="result_column" placeholder="请输入结果集展示列" value="" />
+    		<font size="2" color='red'>注意:多个列请以逗号(英文下)隔开</font>
+    	</p> -->
+    	<p>页码:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="pageNo" id="pageNo" placeholder="请输入页码" value="1" /></p>
+    	<p>每页条数:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="pageSize" id="pageSize" placeholder="请输入每页显示条数" value="10" /></p>
+    	<p><button id="searchbtn" style="background: #ffee88;">查询</button></p>
+    	
+    	</div>
+    	<div style="width: 50%;float:right;padding-bottom: 200px;">
+			<div id="tables">
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="commons/js/common.js"></script>
+<script>
+	var COUNT = 1;
+	var artLoading = null;
+	function queryTableInfo(tname){
+		var dataJson ={};
+		dataJson["_eq_table_schema"]= $("#db").val();
+		dataJson["_eq_table_name"]= tname;
+		dataJson["_COLUMN"]="column_name,column_comment";
+		dataJson["pageNo"]="1";
+		dataJson["pageSize"]="150";
+		$.ajax({  
+			type: "GET",
+			url: location.protocol + '//' + location.host + '/api/information_schema.columns/query.do',
+			data: dataJson,
+			async: false,
+			timeout : 30000,
+			cache : true,
+			dataType: 'json',
+			success: function(data){
+				var strHtml = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" class=\"dv-table\"><thead><tr><th colspan=\"30\" class=\"dv-label\">查询结果集</th></tr></thead>";
+				if(data.RespCode == 10000){
+					strHtml += "";
+					$.each(data.result,function(k,itemObj){
+						if(k==0){
+							strHtml += "<tr>";
+							$.each(itemObj,function(i,item){
+								strHtml += "<th align=\"center\" class=\"dv-label\"> "+i+"</th>";
+							});	 
+							strHtml += "</tr><tbody>";
+						}
+						strHtml += "<tr>";
+						$.each(itemObj,function(i,item){
+							var v = (isJsonObj(item)?JSON.stringify(item):(item==undefined?"":item));
+							strHtml += "<td> "+v+" </td>";
+						});	
+						strHtml += "</tr>";
+					});
+				}else{
+					
+				}
+				strHtml += "</tbody></table>";
+				var title = "详细信息-" + "<span class='c-f00'>(" + tname +")</span>";
+				art.dialog({
+					lock : true, 
+					artIcon : 'query', 
+					opacity : 0.4, 
+					width : 800,
+					height : '80%',
+					overflow:true,
+					title : title, 
+					fixed : false,
+					content : strHtml, 
+					ok : null, 
+					cancel : null, 
+					quickClose : true
+				});
+ 			},
+ 			error:"查询报错！"
+		});
+	}
+	
+	function queryTables(){
+		var dataJson ={};
+		dataJson["_eq_table_schema"]= $("#db").val();
+		dataJson["_COLUMN"]="DISTINCT table_name";
+		dataJson["pageNo"]="1";
+		dataJson["pageSize"]="150";
+		$.ajax({
+			type: "GET",
+			url: location.protocol + '//' + location.host + '/api/information_schema.columns/query.do',
+			data: dataJson,
+			async: false,
+			timeout : 30000,
+			cache : true,
+			dataType: 'json',
+			success: function(data){
+				var strHtml = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" class=\"dv-table\"><thead><tr><th colspan=\"30\" class=\"dv-label\">数据库表</th></tr></thead>";
+				if(data.RespCode == 10000){
+					strHtml += "";
+					$.each(data.result,function(k,itemObj){
+						strHtml += "<tr>"; 
+						$.each(itemObj,function(i,item){
+							var v = (isJsonObj(item)?JSON.stringify(item):(item==undefined?"":item));
+							strHtml += "<td><a href='javascript:void(0);' onclick='queryTableInfo(\""+v+"\");'>"+v+"</a></td>";
+						});	
+						strHtml += "</tr>";
+					});
+				}else{
+					
+				}
+				strHtml += "</tbody></table>";
+				var title = "详细信息-" + "<span class='c-f00'>(" +$("#tableName").val()+")</span>";
+				$("#tables").html(strHtml);
+ 			},
+ 			error:"查询报错！"
+		});
+	}
+	function excuteSqlStr(){
+		var dataJson ={};
+		dataJson["sqlStr"]=$("#sqlStr").val();
+		dataJson["pageNo"] = $("#pageNo").val();
+		dataJson["pageSize"] = $("#pageSize").val();
+		Commonjs.ajax('/sys/db/query.do',dataJson,function(data){
+				var strHtml = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" class=\"dv-table\"><thead><tr><th colspan=\"30\" class=\"dv-label\">数据库表</th></tr></thead>";
+				if(data.RespCode == 10000){
+					strHtml += "";
+					$.each(data.result,function(k,itemObj){
+						if(k==0){
+							strHtml += "<tr>";
+							$.each(itemObj,function(i,item){
+								strHtml += "<th align=\"center\" class=\"dv-label\"> "+i+"</th>";
+							});	 
+							strHtml += "</tr><tbody>";
+						}
+						strHtml += "<tr>"; 
+						$.each(itemObj,function(i,item){
+							var v = (isJsonObj(item)?JSON.stringify(item):(item==undefined?"":item));
+							strHtml += "<td>"+v+"</td>";
+						});	
+						strHtml += "</tr>";
+					});
+				}else{
+					strHtml += data.RespMessage;
+				}
+				strHtml += "</tbody></table>";
+				console.log(strHtml);
+				var title = "执行结果信息";
+				art.dialog({
+					lock : true, 
+					artIcon : 'query', 
+					opacity : 0.4, 
+					width : 1000,
+					height : '80%',
+					overflow:true,
+					title : title, 
+					fixed : false,
+					content : strHtml, 
+					ok : null, 
+					cancel : null, 
+					quickClose : true
+				});
+		});
+	}
+	
+	//执行语句查询
+	function excuteSql(){
+		var paramKey = new Array();
+		var paramValue = new Array();
+		var dataJson ={};
+		$("input[name='query_column']").each(
+			function(index, item){
+				paramKey.push($(this).val());
+			}
+		);
+		$("input[name='query_value']").each(
+			function(index, item){
+				paramValue.push($(this).val());
+			}
+		);
+		var relation = $("#relation").val();
+		for(var i=0;i<paramKey.length;i++){
+			dataJson[relation+paramKey[i]] = paramValue[i];
+		}
+		var columnVal = $("#result_column").val();
+		if(columnVal != ""){
+			dataJson["_COLUMN"] = columnVal;	
+		}
+		dataJson["pageNo"] = $("#pageNo").val();
+		dataJson["pageSize"] = $("#pageSize").val();
+		
+		if($("#tableName").val() == ''){
+			alert("请输入查询的表名!!!");
+			return;
+		}
+		$.ajax({
+			type: "GET",
+			url: location.protocol + '//' + location.host + '/api/'+$("#tableName").val()+'/query.do',
+			data: dataJson,
+			async: false,
+			timeout : 30000,
+			cache : true,
+			dataType: 'json',
+			success: function(data){
+				var strHtml = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" class=\"dv-table\"><thead><tr><th colspan=\"30\" class=\"dv-label\">查询结果集</th></tr></thead>";
+				if(data.RespCode == 10000){
+					strHtml += "";
+					$.each(data.result,function(k,itemObj){
+						if(k==0){
+							strHtml += "<tr>";
+							$.each(itemObj,function(i,item){
+								strHtml += "<th align=\"center\" class=\"dv-label\"> "+i+"</th>";
+							});	 
+							strHtml += "</tr><tbody>";
+						}
+						strHtml += "<tr>";
+						$.each(itemObj,function(i,item){
+							strHtml += "<td>"+(isJsonObj(item)?JSON.stringify(item):(item==undefined?"":item))+"</td>";
+						});	
+						strHtml += "</tr>";
+					});
+				}else{
+					
+				}
+				strHtml += "</tbody></table>";
+				var title = "详细信息-" + "<span class='c-f00'>(" +$("#tableName").val()+")</span>";
+				art.dialog({
+					lock : true, 
+					artIcon : 'query', 
+					opacity : 0.4, 
+					width : 800,
+					height : '80%',
+					overflow:true,
+					title : title, 
+					fixed : false,
+					content : strHtml, 
+					ok : null, 
+					cancel : null, 
+					quickClose : true
+				});
+ 			},
+ 			error:"查询报错！"
+		});
+	}
+	
+	$(function(){
+		queryTables();
+		$("#searchbtn").click(function(){
+			excuteSqlStr();
+		});
+	});
+	
+	$("#addQueryColumnbtn").click(function(){
+		var paramKey = new Array();
+		paramKey = $("input[name='query_column']");
+		var index = paramKey.length;
+		if(index < COUNT){
+			index = COUNT;
+		}
+		
+		var $paramKey = $("<p>查询key:&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+		var $keyInput = $("<input type='text' name='query_column' placeholder='请输入条件查询列' value='' />");
+		$paramKey.append($keyInput);
+		
+		var $paramValue = $("<p>查询value:&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+		var $input = $("<input type='text' name='query_value' placeholder='请输入数值' value='' />");
+		var $font = $("<font size='2' color='red'>注意:多个值请以逗号(英文下)隔开</font>");
+		var $delbtn = $("<a href='javascript:delInput("+index+");' style='text-decoration: none;'><font size='2' color='blue'>&nbsp;&nbsp;删除</font></a>");
+		$paramValue.append($input);
+		$paramValue.append($font);
+		$paramValue.append($delbtn);
+		
+		var $div = $("<div id='query_div"+index+"'></div>");
+		$div.append($paramKey);
+		$div.append($paramValue);
+		$("#query_div"+(index-1)).after($div);
+		
+		COUNT = index;
+	});
+	
+	function delInput(index){
+		$("#query_div"+index).remove();
+	}
+	
+	function  isJsonObj(obj){
+    	var isjson = typeof(obj) == "object" 
+    		&& (Object.prototype.toString.call(obj).toLowerCase() == "[object object]" 
+    		|| Object.prototype.toString.call(obj).toLowerCase() == "[object array]")
+    		&& !obj.length; 
+    	var isarray = typeof(obj) == "object" 
+    		&& Object.prototype.toString.call(obj).toLowerCase() == "[object array]"; 
+    	return (isjson||isarray);
+    }
+	
+</script>
+ 	
+</html>

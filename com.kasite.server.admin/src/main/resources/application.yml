@@ -1,0 +1,73 @@
+server:
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 9999
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  security: # 登录的用户名密码
+    user:
+      name: admin
+      password: kst.2018
+  boot:
+    admin:
+      monitor:
+        read-timeout: 60000
+        connect-timeout: 60000
+      client:
+        read-timeout: 30000
+        connect-timeout: 30000
+        instance:
+          name: Spring Boot Admin 2.0.1
+          # 你的工程首页外网地址
+          service-url: http://localhost:9999
+          # http://外网IP或域名/actuator
+          management-url: http://localhost:9999/actuator
+          # http://外网IP或域名/actuator/health
+          health-url: http://localhost:9999/actuator/health
+          # admin服务端地址 https://springadmin.kasitesoft.com http://119.23.210.15:9999  http://127.0.0.1:9999
+        url: http://localhost:9999
+        username: admin
+        password: kst.2018
+info:
+  name: Spring Boot Admin 2.0.1
+  orgCode: 10000
+# Actuator 在 spring boot 2.0 版本后，默认只暴露了两个端点
+management: 
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS 
+# 设置日志级别
+logging:
+  level:
+    com.kasite: info 
+    org.springframework.web: info
+    org.springboot.sample: info
+  # 改成你自己的工程日志所在路径
+  file: D:\Client\logs\logback\all.log
+#      notify:
+#        wechat:
+#          enabled: true
+#          webhook-token: https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN
+#        mail:
+#          enabled: true
+#          from: 551880768@qq.com
+#          to: 551880768@qq.com,343675979@qq.com
+#  mail: # 管理的实例有启动或关闭时发送邮件:用来发送邮件的账号一定要开启POP3/SMTP服务,密码不是登录密码，是开启pop3分配的授权码
+#    host: smtp.qq.com
+#    username: 551880768@qq.com
+#    password: qzfilyzmosyfbbbf

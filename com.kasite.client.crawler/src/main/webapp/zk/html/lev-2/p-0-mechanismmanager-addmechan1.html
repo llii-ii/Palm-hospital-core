@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" href="../../css/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+		<script type="text/javascript" src="../../js/jquery-1.7.2.js"></script>
+		<script src="../../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+		<script src="../../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.busy.min.js"></script>
+		<script type="text/javascript" src="../../js/realesoft.js"></script> 
+		<script type="text/javascript" src="../../js/general.js"></script>
+		<script type="text/javascript" src="../../js/Validform_v5.0.js"></script>
+		<script type="text/javascript" src="../../js/jquery-ui-1.9m7.js"></script>
+		<script type="text/javascript" src="../../js/jquery.uniform.js"></script>
+		<script type="text/javascript" src="../../js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.mCustomScrollbar.js"></script>
+		<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+		<script type="text/javascript" src="../../js/jquery.spin.js"></script>
+		<script type="text/javascript" src="../../js/jquery.bottomTipbar.js"></script>
+		<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery.ztree.all-3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+
+		<style>
+			.widget label, span {
+			    font-size: 12px;
+			    position: relative;
+			}
+			h1, .h1, h2, .h2, h3, .h3{
+				margin-top:30px;
+			}
+			.widget {
+			    margin-bottom: 15px;
+			}
+			.btn{
+				font-size:12px;
+			}
+			.well{
+				background:#FEFEFE;
+				border:1px solid #d5d5d5;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container" style="visibility: visible;">
+		   <table width="100%" height="100%" cellspacing="0" cellpadding="0" style="padding: 0px;word-break:break-all">
+				<tbody><tr id="containerLayoutUl">
+					
+					<td valign="top" style="padding: 0px;" class="main-column"><div id="mainContainer" class="divContainer">
+
+
+
+
+
+
+
+
+
+<div id="4b0acce2-7ff1-44f0-964e-e0753ff6795b">
+	
+		<div class="widget-head">
+			<span class="icon-edit"></span>
+			<h2>添加/更新机构</h2>
+		</div>
+	
+
+	
+	
+	<form id="organizationForm" name="organizationForm" class="form-horizontal" action="/PMC/organization/manager/form-action" method="post">
+		<div class="widget row-fluid">
+			<div class="well">
+				<div class="control-group">
+					<label class="control-label" for="name">机构名称 <span class="required">*</span> </label>
+					<div class="controls">
+						<input id="name" name="name" style="width:350px;" type="text" value="" datatype="*2-32" errormsg="机构名称为2-32个字符" nullmsg="机构名称不能为空" class="text">
+						<a style="padding-left: 5px;padding-right: 5px;" href="javascript:void(0)" onclick="checkOrganization();">检查机构 </a>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="order">机构排序<span class="required">*</span> </label>
+					<div class="controls">
+						<input id="order" name="order" type="text" value="" datatype="n1-5" errormsg="机构排序只能为1-5位数字" nullmsg="请输入机构排序" class="text">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="showCode">机构编码<span class="required">*</span>
+					</label>
+					<div class="controls">
+						<input id="showCode" name="showCode" type="text" value="" datatype="*2-32" errormsg="机构编码为2-32个字符" nullmsg="机构编码不能为空" class="text">
+						<span class="help-block">机构唯一编码</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="tempcolumn01">医疗机构
+					</label>
+					<div class="controls">
+					    <div class="checker" id="uniform-checkbox99"><span><input type="checkbox" name="checkbox" value="" id="checkbox99" style="opacity: 0;"></span></div>
+					</div>
+				</div>
+				<div class="control-group" id="hospitalType" style="display:none">
+					<label class="control-label" for="column01">
+					机构类型<span class="required">*</span> </label>
+					<div class="controls">
+						<div class="selector" id="uniform-column01"><span>医院</span><select name="column01" id="column01" style="opacity: 0;">
+						   
+						        
+						        <option value="1">医院</option>
+						   
+						        
+						        <option value="11">社区卫生服务中心</option>
+						   
+						        
+						        <option value="12">社区卫生服务站</option>
+						   
+						        
+						        <option value="13">乡镇卫生院</option>
+						   
+						        
+						        <option value="14">村卫生室</option>
+						   
+						        
+						        <option value="15">妇幼保健院(所、站)</option>
+						   
+						        
+						        <option value="999">其他</option>
+						   
+						    <!--  
+							<option value="1" >医院</option>
+							<option value="11" >社区卫生服务中心</option>
+							<option value="12" >社区卫生服务站</option>
+							<option value="13" >乡镇卫生院</option>
+							<option value="14" >村卫生室</option>
+							<option value="15" >妇幼保健院(所、站)</option>
+							<option value="99" >其他</option>
+							 -->
+						</select></div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="desc">描述 </label>
+					<div class="controls">
+						<textarea id="desc" name="desc" style="width:350px;" datatype="#*2-64" errormsg="机构描述为2到64个字符" class="uniform"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">
+			保存
+		</button>
+
+		<input id="encryptId" name="encryptId" type="hidden" value="">
+		<input id="parentId" name="parentId" type="hidden" value="1">
+	</form>
+</div>
+
+<script>
+	function delete_Organization(id) {
+		window.parent.delete_Organization(id);
+		return false;
+	}
+
+	function checkOrganization() {
+		var name = $("input#name").val();
+		if (name != null && name != "") {
+			$.ajax({
+				async : false,
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : "name=" + $("input#name").val() + "&organizationId="
+						+ $("#encryptId").val() + "&parentId="
+						+ $("#parentId").val() + "&showCode=" + $("#showCode").val(),
+				url : "/PMC/organization/manager/check-action",
+				error : function() {//请求失败处理函数
+					window.parent.requestError();
+				},
+				success : function(data) { //请求成功后处理函数。
+					var result = eval("(" + data + ")");
+					if (result.result == "ERROR") {
+						window.parent.checkError();
+					} else {
+						window.parent.checkOk();
+					}
+
+				}
+			});
+		}
+	}
+
+	function formSubmit(oForm) {
+		var name = $("input#name").val();
+		if (name != null && name != "") {
+			$.ajax({
+				async : false,
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : "name=" + $("input#name").val() + "&organizationId="
+						+ $("#encryptId").val() + "&parentId="
+						+ $("#parentId").val() + "&showCode=" + $("#showCode").val(),
+				url : "/PMC/organization/manager/check-action",
+				error : function() {//请求失败处理函数
+					window.parent.requestError();
+				},
+				success : function(data) { //请求成功后处理函数。
+					var result = eval("(" + data + ")");
+					if (result.result == "ERROR") {
+						window.parent.checkError();
+					} else {
+						oForm.submit();
+					}
+
+				}
+			});
+		}
+
+	}
+
+	var isCheck = false;
+
+	$(document)
+			.ready(
+					function() {
+						$("#organizationForm")
+								.Validform(
+										{
+											tiptype : 2,
+											showAllError : true,
+											beforeCheck : function(form) {
+												var name = $("input#name").val();
+												if (name != null && name != "") {
+													$.ajax({
+																async : false,
+																cache : false,
+																type : 'POST',
+																dataType : "json",
+																data : "name="
+																		+ $(
+																				"input#name")
+																				.val()
+																		+ "&organizationId="
+																		+ $(
+																				"#encryptId")
+																				.val()
+																		+ "&parentId="
+																		+ $(
+																				"#parentId")
+																				.val() + "&showCode=" + $("#showCode").val(),
+																url : "/PMC/organization/manager/check-action",
+																error : function() {
+																	window.parent
+																			.requestError();
+																	return false;
+																},
+																success : function(
+																		data) {
+																	var result = eval("("
+																			+ data
+																			+ ")");
+																	if (result.result == "ERROR") {
+																		isCheck = false;
+																		window.parent
+																				.checkError();
+																	} else {
+
+																		isCheck = true;
+																	}
+
+																}
+															});
+												}
+												else
+												{
+													alert("机构名称不能为空!");
+												}
+												if (isCheck) {
+												    if(!$("#checkbox99").attr("checked")) {
+												      $("#column01").append("<option value='99' selected='true'>Text</option>");  //添加一项option
+			                                        
+			                                           //var temp = $("#column01").val();
+			                                        }
+													return true;
+												} else {
+													return false;
+												}
+											}
+
+										});
+	$("#checkbox99").click(function() {
+		if($(this).attr("checked")) {
+			$("#hospitalType").show()
+		} else {
+			$("#hospitalType").hide()
+		}
+	});
+	firstCheckbox();
+					});
+					
+	 function firstCheckbox(){
+		if($("#checkbox99").attr("checked")) {
+			$("#hospitalType").show()
+		} else {
+			$("#hospitalType").hide()
+		}
+   }
+</script></div></td>
+					
+				</tr>
+			</tbody></table>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		
+	</script>
+</html>

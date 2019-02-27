@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>智付收银台</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />  
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="js/payment.js?v=201901152112"></script>
+</head>
+<body>
+<div class="c-main pb15">
+	<div class="toptip c-t-center">订单已生成！请在<span class="c-ffac0b" id="payTimeSrc">10分钟内</span>完成付款</div>
+    <div class="mt5 c-border-tb" style="margin:5 auto;text-align:center">
+    	<ul>
+        	<li class="mt10"><div id="logoImgHtml"></div></li> 
+        	<li class="mt10"><div style="font-size:15px;"><span id="orgNameSpan"></span></div></li>
+            <li class="mt10"><div class="c-999" style="font-size:12px;"><span id="zhifuNameSpan"></span></div></li>
+        </ul>
+    </div>
+    <div class="c-border-tb">
+    	<ul class="c-list c-f15" id="payItems">
+        	<li>
+            	<div class="c-list-key c-999 pr15">项目名称</div>
+            	<div class="c-list-info c-t-right" id="priceName">加载中...</div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">支付金额</div>
+            	<div class="c-list-info c-t-right">￥<span class="c-ffac0b" id="payMoney">加载中...</span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li class="c-list-a">
+            	<a href="javascript:void(0);" class="c-arrow-r" id="wxPay">
+                    <div class="c-list-info" id = "payDiv" style="display: none"><img id='payImg' src="https://v1kstcdn.kasitesoft.com/common/images/pay-wx.png" alt="" class="pay-tb" /><span id = 'paySpan'>微信支付</span></div>
+            	</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>问卷编辑</title>
+        <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+        <script type="text/javascript" src="./js/jquery.json-2.3.min.js"></script>	
+		<link type="text/css" rel="stylesheet" href="../commons/themes/default/css/wjdc.layout.css" media="screen"/>
+               <script type="text/javascript" src="./js/myd-anserInf.js"></script>
+    </head>
+    <body>
+    <div class="clearfix">
+            <div class="main-tit"><h2>问卷答案</h2>
+               </div>
+                <a href="javascript:;"   class="btn btn-w-auto btn-gray fr" id="backBtn" onclick="window.history.back(-1)" style="margin: 10px;"><i class="icon icon-back"></i>返回</a>
+         
+              <div class="qa-wrap" style="padding:30px 20px;" id="divV">
+                <div class="qa-item-wrap">
+                    <div class="q-tit">
+                        <span class="q-num">Q1</span>
+                        <div class="q-tit-txt2">请在此输入问题标题</div>
+                    </div>
+                    <div class="a-wrap">
+                        <ul class="radio-options">
+                            <li>
+                                <div class="valign-m">
+                                    <div class="valign-m-chk mr20">答案：<span class="radio-opt-txt2">是</span></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt30">
+                      </div>
+            </div>
+    </div>
+    </body>
+    <script type="text/javascript">
+    $('.qa-item-wrap').live('mouseover',function(){
+   // alert("mouseover");
+      $(this).addClass("editable");
+    });
+    
+     $('.qa-item-wrap').live('mouseout',function(){
+      //alert("mouseout");
+     $(this).removeClass("editable");
+    });
+    
+    </script>
+</html>

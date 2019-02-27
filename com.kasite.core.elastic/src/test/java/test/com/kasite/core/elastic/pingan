@@ -1,0 +1,49 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+	      	"inserttime": {
+		          "format": "YYYY-MM-dd HH:mm:ss",
+		          "type": "date"
+		     }
+		     ,"orderId": {
+				"type": "keyword"
+			 }
+		     ,"reqId": {
+				"type": "keyword"
+			 }
+			 ,"callType": {
+				"type": "keyword"
+			 }
+ 			 ,"reqBody": {
+				"type": "keyword"
+			 }
+			 ,"reqHead": {
+				"type": "keyword"
+			 }
+			 ,"reqAdditionInfo": {
+				"type": "keyword"
+			 }
+ 			 ,"respBody": {
+				"type": "keyword"
+			 }
+ 			 ,"respHead": {
+				"type": "keyword"
+			 }
+			 ,"respAdditionInfo": {
+				"type": "keyword"
+			 }
+     	 }
+    }
+  }
+}

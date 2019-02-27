@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>会议安排</title>
+		<style type="text/css">
+			.widget{
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 220px;">
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							<label>参会情况：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;">
+							<select id="gotoMeeting" name="" class="form-control" >
+								<option value="">全部</option>
+								<option value="0">待定</option>
+								<option value="2">参加</option>
+								<option value="3">请假</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="width: 220px;">
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							<label>签到情况：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;">
+							<select  id="signIn" name="" class="form-control" >
+								<option value="">全部</option>
+								<option value="已签到">已签到</option>
+								<option value="未签到">未签到</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="width: 220px;">
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							<label>签退情况：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;">
+							<select id="signBack" name="" class="form-control" >
+								<option value="">全部</option>
+								<option value="已签退">已签退</option>
+								<option value="未签退">未签退</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="width: 220px;">
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							<label>姓名：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;">
+							<input type="text" class="form-control" name="" id="membername" value="" />
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:880px;">
+					<button type="button" class="btn btn-primary pull-right" onclick="refresh()">查询</button>
+				</div>
+			</div>
+		</div>
+		
+		<div id="toolbar">
+			<button type="button" onclick="exc()" class="btn btn-primary">导出excel</button>
+			<table class="table-bordered" style="width: 100%;text-align: center;">
+				<tr>
+					<th class="text-center">参会人数</th>
+					<th class="text-center">签到人数</th>
+					<th class="text-center">退签人数</th>
+					<th class="text-center">请假人数</th>
+				</tr>
+				<tr>
+					<td id = "allPeople">0</td>
+					<td id = "signInNum">0</td>
+					<td id = "signBackNum">0</td>
+					<td id = "leaveNum">0</td>
+				</tr>
+			</table>
+		</div>
+		<table id="queryMeetingSign" 
+	    	data-mobile-responsive="true" 
+	    	data-pagination="true" 
+	    	data-toolbar="#toolbar"
+	    	>
+        </table>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script src="../js/webCom1.0/component/table/js/tableExport.js"></script>
+	<script>
+	var meetingId = Commonjs.getUrlParam("meetingId");
+	$(function(){
+		queryMeetingSign();
+	});
+	
+	//查询会议列表
+	function queryMeetingSign(){
+		$('#queryMeetingSign').bootstrapTable({
+			url: '/wsgw/qyWeChat/QueryMeetingSign/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 10,                     //每页的记录行数（*）
+	        queryParams : function (params) {
+	        	var apiData = {};
+	        	apiData.uid = meetingId;
+	        	apiData.memberType = $("#gotoMeeting option:selected").val();
+	        	apiData.signIn = $("#signIn option:selected").val();
+	        	apiData.signBack = $("#signBack option:selected").val();
+	        	apiData.memberName = $("#membername").val();
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	        {
+	            field: 'Membername',
+	            title: '姓名',
+	            align: 'center',
+	            valign: 'middle',
+	        }, {
+	            field: 'DeptName',
+	            title: '部门',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'MemberType',
+	            title: '参会情况',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Reason',
+	            title: '请假原因',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'SignInType',
+	            title: '签到情况',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'SignInTime',
+	            title: '签到时间',
+	            align: 'center',
+	            valign: 'middle',            
+	        },
+
+	        {
+	            field: 'SignBackType',
+	            title: '签退情况',
+	            align: 'center',
+	            valign: 'middle',
+	        },
+	        {
+	            field: 'SignBackTime',
+	            title: '签退时间',
+	            align: 'center',
+	            valign: 'middle',
+	        }],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        		top.location = "http://"+window.location.host;
+	        	}else if(res.RespCode == 10000){
+		       		if(res.Data == undefined){
+		       			return [];
+		       		}else{
+		       			$("#allPeople").text(res.Data.length);
+		       			$("#signInNum").text(res.Data[0].SignInNum);
+		       			$("#signBackNum").text(res.Data[0].SignBackNum);
+		       			$("#leaveNum").text(res.Data[0].LeaveNum);
+		       			return res.Data;
+		       		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+	        	
+	        },
+	        onLoadError: function () {
+	            //alert("数据加载失败！");
+	        },
+		});
+	}
+	
+		function exc(){
+			$('#exampleTablePagination').tableExport({ 
+				type: 'excel', 
+				escape: false,
+//				gnoreColumn: 'part',  //忽略某一列的索引  
+				fileName: document.title,  //文件名称设置  
+				worksheetName: 'sheet1'  //表格工作区名称  
+				//tableName: '总台帐报表',  
+				//excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],  
+	           	//onMsoNumberFormat: function(cell, row, col) {  
+	           	//	var result = "";  
+	           	//	if (row > 0 && col == 0)  
+	           	//		result = "\\@";  
+	           	//	return result;  
+				//}
+			});
+		}
+		
+		//查询刷新
+		function refresh(){
+			$("#queryMeetingSign").bootstrapTable('destroy');
+			queryMeetingSign();
+		}
+		
+	</script>
+</html>

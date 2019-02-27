@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>实名认证</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li>
+            	<div class="c-list-key c-999 pr15">姓名</div>
+            	<div class="c-list-info c-t-right"><input type="text" id="name" style="width:100%; text-align:right;" value="林建法" /> </div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">身份证</div>
+            	<div class="c-list-info c-t-right"><input type="text" id="idCardNumber" style="width:100%; text-align:right;" value="350182199004282617" /></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">手机号码</div>
+            	<div class="c-list-info c-t-right"><input type="text" id="mobile" style="width:100%; text-align:right;" value="13960317626" /></div>
+            </li>
+            <li class="c-list-a">
+                <a class="c-arrow-r" onclick="valid()">
+                    <div class="c-list-key c-999 pr15" style="font-weight:bold;">实名认证</div>
+                    <div class="c-list-info c-t-right"><i class="bindbq">去认证</i></div>
+                </a>
+            </li>
+        
+        </ul>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="javascript:;" class="c-btn c-btn-blue" id="Unbind">在线复诊</a>
+    </div>
+</div>
+    <!---->
+    <div id="div_dialog" style="width:100%;height:100%; position:fixed;left:0px;top:0px; background-color:#616161;text-align:center; opacity:0.98;display:none;">
+        <div style="width:80%;margin-top:120px;position:relative;left:10%; background-color:#fff; border-radius:5px 5px 5px 5px;height:240px; opacity:1; z-index:999">
+            <div style="height:60px;line-height:60px;font-size:24px; text-align:center;width:100%">温馨提示</div>
+            <div style="width:90%;font-size:16px; text-align:left;padding:12px;margin:12px;color:#808080">应国家网络安全要求及我院就诊管理制度，需要对就诊人进行实名认证方可进行就诊。请确认是否继续？</div>
+            <div style="width:100%; position:relative;bottom:-20px;">
+                <div style="width:49%;float:left; line-height:38px;font-size:18px;border-top:1px solid #e3e3e3;" onclick="cancel()">取消</div>
+                <div style="width:49%;float:left;color:#00cc00; line-height:38px;font-size:18px;border-left:1px solid #e3e3e3;border-top:1px solid #e3e3e3;" onclick="confirm()">确定</div>
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    	$("#div_dialog").hide();
+    	
+    	$("#Unbind").click(function(){
+    		 $("#div_dialog").show();
+    	});
+    	
+    });
+
+    function cancel()
+    {
+        $("#div_dialog").hide();
+    }
+    function valid() {
+        $("#div_dialog").show();
+    }
+    function confirm() { 
+    	location.href=
+    		"/facePictureVerifyDemo/wechatFacePictureVerify.jsp?name="+$("#name").val()
+    				+"&idCardNumber="+$("#idCardNumber").val()
+    				+"&mobile="+$("#mobile").val();
+    }
+</script>
+</body>
+</html>

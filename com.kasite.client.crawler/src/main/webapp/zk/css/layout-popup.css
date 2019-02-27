@@ -1,0 +1,39 @@
+html {
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-origin: padding-box;
+	background-position: 0 0;
+	background-repeat: repeat-x repeat-y;
+	background-size: auto auto;
+	background: #FFFFFF;
+}
+
+#subMenuTr {
+	
+}
+
+.text_align_left
+{
+	text-align: left;
+}
+
+body {
+	margin: 0px;
+	font-family: Arial,sans-serif;
+	font-size: 12px;
+	line-height: 19px;
+	/*background: none repeat scroll 0 0 #F5F5F5;*/
+}
+
+a {
+	text-decoration: none;
+	/*color: #498f3a;*/
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:link,a:visited {
+	text-decoration: none;
+}

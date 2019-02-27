@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>就诊卡充值</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+	<div class="c-main pb15">
+		<div class="inqui-head c-pack">
+	        <p class="mt5">可退金额(元)</p>
+	        <p class="c-f30" id="refundableBalance">0</p>
+	        <p >就诊卡余额<span id="balance">0</span>元
+			</p>
+	    </div>
+		<div class="c-border-b mt10">
+			<ul class="c-list c-f14 pt10">
+				<li >
+					<div class="c-list-key c-666 pr15">
+						<i class="sicon icon-memtb1"></i>就诊人
+					</div>
+					<div class="c-list-info c-t-right" id="memberName"></div>
+				</li>
+				<li>
+					<div class="c-list-key c-666 pr15">
+						<i class="sicon icon-memtb5"></i>就诊卡号
+					</div>
+					<div class="c-list-info c-t-right" id="cardNo"></div>
+				</li>
+			</ul>
+		</div>
+		<div class="result-intro mt10 c-border-tb">
+	    	<h3 class="ri-title" style="line-height: 1.25rem;font-size: .55rem;">退款说明<s class="ui-arrow ui-arrow-b"><s></s></s></h3>
+	        <div class="ri-con c-f13" style="color:#ff7070" id="refundDesc"></div>
+	    </div>
+		<div class="mt10 c-border-tb">
+	    	<ul class="c-list c-f15">
+	        	<li class="c-list-a" id="selfReundRecordBtn">
+	            	<a href="javascript:void(0);" class="c-arrow-r">
+	                    <div class="c-list-key c-999 pr15">退款记录</div>
+	                </a>
+	            </li>
+	        </ul>
+	    </div>
+		
+		<div class="mt20 plr15" style="display:none;" id="divApplyRefund">
+			<a href="javascript:;" class="c-btn c-btn-blue" id="applyRefund">申请退费</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="js/outpatientSelfServiceRefund.js?v=201901152112"></script>
+</body>
+</html>
+<script type="text/javascript">
+
+</script>

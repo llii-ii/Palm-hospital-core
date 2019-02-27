@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>医生详情</title>
+   	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+    <div class="docmes-head">
+    	<div class="dh-img"><img id = 'headImg' src="https://v1kstcdn.kasitesoft.com/common/images/d-male.png" alt="" /></div>
+    	<div class="dh-con">
+        	<h4 class="c-f15" id="doctorName"></h4>
+            <p id="doctorTitle"></p>
+            <!-- <p><i class="sicon icon-star"></i><i class="c-f15">9</i>.8<span class="ml15">接诊量 5295</span></p> -->
+            <p class="c-nowrap-multi" id="spec"></p>
+        </div>
+    </div>
+    <div class="docmes-info c-border-tb">
+    	<h4><span class="fr c-f13 c-666">排班信息</span><span id="deptName">呼吸科</span></h4>
+        <div class="ui-grid bor-tb-e5" id="schedule">
+        </div>
+        <div class="di-bot">
+        	<a href="javascript:;" class="fr btn-appoin disable">立即预约</a>
+        	<span class="c-f13" id="isShowRegFee">挂号费：￥<i class="c-ffac0b" id="fee"></i></span>
+        	<br>
+        	<span id="span_treatFee" class="c-f13" style="display: none;">诊查费：￥<i class="c-ffac0b" id="treatFee"></i></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=20190118"></script>
+<script type="text/javascript" src="js/yyghScheduleList.js?v=20190118"></script>
+</body>
+</html>

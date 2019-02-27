@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>创建问卷</title>
+		<link type="text/css" rel="stylesheet" href="../commons/themes/default/css/style.css" media="screen"/>
+		<link type="text/css" rel="stylesheet" href="../commons/themes/default/css/yihuui.css" media="screen"/>
+		<script language="javascript" src="../commons/js/jquery-1.8.3.min.js"></script>
+      	<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+     	<link type="text/css" rel="stylesheet" href="../commons/themes/default/css/base.css" media="screen"/>
+		<link type="text/css" rel="stylesheet" href="../commons/themes/default/css/wjdc.layout.css" media="screen"/>
+     	<script type="text/javascript" src="./js/myd-wjfb.js"></script>
+     	<script language="javascript" type="text/javascript" src="./js/clipboard.min.js"></script>
+		<script language="javascript" type="text/javascript" src="./jqcode/jqueryqr.js"></script>
+		<script language="javascript" type="text/javascript" src="./jqcode/ff-range.js"></script>
+		<script language="javascript" type="text/javascript" src="./jqcode/scripts.js"></script>
+		
+		
+     </head>
+    <body>
+	 <div class="main-tit"><h2>发布问卷</h2><div class="absolute myd-step-3" style="right:20px; top:20px;"></div></div>
+	 <div class="p30">
+	     <div class="pb50" style="border-bottom:1px dashed #e1e1e1;">
+	         <h4>问卷链接</h4>
+	         <p class="f12 mt25">可以直接把问卷链接复制发给被访人或复制到微官网或微导诊相应的栏目链接里</p>
+	         <div class="mt20">
+	             <div class="copylink" style="width:700px;" >
+	             	<span id='fe_text'></span>
+	             	<a href="javascript:;" data-clipboard-text="fe_text" id='copyBtn' class="btn btn-w65 btn-gray">复制</a>
+	             </div>
+	         </div>
+	     </div>
+		<div class="control left" style='display:none'>
+		<a id="banner" href="http://www.js-css.cn/jscode/qrcode">二维码生成器</a>
+		<hr>
+		<label for="render">渲染模式</label>
+		<select id="render">
+			<option value="canvas" selected="selected">Canvas</option>
+			<option value="image">Image</option>
+			<option value="div">DIV</option>
+		</select>
+		<hr>
+		<label for="size">二维码尺寸: 200px</label>
+		<input id="size" value="200" min="100" max="1000" step="50" type="range">
+		<label for="fill">二维码颜色</label>
+		<input id="fill" value="#333333" type="color">
+		<label for="background">二维码背景颜色</label>
+		<input id="background" value="#ffffff" type="color">
+		<label for="text">二维码内容</label>
+		<textarea id="text" >
+<!--			www.yihu.com/web/SurveyHome.aspx?platformType=17&sourceType=1&sourceId=1024727-->
+		</textarea>
+		<hr>
+		<label for="minversion">MIN VERSION: 6</label>
+		<input id="minversion" value="6" min="1" max="10" step="1" type="range">
+		<label for="eclevel">误差校正水平</label>
+		<select id="eclevel">
+			<option value="L">L - Low (7%)</option>
+			<option value="M">M - Medium (15%)</option>
+			<option value="Q">Q - Quartile (25%)</option>
+			<option value="H" selected="selected">H - High (30%)</option>
+		</select>
+		<label for="quiet">版本: 1 modules</label>
+		<input id="quiet" value="1" min="0" max="4" step="1" type="range">
+		<label for="radius">圆滑度: 50%</label>
+		<input id="radius" value="0" min="0" max="50" step="10" type="range">
+	</div>  
+	<div class="control right" style='display:none'>
+		<label for="mode">二维码LOGO设置</label>
+		<select id="mode">
+			<option value="0">0 - Normal</option>
+			<option value="1">1 - Label-Strip</option>
+			<option value="2">2 - Label-Box</option>
+			<option value="3">3 - Image-Strip</option>
+			<option selected="selected" value="4">4 - Image-Box</option>
+		</select>
+		<hr>
+		<label for="msize">二维码LOGO尺寸: 31%</label>
+		<input id="msize" value="31" min="0" max="40" step="1" type="range">
+		<label for="mposx">二维码LOGOX坐标: 50%</label>
+		<input id="mposx" value="50" min="0" max="100" step="1" type="range">
+		<label for="mposy">二维码LOGOY坐标: 50%</label>
+		<input id="mposy" value="50" min="0" max="100" step="1" type="range">
+		<hr>
+		<label for="label">标签</label>
+		<input id="label" value="111111" type="text">
+		<label for="font">字体名字</label>
+		<input id="font" value="Ubuntu" type="text">
+		<label for="fontcolor">字体颜色:</label>
+		<input id="fontcolor" value="#ff9818" type="color">
+		<hr>
+		<label for="image">上传二维码LOGO</label>
+		<input id="image" type="file">
+	</div>	
+	     
+	     <div class="mt50">
+	         <h4>手机二维码</h4>
+	         <p class="f12 mt25">通过微信扫一扫将问卷分享给你的朋友，或下载二维码后将其发送给被访人</p>
+	         <div class="mt40">
+	             <div id="container"><canvas height="200px" width="200px" id ="canvas"></canvas></div>
+	             <img style="display: none" id="img-buffer" src="../commons/themes/default/images/wbjlogo.ico">
+	             <a  id="download" class="btn btn-w65" download="qrcode.png">下载</a>
+	         </div>
+	     </div>
+	 </div>
+    </body>
+</html>

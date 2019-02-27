@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>请假</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.remark textarea{display: block;width: 100%;padding: 0.4rem;box-sizing:border-box;margin: 0;}
+			.remark-img{background: #fff;overflow: hidden;padding: 0.3rem 0.5rem;}
+			.remark-img img{width: 0.55rem;height: 0.48rem;float: right;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="remark">
+				<textarea id="reason" name="remark" rows="10" placeholder="请输入请假理由"></textarea>
+			</div>
+			<div class="x-row boxflex foot">
+				<div class="x-row-cols left" onclick="window.history.back()">取消</div>
+				<div class="x-row-cols right" onclick="sureLeave();">确定</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+	var meetingUUid = Commonjs.getUrlParam("meetingUUid");
+	var memberName = Commonjs.getUrlParam("memberName");
+	var title = Commonjs.getUrlParam("title");
+	//确认请假
+	function sureLeave(){
+		var reason = $("#reason").val();
+		if(reason == null || reason == '' || reason == undefined){
+			myLayer.alert('请输入请假理由！');
+		}else {
+			isleave();
+		}
+	}
+	
+	//是否已经请过假
+	function isleave(){
+		var apiData = {};	
+        apiData.meetingId = meetingUUid;
+        apiData.memberId = Commonjs.getOpenId();
+        apiData.status = -1;
+        apiData.id = -1;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingApproval/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				if(dd.Data != undefined){
+					if(dd.Data[0].Status == 0){
+						updateReason(dd.Data[0].Id,dd.Data[0].Approvalid);
+					}else {
+						myLayer.alert("该请假事项已经审批无法修改");
+					}
+				}else{
+					changeChecksPeople();
+				}
+			}else {
+				myLayer.alert(dd.RespMessage,3000);
+			}
+			
+		},{async:false});
+	}
+	
+	//请假
+	function changeChecksPeople(){
+		var apiData = {};	
+        apiData.uid = meetingUUid;
+        apiData.memberIds = Commonjs.getOpenId();
+        apiData.memberNames = memberName;
+        apiData.memberType = 3;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				addMeetingApproval();
+			}else{
+				myLayer.alert(dd.RespMessage,3000);
+			}
+		},{async:false});
+	}
+	
+	//添加事项审批
+	function addMeetingApproval(){
+		var apiData = {};	
+        apiData.meetingId = meetingUUid;
+        apiData.meetingTitle = title;
+        apiData.memberId = Commonjs.getOpenId();
+        apiData.memberNames = memberName;
+        apiData.reason = $("#reason").val();
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/AddMeetingApproval/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+   				myLayer.alert('请假成功'); 
+   				var url = 'approvalDetail.html?approvalId='+dd.RespMessage+'&reason='+$("#reason").val();
+   				location.href = Commonjs.goToUrl(url); 
+			}else{
+				myLayer.alert(dd.RespMessage,3000);
+			}
+		},{async:false});
+	}
+	
+	//修改请假理由
+	function updateReason(id,uid){
+		var apiData = {};	
+        apiData.id = id;
+        apiData.reason = $("#reason").val();
+        apiData.status = 0;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/UpdateMeetingApproval/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+   				myLayer.alert('请假成功'); 
+   				var url = 'approvalDetail.html?approvalId='+uid+'&reason='+$("#reason").val();
+   				location.href = Commonjs.goToUrl(url); 
+			}else{
+				myLayer.alert(dd.RespMessage,3000);
+			}
+		},{async:false});
+	}
+	</script>
+</html>

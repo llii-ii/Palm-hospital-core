@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>学分变更</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width: 100%;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label>当前学分：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;">
+					<div id="oldCredits" style="padding: 8px 12px;"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label>变更为：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;">
+					<input type="text" class="form-control" name="" id="credits" value="" />
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="clo()">保存</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		var memberId = Commonjs.getUrlParam("memberId");
+		$(function(){
+			queryMemberCredits();
+		});
+		
+        //获取成员学分
+        function queryMemberCredits(){
+        	var apiData = {};	
+    		apiData.memberId = memberId;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryMemberCredits/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				$("#oldCredits").text(dd.Data[0].AllCredits);
+     			}else if(dd.RespCode == -14018){
+     				alert("获取学分信息失败请联系管理员");
+     			}
+     		},{async:false});
+        }
+        
+        //保存
+		function clo(){
+        	if($("#credits").val() == '' || $("#credits").val() == null || $("#credits").val() == undefined || SubmitNumber($("#credits").val())){
+        		alert("无效学分请重新输入");
+        	}else{
+        		var credits = parseInt($("#credits").val()) - parseInt($("#oldCredits").text());
+        		if(credits != 0){
+        			var apiData = {};	
+            		apiData.memberId = memberId;
+            		apiData.credits = credits;
+            		apiData.updateType = "oneUpdate";
+             		var param = {};
+             		param.apiParam = Commonjs.getApiReqParams(apiData);
+             		Commonjs.ajax('/wsgw/qyWeChat/UpdateMemberCredits/callApi.do',param,function(dd){
+             			if(dd.RespCode == 10000){
+             				alert("修改成功");
+             				$("#oldCredits").text(credits);
+             			}else {
+             				alert("修改学分失败请联系管理员");
+             			}
+             			$("#credits").val('');
+             		});         			
+        		}
+        	} 
+		}
+        
+        //数字正则
+		function SubmitNumber(number) {
+			var reg = /^\d+(\.\d+)?$/;
+			if (reg.test(number)) {
+				return false;
+			}else {
+				return true;
+			}
+		}
+	</script>
+</html>

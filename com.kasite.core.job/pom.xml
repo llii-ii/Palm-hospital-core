@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kasite</groupId>
+    <artifactId>com.kasite.core</artifactId>
+    <version>1.0.0-RELEASES</version>
+  </parent>
+  <artifactId>com.kasite.client.job</artifactId>
+  <name>job</name>
+  <description>定时任务模块</description>
+  
+  <build>
+		<defaultGoal>compile</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  
+  <dependencies>
+    <dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>kasite</groupId>
+		<artifactId>com.kasite.core.serviceinterface</artifactId>
+		<version>1.0.0-RELEASES</version>
+	</dependency>
+	<dependency>
+		<groupId>kasite</groupId>
+		<artifactId>com.kasite.core.common</artifactId>
+		<version>1.0.0-RELEASES</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-quartz</artifactId>
+	</dependency>
+  </dependencies>
+</project>

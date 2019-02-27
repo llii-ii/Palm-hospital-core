@@ -1,0 +1,65 @@
+.widget {margin-bottom:15px;}
+.widget-head {margin:10px 0;border-bottom:1px solid #CCC;/*background:url(../images/bg_main_title.png) bottom repeat-x;*/position:relative;}
+.widget-head h2 {font-size:14px;color:#666;}
+.widget-head > span {margin-right:8px;float:left;margin-top:1px;display:block;width:16px;height:16px;}
+.widget-head .icon-add {background:url(../images/widget_ico_add.png);}
+.widget-head .icon-delete {background:url(../images/widget_ico_delete.png);}
+.widget-head .icon-edit {background:url(../images/widget_ico_edit.png);}
+.widget-head .icon-list {background:url(../images/widget_ico_list.png);}
+.widget-head .icon-history {background:url(../images/widget_ico_history.png);}
+.widget-head .icon-log {background:url(../images/widget_ico_log.png);}
+.widget-head .icon-schedule {background:url(../images/widget_ico_schedule.png);}
+.widget-head .icon-config {background:url(../images/widget_ico_config.png);}
+.widget-head .icon-data {background:url(../images/widget_ico_data.png);}
+.widget-head .icon-parameter {background:url(../images/widget_ico_parameters.png);}
+.widget-head .icon-safe {background:url(../images/widget_ico_safe.png);}
+.widget-head .icon-plugin {background:url(../images/widget_ico_plugin.png);}
+.widget-head .icon-user {background:url(../images/widget_ico_user.png);}
+.widget-head .icon-users {background:url(../images/widget_ico_users.png);}
+.widget-head .icon-tree {background:url(../images/widget_ico_tree.png);}
+.widget-head .icon-role {background:url(../images/widget_ico_role.png);}
+.widget-head .icon-xml {background:url(../images/widget_ico_xml.png);}
+.widget-head .icon-flow {background:url(../images/widget_ico_flow_monitor.png);}
+.widget-head .icon-chart {background:url(../images/widget_ico_chart.png);}
+.widget-head .icon-error {background:url(../images/widget_ico_error.png);}
+.widget-head .icon-new {background:url(../images/widget_ico_new.png);}
+.widget-head .icon-rule {background:url(../images/widget_ico_rule.png);}
+.widget-head .icon-job {background:url(../images/widget_ico_job.png);}
+.widget-head .icon-step {background:url(../images/ico_scheduler_step.png);}
+.widget-head .icon-model {background:url(../images/ico_model.png);}
+
+
+
+
+
+.widget-head .head-return {position:absolute;right:5px;bottom:15px;padding-left:12px;font-size:14px;background:url('../images/ico_chead_return.png') left center no-repeat;}
+.widget-head .head-return:link,.widget-head .head-return:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-return:hover {color:#E03D22;background:url('../images/ico_chead_return_hover.png') left center no-repeat;}
+.widget-head .head-refresh {position:absolute;right:55px;bottom:15px;padding-left:14px;font-size:14px;background:url('../images/ico_chead_refresh.png') left center no-repeat;}
+.widget-head .head-refresh:link,.widget-head .head-refresh:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-refresh:hover {color:#E03D22;background:url('../images/ico_chead_refresh_hover.png') left center no-repeat;}
+.widget-head .head-refreshhand {position:absolute;right:5px;bottom:15px;padding-left:14px;font-size:14px;background:url('../images/ico_chead_refresh.png') left center no-repeat;}
+.widget-head .head-refreshhand:link,.widget-head .head-refresh:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-refreshhand:hover {color:#E03D22;background:url('../images/ico_chead_refresh_hover.png') left center no-repeat;}
+
+.widget-head .head-hide {position:absolute;right:5px;bottom:7px;padding-left:12px;font-size:14px;background:url('../images/ico_chead_hide.png') left center no-repeat;}
+.widget-head .head-hide:link,.widget-head .head-hide:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-hide:hover {color:#E03D22;background:url('../images/ico_chead_hide_hover.png') left center no-repeat;}
+.widget-head .head-show {position:absolute;right:5px;bottom:15px;padding-left:12px;font-size:14px;background:url('../images/ico_chead_show.png') left center no-repeat;}
+.widget-head .head-show:link,.widget-head .head-show:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-show:hover {color:#E03D22;background:url('../images/ico_chead_show_hover.png') left center no-repeat;}
+.widget-head .head-add {position:absolute;right:60px;bottom:15px;padding-left:20px;font-size:14px;background:url('../images/ico_chead_add.png') left center no-repeat;}
+.widget-head .head-add:link,.widget-head .head-add:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-add:hover {color:#E03D22;background:url('../images/ico_chead_add_hover.png') left center no-repeat;}
+.widget-head .head-edit {position:absolute;right:60px;bottom:15px;padding-left:20px;font-size:14px;background:url('../images/ico_chead_edit.png') left center no-repeat;}
+.widget-head .head-edit:link,.widget-head .head-edit:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-edit:hover {color:#E03D22;background:url('../images/ico_chead_edit_hover.png') left center no-repeat;}
+.widget-head .head-delete {position:absolute;right:60px;bottom:15px;padding-left:20px;font-size:14px;background:url('../images/ico_chead_delete.png') left center no-repeat;}
+.widget-head .head-delete:link,.widget-head .head-delete:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-delete:hover {color:#E03D22;background:url('../images/ico_chead_delete_hover.png') left center no-repeat;}
+.widget-head .head-manual-excute {position:absolute;right:60px;bottom:15px;padding-left:20px;font-size:14px;background:url('../images/ico_chead_manual_execute.png') left center no-repeat;}
+.widget-head .head-manual-excute:link,.widget-head .head-manual-excute:visited {color:#1D8ED0;text-decoration:none;}
+.widget-head .head-manual-excute:hover {color:#E03D22;background:url('../images/ico_chead_manual_execute_hover.png') left center no-repeat;}
+
+.widget-head-title {font-size:16px;color:#666;padding:8px 0;font-weight:bold;}
+

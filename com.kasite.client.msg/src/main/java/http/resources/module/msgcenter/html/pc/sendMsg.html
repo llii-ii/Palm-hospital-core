@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta name="skin" content="mes">
+<script src="../../js/pc/webCom1.0/base.js" type="text/javascript"
+	charset="utf-8"></script>
+<!--内网环境时将js文件复制到服务器 -->
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		
+<script type="text/javascript"   src="../../../../common/js/common.js" ></script>
+<title>发送消息</title>
+<style type="text/css">
+</style>
+</head>
+<body class="children-page">
+	<form class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">发送渠道</label>
+					<div class="col-sm-10">
+						<select id="useChannel" class="form-control">
+							<option value="100123">微信</option>
+							<option value="100125">支付宝</option>
+							<option value="sms">短信</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">卡类型</label>
+					<div class="col-sm-10">
+						<select id="cardType" class="form-control">
+							<option value="1">门诊</option>
+							<option value="2">住院</option>
+						</select>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">消息模板</label>
+					<div class="col-sm-10">
+						<select name="" class="form-control" id="msgTemp">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">发送时间</label>
+					<div class="col-sm-10">
+							<input type="text" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">卡号</label>
+						<div class="col-sm-11">
+							<textarea class="form-control" name="" rows="10" cols=""
+								id="cardNo" placeholder="提示：支持批量发送，发送多个卡号时，卡号用英文逗号隔开。"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">发送内容</label>
+						<div class="col-sm-11">
+							<textarea class="form-control" name="" rows="10" cols=""
+								id="xmlDemo"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="form-group" id="savebtn">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" class="btn btn-w-m btn-success"
+				onclick="saveData()">发送</button>
+			&nbsp;&nbsp;&nbsp;
+		</div>
+	</div>
+</body>
+<script>
+		function saveData(){
+			var param = {};
+			var apiData = {};
+			apiData.ChannelId = $("#useChannel").val();
+			apiData.MsgContent = $("#xmlDemo").val();
+			apiData.HosId = Commonjs.hospitalId();
+			apiData.CardNo = $("#cardNo").val();
+			apiData.ModeId=$("#msgTemp").val();
+			apiData.CardType = $("#cardType").val();
+			apiData.OperatorId = Commonjs.getUrlParam("userId");
+			apiData.OperatorName = Commonjs.getUrlParam("userName");
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/AddMsgQueue/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					alert("成功")
+				} else {
+					alert(d.RespMessage);// 错误提示
+				}
+			});
+		}
+		$(function(){
+			queryTemp();
+			$("#useChannel").change(function (){
+				queryTemp();
+			})
+			$("#msgTemp").change(function (){
+				if($(this).val()!='0'){
+					queryTempDetail($(this).val());
+				}
+			})
+			
+		})
+		function queryTemp(){
+			var param = {};
+			var apiData = {};
+			apiData.useChannel = $("#useChannel").val();
+			apiData.state = 1;
+			apiData.orgId = Commonjs.hospitalId();
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgTempList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					var html = '';
+					html+='<option value="0">请选择</option>';
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						html+='<option value="'+item.ModeId+'">'+item.MsgTempName+'</option>';
+					})
+					$("#msgTemp").html(html);	
+				} 
+			});
+		}
+		function queryTempDetail(modeId){
+			var param = {};
+			var apiData = {};
+			apiData.useChannel = $("#useChannel").val();
+			apiData.modeId = modeId;
+			apiData.orgId = Commonjs.hospitalId();
+			apiData.state = 1;
+			param.api = '';
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			var url = '/wsgw/msg/MsgTempList/callApi.do';
+			Commonjs.ajax(url, param, function(d) {
+				if (d.RespCode == 10000) {
+					Commonjs.BaseForeach(d.Data, function(i,item){
+						$("#xmlDemo").val(item.MsgTempDemo);
+					})
+				} 
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>就诊卡列表</title>
+<link rel="stylesheet"
+	href="https://v1kstcdn.kasitesoft.com/common/css/base.css"
+	type="text/css" />
+<link rel="stylesheet"
+	href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css"
+	type="text/css" />
+<style>
+.switch {
+	width: 60px;
+	height: 34px;
+	position: relative;
+	display: inline-block;
+}
+
+input {
+	display: none;
+}
+
+.round {
+	border-radius: 24px;
+}
+
+.slider {
+	background: #ccc;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transition: all .4s;
+	cursor: pointer;
+}
+
+.slider:after {
+	content: '';
+	width: 26px;
+	height: 26px;
+	display: block;
+	border-radius: 50%;
+	background-color: #FFFFFF;
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	transition: all .4s;
+}
+
+input:checked+.slider {
+	background: #2196F3;
+}
+
+input:checked+.slider:after {
+	transform: translateX(26px);
+}
+</style>
+</head>
+
+<body>
+	<div class="c-main mt10 pb15">
+		<div class="c-border-tb">
+			<ul class="c-list c-f15" id="cardListUl">
+				<li>
+					<div class="c-list-key c-999 pr15">就诊卡</div>
+					<div class="c-list-info c-t-right"></div>
+				</li>
+			</ul>
+		</div>
+		<div class="mt20 plr15">
+			<a href="javascript:gotoBindClinic();" class="c-btn c-btn-blue" id="unbind">新增就诊卡</a>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="js/cardList.js?v=201901152112"></script>
+</body>
+</html>

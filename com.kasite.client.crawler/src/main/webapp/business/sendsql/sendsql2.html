@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<title>在线代码格式化</title>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta name="keywords"
+	content="开源中国 在线工具,ostools,jsbin,加密/解密，Markdown,less,java api,php api,node.js api,QR Code" />
+<meta name="description"
+	content="开源中国在线工具,ostools为开发设计人员提供在线工具，提供jsbin在线 CSS、JS 调试，在线 Java API文档,在线 PHP API文档,在线 Node.js API文档,Less CSS编译器，MarkDown编译器等其他在线工具" />
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="/css/basic.css?20120912" type="text/css" />
+<script type="text/javascript" src='/js/jquery/jquery-1.7.2.js'></script>
+<script type="text/javascript"
+	src='/js/jquery/jquery.cookies.2.2.0.min.js'></script>
+<link rel="stylesheet" href='/js/bootstrap/css/bootstrap.min.css' />
+<script src='/js/bootstrap/js/bootstrap.min.js'></script>
+
+</head>
+<body>
+	<!--     头部header开始    -->
+	<div id="header">
+		<div class="wrapper">
+			<div id="mainSearch">
+
+				<!-- Put the following javascript before the closing </head> tag. -->
+				<style>
+.go_search {
+	width: 300px;
+}
+
+.go_search .gsc-input td, .go_search .gsc-input tddiv {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	height: 23px;
+}
+
+.go_search .gsc-input input:focus {
+	border: none;
+}
+
+.go_search .gsc-input input {
+	border: none;
+	height: 23px;
+	width: 100%;
+	padding: 0px;
+	border: none;
+	margin: 0px;
+	height: auto;
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	background-image:
+		url(../img/google_custom_search_watermark.gif?20140625);
+	background-color: rgb(255, 255, 255);
+	background-position: 0% 50%;
+	background-repeat: no-repeat no-repeat;
+}
+</style>
+
+				<div class="go_search">
+					<!-- Place this tag where you want the search box to render -->
+				</div>
+			</div>
+			<div id="logo" class="texthidden"
+				onclick="javascript:location.href='/'">
+				<h1>开源中国在线工具</h1>
+			</div>
+		</div>
+	</div>
+	<!--     头部header结束    -->
+	<div class="wrapper">
+		<script type="text/javascript" src="/js/ad/tag.js?date=20140625"></script>
+
+
+	</div>
+	<style>
+.leftBar .title, .rightBar .title, .topBar .title {
+	margin-bottom: 10px;
+}
+
+.bottomBar .title {
+	margin: 10px 0;
+}
+</style>
+	<link id="css" rel="stylesheet" type="text/css"
+		href="/js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css" />
+	<link id="css" rel="stylesheet" type="text/css"
+		href="/js/jquery/textarearesizer/style.css" />
+	<script type="text/javascript"
+		src="/js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+	<script type="text/javascript" src="/js/jquery/jquery.form-2.82.js"></script>
+	<script type="text/javascript"
+		src="/js/jquery/textarearesizer/jquery.textarearesizer.compressed.js"></script>
+	<script>
+		$(function() {
+			$('textarea.resizable:not(.processed)').TextAreaResizer();
+			$('div.resizable:not(.processed)').TextAreaResizer();
+		});
+	</script>
+	<div id="mainContent" class="tool_content wrapper">
+		<div class="toolName">
+			在线代码格式化<a data-toggle="modal" href="#advice"
+				style="float:right;text-decoration:none;"><span
+				class="badge badge-important"><i
+					class="icon-envelope icon-white"></i> Feedback</span></a>
+		</div>
+		<div class="toolUsing clearfix">
+			<div class="toolsTab  clearfix">
+				<ul class="nav nav-tabs">
+					<li><a href="/codeformat/html">HTML格式化</a></li>
+					<li><a href="/codeformat/xml">XML格式化</a></li>
+					<li><a href="/codeformat/css">CSS格式化</a></li>
+					<li class="active"><a href="/codeformat/json">JSON格式化</a></li>
+					<li><a href="/codeformat/js">JavaScript格式化</a></li>
+					<li><a href="/codeformat/java">Java格式化</a></li>
+					<li><a href="/codeformat/sql">SQL格式化</a></li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<form id="codeformat_form" action="/action/format/json" method="POST">
+				<link href="/tools/json_format/s.css" type="text/css"
+					rel="stylesheet">
+				<script type="text/javascript" src="/tools/json_format/c.js"></script>
+				<script type="text/javascript">
+					function format_() {
+						var json = $("#jsondata").val();
+						$("#fjson").html(fmt);
+					}
+				</script>
+				<div class="alert alert-info">
+					JSON格式化采用<a href="http://www.oschina.net/" target="_blank">OSChina</a>会员
+					<code>
+						<a href="http://my.oschina.net/dengying" target="_blank">沙王重名了</a>
+					</code>
+					提供的
+					<code>
+						<a href="http://www.oschina.net/code/snippet_119610_11825"
+							target="_blank">代码</a>
+					</code>
+					实现
+				</div>
+				<div class="topBar">
+					<div class="title">待格式化JSON：</div>
+					<textarea name="json" id="RawJson" style="resize:none;"
+						class="resizable"></textarea>
+				</div>
+				<div class="operateTB form-inline">
+					<label for="TabSize">缩进量：</label> <select id="TabSize"
+						onchange="TabSizeChanged()" class="span1">
+						<option value="1">1</option>
+						<option value="2" selected="true">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+					</select> <label for="QuoteKeys" class="checkbox"> <input
+						type="checkbox" id="QuoteKeys" onclick="QuoteKeysClicked()"
+						checked="true">引号
+					</label> <span id="CollapsibleViewHolder"> <label
+						for="CollapsibleView" class="checkbox"> <input
+							type="checkbox" id="CollapsibleView"
+							onclick="CollapsibleViewClicked()" checked="true">显示控制
+					</label>
+					</span> <span id="CollapsibleViewDetail"
+						style="visibility: visible;margin-right:10px; "> <a
+						href="javascript:void(0);" onclick="ExpandAllClicked()">展开</a> <a
+						href="javascript:void(0);" onclick="CollapseAllClicked()">叠起</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(3)">2级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(4)">3级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(5)">4级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(6)">5级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(7)">6级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(8)">7级</a> <a
+						href="javascript:void(0);" onclick="CollapseLevel(9)">8级</a>
+					</span> <input class="btn btn-small btn-primary"
+						data-loading-text="正在格式化json..." id="format" type="button"
+						onclick="Process()" value="格式化" />
+				</div>
+				<div class="bottomBar">
+					<div class="title">格式化JSON：</div>
+					<div id="Canvas" class="Canvas well resizable"
+						style="height:200px;overflow:auto;margin-bottom:0px;"></div>
+				</div>
+			</form>
+		</div>
+	</div>

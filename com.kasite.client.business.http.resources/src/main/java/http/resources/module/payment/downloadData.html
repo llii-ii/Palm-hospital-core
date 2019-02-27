@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <title>数据库查询</title>
+</head>
+
+<body>
+	<div class="c-main">
+    	<div>
+    		<p>数据库服务器IP:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="databaseIp" id="databaseIp" placeholder="请输入IP" value="127.0.0.1" /><font color='red'>*</font></p>
+    		<p>密码:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="password" id="password" placeholder="请输入密码" value="" /><font color='red'>*</font></p> -->
+    		<p>数据库配置文件地址:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="configFile" id="configFile" placeholder="请输入数据库配置文件地址" value="D:/software/mysql-5.7.24-winx64/my-default.ini" /><font color='red'>*</font></p>
+    		<p>导出的数据库名称:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="databaseName" id="databaseName" placeholder="请输入数据库名" value="fjykdxfsdeyy" /><font color='red'>*</font></p>
+    		<p>导出表名:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name="tableName" id="tableName" placeholder="请输入导出表名" value="o_order,p_bill,p_his_bill" /><font color='red'>* 导出全部表请输入*,多表导出以,隔开</font></p>
+    		<p><button id="exprotData" style="background: #ffee88;">确认导出</button> <a id='confirmDownload' href='' download="data.sql">确认下载</a></p>
+    	</div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="commons/js/common.js"></script>
+<script>
+	var COUNT = 1;
+	var artLoading = null;
+	$(function(){
+		//导出数据库
+		$("#exprotData").click(function(){
+			var databaseIp = $("#databaseIp").val();
+			if(databaseIp == ''){
+				alert("请输入数据库服务器IP!!!");
+				return;
+			}
+			var configFile = $("#configFile").val();
+			if(configFile == ''){
+				alert("请输入数据库配置文件!!!");
+				return;
+			}
+			var token = $("#token").val();
+			if(token == ''){
+				alert("请输入token!!!");
+				return;
+			}
+			var tableName = $("#tableName").val();
+			if(tableName == ''){
+				alert("请输入导出表名!!!");
+				return;
+			}
+			var databaseName = $("#databaseName").val();
+			if($("#databaseName").val() == ''){
+				alert("请输入数据库名称!!!");
+				return;
+			}
+			var dataJson = {
+				"hostIP": databaseIp,
+				"configFile": configFile,
+				"databaseName": databaseName,
+				"tableName": tableName
+			};
+			var url = location.protocol + '//' + location.host + '/sysdb/downloadData1.do';
+			Commonjs.ajax(url,dataJson,function(data){
+				var filePath = data.filePath;
+				//$("#confirmDownload").attr("href", location.protocol + '//' + location.host + "/" + filePath + "?token=" + token);
+				var $eleForm = $("<form method='get'><input type='hidden' name='token' value='"+token+"'></form>");
+	            $eleForm.attr("action", location.protocol + '//' + location.host + "/" + filePath);
+	            $(document.body).append($eleForm);
+	            //提交表单，实现下载
+	            $eleForm.submit();
+			});
+		});
+	});
+</script>
+ 	
+</html>

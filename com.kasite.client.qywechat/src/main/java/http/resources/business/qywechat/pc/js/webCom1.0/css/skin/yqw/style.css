@@ -1,0 +1,220 @@
+.children-page{
+	padding: 30px;
+	overflow-x: auto;
+}
+.ibox-content{
+	padding-left: 0!important;
+	padding-right: 0!important;
+	min-width: 1100px;
+}
+/*面包屑*/
+.yqw .breadcrumb{
+	background-color: transparent;
+	padding-bottom: 20px;
+}
+.yqw .breadcrumb li:last-child .divider{
+	display: none;
+}
+.yqw .breadcrumb img{
+	width: 18px;
+	float: left;
+}
+.yqw .breadcrumb .divider{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.yqw .breadcrumb>li+li:before{
+	display: none;
+}
+
+/*按钮*/
+/*.yqw .btn,.yqw .btn:hover{
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	min-width: 80px;
+	min-height: 34px;
+	background-color: #3685ff;
+	color:#fff;
+	border:1px solid #3685ff;
+}*/
+.yqw .form-horizontal .btn,.yqw .form-horizontal .btn:hover{
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+}
+
+.yqw .btn.btn-filter{
+	padding: 6px 27px;
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = '#94bdff', endColorstr = '#3685ff');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = '#94bdff', endColorstr = '#3685ff')";
+	background-image: -moz-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -ms-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -o-linear-gradient(left, #94bdff, #3685ff);
+	background-image: -webkit-gradient(linear, left top, right top, from(#94bdff), to(#3685ff));
+	background-image: -webkit-linear-gradient(left, #94bdff, #3685ff);
+	background-image: linear-gradient(left, #94bdff, #3685ff);
+	border:0;
+}
+.yqw .btn.btn-default{
+	/*border:1px solid #3685ff;*/
+	/*color: #3685ff;*/
+	/*background: #fff;
+	padding: 6px 27px;*/
+}
+.yqw .btn.btn-success{
+	background: #00bc16;
+	border:1px solid #00bc16;
+}
+.yqw .btn.btn-info{
+	background: #4ab4ff;
+	border:1px solid #4ab4ff;
+}
+.yqw .btn.btn-white{
+	background: #fff;
+	border:1px solid #fff;
+	color: #999;
+}
+.yqw .btn.btn-border{
+	background: #fff;
+	border:1px solid #3685ff;
+	color: #3685ff;
+}
+.yqw .btn.btn-font{
+	background: transparent;
+	border:1px solid transparent;
+	color: #3685ff;
+}
+
+/*表格样式*/
+.yqw .fixed-table-container{
+	padding: 4px 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px 6px 0 0;
+    -ms-border-radius: 6px 6px 0 0;
+    -o-border-radius: 6px 6px 0 0;
+    border: 1px solid #e6e6e6!important;
+    margin-bottom: 20px;
+}
+.yqw .fixed-table-toolbar:after,.yqw .fixed-table-pagination:after{
+	content: '';
+	display: block;
+	width: 100%;
+	height: 0;
+	clear: both;
+}
+.yqw .fixed-table-toolbar .bs-bars{
+	line-height: 40px;
+}
+.yqw .fixed-table-toolbar{
+	height: auto!important;
+	margin-bottom: 10px;
+}
+.yqw .fixed-table-toolbar .form-group{
+	margin-bottom: 0!important;
+}
+.yqw .fixed-table-toolbar .columns-right,
+.yqw .fixed-table-toolbar .search{
+	display: none;
+}
+.yqw .fixed-table-toolbar .bs-bars{
+	float: none!important;
+}
+.yqw .fixed-table-container{
+    border: 1px solid #fff;
+}
+.yqw .bootstrap-table .table tbody > tr > td{
+	background-color: #f5f5f5;
+}
+.yqw .bootstrap-table .table,
+.yqw .bootstrap-table .table > thead > tr > th,
+.yqw .bootstrap-table .table > tbody > tr > td{
+    border-bottom: 1px solid #fff;
+}
+.yqw .bootstrap-table .table > thead > tr > th,
+.yqw .bootstrap-table .table > tbody > tr > td{
+	border-left: 0;
+}
+.yqw .table-hover>tbody>tr>td{
+	position: relative;
+}
+.yqw .table-hover>tbody>tr.active td:first-child:before{
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: #3685ff;
+}
+.yqw .table-hover>tbody>tr.active td:last-child:after{
+	content: '';
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: #3685ff;
+}
+.yqw .fixed-table-toolbar .pull-left .form-inline button{
+	float: none!important;	
+}
+.yqw .fixed-table-pagination .btn.btn-default,
+.yqw .fixed-table-pagination .page-fast input{
+	border:1px solid #bababa;
+	color: #bababa;
+	padding: 3px 10px;
+	min-width: auto;
+    min-height: auto;
+    height: auto;
+    position: relative;
+    top: -2px;
+}
+.yqw .fixed-table-pagination .dropdown-toggle.btn-default{
+	color: #fff;
+}
+.yqw .fixed-table-pagination .open .dropdown-toggle.btn-default{
+	background: #3685ff;
+	border:1px solid #3685ff;
+	color: #fff;
+}
+.yqw .bootstrap-table .pagination{
+	margin: 0;
+}
+
+/*form-inline*/
+.form-inline{
+	margin-left: -20px;
+	min-width: 1000px;
+}
+.form-inline .form-control{
+	display: inline-block;
+}
+.form-inline label{
+	line-height: 34px;
+	padding-left: 20px;
+	padding-right: 10px;
+	margin-bottom: 5px;
+}
+.form-inline input,
+.form-inline select{
+	width: 100%!important;
+	margin-bottom: 5px!important;
+}
+
+.red{
+	color: #f00;
+	font-size: 24px;
+	display: inline-block;
+	line-height: normal;
+	position: relative;
+	top: 7px;
+}

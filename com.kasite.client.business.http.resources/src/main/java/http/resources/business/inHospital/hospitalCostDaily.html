@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>住院清单</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript"   src="../../common/js/common.js?v=20190118" ></script>
+	<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css" />
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+	<script type="text/javascript"   src="../../common/js/memberpicker.js" ></script>
+	<script type="text/javascript" src="js/hospitalCostDailyMemberId.js?v=201901152112"></script>
+</head>
+
+<body>
+<div class="c-main pb15">
+    <div class="h45">
+    	<div class="bill-top">
+        	<a href="javascript:;" class="bill-prev">前一天</a>
+        	<div class="bt-date">
+            	<i class="sicon icon-data"></i><span id="dateword">选择日期</span>
+                <input type="text" class="filtertext" id="filter-date" />
+            </div>
+        	<a href="javascript:;" class="bill-next">后一天</a>
+        </div>
+    </div>
+    <div class="bill-head-hold">
+    	<div class="bill-head c-pack">
+        	<div class="bh-jzr">
+            	<i class="sicon icon-rt"></i>
+                <label class="c-f15 mr5" id="memberPicker_name"></label>
+                <span class="jzcard" id="memberPicker_cardNo"></span>
+                <i class="sicon icon-gjt-b"></i>
+                <input type="text" id="filter-jzr" class="filtertext" />
+            </div>
+            <p>今日费用(元)</p>
+            <p class="c-f28"></p>
+        </div>
+    </div>
+    <div class="bill-title-hold">
+    	<div class="bill-title">
+        	<span class="fr">金额(元）</span>费用分类
+        </div>
+    </div>
+    <div>
+    	<ul class="c-list c-border-b">
+        	
+        </ul>
+        <div class="nomore">&emsp;</div>
+        <div class="infinite-scroll" style="display: none;">
+        	<div class="infinite-preloader"></div>
+        	正在加载
+        </div>
+        <div class="nomess">
+        	<i class="nomess-tb"></i>
+            <p class="mt10">暂无此类数据</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

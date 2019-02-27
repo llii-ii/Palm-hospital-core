@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ 		<script type="text/javascript" src="../commons/js/business-all.js"></script>
+        <script type="text/javascript" src="js/basic-dept.js"></script>
+        <script type="text/javascript" src="../commons/upload/upload.js"></script>
+
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+       <div class="container-wrap">
+        	<div class="main-header" style="top :0px;left:1px;">
+                <ul class="clearfix">
+                    <li><span><a href="javascript:window.location.href='basic-hospital.html';">医院信息</a></span></li>
+                    <li class="last"><span><a href="javascript:window.location.href='basic-dept.html';" class="curr">科室医生</a></span></li>
+                </ul>
+            </div>
+            <div class="scroll-pane bg-grey jspScrollable">
+           		<div class="container" style="float:left;">
+               		
+                </div>
+                <div class="container">
+                	<div class="">
+                		<div class="info-doctor-fl">
+		               	   	<div><select id="hosNameSelect" class="select" style="width:300px;opacity:1"></select></div> 
+	                    </div>
+                        <div class="info-doctor clearfix">
+                            <div class="info-doctor-fl fl">
+                                <div class="info-office" style="height:480px">
+                                    <div class="info-office-title">
+                                        <h2>科室</h2>
+                                        <span class="arrow arrowB"><s></s></span>
+                                    </div>
+                                     <div class="info-office-wrap">
+                                    <div class="info-office-box">
+                                    	<div class="info-office-list" id="deptList">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-doctor-fl fl">
+                                <div class="info-office">
+                                    <div class="info-office-title">
+                                        <h2>二级科室</h2>
+                                        <span class="arrow arrowB"><s></s></span>
+                                    </div>
+                                     <div class="info-office-wrap">
+	                                     <div class="info-office-box">
+		                                     <div class="info-office-list" id="twoLeveDept">
+		                                    </div>
+	                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-doctor-fr">
+                                <div class="info-details">
+                                	<div class="info-details-top">
+                                    	<h2><span style="width: 30%;display:inline-block;">详情</span><span style="width: 60%;display:inline-block;text-align: right"><a href="javascript:;" id="dataSynchronous" class="btn" >同步</a></span></h2>
+                                    </div>
+                                    <div class="info-details-wrap clearfix ">
+                                    	<div class="info-details-fl fl " style="width: 330px" >
+                                    		<div id="divDept" class="info-details-box">
+	                                        	<div class="info-edit-top"></div>
+	                                            <div id="addr" class="info-edit-address p15"></div>
+	                                            <div id="intro"  class="info-edit-text p15" style="max-height: 160px;overflow: hidden;"></div>
+	                                            <div id="orderCol"  class="info-edit-text  p15"  ></div>
+	                                            <div id="deptType"  class="info-edit-text  p15"  ></div>
+	                                            <div id="deptTel" class="info-edit-text  p15"  ></div>
+	                                            <div class="info-edit-btns p15">
+	                                            <a href="javascript:;" class="btn" id="deptCancel">取消</a>
+	                                            <a href="javascript:;" class="btn" id="edit-btns">编辑</a></div>
+                                            </div>
+                                        </div>
+                                      
+                                          <div id="popup" class="art-doctor-box" style="display:none">
+                                                	<div class="art-doctor-details clearfix">
+<!--                                                    	<div class="art-doctor-img fl"><a href="#"><img id="adbImg" src="../images/demo/1.jpg" /><span>编辑图片</span></a></div>-->
+                                                    	  <div  id="updateSmallImg" class="art-doctor-img fl"> <input type="file" title="点击上传图片" value="点击上传图片" />
+															<img id="SmallImgV"  src="http://f1.yihuimg.com/TFS/upfile/WBJ/1024727/2014-07-23/003320_1406097193619_fullsize.jpg" style="height:80px;width:80px;"  />
+														</div>
+                                                    	
+                                                        <div class="art-doctor-txt fr">
+                                                        	<div class="user" >
+                                                        	<input type="text" class="text" value="请输入姓名"  id="adb-name"/> <input id="adb-title"  type="text" class="text" value="请输入职称" onkeydown=""/>
+                                                        	</div>
+                                                            <div class="info mt10">
+                                                            	<ul class="clearfix">
+                                                                	<!-- <li>
+                                                                    	<span class="t">所在部门:</span>
+                                                                       
+                                                                         <span class="w"><span class="text"  id="adb-depart" /></span>
+                                                                         
+                                                                    </li>
+                                                                    <li>
+                                                                    	<span class="t">出诊科室:</span>
+                                                                   
+                                                                           <span class="text" id="adb-dept" >1</span>
+                                                                       
+                                                                    </li> -->
+                                                                    <li>
+                                                                    	<span class="t">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
+                                                                    	 <span class="w"><select id="adb-sex" style="width:150px;">
+                                                                    	 <option value="0" >男</option>
+                                                                    	 <option value="1" >女</option>
+                                                                    	 </select>
+<!--                                                                    	 <input type="text" class="text" value="男"  id="adb-sex"  /></span>-->
+                                                                    	 
+                                                                    </li>
+                                                                    <li>
+                                                                    	<span class="t">手机号码:</span>
+                                                                         <span class="w"><input type="text" class="text" value="" id="adb-tel" /></span>
+                                                                         
+                                                                    </li>
+                                                                    <li> 
+                                                                    	<span class="t">教学职称:</span>
+                                                                          <span class="w"><select id="teachTitle" style="width:150px;">
+                                                                         <option value="" >请选择</option>
+                                                                         <option value="0" >专家</option>
+                                                                         <option value="1" >教授</option>
+                                                                         <option value="2" >副教授</option>
+                                                                         <option value="3" >讲师</option>
+                                                                         <option value="4" >未知</option>
+                                                                         </select>
+                                                                         
+                                                                    </li>
+                                                                    <li>
+                                                                    	<span class="t">排序:</span>
+                                                                         <span class="w"><input type="text" class="text"  id="orderCol" /></span>
+                                                                         
+                                                                    </li>
+                                                                    <li> 
+                                                                        <span class="t">是否显示:</span>
+                                                                          <span class="w"><select id="show" style="width:150px;">
+                                                                         <option value="1" >显示</option>
+                                                                         <option value="0" >不显示</option>
+                                                                         </select>
+                                                                         
+                                                                    </li>
+                                                                    <li>
+                                                                        <span class="t">学历:</span>
+                                                                         <span class="w"><input type="text" class="text"  id="doctorDegree" /></span>
+                                                                         
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="art-doctor-input mt25">
+<!--                                                    	<input type="text" id="spec" class="text big" value="请输入医生专长" />-->
+														<span class="t">医生专长:</span>
+                                                    	<input type="text"   id="spec"  class="text big" value="请输入医生专长" onFocus="this.value=='请输入医生专长'?this.value='':null" onBlur="this.value==''?this.value='请输入医生专长':null" />
+                                                    	
+                                                    </div>
+                                                    <div class="art-doctor-textarea mt15">
+                                                    <span class="t">医生介绍:</span>
+<!--                                                    	<textarea class="textarea">请输入医生介绍</textarea>-->
+<!--                                                    	<textarea onpropertychange="if(value.length>100) value=value.substr(0,100)"  class="textarea doctor-textarea-focu" id="adb-intro"  onFocus="this.value=='请输入医生介绍'?this.value='':null" onBlur="this.value==''?this.value='请输入医生介绍':null">请输入医生介绍</textarea>-->
+                                                    	<textarea id="adb-intro" rows="3"  maxlength="150" onchange="this.value=this.value.substring(0, 150)" onkeydown="this.value=this.value.substring(0, 150)" onkeyup="this.value=this.value.substring(0, 150)" class="textarea doctor-textarea-focu" ></textarea>
+                                                    </div>
+                                                    
+                                                    <div class="art-doctor-tips">
+                                                    	限150个字
+                                                    </div>
+                                                </div>
+                                                
+		                                             <div class="info-details-box">
+		                                        	   <div class="info-details-list clearfix" id="docTable">
+                                              
+		                                            	</div>
+			                                            <div class="pager_container clearfix" >
+									                                <input id="totalcount" type="hidden" value="0" />
+									                                <input id="pagenumber" type="hidden" value="1" />
+									                                <div id="pager"></div>
+								                     	</div>
+		                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+     </body>
+    
+</html>

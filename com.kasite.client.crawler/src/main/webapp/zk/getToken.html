@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>getToken</title>
+</head>
+<body>
+<div id = 'sign'>
+	
+</div>
+</body>
+<script src="js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+<script type="text/javascript" src="../commons/js/common.js"></script>
+<script type="text/javascript">
+	var orgCode = Commonjs.getUrlParam("orgCode");
+	var appId = Commonjs.getUrlParam("appId");
+	var encryptType = Commonjs.getUrlParam("encryptType");
+	var encrypt = Commonjs.getUrlParam("encrypt");
+
+	$.ajax({
+		url: "../api/verificat/getToken.do",
+		type:'POST',
+		data: {
+				"orgCode" : orgCode,
+				"appId" : appId,
+				"encryptType" : encryptType,
+				"encrypt" : encrypt
+			  },
+		success: function(data){
+			console.log(data);
+			$("#sign").html("access_token："+data.access_token+"<br/>"+"code(0表示正常)："+data.code+"<br/>"+"凭证有效时间："+data.invalid_time+"<br/>");
+	
+		}
+		
+	});
+	
+</script>
+</html>

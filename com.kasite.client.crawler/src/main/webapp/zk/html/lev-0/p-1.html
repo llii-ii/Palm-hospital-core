@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+		<style>
+		.data-filter {padding:3px;overflow:hidden;}
+		.data-filter > span {display:block;float:left;padding:10px 15px;border-left:1px solid #CCC;margin:0;cursor:pointer;}
+		.data-filter > span:first-child {border-left:1px solid transparent;}
+		.data-filter > span.active,.data-filter > span:hover {background:#2775A2;color:#FFF;border-left:1px solid transparent;}
+		
+		.date-filter {float:right;margin:7px;}
+		.date-filter > span {display:block;float:left;padding:3px 5px;border-left:1px solid #FFF;background:#999999;color:#FFF;cursor:pointer;}
+		.date-filter > span.active, .date-filter > span:hover {background:#FF9326;}
+		.date-filter > span:first-child {border-top-left-radius:5px !important;border-bottom-left-radius:5px !important;}
+		.date-filter > span:last-child {border-top-right-radius:5px !important;border-bottom-right-radius:5px !important;}
+		.widget-head input{
+			width:108px!important;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-list-alt"></i> 上报明细
+			</div>
+			<div class="data-filter">
+				<div class="pull-left" style="padding:8px 0;">&nbsp;机构选择:</div>
+				<a class="pull-left " style="padding:7px;" href="#" onclick="showOrgTree();">
+					<img src="../../img/ico_chead_edit.png" title="机构选择" alt="机构选择">
+				</a>
+				<!--<div class="form-group has-feedback">
+				    <input class="form-control" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" >
+				    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+			  	</div>-->
+				<input id="scoreDate" type="text" name="scoreDate" style="margin:3px;"onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="" value="2018-06-01" class="styled date-custom pull-right text hasDatepicker">
+			</div>
+		</div>
+		
+		<div id="chartdiv" style="height: 400px;"></div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/serial.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var chart;
+		function draw(chartData){
+		  chart = new AmCharts.AmSerialChart();
+		  chart.dataProvider = chartData;
+		  chart.pathToImages = "/PMC/themes/common/images/";
+		  chart.categoryField = "hospital";
+		  chart.startDuration = 1;
+		  chart.precision = 0;
+		
+		  chart.addListener("dataUpdated", zoomChart);
+		  
+		  // AXES
+		  // category
+		  var categoryAxis = chart.categoryAxis;
+		  categoryAxis.labelRotation = 45;
+		  categoryAxis.gridPosition = "start";
+		  categoryAxis.labelFunction =subLabelFunction;
+		
+		  // value
+		  // in case you don't want to change default settings of value axis,
+		  // you don't need to create it, as one value axis is created automatically.
+		
+		  // GRAPH
+		  var graph = new AmCharts.AmGraph();
+		  graph.valueField = "count";
+		  graph.balloonText = "[[category]]: <b>[[value]]</b>";
+		  graph.type = "column";
+		  graph.lineAlpha = 0;
+		  graph.fillAlphas = 0.8;
+		  chart.addGraph(graph);
+		   
+		  //数据少，减少柱的宽度
+		  if(chartData.length <= 1){
+		   	 graph.columnWidth = 0.08;
+		  }
+		  else if(chartData.length > 1 && chartData.length < 5) {
+		    graph.columnWidth = 0.2;
+		  } else if (chartData.length >= 5 && chartData.length < 10) {
+		    graph.columnWidth = 0.5;
+		  } else if (chartData.length > 20) {
+		    // SCROLLBAR
+		    var chartScrollbar = new AmCharts.ChartScrollbar();
+		    chartScrollbar.graph = graph;
+		    chartScrollbar.scrollbarHeight = 30;
+		    chart.addChartScrollbar(chartScrollbar);
+		  }
+		
+		  // CURSOR
+		  var chartCursor = new AmCharts.ChartCursor();
+		  chartCursor.cursorAlpha = 0;
+		  chartCursor.zoomable = false;
+		  chartCursor.categoryBalloonEnabled = false;
+		  chart.addChartCursor(chartCursor);
+		  
+		  chart.creditsPosition = "top-right";
+		  chart.write("chartdiv");
+		
+		}
+		
+		function subLabelFunction(valueText, serialDataItem, categoryAxis){
+		   if(valueText.length > 10)
+		   {
+		      return valueText.substring(0,10)+"...";
+		   }else{
+		       return valueText;
+		   }
+		}
+		function zoomChart() {
+		    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+		    chart.zoomToIndexes(0, 15);
+		}
+		
+		//add end
+		$(function(){
+		   //add end
+		  	draw([{"hospital":"信州区","count":11111184},{"hospital":"上饶县","count":54788},{"hospital":"广丰县","count":16089845},{"hospital":"鄱阳县","count":71849},{"hospital":"德兴市","count":42038},{"hospital":"弋阳县","count":0},{"hospital":"万年县","count":0},{"hospital":"婺源县","count":17266},{"hospital":"铅山县","count":0},{"hospital":"余干县","count":0}]);
+		});
+	
+		function showOrgTree(){
+			//页面层
+			layer.open({
+			  type: 2,
+			  skin: 'layui-layer-rim', //加上边框
+			  area: ['420px', '240px'], //宽高
+			  content: 'http://www.baidu.com'
+			});
+		}
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

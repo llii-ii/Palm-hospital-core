@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>审批</title>
+		<style type="text/css">
+			.radio.i-checks{
+				display: inline-block!important;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width: 100%;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label>状态：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;">
+					<div class="radio i-checks">
+                        <label><input type="radio" checked="" value="1" name="a"> <i></i> 通过</label>
+                    </div>
+                    <div class="radio i-checks">
+                        <label><input type="radio" value="2" name="a"> <i></i> 驳回</label>
+                    </div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label>添加备注：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;">
+					<textarea id="remark" name="" rows="5" style="width: 100%;resize: none;" class="form-control" cols=""></textarea>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="clo()">确认</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var id = Commonjs.getUrlParam("id");
+		var meetingId = Commonjs.getUrlParam("meetingId");	
+		var memberId = Commonjs.getUrlParam("memberId");	
+		$(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+		
+		function clo(){
+			var status = $('input[type="radio"]:checked').val();
+			var remark = $('#remark').val();		
+			var apiData = {};	
+            apiData.id = id;
+            apiData.status = status;
+            apiData.remark = remark;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/UpdateMeetingApproval/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				if(status == 2){
+    					deleteToMember();
+    				}
+    				meetingPush(status);
+    	         	alert("审批成功");
+					parent.refresh();
+					System.closeThisWindow();
+    			}else{
+    	         	alert("审批失败请联系管理员");
+    			}
+    		},{async:false});
+		}
+		
+		//驳回（删除tomember中请假记录）
+		function deleteToMember(){
+			var apiData = {};	
+            apiData.uid = meetingId;
+            apiData.memberType = 3;
+            apiData.memberId = memberId;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/DeleteToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				
+    			}else{
+    	         	alert("审批失败请联系管理员");
+    			}
+    		},{async:false});
+		}
+		
+		//消息推送
+		function meetingPush(leaveStatus){
+			var apiData = {};	
+            apiData.uid = id;
+            apiData.memberIds = memberId;
+            apiData.leaveStatus = leaveStatus;
+            apiData.type = 2;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HYGL');
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/ActivityMeetingPush/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					
+    			}else{
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+		}
+	</script>
+</html>

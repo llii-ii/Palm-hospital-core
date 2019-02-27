@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+	</head>
+	<body>
+		<div class="widget">
+			<div class="widget-head">
+				<div class="widget-head-title">
+					<i class="fa fa-pencil-square-o"></i>
+					新增数据标准集
+				</div>
+			</div>
+			<div class="widget-body">
+				<div id="collectForm" name="collectForm" class="form-horizontal" action="/PMC/resourcemanage/platformcriterion/mainsave" method="post">
+					<div class="widget row-fluid">
+						<div class="well">
+							<div class="control-group">
+								<label class="control-label" for="tableName">标准集： <span class="required">*</span> </label>
+								<div class="controls">
+									<input type="file" id="uploadFile" />
+								</div>
+							</div>
+						
+							<div class="control-group">
+								<label class="control-label" for="tableName">版本： <span class="required">*</span></label>
+								<div class="controls">
+									<input id="version" name="version" class="input-xlarge text" type="text" value="">
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label" for="businessName">描述： </label>
+								<div class="controls">
+									<textarea id="describe" name="describe" style="width:70%;line-height:1.5;" datatype="*0-1024" errormsg="描述为0-1024个字符" rows="6" class="uniform"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<button onclick='saveFile()' class="btn btn-primary">
+							保存
+						</button>
+						<button onclick="returnFirst()" type="button" class="btn btn-primary">
+							返回
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script type="text/javascript" src="../../commons/js/common.js"></script>
+	<script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+	<script type="text/javascript">
+		var type = Commonjs.getUrlParam("standardType");
+
+		var fileName = '';
+		var fileSize = '';
+	
+		
+        function saveFile(){
+        	uploadFile();
+        }
+        
+	    // 动态获取文件名和文件大小，如果要做判断的话
+	    $("#uploadFile").change(function(){
+	        var file = this.files[0];
+	        fileName = file.name;
+	        fileSize = file.size;
+	    });
+	    
+	    function uploadFile() {
+	        var formData = new FormData();
+	        var file = document.getElementById("uploadFile").files[0];
+	        if (!file) {
+	        	Commonjs.alert('请选择标准集文件!');
+	        	
+	        	return false;
+			}
+	        if (!$("#version").val()) {
+	        	Commonjs.alert("请输入版本号!");
+	        	return false;
+			}        
+	        
+	        formData.append("file",file);
+	        formData.append("fileName",fileName);
+	        formData.append("fileSize",fileSize);
+	        formData.append("version",$("#version").val());
+	        formData.append("describe",$("#describe").val());
+	        formData.append("type",type);
+
+	    // 省略掉了success和error的处理
+	        sendFile("../../standard/uploadFile.do",formData,true,
+				        function (res) {
+				        	art.dialog({
+								lock : true,
+								opacity : 0.4,
+								width : 250,
+								title : '提示',
+								time : 3,
+								content : res.respMessage,
+								ok : function() {
+									returnFirst();
+								}
+							}); 
+	        				
+				        },function (XMLHttpRequest, textStatus, errorThrown) {
+				        	art.dialog({
+								lock : true,
+								opacity : 0.4,
+								width : 250,
+								title : '提示',
+								time : 3,
+								content : "操作异常",
+								ok : function() {
+									returnFirst();
+								}
+							}); 
+				        });
+	    }
+	    
+	    function sendFile(_url, _data, _async, _successCallback, _errorCallback) {
+		    $.ajax({
+		        type: "post",
+		        async: _async,
+		            url: _url,
+		            dataType: 'json',
+		            // 告诉jQuery不要去处理发送的数据
+		            processData : false,
+		            // 告诉jQuery不要去设置Content-Type请求头
+		            contentType: false,
+		            data: _data,
+		            success: function (msg) {
+		                _successCallback(msg);
+		            },
+		            error: function (error) {
+		                _errorCallback(error);
+		            }
+		    });
+	    }
+	    
+		function returnFirst(){
+			if(type == 1){
+				document.location.href='./p-0.html';
+			}
+			if(type == 2){
+				document.location.href='./p-2.html';
+			}			
+		}
+	</script>
+</html>

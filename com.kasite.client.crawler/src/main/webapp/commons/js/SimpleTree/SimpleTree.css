@@ -1,0 +1,8 @@
+.st_tree{padding:10px;}
+.st_tree a{ text-decoration:none; display:inline-block; }
+.st_tree a:hover{}
+.st_tree ul{ padding:0 18px; margin:0; }
+.st_tree ul li{ font-size:14px; color:#222; line-height:24px; cursor:pointer;list-style:none; background-repeat:no-repeat; padding:0 0 3px 5px; }
+.st_tree li:hover{ background:#e6e6e6; width:100%;  } 
+.st_tree .folder{ list-style-image:url(../images/st_icon.png); background-repeat:no-repeat; padding:0 0 0 5px; }
+.st_tree .open{ list-style-image:url(../images/st_icon_open.png);background-repeat:no-repeat; padding:0 0 0 5px; }

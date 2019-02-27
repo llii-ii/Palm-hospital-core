@@ -1,0 +1,1 @@
+maven运行：mybatis-generator:generate

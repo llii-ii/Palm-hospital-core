@@ -1,0 +1,39 @@
+
+<Response>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:hospitalization">
+		<allergies></allergies>
+		<bunkId>630</bunkId>
+		<certNum>362330197707183753</certNum>
+		<certType>01</certType>
+		<clientStatus></clientStatus>
+		<clinicCard>FJ059510020000223731</clinicCard>
+		<clinicCardType></clinicCardType>
+		<complained></complained>
+		<complication></complication>
+		<deptCod>0706010000</deptCod>
+		<deptName>脊柱科</deptName>
+		<description></description>
+		<diseases></diseases>
+		<doctorRemark></doctorRemark>
+		<familyHistory></familyHistory>
+		<firstVisit>1</firstVisit>
+		<historyOfpastillness></historyOfpastillness>
+		<historyPresentIllness></historyPresentIllness>
+		<homsNum></homsNum>
+		<inHosDate>2007-08-20</inHosDate>
+		<inHosDoctorCode></inHosDoctorCode>
+		<inHosDoctorName></inHosDoctorName>
+		<inHosTimes>1</inHosTimes>
+		<inHospitalNum>20074054            </inHospitalNum>
+		<lesionName>四病区</lesionName>
+		<medicalType>2</medicalType>
+		<pastDiseaseHistory></pastDiseaseHistory>
+		<patientId>336132</patientId>
+		<physicalExam></physicalExam>
+		<socialhistory></socialhistory>
+	</Data>
+	<Message>成功</Message>
+	<Code>10000</Code>
+	<total>0</total>
+</Response>

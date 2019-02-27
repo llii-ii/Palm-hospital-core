@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>签退</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	    
+		<style type="text/css">
+			.act2{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.act2-top{
+				padding: 0.5rem;
+				background: url(../../img/bg.png) no-repeat;
+				background-size: cover;
+				color: #fff;
+				text-align: center;
+			}
+			.act2-top h2{
+				font-size: 0.42rem;
+				margin-top: 0;
+				margin-bottom: 0.2rem;
+				margin-top: 0;
+			}
+			.act2-top p{
+				font-size: 0.28rem;
+			}
+			.act2-top-info{
+				border-top: 1px solid #fff;
+			}
+			.act2-top-info p{
+				padding-top: 0.26rem;
+				padding-bottom: 0;
+				margin-top: 0;
+				text-align: left;
+				margin-bottom: 0;
+			}
+			.act2-top-info p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .05rem;
+			}
+			.act2-title{
+				position: relative;
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .55rem;
+				padding-top: .3rem;
+				padding-bottom: .3rem;
+				font-weight: bold;
+			}
+			.act2-title:before{
+				content: '';
+				display: block;
+				width: 0.06rem;
+				height: 0.3rem;
+				background-color: #2988fc;
+				position: absolute;
+				left: 0.38rem;
+				top: 50%;
+				margin-top: -.15rem;
+				border-radius: 0.06rem;
+				-webkit-border-radius: 0.06rem;
+			}
+			.act2-title span{
+				float: right;
+				color: #999;
+				font-weight: normal;
+				padding-right: 0.38rem;
+			}
+			.act2-person{
+				background: #fff;
+				padding:0 0.54rem 0.2rem 0.54rem;
+			}
+			.act2-person li{
+				position: relative;
+				float: left;
+				display: block;
+				padding: 0 0.17rem 0 0.4rem;
+				font-size: 0.28rem;
+				line-height: 0.46rem;
+				color: #333;
+				background: #f7fbff;
+				border-radius: 0.1rem;
+				-webkit-border-radius: 0.1rem;
+				margin-right: 0.56rem;
+				margin-bottom: 0.1rem;
+			}
+			.act2-person li img{
+				width: .46rem;
+				height: .46rem;
+				position: absolute;
+				z-index: 1;
+				left: -.2rem;
+				top: 0;
+			}
+			.act2-content{
+				position: relative;
+				background: #fff;
+				font-size: 0.26rem;
+				padding: 0 0.5rem 0.2rem 0.5rem;
+			}
+			.act2-content label{
+				display: inline-block;
+				width: 1.4rem;
+				color: #2988fc;
+				margin-bottom: 0.2rem;
+			}
+			.act2-scan{
+				position: absolute;
+				top: -0.1rem;
+				right: 0.7rem;
+			}
+			.act2-scan img{
+				width: 1rem;
+				height: 1rem;
+			}
+			.act2-detail{
+				color: #2988fc;
+				background: #fff;
+				text-align: center;
+				font-size: 0.26rem;
+				padding: 0.25rem;
+			}
+		</style>
+	</head>
+	<body onload="init()">
+		    <div class="x-row boxflex foot">
+				<div class="x-row-cols right" onclick="address()">签退</div>
+			</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=PTFBZ-6UCKR-P3TWK-WZ7JI-W2OJV-GEBN4"></script>
+	<script type="text/javascript">
+	var meetingId = Commonjs.getUrlParam("uid");
+	
+	$(function(){
+		getWxConfig();
+	});
+	//获取微信配置	
+	function getWxConfig(){
+		var apiData = {};	
+		apiData.url = location.href.split('#')[0];
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQyWxConfigInfo/callApi.do',param,function(dd){
+			if(dd.RespCode==10000){
+				var data = JSON.parse(dd.RespMessage);
+				wx.config({
+				    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+				    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: data.appId, // 必填，企业微信的corpID
+				    timestamp: data.timestamp, // 必填，生成签名的时间戳
+				    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+				    signature: data.signature,// 必填，签名，见 附录-JS-SDK使用权限签名算法
+				    jsApiList: [
+						    'selectEnterpriseContact',
+					    	'chooseImage',
+					    	'uploadImage',
+					    	'openLocation',
+					    	'getLocation',
+					    	'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			}else{
+				alert("获取企业微信配置异常！");
+			}
+		},{async:false});
+	}
+	// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+	wx.ready(function(){
+		
+	});
+	// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+	wx.error(function(res){
+		
+	});
+	
+	var addressComponents;
+	var geocoder = null;
+	var init = function() {
+	    geocoder = new qq.maps.Geocoder({
+	        complete : function(result){
+	          	//addressComponents = result.detail.addressComponents.street+""+result.detail.addressComponents.streetNumber;
+	          	addressComponents = result.detail.addressComponents.streetNumber;
+	          	//alert(addressComponents);
+	          	//定位签到用  打开地图 但是没有位置名
+		       /*  wx.openLocation({
+				    latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+				    longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+				    name: address, // 位置名
+				    address: '', // 地址详情说明
+				    scale: 25, // 地图缩放级别,整形值,范围从1~28。默认为16
+				}); */ 
+	          	sign();
+	        }
+	    });
+	}
+	
+	function codeLatLng(latitude,longitude) {
+	    var latLng = new qq.maps.LatLng(latitude, longitude);
+	    //调用获取位置方法  这是异步的 注意了！!
+	    geocoder.getAddress(latLng);
+	}
+	
+	//定位
+	var latitude;
+	var longitude;
+	var accuracy;
+	function address(){
+		wx.getLocation({
+		    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+		    success: function (res) {
+		        latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+		        longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+		        //var speed = res.speed; // 速度，以米/每秒计
+		        accuracy = res.accuracy; // 位置精度
+		        //alert(latitude + ","+longitude);
+		        //TO DO 新增签到  成功后 跳转至 签到列表
+		        codeLatLng(latitude,longitude);
+		    }
+		});
+	}
+	
+	function sign(){
+		//alert("位置="+addressComponents);
+		var apiData = {};	
+	        apiData.uid = meetingId;
+	        apiData.latitude = latitude;
+	        apiData.longitude = longitude;
+	        apiData.accuracy = accuracy;
+	        apiData.signType = 1;
+	        apiData.place = addressComponents;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/AddMeetingSign/callApi.do',param,function(dd){
+				if(dd.RespCode == 10000){
+					myLayer.alert('签退成功');
+      				var url = 'signDetail.html?meetingUUid='+meetingId;
+      				location.href = Commonjs.goToUrl(url); 
+				}else{
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			},{async:false}); 
+	}
+	
+	</script>
+</html>

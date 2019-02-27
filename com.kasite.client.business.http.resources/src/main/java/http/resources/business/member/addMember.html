@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>添加就诊人</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css"/>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/widget/picker/css/picker.css" type="text/css"/>
+</head>
+
+<body>
+<div class="c-main pb15">
+	<div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li>
+            	<div class="c-list-key c-999 pr15"><span style="color:red">*</span>姓名</div>
+            	<div class="c-list-info c-t-right"><input id="memberName" type="text" class="list-text c-t-right" placeholder="请输入姓名"></div>
+            </li>
+            <li class="c-list-a">
+            	<a href="#" class="c-arrow-r">
+                    <div class="c-list-key c-666 pr15">证件类型</div>
+                    <div class="c-list-info c-t-right" id="certTypeName">居民身份证</div>
+                    <input type="text" id="certType" placeholder="请选择证件类型" class="filtertext" value="01"/>
+            	</a>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15"><span style="color:red">*</span>证件号码</div>
+            	<div class="c-list-info"><input type="text" id="certNum"class="list-text c-t-right" placeholder="请输入证件号码"></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15"><span style="color:red">*</span>手机号</div>
+            	<div class="c-list-info"><input type="text" id="mobile" class="list-text c-t-right" placeholder="请输入手机号"></div>
+            </li>
+        	<li id="provingCode_li">
+            	<div class="c-list-key c-999 pr15">验证码</div>
+            	<div class="c-list-info"><input id="provingCode" type="text" class="list-text c-t-right" placeholder="请输入验证码"></div>
+                <div class="c-list-key"><a href="javascript:;" class="btn-yzm">获取验证码</a></div>
+            </li>
+            <li class="c-list-a">
+            	<a href="#" class="c-arrow-r">
+                    <div class="c-list-key c-666 pr15">是否儿童</div>
+                    <div class="c-list-info c-t-right" id="isChildrenName">否</div>
+                    <input type="text" id="isChildren" placeholder="请选择" class="filtertext" value="0"/>
+            	</a>
+            </li>
+            <li id="guardian_li_name">
+            	<div class="c-list-key c-999 pr15">监护人姓名</div>
+            	<div class="c-list-info c-t-right">
+            		<input  type="text" class="list-text c-t-right" id="guardianName" placeholder="请输入姓名">
+            	</div>
+            </li>
+            <li id="guardian_li_certtype" class="c-list-a">
+            	<a href="#" class="c-arrow-r">
+                    <div class="c-list-key c-666 pr15">监护人证件类型</div>
+                    <div class="c-list-info c-t-right" id="guardianCertTypeName">居民身份证</div>
+                    <input type="text" id="guardianCertType" placeholder="请选择证件类型" class="filtertext" value="01"/>
+            	</a>
+            </li>
+            <li id="guardian_li_certnum">
+            	<div class="c-list-key c-999 pr15">监护人证件号码</div>
+            	<div class="c-list-info">
+            		<input type="text" class="list-text c-t-right" id="guardianCertNum" placeholder="请输入证件号码">
+            	</div>
+            </li>
+        </ul>
+    </div>
+	<div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<!-- <li class="c-arrow-r">
+            	<div class="c-list-key c-999 pr15">就诊卡</div>
+            	<div class="c-list-info c-t-right">
+            		<input  type="text" class="list-text c-t-right" placeholder="请选择" id="picker-jzk" value="有">
+            	</div>
+            </li> -->
+        	<li>
+            	<div class="c-list-key c-999 pr15">就诊卡号</div>
+            	<div class="c-list-info"><input id="cardNo" type="text" class="list-text c-t-right" placeholder="请输入就诊卡号"></div>
+            </li>
+            <li>
+            	<div class="c-list-key c-999 pr15">住院号</div>
+            	<div class="c-list-info"><input id="hospitalNo" type="text" class="list-text c-t-right" placeholder="请输入住院号"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="addjzr-agree mt10">
+    	<div class="input-checkbox" data-toggle="checkbox">
+            <div class="input-pack mr5 checked">
+                <i class="sicon"></i>
+                <input type="checkbox" name="n1" id="isReadProtocol" checked>
+            </div>
+            我已了解
+        </div>
+        <a href="javascript:agreePop();" class="c-0093ff">《掌上智慧医院服务协议》</a>
+        <span style="color:red"> *为必填项</span>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="javascript:;" class="c-btn c-btn-blue" id="bindbtn">添加</a>
+    </div>
+</div>
+
+
+<!--服务协议-->
+<div id="agreeCon" class="c-hide">
+	<div class="agreebox">
+    	<h4>掌上智慧医院服务协议</h4>
+       <p>第一条  总则</p>
+    <p>本服务协议（以下简称“本协议”）是<span id="orgName"></span>（以下简称“医院”）、微信公众号（以下简称“微信”）与医院用户（以下简称“用户”或“您”)就医院的微信公众号服务（以下简称“本服务”）的使用等相关事项所订立的有效合约。用户通过网络页面点击确认或以其他方式选择接受本协议，即表示用户与医院、微信已达成协议并同意接受本协议的全部约定内容。
+
+在接受本协议之前，请您仔细阅读本协议的全部内容，尤其是加粗的文字部分。如果您不同意本协议的任意内容，或者无法准确理解医院、微信对条款的解释，请不要进行后续操作。</p>
+    <p>第二条 定义 </p>
+    <p>1. 医院微信公众号服务：是指医院在微信客户端向个人或企业用户提供的信息展示平台，医院可通过公众号号向用户提供挂号、预约、诊间支付等服务。</p>
+    <p>第三条 基本权利义务</p>
+    <p>1. 您理解并同意，您不会利用本服务从事任何非法的或违反本协议目的或者侵犯其他第三方权益的行为，否则医院有权立即单方面终止提供本服务，并不承担任何责任；如果因您的行为给医院造成损失的，您应承担全部赔偿责任。
+
+2. 您授权医院在您使用本服务期间及医院终止提供本服务后，有权保留您在使用本服务期间所形成的相关信息数据，且该数据的保留期限以国家法律行政法规规定的期限为准。
+
+3. 医院对您的注册信息负有保密义务，在法律允许的情况下，医院有权将相关信息提供给医院的监管机关及法律法规许可的机构。
+
+4. 除本协议另有规定外，在网站公告的情况下，可以单方面终止向您提供本服务，并不承担任何赔偿责任。医院在终止提供本服务后，若发现您之前存在违法或违反本协议目的的使用行为，给医院造成损失的，则医院仍可据此要求您承担相应赔偿责任并保留通过司法途径予以解决的权利。
+
+5. 医院有义务在技术上确保本服务的安全、有效、正常运行，保证您的正常使用。
+
+6. 医院在医院网站公布功能介绍、使用规则等内容，并提供咨询服务。</p>
+<p>第四条 使用责任</p>
+<p>使用医院“掌上智慧医院”服务需接受以下协定：
+
+1.成功预约挂号，不收取挂号费用。
+
+2.成功预约普通平诊号，该挂号凭据当天有效；
+
+3.成功预约专家号，该挂号凭据在上午或下午半天内内有效，仅在预约就诊时间所在的前一天内可退号；
+
+4.医院有权对门诊医生排班进行变更，会对变更医生已挂的号进行取消操作，同时会根据您绑定就诊卡时预留的联系方式通知您。</p>
+<p>第五条 “微信公众号”服务特别约定</p>
+<p>1. 您确认在使用本服务的意思表示出自您的真实意愿；同时您对使用本服务过程中发出的指令的真实性及有效性承担全部责任，该指令视为您的真实意思表示且不可变更或撤销。您承诺，医院、微信依照您的指令进行操作的一切风险均由您承担。
+
+2. 您理解并同意，您使用本服务时应将您的微信账户与您需要使用的就诊卡的登记号进行绑定。在绑定过程中，您授权微信将您的部分信息共享给医院。医院应对您的信息（包括微信共享的信息，或您在医院公众号自行填写的信息）与您需要绑定的就诊卡本身的信息进行校验，校验通过的，方可绑定成功。
+
+3. 您理解并同意，当您将您的微信账户和您需要使用的就诊卡登记号绑定成功后，您即可使用您的微信账户支付您使用的就诊卡所产生的相关费用。
+
+4. 您理解并同意，在您使用微信账户进行支付您使用的就诊卡对应的医疗费用时，均按照自费医疗进行记账。如因您的原因未按上述内容执行导致利益受损，将由个人负担。
+
+5. 您理解并同意，在使用本服务时，如产生退费等业务（可自动退费的项目除外），需前往门诊收费处进行操作。
+
+6. 您理解并同意，医院微信公众号中所显示的消费明细等信息仅供参考，您在医院就医所产生的实际消费情况，以最终结算明细为准。
+
+7. 您理解并同意，在使用本服务时，与就医相关的票据、发票需要前往门诊收费处索取。</p>
+<p>第六条 协议修改</p>
+<p>1. 医院、微信有权修改本协议的有关条款，一旦相关内容发生变动，医院、微信将会通过微信公众号或网站公告等方式向您告知。
+
+2. 如果您不同意医院、微信对本协议相关条款所做的修改，医院将向您停止本项服务。如果您继续使用医院提供的服务，则视为您接受并认可本协议相关条款的修改及相关附属规则。</p>
+<p>第七条 争议的解决</p>
+<p>1. 双方在履行本协议的过程中，如发生争议，应协商解决。协商不成的，任何一方均可向医院所在地人民法院提起诉讼。</p>
+<p>第八条 协议的解释</p>
+<p>
+1. 本协议的成立、生效、履行和解释，均适用中华人民共和国法律；法律无明文规定的，应适用医院制定的业务规则和通行的商业惯例。本服务协议未规定部分依照《微信服务协议》、相关附属规则及微信、医院页面的相关提示予以履行；本协议与《微信服务协议》及相关附属规则相冲突的，以本协议为准。</p>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/widget/picker/js/picker.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/checkForm.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/appConfig.js"></script>
+<script type="text/javascript" src="js/addMember.js?v=201901152112"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+/*==========以下部分是Validform必须的===========*/
+.Validform_checktip {
+	/*margin-left: 8px;*/
+	line-height: 20px;
+	height: 20px;
+	overflow: hidden;
+	color: #999;
+	font-size: 12px;
+	z-index:999;
+}
+
+.Validform_right {
+	color: #71b83d;
+	/*padding-left: 20px;
+	background: url(../images/right.png) no-repeat left center;*/
+}
+
+.Validform_wrong {
+	color: #FFF;
+	padding: 0 10px 10px 25px;
+	white-space: nowrap;
+	background: url(../images/error1.png) no-repeat left center;
+	line-height:22px;
+	position:absolute;
+	left:80px;
+	top:-30px;
+}
+
+td .Validform_wrong {
+	color: #FFF;
+	padding: 0 10px 10px 25px;
+	white-space: nowrap;
+	background: url(../images/error1.png) no-repeat left center;
+	line-height:22px;
+	position:absolute;
+	left:80px;
+	top:-20px;
+}
+
+label .Validform_wrong {
+	color: #FFF;
+	padding: 0 10px 10px 25px;
+	white-space: nowrap;
+	background: url(../images/error1.png) no-repeat left center;
+	line-height:22px;
+	position:absolute;
+	left:75px;
+	top:-36px;
+}
+
+.Validform_loading {
+	padding-left: 20px;
+	background: url(../images/onLoad.gif) no-repeat left center;
+}
+
+.Validform_error {
+	background-color: #ffe7e7;
+	border:1px solid rgb(215, 153, 153) !important;
+}
+
+#Validform_msg {
+	color: #7d8289;
+	font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+	width: 280px;
+	-webkit-box-shadow: 2px 2px 3px #aaa;
+	-moz-box-shadow: 2px 2px 3px #aaa;
+	background: #fff;
+	position: absolute;
+	top: 0px;
+	right: 50px;
+	z-index: 99999;
+	display: none;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135,
+		Color='#999999' );
+}
+
+#Validform_msg .iframe {
+	position: absolute;
+	left: 0px;
+	top: -1px;
+	z-index: -1;
+}
+
+#Validform_msg .Validform_title {
+	line-height: 25px;
+	height: 25px;
+	text-align: left;
+	font-weight: bold;
+	padding: 0 8px;
+	color: #fff;
+	position: relative;
+	background-color: #000;
+}
+
+#Validform_msg a.Validform_close:link,#Validform_msg a.Validform_close:visited
+	{
+	line-height: 22px;
+	position: absolute;
+	right: 8px;
+	top: 0px;
+	color: #fff;
+	text-decoration: none;
+}
+
+#Validform_msg a.Validform_close:hover {
+	color: #cc0;
+}
+
+#Validform_msg .Validform_info {
+	padding: 8px;
+	border: 1px solid #000;
+	border-top: none;
+	text-align: left;
+}
+
+
+.info{
+	padding:6px 20px 6px 5px;
+	border-radius:3px;
+	color:#FFF; 
+	position:absolute;
+	display:none;
+	line-height:20px;
+	background-color:#D55C48;
+}
+.dec {
+    bottom: -8px;
+    display: block;
+    height: 8px;
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    width: 17px;
+}
+.dec s {
+    font-family: simsun;
+    font-size: 16px;
+    height: 19px;
+    left: 0;
+    line-height: 21px;
+    position: absolute;
+    text-decoration: none;
+    top: -9px;
+    width: 17px;
+}
+.dec .dec1 {
+    color: #CCC;
+}
+.dec .dec2 {
+    color: #D55C48;
+    top: -10px;
+}
+.text-error {color:#b94a48;}

@@ -1,0 +1,36 @@
+<Response>
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:type="ns2:clinicCase">
+		<allergies></allergies>
+		<clinicCaseId>371211</clinicCaseId>
+		<clinicNum></clinicNum>
+		<complained>全身关节肿胀、疼痛伴晨僵1年。           </complained>
+		<complication></complication>
+		<description>-患者1年前无明显诱因出现疲劳、不适、体重减轻、纳差、周身肌肉酸痛，随后双手近端指间、掌指、腕、双膝关节对称性肿胀、疼痛，伴晨僵约持续1-2小时，无发热、脱发、皮疹、口腔溃疡、结膜炎、口干、眼干、腹痛、腹泻、尿频、尿急、尿痛、足跟痛、雷诺现象，在外不规则治疗，症状未见明显好转，曾服用“保太松、强的松”治疗，未服用病情缓解药治疗，症状逐渐加剧，遂求治我院。
+		</description>
+		<diseases>-一般情况可，心肺无异常， PIP梭形肿胀，
+			MCP对称性肿胀，关节轻压痛、僵硬，DIP无受累；腕关节轻压痛，腕屈试验（+），腕关节背伸 15 度，掌屈10
+			度，MCP尺侧偏斜，桡掌关节桡侧偏斜，肘、膝、跖趾、趾间关节无肿胀、压痛，浮髌试验（-
+			），凉髌征存在，双侧骶髂关节无压痛，Schober试验（- ），Patrick试验(- ),Gaenslen征( -)。
+		</diseases>
+		<doctorRemark>收住内科。-</doctorRemark>
+		<familyHistory></familyHistory>
+		<firstVisit>1</firstVisit>
+		<historyOfpastillness></historyOfpastillness>
+		<historyPresentIllness></historyPresentIllness>
+		<medicalNum>371211</medicalNum>
+		<pastDiseaseHistory></pastDiseaseHistory>
+		<patientId>10144</patientId>
+		<physicalExam>5/9/06,ESR50mm/h,RF 20IU/ml,UA430umol/L,uUA3547umol/L,X线报告(101878-2005030714132):右侧膝关节骨结构完整，胫骨平台边缘硬化，两侧缘骨质增生改变，膝关节间隙略狭窄。
+			右侧膝关节骨性关节炎.
+			CR检查报告（检查号：102456 检查时间：20060905 104301 )
+			CR检查描述：双腕舟骨、三角骨、豆状骨及右第3裳骨头���小囊状低密度区，双桡尺骨远端骨小梁变紊乱，余双手诸骨骨小梁稀疏，双侧桡腕关节间隙稍变窄，双手掌各关节间隙等宽，关节关系正常，第2-5近端指间关节周围软组织均肿胀。
+			CR检查诊断：双腕关节及双手类风湿性关节炎改变。
+		</physicalExam>
+		<socialhistory></socialhistory>
+		<totalRecordInfo>收住内科。-</totalRecordInfo>
+	</Data>
+	<Message>成功</Message>
+	<Code>10000</Code>
+	<total>0</total>
+</Response>

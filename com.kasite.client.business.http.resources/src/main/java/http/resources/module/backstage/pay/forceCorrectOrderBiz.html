@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>退款重试</title>
+</head>
+<body>
+<div style="border:1px solid #00F">
+	<div><h3>订单重试（冲正订单）<h3></div>
+	<div>全流程订单id（orderId）:<input type="text" id="orderId" style="width: 270px;"/></div>
+	<div><button onClick="orderCallBackRery()">冲正</button></div>
+	<div>订单重试结果:<div id="orderCallBackReryResult"></div></div>
+	<br>
+	<div><button onClick="queryOrderDetail()">查询订单详情</button></div>
+	<div>查询订单详情结果:<div id="queryOrderDetailResult"></div></div>
+</div>
+<script type="text/javascript" src="../commons/js/business-all.js"></script>
+<script type="text/javascript">
+function orderCallBackRery(){
+	var r=confirm("请慎重使用！确认冲正订单？");
+	if( r ){
+		var orderId = $("#orderId").val();
+		var apiData = {};
+		var param = {};
+		var page = {};
+		page.PIndex = 0;
+		page.PSize = 1;
+		param.apiParam = Commonjs.getReqParams({'OrderId':orderId,'OrderType':1});
+		$("#orderCallBackReryResult").html('');
+		Commonjs.ajax('/wsgw/order/ForceCorrectOrderBiz/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+			$("#orderCallBackReryResult").html(Commonjs.jsonToString(jsons));
+		});
+	}
+}
+
+function queryOrderDetail(){
+	var orderId = $("#orderId").val();
+	var apiData = {};
+	var param = {};
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	param.apiParam = Commonjs.getReqParams({'OrderId':orderId});
+	$("#queryOrderDetailResult").html('');
+	Commonjs.ajax('/wsgw/order/OrderDetailLocal/callApi.do?t=' + new Date().getTime(), param, function(jsons) {
+		alert(Commonjs.jsonToString(jsons));
+		$("#queryOrderDetailResult").html(Commonjs.jsonToString(jsons));
+	});
+} 
+</script>
+</body>
+</html>

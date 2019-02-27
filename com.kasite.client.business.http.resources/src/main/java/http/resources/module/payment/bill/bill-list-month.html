@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/zd-style.css" type="text/css" />
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+</head>
+<body>
+	<div class="c-main">
+		<div class="bill-title">月账单统计</div>
+	    <div class="bgc-fff">
+	    	<input type="text" class="input-text" style="display: none;" id="dateType" value="2" />
+	    	<div class="bill-sel clearfix">
+	    		<div class="bls-switch">
+		        	<a href="javascript:;" class="dateType" id="day">日账单</a>
+		        	<a href="javascript:;" class="dateType curr" id="month">月账单</a>
+		        </div>
+	            <input type="text" class="bls-date ml30" id="dateChoo" />
+	            <div class="bls-next">
+	            	<a href="javascript:;" class="opera-prev"><i class="icon-prev"></i></a>
+	            	<a href="javascript:;" class="opera-next"><i class="icon-next"></i></a>
+	            </div>
+	            <!-- <select class="bls-sel ml30">
+	                <option>-请选择-</option>
+	                <option>李代沫 13960865654</option>
+	                <option>李代沫 13960865654</option>
+	                <option>李代沫 13960865654</option>
+	                <option>李代沫 13960865654</option>
+	                <option>李代沫 13960865654</option>
+	            </select> -->
+	            <a style="margin-left: 20px;width: 45px;" href="javascript:search();" class="query-btn mr5 mb10"><i class="icon icon-search"></i></a>
+	    	</div>
+	    	<div class="bill-con">
+	        	<table class="bill-table">
+	            	<thead>
+	                	<tr>
+	                    	<td>一季度</td>
+	                    	<td>二季度</td>
+	                    	<td>三季度</td>
+	                    	<td>四季度</td>
+	                    </tr>
+	                </thead>
+	            	<tbody id="billInfo">
+	                	
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+	<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+	<script type="text/javascript" src="../js/public.js"></script>
+	<script src="../js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+	<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+	<script type="text/javascript" src="js/bill-list-month.js"></script>
+	<script type="text/javascript">
+		$('.c-main').on('hover','.blc-div',function(){
+			$(this).find('.b-account').toggle();
+			$(this).find('.b-account-none').toggle();
+		});
+		
+		laydate.render({
+			elem: '#dateChoo',
+			type: 'year',
+			format: 'yyyy年',
+			change: function(value, date){ //监听日期被切换
+				
+			}
+		});
+	</script>
+</body>
+</body>
+</html>

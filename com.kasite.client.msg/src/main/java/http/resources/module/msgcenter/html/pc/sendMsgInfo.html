@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>详情</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+        <div class="ibox-content" style="line-height: 24px;">
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					消息编号：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="msgId">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					模板编号：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="modeId">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					创建时间：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="createTime">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					预发送时间：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="preSendTime">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					发送时间：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="sendTime">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					渠道：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="channelName">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					场景：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="sceneName">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					会员ID：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="pushMemberId">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					会员卡号：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="cardNo">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					卡类型：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="cardType">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					openId：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="openId">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					电话：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="mobile">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					关联订单号：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="orderid">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					消息类型：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="msgType">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					内容：
+				</div>
+				<div class="x-row-cols " style="margin-left:150px;" id="msgContent">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					消息来源：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="operatorId">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					重试次数：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="sendCount">
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					最后一次发送结果：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="pushResult">
+				</div>
+			</div>
+        	<div class="x-row">
+				<div class="x-row-cols " style="width: 150px;">
+					状态：
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;" id="state">
+				</div>
+			</div>
+        </div>
+	</body>
+	<script>
+	$(function(){
+		queryList();
+	})
+	function queryList(){
+		var param = {};
+		var apiData = {};
+		apiData.MsgId = Commonjs.getUrlParam("msgId");
+		apiData.OrgId = Commonjs.hospitalId();
+		param.api = '';
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/MsgQueueList/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				initHtml(d.Data)
+			} else {
+				alert(d.RespMessage);// 错误提示
+			}
+		});
+	}
+	function initHtml(d){
+		var html = '';
+		Commonjs.BaseForeach(d, function(i,item){
+			var content = item.MsgContent;
+			content = content.replace(/\</g,"&lt;");
+			content = content.replace(/\>/g,"&gt;");
+			$("#msgId").html(item.MsgId);
+			$("#modeId").html(item.ModeId);
+			$("#channelName").html(item.ChannelName);
+			$("#createTime").html(item.CreateTime);
+			$("#sendTime").html(item.SendTime);
+			$("#msgContent").html((content));
+			$("#msgType").html(item.MsgType=="1"?"模板消息":"文本消息");
+			$("#sceneName").html(item.SceneName); 
+			$("#pushMemberId").html(item.PushMemberId);
+			$("#cardNo").html(item.CardNo);
+			$("#cardType").html(item.CardType=="1"?"门诊卡号":"住院号");
+			$("#openId").html(item.OpenId);
+			$("#preSendTime").html(item.PreSendTime);
+			$("#SendTime").html(item.SendTime);
+			$("#sendCount").html(item.SendCount);
+			$("#orderid").html(item.OrderId);
+			$("#operatorId").html(item.OperatorId);
+			$("#pushResult").html(item.PushResult);
+			$("#mobile").html(item.Mobile);
+			
+			
+			if(item.State==0){
+				$("#state").html("等待发送");
+			}
+			else if(item.State==1){
+				if(item.IsRead==1){
+					$("#state").html("发送成功(已读)");
+				}
+				else{
+					$("#state").html("发送成功");
+				}
+			}
+			else{
+				$("#state").html("发送失败");
+			}
+		})
+	}
+	</script>
+</html>

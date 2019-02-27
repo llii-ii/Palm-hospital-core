@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kasite.client.hospay.module.bill.dao.EveryDayBalanceDao">
+
+    <!--
+        注意：1.所有SELECT子句中的节点都请按照自己数据库的标准进行修改，
+        如有不明白的请及时沟通，避免意外某个节点取值错误，导致数据异常
+    -->
+
+    <sql id="EveryDayBalanceResult">
+        billDate,hisBills,qlcBills,channelBills,checkNum,abnormalNum,overPlusErrNum,receivableMoney,
+        alreadyReceivedMoney,refundMoney,alreadyRefundMoney,checkResult,createDate
+    </sql>
+
+    <sql id="ThreePartyBalanceResult">
+        orderId,hisOrderId,channelOrderId,serviceId,reserveId,priceName,receivableMoney,
+        alreadyreceivedmoney,refundmoney,alreadyrefundmoney,orderMemo,cardNo,operator,
+        operatorName,createDate,lastdate,channelId,payUpdateKey,qlcorderstate,hisorderstate,
+        channelOrderState,errorState,checkState,bizType,exeState,isSyn
+    </sql>
+
+    <sql id="ClassifySummaryBillResult">
+         billDate,channelId,serviceId,serviceName,hisBills,qlcBills,channelBills,receivableMoney,
+         alreadyReceivedMoney,refundMoney,alreadyRefundMoney,createDate,parenServiceId
+    </sql>
+
+    <insert id="insertEveryDayBill" useGeneratedKeys="false">
+        INSERT INTO p_everyDayBalance
+        <trim prefix="(" suffix=")">
+            <include refid="EveryDayBalanceResult"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{everyDayBalance.billDate,jdbcType=VARCHAR},
+            #{everyDayBalance.hisBills,jdbcType=VARCHAR},
+            #{everyDayBalance.qlcBills,jdbcType=VARCHAR},
+            #{everyDayBalance.channelBills,jdbcType=VARCHAR},
+            #{everyDayBalance.checkNum,jdbcType=VARCHAR},
+            #{everyDayBalance.abnormalNum,jdbcType=VARCHAR},
+            #{everyDayBalance.overPlusErrNum,jdbcType=VARCHAR},
+            #{everyDayBalance.receivableMoney,jdbcType=VARCHAR},
+            #{everyDayBalance.alreadyReceivedMoney,jdbcType=VARCHAR},
+            #{everyDayBalance.refundMoney,jdbcType=VARCHAR},
+            #{everyDayBalance.alreadyRefundMoney,jdbcType=VARCHAR},
+            #{everyDayBalance.checkResult,jdbcType=VARCHAR},
+            #{everyDayBalance.createDate}
+        </trim>
+    </insert>
+
+    <insert id="insertClassifySummaryBill" useGeneratedKeys="false">
+        INSERT INTO p_classifySummaryBalance
+        <trim prefix="(" suffix=")">
+            <include refid="ClassifySummaryBillResult"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{classifySummaryBalance.billDate,jdbcType=VARCHAR},
+            #{classifySummaryBalance.channelId,jdbcType=VARCHAR},
+            #{classifySummaryBalance.serviceId,jdbcType=VARCHAR},
+            #{classifySummaryBalance.serviceName,jdbcType=VARCHAR},
+            #{classifySummaryBalance.hisBills,jdbcType=VARCHAR},
+            #{classifySummaryBalance.qlcBills,jdbcType=VARCHAR},
+            #{classifySummaryBalance.channelBills,jdbcType=VARCHAR},
+            #{classifySummaryBalance.receivableMoney,jdbcType=VARCHAR},
+            #{classifySummaryBalance.alreadyReceivedMoney,jdbcType=VARCHAR},
+            #{classifySummaryBalance.refundMoney,jdbcType=VARCHAR},
+            #{classifySummaryBalance.alreadyRefundMoney,jdbcType=VARCHAR},
+            #{classifySummaryBalance.createDate},
+            #{classifySummaryBalance.parenServiceId,jdbcType=VARCHAR}
+        </trim>
+    </insert>
+
+    <!-- 每日汇总账单数据去重-->
+    <delete id="deleteEveryDayBalance">
+        delete from p_everyDayBalance
+        where 1=1
+        AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </delete>
+
+    <!-- 删除分类汇总账单数据（去重）-->
+    <delete id="deleteClassifySummaryBalance">
+        delete from p_classifySummaryBalance
+        where 1=1
+        AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND to_date(billDate,'yyyy-MM-dd HH24:mi:ss') &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </delete>
+
+    <!-- 查询三方汇总账单明细表指定日期内的数据-->
+    <select id="queryThreePartyBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance">
+        SELECT
+          <include refid="ThreePartyBalanceResult"/>
+        from
+          p_threePartyBalance p
+        WHERE 1=1
+        AND  p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND  p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </select>
+
+    <!-- 查询每日汇总账单表里的明细总数-->
+    <select id="queryEveryDayBillCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+		FROM
+		    p_threePartyBalance p
+		WHERE 1 = 1
+		AND  p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND  p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </select>
+    <!-- 汇总每日账单数据-->
+    <select id="summaryEveryDayBill"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.EveryDayBalance">
+        SELECT DISTINCT to_char(p.createDate,'yyyy-MM-dd') billDate,
+            SUM(CASE WHEN p.hisOrderState IS NOT NULL THEN 1 ELSE 0 END) hisBills,
+            SUM(CASE WHEN (p.qlcOrderState IS NOT NULL AND p.isSyn!='2') THEN 1 ELSE 0 END) qlcBills,
+            SUM(CASE WHEN p.channelOrderState IS NOT NULL THEN 1 ELSE 0 END) channelBills,
+            SUM(p.receivableMoney) receivableMoney,
+            SUM(p.alreadyReceivedMoney) alreadyReceivedMoney,
+            SUM(p.refundMoney) refundMoney,
+            SUM(p.alreadyRefundMoney) alreadyRefundMoney
+        FROM
+            p_threePartyBalance p
+        WHERE 1=1
+        AND  p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND  p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        group by  to_char(p.createDate,'yyyy-MM-dd')
+    </select>
+
+    <!-- 查询当前日期内是否还存在异常账单（用于汇总每日账单）要特别注意hisOrderId='' 这个条件,也许数据库或者表不同，该字段取值也得修改-->
+    <select id="queryVeryDayExitsErrorBill" resultType="java.lang.Integer">
+        select COUNT(*) errorNum from p_threePartyBalance p
+        WHERE  (p.channelorderid IS NULL OR p.hisOrderId IS NULL)
+        AND  p.exeState != '2'
+        AND  p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND  p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+    </select>
+
+    <!-- 生成每日分类汇总账单数据 根据渠道ID和服务ID进行分组 细项的分类-->
+    <select id="classifySummaryBill"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ClassifySummaryBalance">
+        SELECT to_char(p.createDate, 'yyyy-MM-dd') billDate,p.channelId,p.priceName serviceName,
+			SUM(CASE WHEN p.hisOrderState IS NOT NULL THEN 1 ELSE 0 END) hisBills,
+            SUM(CASE WHEN (p.qlcOrderState IS NOT NULL AND p.isSyn!='2') THEN 1 ELSE 0 END) qlcBills,
+            SUM(CASE WHEN p.channelOrderState IS NOT NULL THEN 1 ELSE 0 END) channelBills,
+            SUM(p.receivableMoney) receivableMoney,
+            SUM(p.alreadyReceivedMoney) alreadyReceivedMoney,
+            SUM(p.refundMoney) refundMoney,
+            SUM(p.alreadyRefundMoney) alreadyRefundMoney
+        FROM
+            p_threePartyBalance p
+        WHERE 1=1
+        AND  p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND  p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        GROUP BY p.channelId,to_char(p.createDate, 'yyyy-MM-dd'),p.priceName
+    </select>
+
+    <!-- serviceId 需要根据不同的医院进行修改 此条SQL是将分类的服务ID的数据进行汇总生成一条总的，例如门诊缴费包括（处方缴费，预约挂号缴费，当日挂号缴费等）-->
+    <select id="summaryClassifyBills"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ClassifySummaryBalance">
+        SELECT to_char(p.createDate, 'yyyy-MM-dd') billDate,p.channelId,p.serviceId,p.priceName serviceName,
+            SUM(CASE WHEN p.hisOrderState IS NOT NULL THEN 1 ELSE 0 END) hisBills,
+            SUM(CASE WHEN (p.qlcOrderState IS NOT NULL AND p.isSyn!='2') THEN 1 ELSE 0 END) qlcBills,
+            SUM(CASE WHEN p.channelOrderState IS NOT NULL THEN 1 ELSE 0 END) channelBills,
+            SUM(p.receivableMoney) receivableMoney,
+            SUM(p.alreadyReceivedMoney) alreadyReceivedMoney,
+            SUM(p.refundMoney) refundMoney,
+            SUM(p.alreadyRefundMoney) alreadyRefundMoney
+        FROM
+            p_threePartyBalance p
+        WHERE
+            p.createDate >= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND p.createDate &lt; to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+        AND (p.serviceId ='0' or p.serviceId ='006' or p.serviceId ='999')
+        GROUP BY p.channelId,p.serviceId,to_char(p.createDate, 'yyyy-MM-dd'),p.priceName
+    </select>
+
+    <!-- 查询每日汇总账单数据-->
+    <select id="queryEveryDayBills"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.EveryDayBalance">
+        SELECT
+            <include refid="EveryDayBalanceResult"/>
+        FROM
+        p_everyDayBalance p
+        <where>
+            1 = 1
+            <if test="queryBillParam.startDate != '' and queryBillParam.startDate != null">
+                AND to_date(p.billDate,'yyyy-MM-dd HH24:mi:ss') >= to_date(#{queryBillParam.startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="queryBillParam.endDate != '' and queryBillParam.endDate != null">
+                AND to_date(p.billDate,'yyyy-MM-dd HH24:mi:ss') &lt; to_date(#{queryBillParam.endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="queryBillParam.checkState != '' and queryBillParam.checkState != null">
+                AND p.checkResult = #{queryBillParam.checkState,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY p.billDate desc
+    </select>
+
+    <!-- 查询每日汇总分类账单数据-->
+    <select id="queryClassifySummaryBills"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ClassifySummaryBalance">
+        SELECT
+            <include refid="ClassifySummaryBillResult"/>
+        FROM
+        p_classifySummaryBalance p
+        <where>
+            1 = 1
+            AND p.parenServiceId IS NULL
+            <if test="queryBillParam.startDate != '' and queryBillParam.startDate != null">
+                AND to_date(p.billDate,'yyyy-MM-dd HH24:mi:ss')>= to_date(#{queryBillParam.startDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="queryBillParam.endDate != '' and queryBillParam.endDate != null">
+                AND to_date(p.billDate,'yyyy-MM-dd HH24:mi:ss') &lt; to_date(#{queryBillParam.endDate,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="queryBillParam.serviceId != '' and queryBillParam.serviceId != null">
+                AND p.serviceId = #{queryBillParam.serviceId,jdbcType=VARCHAR}
+            </if>
+            <if test="queryBillParam.channelId != '' and queryBillParam.channelId != null">
+                AND p.channelId = #{queryBillParam.channelId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY p.billDate desc
+    </select>
+
+</mapper>

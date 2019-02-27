@@ -1,0 +1,336 @@
+/*故障申报*/
+.f-tab{
+	width: auto!important;
+	padding: 0.3rem;
+}
+.f-tab img{
+	position: relative;
+	top: 0.18rem;
+	width: 0.47rem;
+	height: 0.6rem;
+	margin-right: 0.5rem;
+}
+.f-tab .x-row-cols{
+	color: #fff;
+	height: 1rem;
+	line-height: 1rem;
+	font-size: 0.36rem;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 0.1rem;
+}
+.f-tab .x-row-cols:first-child{
+	margin-right: 0.3rem;
+	background: linear-gradient(to right,#ffbf4b,#ff9f44);
+}
+.f-tab .x-row-cols:last-child{
+	background: linear-gradient(to right,#68b2ff,#8184ff);
+}
+.f-input{
+	padding: 0.3rem;
+	background: #fff;
+	margin-bottom: 0.2rem;
+}
+.f-input input{
+	float: right;
+	text-align: right;
+}
+.f-input textarea{
+	width: 100%;
+	margin-top: 0.1rem;
+}
+.f-input span{
+	color: #ccc;
+	font-size: 0.26rem;
+	margin-left: 0.1rem;
+}
+.f-input-add{
+	overflow: hidden;
+}
+.f-input-add-box{
+	width: 2rem;
+	height: 2rem;
+	float: left;
+	margin-right: 0.25rem;
+	text-align: center;
+	margin-top: 0.26rem;
+	border: 1px solid #ccc;
+}
+.f-input-add-box img{
+	width: 0.8rem;
+	height: 0.8rem;
+	margin-top: 0.6rem;
+}
+.f-input-title{
+	margin-bottom: 0.3rem;
+}
+.submit-btn{
+	display: block;
+	width: 80%;
+	color: #fff;
+	border: 0;
+	margin: 0 auto;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	font-size: 0.36rem;
+	font-weight: bold;
+	border-radius: 0.1rem;
+	margin-top: 1rem;
+	background: linear-gradient(to right,#60b1ff,#2988fc);
+}
+.f-list li{
+	position: relative;
+	padding: 0.25rem 0.3rem;
+	background: #fff;
+	margin-top: 0.2rem;
+}
+.f-list li .title{
+	width: 65%;
+	font-weight: bold;
+	margin-bottom: 0.4rem;
+}
+.f-list li .date{
+	position: absolute;
+	top: 0.3rem;
+	right: 0.3rem;
+	color: #999;
+	font-size: 0.24rem;
+}
+.f-list li label{
+	display: inline-block;
+	color: #2988fc;
+	width: 1.2rem;
+}
+.f-list li .info{
+	margin-top: 0.2rem;
+}
+/*订单详情*/
+.f-detail{
+	background: #fff;
+	margin-bottom: 0.2rem;
+	overflow: hidden;
+	padding: 0.2rem 0.3rem 0.45rem 0.5rem;
+}
+.f-detail .status{
+	position: absolute;
+	right: 0.3rem;
+	top: 0.4rem;
+	font-size: 0.26rem;
+}
+.f-detail .status.green{
+	color: #3fc385;
+}
+.f-detail .status.red{
+	color: #ff3c3c;
+}
+.f-detail .x-row{
+	margin-top: 0.2rem;
+	font-size: 0.26rem;
+}
+.f-detail .x-row-cols:first-child{
+	color: #2988fc;
+}
+.f-detail .x-row-cols:last-child{
+	line-height: 0.36rem;
+}
+.f-detail .file{
+	overflow: hidden;
+	margin-top: 0.2rem;
+}
+.f-detail .file .title{
+	color: #2988fc;
+	font-size: 0.26rem;
+}
+.f-detail .file .pic{
+	float: left;
+	width: 2rem;
+	height: 2rem;
+	margin-right: 0.3rem;
+	margin-top: 0.2rem;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.f-detail .avatar{
+	position: relative;
+	float: left;
+	width: 1.2rem;
+	font-size: 0.26rem;
+	margin-top: 0.3rem;
+	text-align: center;
+	margin-right: 0.9rem;
+}
+.f-detail .avatar img{
+	width: 1rem;
+	height: 1rem;
+}
+.f-detail .avatar:after{
+	content: '';
+	position: absolute;
+	top: 0.4rem;
+	right: -0.5rem;
+	width: 0.2rem;
+	height: 0.24rem;
+	background-image: url('../img/icon-3.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.f-detail .avatar:last-child:after{
+	display: none;
+}
+.f-detail .track{
+	
+}
+.f-detail .track li{
+	position: relative;
+	font-size: 0.26rem;
+	margin-top: 0.35rem;
+	padding-left: 0.36rem;
+}
+.f-detail .track li:before{
+	content: '';
+	position: absolute;
+	top: 0.2rem;
+    left: -0.0505rem;
+    bottom: -0.5rem;
+	width: 1px;
+	background: #ccc;
+}
+.f-detail .track li:last-child:before{
+	 bottom: -0.2rem;
+}
+.f-detail .track li:after{
+	content: '';
+	position: absolute;
+	top: 0.1rem;
+	left: -0.14rem;
+	width: 0.18rem;
+	height: 0.18rem;
+	background: #ccc;
+	border-radius: 100%;
+}
+.f-detail .track li:last-child:after{
+	width: 0.22rem;
+	height: 0.22rem;
+	left: -0.16rem;
+	background: #2988fc;
+}
+.f-detail .track .date{
+	margin-right: 0.35rem;
+}
+.f-detail .success{
+	font-size: 0.36rem;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 1.2rem;
+}
+.f-detail .success img{
+	width: 1.96rem;
+	height: 1.52rem;
+	margin-bottom: 0.3rem;
+}
+.f-detail-con{
+	margin-top: 0.2rem;
+	font-size: 0.26rem;
+}
+.f-detail-con label{
+	display: inline-block;
+	width: 1.5rem;
+}
+.f-detail-con{}
+.department{
+	
+}
+.department li{
+	position: relative;
+	margin-top: 0.6rem;
+	font-size: 0.3rem;
+	font-weight: bold;
+	padding-left: 0.7rem;
+}
+.department li:before{
+	content: '';
+	position: absolute;
+	left: 0rem;
+	top: 0.045rem;
+	width: 0.3rem;
+	height: 0.3rem;
+	border-radius: 100%;
+	border: 1px solid #e6e6e6;
+}
+.department li.cur:before{
+	content: '';
+	position: absolute;
+	left: 0rem;
+	top: 0.045rem;
+	width: 0.34rem;
+	height: 0.34rem;
+	border: 0;
+	background-image: url('../img/icon-yes.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.department li:after{
+	content: '';
+	position: absolute;
+	right: 0.4rem;
+	top: 0.04rem;
+	width: 0.13rem;
+	height: 0.21rem;
+	background-image: url('../img/right.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.chosen-list{
+	background: #fff;
+	padding: 0.1rem 0;
+}
+.chosen-list li{
+	line-height: 1rem;
+	font-size: 0.3rem;
+	color: #333;
+	padding-left: 1.28rem;
+	padding-right: 0.54rem;
+	position: relative;
+}
+.chosen-list li:before{
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0.62rem;
+	top: 50%;
+	margin-top: -.15rem;
+	width: 0.3rem;
+	height: 0.3rem;
+	background-image: url(../img/icon-vote-6.png);
+	background-position: center;
+	background-size: 0.3rem;
+	background-repeat: no-repeat;
+}
+.chosen-list li.active:before{
+	background-image: url(../img/icon-vote-5.png);
+}
+.chosen-list li.more:after{
+	content: '';
+	display: inline-block;
+	width: 0.13rem;
+	height: 0.21rem;
+	background-image: url(../img/right.png);
+	background-size: 0.13rem;
+	margin-left: 0.2rem;
+}
+.chosen-back{
+	line-height: 1rem;
+	background: #f2f9ff;
+}
+.chosen-back:before{
+	content: '';
+	display: inline-block;
+	width: 0.16rem;
+	height: 0.27rem;
+	background-image: url(../img/back.png);
+	background-size: 0.16rem 0.27rem;
+	margin-left: 0.62rem;
+	margin-right: 0.23rem;
+	position: relative;
+	top: 0.02rem;
+}

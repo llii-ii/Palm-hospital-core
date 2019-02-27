@@ -1,0 +1,40 @@
+@charset "utf-8";
+html,body {font:12px/1.5 \5FAE\8F6F\96C5\9ED1,tahoma,arial; color:#555; overflow:hidden;}
+/* header-wrap */
+.cicon{ display:inline-block; background:url(../images/icon.png) no-repeat; vertical-align:middle;}
+.icon-logo{ width:30px; height:30px; background-position:0 -30px; margin:0 10px 3px 0;}
+.icon-indextb1{ width:20px; height:18px; background-position:-120px 0; margin:0 10px 3px 0;}
+.icon-indextb2{ width:20px; height:18px; background-position:-140px 0; margin:0 10px 3px 0;}
+.icon-indextb3{ width:20px; height:18px; background-position:-160px 0; margin:0 10px 3px 0;}
+.icon-indextb4{ width:20px; height:18px; background-position:-180px 0; margin:0 10px 3px 0;}
+
+.header-wrap {height:49px; line-height:49px; background-color:#f3f3f4; z-index:1010; border-bottom:1px solid #c0c0c0;}
+.header-logo { width:189px; background-color: #393c43; text-align:center; border-bottom:1px solid #2d2f34; position:relative;}
+.header-logo h1 {line-height: 49px; font-weight:normal;}
+.header-menu {height: 40px;}
+.header-menu-arrow {border-left: 1px solid #1684c7; display:inline-block; position:relative; cursor:pointer; height: 40px; line-height: 40px; overflow: hidden;}
+.header-menu-bg {background-color:rgba(0, 0, 0, 0.4); filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4F000000,endcolorstr=#4F000000); z-index: 1000;}
+.header-menu-box {left: 0; top: 40px; z-index: 1111;}
+.header-feature li {float:left; display:inline-block;}
+.header-feature li a {display:block; height:40px; width:40px; text-align:center; position:relative}
+.header-feature li a:hover ,.header-feature li a.curr {opacity: .9;}
+.header-feature li a i.iconfont {color:#fff; font-size:20px;}
+.header-feature li a em {position:absolute; top:8px; right:5px; width:18px; height:18px; background-color:#f47979; border-radius:50%; line-height:18px; color:#fff}
+/* iframe-menu */
+.iframe-menu {border-bottom:#e0e3ec 1px solid; background-color:#fff; height:37px; overflow: hidden;}
+.iframe-menu-list {left:0; top:0}
+.iframe-menu-list li {float:left; display:inline}
+.iframe-menu-list li a {display:inline-block; width:130px; height:37px; line-height:37px; position:relative; font-size:14px; color:#666; overflow:hidden;}
+.iframe-menu-list li a span {display:block; background-color:#fff; padding-left:10px; position:relative; width:100px; height: 16px; line-height: 16px; border-left:#bbb 1px solid; top:10px; text-align: center;}
+.iframe-menu-list li:first-child a span {border-left: 0px;}
+.iframe-menu-list li a.curr {height:35px; line-height:35px; border-bottom: #007fcc 2px solid; color: #007fcc;}
+.iframe-menu-list li a i.iconfont {position:absolute; right:6px; top:1px; font-size:12px; display: none;}
+.iframe-menu-list li a:hover i.iconfont {display: block;}
+.iframe-menu-btn {right:0; top:0; display:none}
+.iframe-menu-btn a {display:inline-block; width:37px; height:37px; border-left:#e0e3ec 1px solid; background-color:#fff; text-align:center; line-height:37px; color:#333}
+.iframe-menu-btn a:hover {background-color:#4DB2EE; color:#fff;}
+.iframe-menu-mouse {width:160px; border:1px solid #e0e3ec; box-shadow:1px 1px 5px #ccc; background-color:#fff; font-size:14px}
+.iframe-menu-mouse li {border-bottom:#e0e3ec 1px solid;}
+.iframe-menu-mouse li a {height:32px; line-height:32px; padding:0 10px; color:#333; display:block; }
+.iframe-menu-mouse li:last-child {border-bottom:0}
+.iframe-menu-mouse li a:hover {background-color:#4DB2EE; color:#fff;}

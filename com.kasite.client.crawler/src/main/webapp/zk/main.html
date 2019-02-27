@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
+		<style type="text/css">
+			.index-widget-container {position:absolute;right:0;top:0;height:400px;width:150px;z-index:99;}
+			.index-widget {margin-bottom:8px;cursor:pointer;}
+			.index-widget:hover {opacity:0.8;}
+			.index-widget-title {height:20px;text-align:center;color:#FFF;}
+			.index-widget-body {height:85px;text-align:center;}
+			.title-orange {background:#FF9326;}
+			.title-green {background:#2FAA00;}
+			.title-blue {background:#00A2C4}
+			.body-orange {
+			  background:#F90;
+			  background: -moz-linear-gradient(top, #F37225, #F06227);
+			  background: -webkit-gradient(linear, 0 0, 0 100%, from(#F37225), to(#F06227));
+			  background: -webkit-linear-gradient(top, #F37225, #F06227);
+			  background: -o-linear-gradient(top, #F37225, #F06227);
+			  background: linear-gradient(to bottom, #F37225, #F06227);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F37225', endColorstr='#F06227', GradientType=0);
+			}
+			.body-light-yellow {background:#EFFFDF;}
+			.body-light-blue {background:#DDF9FF;}
+			.body-light-green {background:#E8FFF3;}
+			.body-light-orange {background:#FFF0E1;}
+
+			.score {font-family:"Georgia";font-size:50px;line-height:85px;color:#FFF;}
+			.scale {font-family:"Georgia";font-size:40px;line-height:85px;color:#F08229;}
+			.score-large {font-family:"Georgia";font-size:80px;line-height:150px;color:#FFF;text-align:center;}
+			.mini-title {color:#333;text-align:center;margin:10px 20px;border-bottom:1px solid #999;padding:10px;}
+			.mini-title-white {color:#FFF;text-align:center;margin:20px;border-bottom:1px solid #E0E0E0;padding:10px;}
+			.ranking-widget {padding-top:5px;}
+
+
+			.index-widget-content {display:none;position:absolute;right:160px;top:0;width:500px;height:550px;z-index:9999;}
+			.index-widget-content-title {height:30px;line-height:30px;padding-left:30px;font-size:14px;text-align:center;color:#FFF;}
+			.index-widget-content-title .widget-close {float:right;margin:0 7px;line-height:25px;}
+			.index-widget-content-title .widget-close:hover {opacity:0.6;cursor:pointer;}
+			
+			.rank-list {margin:0;padding:20px;}
+			.rank-list li {list-style:none;border-bottom:1px solid #F08229;height:40px;line-height:30px;padding:5px;}
+			.rank-list li .num {display:block;float:left;text-align:center;margin:5px 6px 5px 0;width:20px;height:20px;line-height:20px;background:#F08229;color:#FFF;}
+			.rank-list li .trend {float:right;}
+			.rank-list li .score-small {float:right;}
+
+			.online-status-list {margin:0 20px;height:240px;overflow-y:auto;}
+			.online-status-list li {list-style:none;border-bottom:1px solid #CCC;height:40px;line-height:30px;padding:5px;}
+			.online-status-list li .status {float:right;}
+			
+			.view-more {position:absolute;right:10px;bottom:10px;color:#0098CA;}
+		</style>
+	</head>
+	<body>
+		<div id="title" style="font-size:18px"><a class="priovence" style="cursor:pointer;font-size:18px">上饶市</a></div>
+		<div id="map" class="map"></div>
+		<div class="index-widget-container">
+		
+		<div class="index-widget">
+			<div class="index-widget-title title-orange">上报数据趋势</div>
+			<div class="index-widget-body body-light-orange" id="tiny-upload-trend" style="overflow: hidden; text-align: left;"><div style="position: relative;"><div style="overflow: hidden; position: relative; text-align: left; width: 150px; height: 85px; cursor: default;"><svg version="1.1" style="position: absolute; width: 150px; height: 85px;"><g><path cs="100,100" d="M0.5,0.5 L149.5,0.5 L149.5,84.5 L0.5,84.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0"></path><path cs="100,100" d="M0.5,0.5 L134.5,0.5 L134.5,69.5 L0.5,69.5 L0.5,0.5 Z" fill="#FFFFFF" stroke="#000000" fill-opacity="0" stroke-width="1" stroke-opacity="0" transform="translate(10,5)"></path></g><g><g transform="translate(10,5)"></g><g transform="translate(10,5)" visibility="visible"></g></g><g></g><g></g><g></g><g></g><g><g transform="translate(10,5)" opacity="1" visibility="visible"><g></g><g></g><g clip-path="url(#AmChartsEl-3)"><path cs="100,100" d="M10.5,67.5 L29.5,68.5 L48.5,68.5 L67.5,37.5 L86.5,9.5 L105.5,30.5 L124.5,68.5 M0,0 L0,0" fill="none" stroke-width="1" stroke-opacity="0" stroke="#F90"></path><path cs="100,100" d="M10.5,67.5 L29.5,68.5 L48.5,68.5 L67.5,37.5 L86.5,9.5 L105.5,30.5 L124.5,68.5 L124.5,69.5 L10.5,69.5 L10.5,67.5 Z" fill="#F90" stroke="#000" fill-opacity="0.6" stroke-width="1" stroke-opacity="0"></path></g><clipPath id="AmChartsEl-3"><rect x="0" y="0" width="136" height="71" rx="0" ry="0" stroke-width="0"></rect></clipPath></g></g><g clip-path="url(#AmChartsEl-2)"></g><g><g transform="translate(10,5)"></g><g transform="translate(10,5)" visibility="visible"></g></g><g><path cs="100,100" d="M0.5,69.5 L134.5,69.5 L134.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,5)"></path><path cs="100,100" d="M0.5,0.5 L134.5,0.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,74)"></path><path cs="100,100" d="M0.5,0.5 L0.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#000000" transform="translate(10,5)" visibility="visible"></path></g><g><g transform="translate(10,5)" visibility="hidden"><path cs="100,100" d="M0.5,0.5 L0.5,0.5 L0.5,69.5" fill="none" stroke-width="1" stroke-opacity="0" stroke="#CC0000" visibility="hidden"></path></g></g><g></g><g><g transform="translate(10,5)" opacity="1" visibility="visible"><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(10,67) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(29,68) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(48,68)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(67,37)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(86,9) scale(1)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(105,30)"></circle><circle r="4" cx="0" cy="0" fill="#F90" stroke="#F90" fill-opacity="1" stroke-width="2" stroke-opacity="0" transform="translate(124,68) scale(1)"></circle></g></g><g><g></g></g><g></g><g><g transform="translate(83,13)" visibility="hidden"><rect x="0.5" y="0.5" width="70" height="30" rx="0" ry="0" stroke-width="1" fill="#e5e5e5" stroke="#e5e5e5" fill-opacity="1" stroke-opacity="1" opacity="0" transform="translate(-8,-8)"></rect><text y="6" fill="#000000" font-family="Verdana" font-size="11" opacity="1" text-anchor="start" transform="translate(0,8)"><tspan y="6" x="0">显示全部</tspan></text></g></g><g></g><clipPath id="AmChartsEl-2"><rect x="10" y="5" width="134" height="69" rx="0" ry="0" stroke-width="0"></rect></clipPath></svg><a href="http://www.amcharts.com/javascript-charts/" title="JavaScript charts" style="position: absolute; text-decoration: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 11px; opacity: 0.7; display: block; left: 140px; top: 10px;"> </a></div></div></div>
+		</div>
+		 
+		<div class="index-widget">
+			<div class="index-widget-title title-blue">设备在线比例</div>
+			<div class="index-widget-body body-light-blue"><div class="scale" id="rate">0</div></div>
+		</div>
+		<div class="index-widget-content body-light-orange">
+			<div class="index-widget-content-title title-orange"><span class="widget-close"><img src="images/widget-close.png"></span>上报数据趋势</div>
+			<div style="height:300px;" id="upload-trend"></div>
+		</div>
+		<div class="index-widget-content body-light-blue">
+			<div class="index-widget-content-title title-blue"><span class="widget-close"><img src="images/widget-close.png"></span>设备在线比例</div>
+			<div style="height:200px;" id="online-rate"></div>
+			<div class="mini-title">设备状态明细</div>
+			<ul class="online-status-list" id="device-list" tabindex="5003" style="overflow: hidden; outline: none;">
+			</ul>
+		<div id="ascrail2003" class="nicescroll-rails" style="width: 7px; z-index: 9999; cursor: default; position: absolute; top: 0px; left: -7px; height: 240px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(204, 204, 204); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2003-hr" class="nicescroll-rails" style="height: 7px; z-index: 9999; top: 233px; left: 0px; position: absolute; cursor: default; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(204, 204, 204); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div></div>
+		
+	</div>
+	</body>
+	<script src="js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="js/jquery.nicescroll.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.spin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/general.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/pie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/radar.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/serial.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/map.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//上饶市各县区
+		var countyList = ["信州区","上饶县","鄱阳县","广丰县","德兴市","弋阳县","万年县","婺源县","铅山县","余干县","横峰县","玉山县"];
+		root =  '上饶市' ;
+		upload = [{"country":"2018-07-13","visits":380881},{"country":"2018-07-14","visits":298982},{"country":"2018-07-15","visits":175014},{"country":"2018-07-16","visits":6921253},{"country":"2018-07-17","visits":12987910},{"country":"2018-07-18","visits":8478909},{"country":"2018-07-19","visits":179982}]
+		
+		var param = {};
+		var state_0 = 0;
+		var state_1 = 0;
+		var hos = _ajax('../online/getAllHos.do',param,false);//所有的医院
+		$.each(hos.data.result,function(i,o) {
+			if(o.state == 1){
+				state_1 ++;
+			}
+			if(o.state == 0){
+				state_0 ++;
+			}
+		});
+		rateOnline=[{"business":"在线","value":state_0},{"business":"离线","value":state_1}];
+		
+		$("#rate").text(GetPercent(state_0,parseFloat(state_0)+parseFloat(state_1)));
+		$(window).resize(function(){
+			$("#map").height($(window).height() - 120);
+		});
+		
+		
+		
+		$(function(){		
+			var tbody = '';
+			var param = {};
+			var hos = _ajax('../online/getAllHos.do',param,false);//所有的医院
+			$.each(hos.data.result, function (n, value) {
+	            var trs = "";   
+	            trs +="<li style='display: block'>";
+	
+	            if(value.state=='0'){
+	            	trs +="<span class='status color-green'>在线</span>";
+	            }else if(value.state=='1'){
+	            	trs +="<span class='status color-red'>离线</span>";
+	            } 
+	            tbody += trs + value.name+"</li>";  
+	        });
+			$("#device-list").html(tbody);
+
+			$("#map").height($(window).height() - 120);
+			
+			tinyUploadTrend("");
+			
+			$(".online-status-list").niceScroll({cursorcolor:"#CCC"});
+			
+			
+			$(".widget-close").click(function(){
+				$(".index-widget-content").slideUp();
+			});
+			
+			$(".index-widget").click(function(){
+				var index = $(this).index();
+				$(".index-widget-content").hide(0);
+				$(".index-widget-content:eq("+index+")").slideDown();
+				switch(index){
+					case 0:
+						//alert($("#title").text());
+						
+						if(option.series[0].mapType == "上饶市"){
+							uploadTrend("");
+						}else {
+							uploadTrend(option.series[0].mapType);
+						}
+						
+					case 1:
+						onlineRate(rateOnline);
+				}
+			});
+		
+		
+		
+		function tinyUploadTrend(county) {
+			
+			var chartData = []; //折线图需要的数据	
+			var start = addDate(today(), -6);//至今一周的时间点
+			var param = {};
+			param.startTime = start;//一周前
+			param.endTime = today();//今天
+			if(county != ""){
+				param.county = county;
+			}
+			var reportTotal = _ajax('../report/reportByDate.do',param,false);//获得数据
+			
+			for (var k = 0; k < 7; k++) {
+				var flag = false;
+				$.each(reportTotal.data.result,function(j,r) {
+					if(r.date.substring(0,10) == start){
+
+						chartData.push({"country":start,"visits":parseInt(r.reportTrue) + parseInt(r.reportFalse)});
+						flag = true;
+						return false;
+					}
+				});
+				if(!flag){
+					chartData.push({"country":start,"visits":0});
+				}
+				start = addDate(start,'');
+			}
+	
+			// SERIAL CHART
+			chart = new AmCharts.AmSerialChart();
+			chart.dataProvider = chartData;
+			chart.categoryField = "country";
+			chart.startDuration = 1;
+			chart.marginTop = 5;
+			chart.marginRight = 5;
+			chart.marginBottom = 5;
+			chart.marginLeft = 5;
+		
+			// AXES
+			// category
+			var categoryAxis = chart.categoryAxis;
+			categoryAxis.labelRotation = 0;
+			categoryAxis.gridPosition = "start";
+			categoryAxis.gridAlpha = 0;
+			categoryAxis.axisAlpha = 0;
+			categoryAxis.labelsEnabled = false;
+		
+			// GRAPH
+			var graph = new AmCharts.AmGraph();
+			graph.valueField = "visits";
+			graph.balloonText = "[[category]]<br><b>[[value]]</b> 笔";
+			graph.type = "line";
+			graph.lineAlpha = 0;
+			graph.lineColor = "#F90";
+			graph.fillAlphas = 0.6;
+			graph.bullet = "round";
+			chart.addGraph(graph);
+		
+			// value
+			var valueAxis = new AmCharts.ValueAxis();
+			valueAxis.tickLength = 0;
+			valueAxis.axisAlpha = 0;
+			valueAxis.labelsEnabled = false;
+			valueAxis.showFirstLabel = false;
+			valueAxis.showLastLabel = false;
+			valueAxis.gridAlpha = 0;
+			chart.addValueAxis(valueAxis);
+			
+			// CURSOR
+			var chartCursor = new AmCharts.ChartCursor();
+			chartCursor.cursorAlpha = 0;
+			chartCursor.zoomable = false;
+			chartCursor.categoryBalloonEnabled = false;
+			chart.addChartCursor(chartCursor);
+			chart.creditsPosition = "top-right";
+			chart.write("tiny-upload-trend");
+		}
+
+		function uploadTrend(county) {
+			var chart;
+			
+			var chartData = []; //折线图需要的数据	
+			var start = addDate(today(), -6);//至今一周的时间点
+			var param = {};
+			param.startTime = start;//一周前
+			param.endTime = today();//今天
+			if(county != ""){
+				param.county = county;
+			}
+			var reportTotal = _ajax('../report/reportByDate.do',param,false);//获得数据
+			
+			for (var k = 0; k < 7; k++) {
+				var flag = false;
+				$.each(reportTotal.data.result,function(j,r) {
+					if(r.date.substring(0,10) == start){
+
+						chartData.push({"country":start,"visits":parseInt(r.reportTrue) + parseInt(r.reportFalse)});
+						flag = true;
+						return false;
+					}
+				});
+				if(!flag){
+					chartData.push({"country":start,"visits":0});
+				}
+				start = addDate(start,'');
+			}
+		
+		
+			// SERIAL CHART
+			chart = new AmCharts.AmSerialChart();
+			chart.dataProvider = chartData;
+			chart.categoryField = "country";
+			chart.startDuration = 1;
+		
+			// AXES
+			// category
+			var categoryAxis = chart.categoryAxis;
+			categoryAxis.labelRotation = 0;
+			categoryAxis.gridPosition = "start";
+			categoryAxis.gridAlpha = 0.1;
+			categoryAxis.axisAlpha = 1;
+			categoryAxis.labelRotation =45;
+			//categoryAxis.labelsEnabled = false;
+		
+		
+			// GRAPH
+			var graph = new AmCharts.AmGraph();
+			graph.valueField = "visits";
+			graph.balloonText = "[[category]]: <b>[[value]]</b> 笔";
+			graph.type = "line";
+			graph.lineAlpha = 0;
+			graph.lineColor = "#F90";
+			graph.fillAlphas = 0.6;
+			graph.bullet = "round";
+			chart.addGraph(graph);
+		
+			// value
+			var valueAxis = new AmCharts.ValueAxis();
+			valueAxis.tickLength = 0;
+			valueAxis.axisAlpha = 1;
+			valueAxis.gridAlpha = 0.1;
+			//valueAxis.labelsEnabled = false;
+			valueAxis.showFirstLabel = false;
+			valueAxis.showLastLabel = false;
+			chart.addValueAxis(valueAxis);
+			
+			// CURSOR
+			var chartCursor = new AmCharts.ChartCursor();
+			chartCursor.cursorAlpha = 0;
+			chartCursor.zoomable = false;
+			chartCursor.categoryBalloonEnabled = false;
+			chart.addChartCursor(chartCursor);
+		
+			chart.creditsPosition = "top-right";
+		
+			chart.write("upload-trend");
+		}
+	
+		function onlineRate(temp4){
+			chart = new AmCharts.AmPieChart();
+			legend = new AmCharts.AmLegend();
+			
+			var info = temp4;
+			
+			if(info) {
+				chart.dataProvider = info;
+				chart.colors = ["#2FAA00","#FF9326"];
+				legend.valueText = "[[[value]]]";
+				chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+			} else {
+				chart.dataProvider = [{"business":"无数据", "value":"1"}];
+				chart.colors = ["#CCC"];
+				legend.valueText = "";
+				chart.balloonText = "";
+			}
+			
+			chart.titleField = "business";
+			chart.valueField = "value";
+			chart.sequencedAnimation = true;
+			chart.innerRadius = "40%";
+			//add by wangn 2015-11-20 饼图精度
+			chart.adjustPrecision = true;
+			chart.percentPrecision = 1;
+			//add end
+			//chart.pieX = "45%";
+			//chart.pieY = "45%";
+			chart.labelText = "";
+			chart.startDuration = 0.5;
+			chart.radius = 80;
+			chart.labelRadius = 15;
+			chart.startEffect = "easeOutSine";
+
+			legend.switchable=true;
+			legend.addListener("showItem", showEquipment);
+			legend.addListener("hideItem", hideEquipment);
+
+			legend.position = "absolute";
+			legend.top = 0;
+			legend.right = 20;
+			legend.width = 120;
+			legend.borderAlpha = 0;
+			legend.horizontalGap = 0;
+			chart.addLegend(legend);
+                     
+			chart.write("online-rate");
+		}
+
+		function showEquipment(obj){
+		   var title = obj.dataItem.title;
+		   if(title=='在线'){
+		      
+		        $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='在线'){
+		           $(this).show();
+		         }
+		     
+		     });
+		
+		   }else if(title=='离线'){
+		       $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='离线'){
+		           //$(this).show();
+		          // $(this).css("visibility","");
+		           $(this).show();
+		         }
+		     
+		     });
+		   }
+		  
+		}
+		function hideEquipment(obj){
+		   var title = obj.dataItem.title;
+		   if(title=='在线'){
+		      $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		         if(status=='在线'){
+		           $(this).hide();
+		         }
+		     
+		     });
+		      var ulContent = $("#device-list").html();
+		      $("#device-list").html("&nbsp;");
+		      window.setTimeout(function(){
+		      	 $("#device-list").html(ulContent);
+		      },10)
+		   }else if(title=='离线'){
+		       $("ul#device-list > li").each(function(){
+		       var status = $(".status", this).html();
+		        if(status=='离线'){
+		        	$(this).hide();
+		         }
+		     });
+		     
+		     var ulContent = $("#device-list").html();
+		      $("#device-list").html("&nbsp;");
+		      window.setTimeout(function(){
+		      	 $("#device-list").html(ulContent);
+		      },10)
+		     
+		   }
+		   
+		}
+
+		
+			
+			var myChart;
+			var domMain = document.getElementById('map');
+			var curTheme;
+			
+			
+			function requireCallback(ec, defaultTheme) {
+				echarts = ec;
+				refresh();
+			}
+		
+			
+			function refresh(isBtnRefresh) {
+				if (myChart && myChart.dispose) {
+					myChart.dispose();
+				}
+				myChart = echarts.init(domMain, curTheme);
+				loadMapData();
+				myChart.setOption(option, true)
+			}
+		
+			var echarts;
+			require.config({
+				paths : {
+					echarts : 'js/echarts'
+				}
+			});
+			var temp = '<a class="priovence" style="cursor:pointer;font-size:18px">'+root+'</a>';
+		    $("#title").html(temp);
+		    $(".priovence").live("click",function(){
+		    	var ssss = $(this).html();
+		    	var content = $("#title").html();
+		    	var temp = content.split('-&gt;');
+		    	var stringtemp = "";
+		  
+		    	 for (i = 0; i < temp.length; i++)
+			    {
+		              if(temp[i].indexOf(ssss)<0){
+		                  stringtemp = stringtemp+temp[i]+"->" ;  
+		              }else{
+		                  stringtemp = stringtemp+temp[i] ;  
+		                  break;
+		              } 
+			    }
+		    	returnLevel(ssss);
+		    	 $("#title").html(stringtemp);
+		    });
+			launchMap();
+			//loadOnlineChart();
+			
+			
+			var isLaunched;
+			function launchMap() {
+				if (isLaunched) {
+					return;
+				}
+				// 按需加载
+				isLaunched = 1;
+				require([ 'echarts', 'echarts/chart/map' ], requireCallback);
+			}
+			
+			function getJsonAsync1(url,name)
+			{
+				
+				var data1;
+				$.ajax({
+					  url: url+name+'.json',
+					  dataType: 'json',
+					  cache: false,
+					  async:false,
+//					  data:"name=" + encodeURIComponent(encodeURIComponent(name)), 
+					  success: function(o){
+					      var str1 = o; 
+					      //alert(str1);
+						    data1 = str1;
+					  },
+					  error: function (err) {
+			                alert("获取数据出错，请刷新页面!");
+			            }
+					});
+				return data1;
+			}
+			
+			function getJsonAsync(url)
+			{
+				var data;
+				$.ajax({
+					  url: url,
+					  dataType: 'json',
+					  contentType: "application/json; charset=utf-8",
+					  cache: false,
+					  async:false,
+					  success: function(o){
+						  data = o;
+					  },
+					  error: function (err) {
+			                alert("获取数据出错，请刷新页面!");
+			            }
+					});
+				return data;
+			}
+			
+			
+		  //add by wangn 返回上一级
+		  function returnLevel(mt){
+			 if(mt == "上饶市"){
+				 document.location.href='main.html';
+			 }else {
+				 myChart.clear();
+			     myChart.showLoading()
+			     option.series[0].mapType = mt;
+				 option.series[0].geoCoord = getJsonAsync('kml/cityGeo.json');
+					var obj = [];
+				    var param = {};
+				    param.county = mt;
+				    var allReport = _ajax('../report/reportByhosId.do',param,false);//所有上报
+				    $.each(allReport.data.result,function(m,o) {
+				    	obj.push({"name":o.hospitalName,"value":parseInt(o.reportTrue)+parseInt(o.reportFalse)});
+					});  
+				    if(obj==''){
+				        option.series[0].markPoint.data = [];
+				    }else{
+				      option.series[0].markPoint.data = obj;
+				    }		    
+						    
+				 myChart.hideLoading(); 
+				 myChart.setOption(option, true);
+
+				 $(".index-widget-content").hide(0);
+				 
+			 }
+
+		  }
+		  //add end
+			function loadMapData() {
+				var curIndx = 0;
+				var mapType = [];
+				
+				var cityMap = getJsonAsync('kml/cityMap.json');
+				var geoCoord = getJsonAsync('kml/cityGeo.json');
+				
+				var areaScore = [];
+				
+				var param = {};
+				param.date = $("#scoreDate").val();
+				var count = 0;
+				var allReport = _ajax('../report/reportByhosId.do',param,false);//所有上报
+				var allHos = _ajax('../online/getAllHos.do',param,false);//所有医院
+				
+				for(var i = 0; i < countyList.length; i++){
+					count = 0;
+					$.each(allHos.data.result,function(m,o) {
+						if(o.county == countyList[i]){
+							$.each(allReport.data.result,function(j,r) {
+								if(o.id == r.hospitalId){
+									count = count + parseInt(r.reportTrue) + parseInt(r.reportFalse);	
+								}
+							});
+						}
+					});
+					areaScore.push({"name":countyList[i],"value":count});
+				}
+				
+				var mapGeoData = require('echarts/util/mapData/params');
+				for (var city in cityMap) {
+				    mapType.push(city);
+				    // 自定义扩展图表类型
+				       mapGeoData.params[city] = {
+				        getGeoJson: (function (c) {
+				            var geoJsonName = cityMap[c];
+				            return function (callback) {
+				                $.getJSON(encodeURI('kml/' + geoJsonName + '.json'), callback);
+				            }
+				        }
+				   )(city)
+				    }
+				}
+				
+		
+				var ecConfig = require('echarts/config');
+				//var zrEvent = require('zrender/tool/event');
+		
+				myChart.on(ecConfig.EVENT.MAP_SELECTED, function(param) {
+					var mt = param.target;
+					var len = mapType.length;
+				    var f= false;
+				    for(var i = 0; i < len; i++){
+				        if(mt == mapType[i]){
+				               //if( mapType[i].indexOf(mt)>=0){
+				              f =true;
+				              //mt = mapType[i];
+				        }
+				     }
+				      //add by wangn 2015-11-12
+				    $(".index-widget-content").hide(0);
+
+				       if(f == true){
+				        myChart.clear();
+					    option.series[0].mapType = mt;
+					    
+					  
+					    //var obj = getJsonAsync1('data/value/queryHospitalInfoByArea1',mt);
+  					   	var obj = [];
+					    var param = {};
+					    param.county = mt;
+					    var allReport = _ajax('../report/reportByhosId.do',param,false);//所有上报
+					    $.each(allReport.data.result,function(m,o) {
+					    	obj.push({"name":o.hospitalName,"value":parseInt(o.reportTrue)+parseInt(o.reportFalse)});
+						});  
+
+					    if(obj==''){
+					        option.series[0].markPoint.data = [];
+					    }else{
+					      option.series[0].markPoint.data = obj;
+					      option.series[0].geoCoord = getJsonAsync1('data/value/queryHospitalInfoByArea',mt);
+					    }
+					    myChart.hideLoading(); 
+					    myChart.setOption(option, true);
+					    tinyUploadTrend(mt);
+					    uploadTrend(mt);
+					    //areaQuestAjax(mt,"2");
+
+					    
+					    var tbody = '';
+					    var param = {};
+					    param.county = mt;
+						var state_0 = 0;
+						var state_1 = 0;
+						var hos = _ajax('../online/getAllHos.do',param,false);//所有的医院
+						$.each(hos.data.result,function(i,o) {
+							if(o.state == 1){
+								state_1 ++;
+							}
+							if(o.state == 0){
+								state_0 ++;
+							}
+							var trs = "";   
+				            trs +="<li style='display: block'>";
+				
+				            if(o.state=='0'){
+				            	trs +="<span class='status color-green'>在线</span>";
+				            }else if(o.state=='1'){
+				            	trs +="<span class='status color-red'>离线</span>";
+				            } 
+				            tbody += trs + o.name+"</li>";  
+						});
+						rateOnline=[{"business":"在线","value":state_0},{"business":"离线","value":state_1}];
+						$("#rate").text(GetPercent(state_0,parseFloat(state_0)+parseFloat(state_1)));
+					    
+						$("#device-list").html(tbody);
+				    var temp = $("#title").html();
+				    
+				   if(temp.indexOf(mt)<0){
+				     
+				      $("#title").html(temp+"-><a class=\'priovence\' style=\'cursor:pointer\;font-size:18px\'>"+mt+"</a>");
+				   }
+					       
+				} 
+				   
+			});
+				
+				option = {
+				 
+				   color: ['gold','aqua','lime'],
+	
+				   
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: '{b}'
+				    },
+				 
+				  
+				    dataRange: {
+				    	x : 'left',
+				        min : 0,
+				        max : 80000,
+				        padding: 15,
+				        calculable : true,
+				        //color: ['#ff3333', 'orange', 'yellow','lime','aqua'],
+				        color: ['aqua','lime','yellow', 'orange', '#ff3333'],
+				        text:['高','低'],
+				        textStyle:{
+				            color:'#000'
+				        }
+				    },
+				
+					series : [ {
+						name : '区域地图',
+						type : 'map',
+						roam: true,
+						hoverable: false,
+						mapType : mapType[0],
+						selectedMode : 'single',
+						itemStyle : {
+							normal : {
+							   
+								label : {
+									show : true,
+									textStyle : {
+							            color: '#BBB'
+							        }
+								},
+								borderColor:'rgba(100,149,237,1)',
+				                borderWidth:0.5,
+				                areaStyle:{
+				                   color: '#006699'
+				                 }
+							},
+							emphasis: {
+								label : {
+									show : true,
+									textStyle : {
+							            color: '#333'
+							        }
+								},
+								borderColor:'rgba(255,255,255,1)',
+				                borderWidth:0.5,
+		                        color: '#32cd32',
+				                areaStyle:{
+				                   color: '#F5D529'
+				                 }
+				            }
+						},
+						data :[] /*areaScore*/,
+					    geoCoord:geoCoord,
+					    
+					markPoint : {
+		                symbol:'emptyCircle',
+		               /* symbolSize : function (v){
+		                    return 10 + v/10
+		                },*/
+		                effect : {
+		                    show: true,
+		                    shadowBlur : 0
+		                },
+		                itemStyle:{
+		                    normal:{
+		                        label:{show:false}
+		                    },
+		                    emphasis: {
+		                        label:{
+		                        	position:'top',
+		                        	textStyle: {
+		                        		fontSize : 20,
+		                        		fontFamily : "Open Sans"
+		                        	}
+		                        	
+		                        }
+		                    }
+		                },
+		                data :areaScore
+		            	}
+					}]
+				};
+			}
+
+		});
+		//---------------------------------------------------------------------------------------------
+		
+		
+		//ajax获取数据
+	    function _ajax(url,param,flag){
+			var obj = null;
+			try{
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: param,
+					async: flag,
+					timeout : 8000,
+					dataType: 'json',
+					success: function(data){
+						obj = data;
+		 			}
+				});
+			}catch(err){
+				ComWbj.artTips("提示","error",err,2,null);
+			}
+			if(!flag) return obj;
+		}
+		
+		//当前年月日
+		function today(){
+		    var today=new Date();
+		    var h=today.getFullYear();
+		    var m=today.getMonth()+1;
+		    var d=today.getDate();
+		    var hh=today.getHours();
+		    var mm=today.getMinutes();
+		    var ss=today.getSeconds();
+		    m= m<10?"0"+m:m;     
+		    d= d<10?"0"+d:d;
+		    hh = hh < 10 ? "0" + hh:hh;
+		    mm = mm < 10 ? "0" +  mm:mm;
+		    ss = ss < 10 ? "0" + ss:ss;
+		    return h+"-"+m+"-"+d;
+		}
+		
+		// 日期，在原有日期基础上，增加/减少days天数，默认增加1天
+	    function addDate(date, days) {
+	        if (days == undefined || days == '') {
+	            days = 1;
+	        }
+	        var date = new Date(date);
+	        date.setDate(date.getDate() + days);
+	        var month = date.getMonth() + 1;
+	        var day = date.getDate();
+	        return date.getFullYear() + '-' + getFormatDate(month) + '-' + getFormatDate(day);
+	    }
+		
+	    // 日期月份/天的显示，如果是1位数，则在前面加上'0'
+	    function getFormatDate(arg) {
+	        if (arg == undefined || arg == '') {
+	            return '';
+	        }
+
+	        var re = arg + '';
+	        if (re.length < 2) {
+	            re = '0' + re;
+	        }
+
+	        return re;
+	    }
+	    
+		///计算两个整数的百分比值 
+		function GetPercent(num, total) { 
+			num = parseFloat(num); 
+			total = parseFloat(total); 
+			if (isNaN(num) || isNaN(total)) { 
+				return "-"; 
+			} 
+			return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00 + "%"); 
+		} 
+	</script>
+</html>

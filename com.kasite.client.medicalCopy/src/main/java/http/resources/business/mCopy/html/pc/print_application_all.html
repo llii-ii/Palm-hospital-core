@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>病历复印申请单</title>
+		<style type="text/css">
+			#printList{
+				text-align: center;
+				
+			}
+			#printList th,#printList td{
+				padding:3px 3px;
+				font-size: 14.5px;
+			}
+			.listTH{
+				text-indent:-10px;
+				overflow:hidden;
+				white-space:nowrap;
+			}
+			@page {
+		      size: auto;  /* auto is the initial value */
+		      margin: 0mm; /* this affects the margin in the printer settings */
+		    }
+			.tit {
+			    font-size: 22.5px;
+			    font-weight: bold;
+			    color: #333;
+			    text-align: center;
+			    margin-bottom: 10px;
+			}
+			.tit1 {
+			    font-size: 14.5px;
+			    font-weight: bold;
+			    color: #333;
+			    text-align: left;
+			    margin-bottom: 10px;
+			    display:none;
+			}
+		</style>
+	</head>
+	<body>
+	 	<div style="text-align: center;padding-bottom: 15px;">
+	    	<button id="pbtn" style="display: none;" class="btn" type="button" onclick="p()">打印</button>
+	    	<button id="tableExport" style="display: none;" class="btn" type="button" onclick="tableExport()">导出</button>
+        	<button id="return" style="display: none;" class="btn" type="button" onclick="r()">返回</button>
+        </div> 
+		<p class="tit">病历复印申请单</p>
+		<p class="tit1"></p>
+		<div style="text-align: center;">
+			<table id="printList" border="1">
+				<tr>
+						<th>序号</th>
+						<th>病案号</th>
+						<th style="padding:3px 20px;">姓名</th>
+						<th>出院日期</th>
+						<th>住院天数</th>
+						<th style="text-align: left;width: 16.8rem;">手术名称</th>
+						<th>份数</th>
+						<th>出院科室</th>
+				</tr>
+			</table>
+		</div>
+<!--  		<div style="text-align: center;padding-top: 15px;">
+	    	<button id="pbtn" style="display: none;" class="btn" type="button" onclick="p()">打印</button>
+        	<button id="return" style="display: none;" class="btn" type="button" onclick="r()">返回</button>
+        </div>  -->
+	</body>
+</html>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script src="../../js/pc/tableExport.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+$(function(){
+	var v = JSON.parse(Commonjs.getUrlParam('printApplication'));
+	var selectDate = Commonjs.getUrlParam('selectDate');
+	if(selectDate != '' && selectDate != null && selectDate != '~'){
+		$(".tit1").text("申请日期:"+selectDate);
+		$(".tit1").show();
+	}
+ 	var html = '';
+	for(var i = 0; i<v.length; i++){
+		html+='<tr><td>'+(i+1)+'</td><td>'+v[i].PatientId+'</td><td>'+v[i].Name+'</td><td>'+v[i].OutHosDate+'</td><td>'+v[i].Hospitalization+'</td><td style="text-align: left;">'+v[i].OperationName.substring(0,12)+'</td><td>'+v[i].CaseNumber+'</td><td>'+v[i].OutDeptName.substring(0,4)+'</td></tr>';
+	}
+	$("#printList").append(html); 
+
+	$('#pbtn').show();
+	$('#return').show();
+	$('#tableExport').show();
+/*  	setTimeout(function(){
+		window.print();
+		setTimeout(function(){
+			$('#pbtn').show();
+			$('#return').show();
+		},300)
+	},1000) */
+	
+});
+
+function p(){
+	$('#pbtn').hide();
+	$('#return').hide();
+	$('#tableExport').hide();
+	window.print();
+	setTimeout(function(){
+		$('#pbtn').show();
+		$('#return').show();
+		$('#tableExport').show();
+	},300)
+}
+
+function r(){
+	window.location.href = 'copy.html';
+}	
+
+function tableExport(){
+	$('#printList').tableExport({
+        type:'excel',
+        escape:'false',
+        showExport:'true',
+        fileName: '病历复印申请单表'
+	});	
+}
+
+</script>

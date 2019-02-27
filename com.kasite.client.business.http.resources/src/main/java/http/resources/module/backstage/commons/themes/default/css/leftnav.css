@@ -1,0 +1,158 @@
+/*个人中心左侧导航*/
+.leftnav-tit { margin:0 8px; font:bold 16px/1.5 Simsun; color:#313131; border-bottom:1px dashed #cccdcd;}
+.leftnav-tit.b-none { border:none;}
+
+.leftnav-grzx li a { background:url(../images/member/leftnav-bg.gif) no-repeat;}
+.leftnav-grzx li.lnav-1 a{ background-position:0 0;}
+.leftnav-grzx li.lnav-1 a:hover,.leftnav-grzx li.lnav-1-on a { background-position:-204px 0;}
+.leftnav-grzx li.lnav-2 a{ background-position:0 -32px;}
+.leftnav-grzx li.lnav-2 a:hover,.leftnav-grzx li.lnav-2-on a { background-position:-204px -32px;}
+.leftnav-grzx li.lnav-3 a{ background-position:0 -64px;}
+.leftnav-grzx li.lnav-3 a:hover,.leftnav-grzx li.lnav-3-on a { background-position:-204px -64px;}
+
+/*基础信息左侧导航*/
+.leftnav-jcxx li.jgxx a{ background:url(../images/leftnav.gif) no-repeat; }
+.leftnav-jcxx li.jgxx a:hover,.leftnav-jcxx li.jgxx-on a { background:url(../images/leftnav-h.gif) no-repeat;}
+.leftnav-jcxx li.bmry a{ background:url(../images/leftnav.gif) 0 -32px no-repeat; }
+.leftnav-jcxx li.bmry a:hover,.leftnav-jcxx li.bmry-on a { background:url(../images/leftnav-h.gif) 0 -32px no-repeat;}
+.leftnav-jcxx li.qxsz a{ background:url(../images/leftnav.gif) 0 -64px no-repeat; }
+.leftnav-jcxx li.qxsz a:hover,.leftnav-jcxx li.qxsz-on a { background:url(../images/leftnav-h.gif) 0 -64px no-repeat;}
+
+/*平台介绍左侧导航*/
+.leftnav-ptjs li a { background:url(../images/ptjs/pt-lfnav.gif) no-repeat; }
+.leftnav-ptjs li.js a{ background-position:0 0;}
+.leftnav-ptjs li.js a:hover,.leftnav-ptjs li.js-on a { background-position:-204px 0;}
+.leftnav-ptjs li.wgw a{  background-position:0 -32px; }
+.leftnav-ptjs li.wgw a:hover,.leftnav-ptjs li.wgw-on a { background-position:-204px -32px; }
+.leftnav-ptjs li.ydyy a{  background-position:0 -64px; }
+.leftnav-ptjs li.ydyy a:hover,.leftnav-ptjs li.ydyy-on a { background-position:-204px -64px; }
+.leftnav-ptjs li.yg a{  background-position:0 -96px; }
+.leftnav-ptjs li.yg a:hover,.leftnav-ptjs li.yg-on a { background-position:-204px -96px; }
+.leftnav-ptjs li.xz a{  background-position:0 -128px; }
+.leftnav-ptjs li.xz a:hover,.leftnav-ptjs li.xz-on a { background-position:-204px -128px; }
+.leftnav-ptjs li.mdc a{  background-position:0 -160px; }
+.leftnav-ptjs li.mdc a:hover,.leftnav-ptjs li.mdc-on a { background-position:-204px -160px; }
+.leftnav-ptjs li.fsd a{  background-position:0 -192px; }
+.leftnav-ptjs li.fsd a:hover,.leftnav-ptjs li.fsd-on a { background-position:-204px -192px; }
+
+/*体检左导航*/
+.nav-tit { font-size:16px; color:#313131; line-height:36px; margin:0 7px; font-weight:bold; }
+.tit-bor { border-bottom:1px dashed #cdcdce; }
+.leftnav-tijian li.tjyy a{ background:url(../images/tjnav.gif) no-repeat; }
+.leftnav-tijian li.tjyy a:hover,.leftnav-tijian li.tjyy-on a { background:url(../images/tjnav-h.gif) no-repeat;}
+.leftnav-tijian li.tjqd a{ background:url(../images/tjnav.gif) 0 -32px no-repeat; }
+.leftnav-tijian li.tjqd a:hover,.leftnav-tijian li.tjqd-on a { background:url(../images/tjnav-h.gif) 0 -32px no-repeat;}
+.leftnav-tijian li.tjjg a{ background:url(../images/tjnav.gif) 0 -64px no-repeat; }
+.leftnav-tijian li.tjjg a:hover,.leftnav-tijian li.tjjg-on a { background:url(../images/tjnav-h.gif) 0 -64px no-repeat;}
+.leftnav-tijian li.tjtk a{ background:url(../images/tjnav.gif) 0 -96px no-repeat; }
+.leftnav-tijian li.tjtk a:hover,.leftnav-tijian li.tjtk-on a { background:url(../images/tjnav-h.gif) 0 -96px no-repeat;}
+.leftnav-tijian li.tjjs a{ background:url(../images/tjnav.gif) 0 -128px no-repeat; }
+.leftnav-tijian li.tjjs a:hover,.leftnav-tijian li.tjjs-on a { background:url(../images/tjnav-h.gif) 0 -128px no-repeat;}
+.leftnav-tijian li.tjys a{ background:url(../images/tjnav.gif) 0 -160px no-repeat; }
+.leftnav-tijian li.tjys a:hover,.leftnav-tijian li.tjys-on a { background:url(../images/tjnav-h.gif) 0 -160px no-repeat;}
+.leftnav-tijian li.tjgz a{ background:url(../images/tjnav.gif) 0 -192px no-repeat; }
+.leftnav-tijian li.tjgz a:hover,.leftnav-tijian li.tjgz-on a { background:url(../images/tjnav-h.gif) 0 -192px no-repeat;}
+.leftnav-tijian li.tjxm a{ background:url(../images/tjnav.gif) 0 -224px no-repeat; }
+.leftnav-tijian li.tjxm a:hover,.leftnav-tijian li.tjxm-on a { background:url(../images/tjnav-h.gif) 0 -224px no-repeat;}
+.leftnav-tijian li.tjtc a{ background:url(../images/tjnav.gif) 0 -256px no-repeat; }
+.leftnav-tijian li.tjtc a:hover,.leftnav-tijian li.tjtc-on a { background:url(../images/tjnav-h.gif) 0 -256px no-repeat;}
+.leftnav-tijian li.tjsj a{ background:url(../images/tjnav.gif) 0 -288px no-repeat; }
+.leftnav-tijian li.tjsj a:hover,.leftnav-tijian li.tjsj-on a { background:url(../images/tjnav-h.gif) 0 -288px no-repeat;}
+.leftnav-tijian li.lxwm a{ background:url(../images/tjnav.gif) 0 -320px no-repeat; }
+.leftnav-tijian li.lxwm a:hover,.leftnav-tijian li.lxwm-on a { background:url(../images/tjnav-h.gif) 0 -320px no-repeat;}
+
+/*微官网左侧导航*/
+.leftnav-wgw li a { background:url(../images/wgw/leftnav-bg.gif) no-repeat;}
+.leftnav-wgw li.zhsz a{ background-position:0 0;}
+.leftnav-wgw li.zhsz a:hover,.leftnav-wgw li.zhsz-on a { background-position:-204px 0;}
+.leftnav-wgw li.cdgl a{ background-position:0 -32px;}
+.leftnav-wgw li.cdgl a:hover,.leftnav-wgw li.cdgl-on a { background-position:-204px -32px;}
+.leftnav-wgw li.twhf a{ background-position:0 -64px;}
+.leftnav-wgw li.twhf a:hover,.leftnav-wgw li.twhf-on a { background-position:-204px -64px;}
+.leftnav-wgw li.hdp a{ background-position:0 -96px;}
+.leftnav-wgw li.hdp a:hover,.leftnav-wgw li.hdp-on a { background-position:-204px -96px;}
+.leftnav-wgw li.lmgl a{ background-position:0 -128px;}
+.leftnav-wgw li.lmgl a:hover,.leftnav-wgw li.lmgl-on a { background-position:-204px -128px;}
+.leftnav-wgw li.nrgl a{ background-position:0 -160px;}
+.leftnav-wgw li.nrgl a:hover,.leftnav-wgw li.nrgl-on a { background-position:-204px -160px;}
+.leftnav-wgw li.ghsz a{ background-position:0 -192px;}
+.leftnav-wgw li.ghsz a:hover,.leftnav-wgw li.ghsz-on a { background-position:-204px -192px;}
+.leftnav-wgw li.yl a{ background-position:0 -224px;}
+.leftnav-wgw li.yl a:hover,.leftnav-wgw li.yl-on a { background-position:-204px -224px;}
+
+/*转诊协作左侧导航*/
+.leftnav-tit { margin:0 8px; font:bold 16px/1.5 Simsun; color:#313131; border-bottom:1px dashed #cccdcd;}
+.leftnav-tit.b-none { border:none;}
+
+.leftnav-zzxz li a { background:url(../images/zz/leftnav-bg.gif) no-repeat;}
+.leftnav-zzxz li.lnav-1 a{ background-position:0 0;}
+.leftnav-zzxz li.lnav-1 a:hover,.leftnav-zzxz li.lnav-1-on a { background-position:-204px 0;}
+.leftnav-zzxz li.lnav-2 a{ background-position:0 -32px;}
+.leftnav-zzxz li.lnav-2 a:hover,.leftnav-zzxz li.lnav-2-on a { background-position:-204px -32px;}
+.leftnav-zzxz li.lnav-3 a{ background-position:0 -64px;}
+.leftnav-zzxz li.lnav-3 a:hover,.leftnav-zzxz li.lnav-3-on a { background-position:-204px -64px;}
+.leftnav-zzxz li.lnav-4 a{ background-position:0 -96px;}
+.leftnav-zzxz li.lnav-4 a:hover,.leftnav-zzxz li.lnav-4-on a { background-position:-204px -96px;}
+.leftnav-zzxz li.lnav-5 a{ background-position:0 -128px;}
+.leftnav-zzxz li.lnav-5 a:hover,.leftnav-zzxz li.lnav-5-on a { background-position:-204px -128px;}
+.leftnav-zzxz li.lnav-6 a{ background-position:0 -160px;}
+.leftnav-zzxz li.lnav-6 a:hover,.leftnav-zzxz li.lnav-6-on a { background-position:-204px -160px;}
+.leftnav-zzxz li.hbqd a{ background-position:0 -96px ; }
+.leftnav-zzxz li.hbqd a:hover,.leftnav-zzxz li.hbqd-on a { background-position:-204px -96px ;}
+.leftnav-zzxz li.jgxx a{ background:url(../images/leftnav.gif) no-repeat; }
+.leftnav-zzxz li.jgxx a:hover,.leftnav-zzxz li.jgxx-on a { background:url(../images/leftnav-h.gif) no-repeat;}
+.leftnav-zzxz li.bmry a{ background:url(../images/leftnav.gif) 0 -32px no-repeat; }
+.leftnav-zzxz li.bmry a:hover,.leftnav-zzxz li.bmry-on a { background:url(../images/leftnav-h.gif) 0 -32px no-repeat;}
+
+
+/*分时段左侧导航*/
+.leftnav-fsd li a { background:url(../images/fsd/leftnav-bg.gif) no-repeat;}
+.leftnav-fsd li.lnav-1 a{ background-position:0 0;}
+.leftnav-fsd li.lnav-1 a:hover,.leftnav-fsd li.lnav-1-on a { background-position:-204px 0;}
+.leftnav-fsd li.lnav-2 a{ background-position:0 -32px;}
+.leftnav-fsd li.lnav-2 a:hover,.leftnav-fsd li.lnav-2-on a { background-position:-204px -32px;}
+.leftnav-fsd li.lnav-3 a{ background-position:0 -64px;}
+.leftnav-fsd li.lnav-3 a:hover,.leftnav-fsd li.lnav-3-on a { background-position:-204px -64px;}
+
+/*预约挂号左侧导航*/
+.leftnav-yygh li a { background:url(../images/yygh/yygh-nav.gif) no-repeat; }
+.leftnav-yygh li.yygz a{ background-position:0 0;}
+.leftnav-yygh li.yygz a:hover,.leftnav-yygh li.yygz-on a { background-position:-204px 0; }
+.leftnav-yygh li.zysz a{ background-position:0 -32px ; }
+.leftnav-yygh li.zysz a:hover,.leftnav-yygh li.zysz-on a { background-position:-204px -32px ;}
+.leftnav-yygh li.yyqd a{ background-position:0 -64px ; }
+.leftnav-yygh li.yyqd a:hover,.leftnav-yygh li.yyqd-on a { background-position:-204px -64px ;}
+.leftnav-yygh li.hbqd a{ background-position:0 -96px ; }
+.leftnav-yygh li.hbqd a:hover,.leftnav-yygh li.hbqd-on a { background-position:-204px -96px ;}
+.leftnav-yygh li.mzxx a{ background-position:0 -128px ; }
+.leftnav-yygh li.mzxx a:hover,.leftnav-yygh li.mzxx-on a { background-position:-204px -128px ;}
+/*发布公告 左侧导航*/ 
+.leftnav-ydyy li a { background:url(../images/fbgg/leftnav-bg.gif) no-repeat;}
+.leftnav-ydyy li.lnav-6 a{ background-position:0 -32px;} 
+.leftnav-ydyy li.lnav-6 a:hover,.leftnav-ydyy li.lnav-6-on a { background-position: -204px -32px;}
+
+.leftnav-gzpth li a { background:url(../images/l-zxgl.gif) no-repeat;}
+.leftnav-gzpth li.zxgl a{ background-position:0 0;} 
+.leftnav-gzpth li.zxgl a:hover,.leftnav-gzpth li.zxgl-on a { background-position:-204px 0;}
+
+/*后台反馈 左侧导航*/ 
+.leftnav-htfk li a { background:url(../images/htfk/leftnav-bg.gif) no-repeat;}
+.leftnav-htfk li.lnav-1 a{ background-position:0 0;}
+.leftnav-htfk li.lnav-1 a:hover,.leftnav-htfk li.lnav-1-on a { background-position:-204px 0;}
+.leftnav-htfk li.lnav-2 a{ background-position:0 -32px;}
+.leftnav-htfk li.lnav-2 a:hover,.leftnav-htfk li.lnav-2-on a { background-position:-204px -32px;}
+.leftnav-htfk li.lnav-3 a{ background-position:0 -64px;}
+.leftnav-htfk li.lnav-3 a:hover,.leftnav-htfk li.lnav-3-on a { background-position:-204px -64px;}
+.leftnav-htfk li.lnav-4 a{ background-position:0 -96px;}
+.leftnav-htfk li.lnav-4 a:hover,.leftnav-htfk li.lnav-4-on a { background-position:-204px -96px;}
+
+/*微导诊 左侧导航*/ 
+.leftnav-wdz li a { background:url(../images/wdz/leftnav-bg.gif) no-repeat;}
+.leftnav-wdz li.dzwz a{ background-position:-204px 0;}
+.leftnav-wdz li.dzwz a:hover,.leftnav-wdz li.dzwz-on a { background-position:0 0;}
+.leftnav-wdz li.ewm a{ background-position:-204px -32px;}
+.leftnav-wdz li.ewm a:hover,.leftnav-wdz li.ewm-on a { background-position:0 -32px;}
+.leftnav-wdz li.xxtj a{ background-position:-204px -64px;}
+.leftnav-wdz li.xxtj a:hover,.leftnav-wdz li.xxtj-on a { background-position:0 -64px;}
+.leftnav-wdz li.gngl a{ background-position:-204px -96px;}
+.leftnav-wdz li.gngl a:hover,.leftnav-wdz li.gngl-on a { background-position:0 -96px;}

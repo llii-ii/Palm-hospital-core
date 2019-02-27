@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>绑定就诊卡</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li>
+            	<div class="c-list-key c-999 pr15">姓名</div>
+            	<div class="c-list-info c-t-right" id="memberName"></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">就诊卡</div>
+            	<div class="c-list-info"><input id="cardNo" type="text" class="list-text c-t-right" placeholder="请输入就诊卡号"></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">手机号</div>
+            	<div class="c-list-info"><input id="mobile" type="text" class="list-text c-t-right" placeholder="请输入就诊卡关联的手机号"></div>
+            </li>
+        	<li id="provingCode_li">
+            	<div class="c-list-key c-999 pr15">验证码</div>
+            	<div class="c-list-info"><input id="provingCode" type="text" class="list-text c-t-right" placeholder="请输入验证码"></div>
+                <div class="c-list-key"><a href="javascript:;" class="btn-yzm">获取验证码</a></div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="javascript:;" class="c-btn c-btn-blue" id="bindbtn">绑定就诊卡</a>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/checkForm.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/appConfig.js"></script>
+<script type="text/javascript" src="js/bindClinicCard.js?v=201901152112"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="./commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="./commons/css/login.css" type="text/css" />
+        <script type="text/javascript" src="./commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="./commons/js/jquery.artDialog.js"></script>
+		<script type="text/javascript" src="./commons/js/jquery.md5.js"></script>
+		<script type="text/javascript" src="./commons/js/common.js"></script>
+		<link rel="stylesheet" href="./commons/css/artDialog.css" type="text/css" />
+    </head>
+    <body>
+<div class="lg-wrap">
+    <div class="avatar-wrap">
+         <img alt="" src="./commons/images/login/avatar.png" class=""> 
+        <i class="icon-avatar"></i>
+    </div>
+    <h1>全流程开放平台</h1>
+    <div class="mt20 clearfix">
+        <div class="fl relative">
+            <label class="label-acc" for="loginAcc">账号</label>
+            <input type="text" class="inp inp-acc mr10" id="loginAcc" onkeyup="setCss(this,'label-acc')" />
+            <span class="placeholder">请输入账号</span>
+        </div>
+        <div class="fl relative">
+            <label class="label-pass" for="loginPass">密码</label>
+            <input type="password" class="inp inp-pass" id="loginPass" onkeyup="setCss(this,'label-pass')" />
+            <span class="placeholder">请输入密码</span>
+        </div>
+    </div>
+    <div class="mt20 hidden">	
+        <div class="fl  mr10" style="margin-top: 5px;">
+        	<input  id="rememberuser" name="rememberuser" type="checkbox" />
+        	<label class="" for="action">记住账号</label>
+        </div>
+        <div class="fl divider"></div>
+        <!--<span class="fl link-555 ml10 mt5"><a href="javascript:;">忘记密码？</a></span>
+        -->
+        <input type="button" class="fr btn" value="登录" onclick="doLogin()" />
+        <span class="fl link-555 ml10 mt5" style="float:right">
+       		 <span id="logininfoid"></span>
+       		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        	
+        </span>
+        
+        
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function(){
+    	
+    	var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1 
+    	
+    	////To check version of browser
+    	if(!isChrome) {
+    		// to check os
+	    	//if(Commonjs.checkOS()) {
+	    	//	window.location.href='/Hos-Process/downloadIE.html?os=0';
+	    	//}
+    		var DEFAULT_VERSION = "8.0";
+			var ua = navigator.userAgent.toLowerCase();
+			var isIE = ua.indexOf("msie")>-1;
+			var safariVersion;
+			if(isIE){
+			    safariVersion =  ua.match(/msie ([\d.]+)/)[1];
+			    if(safariVersion <= DEFAULT_VERSION ){
+			    	if(Commonjs.checkOS()) {
+			    		window.location.href='/downloadIE.html?os=0';
+			    	}else {
+			    		window.location.href='/downloadIE.html?os=1';
+			    	}
+			    }else{
+			        //window.location.href='/Hos-Process/login.html';
+			    }
+			}else{
+			    //window.location.href='/Hos-Process/login.html';
+			}
+    	} 
+    	////
+        $('#layer').click(function(){
+            var artBox=art.dialog({
+                lock: true,
+                icon:'question',
+                opacity:0.4,
+                width: 250,
+                title:'提示',
+                content: '页面模板会覆盖编辑区域已有组件，是否继续？',
+                ok: function () {
+                    
+                },
+                cancel: true
+            });         
+        });
+        //enter键登陆
+        $(document.body).keydown(function () {
+              var event = window.event || arguments.callee.caller.arguments[0];
+              if (event.keyCode == "13") {
+                  doLogin();
+              }
+        });
+ 
+        //多选项
+        $('.custom-checkbox > label').on('click',function(){
+            $(this).toggleClass('checked');
+            if($(this).hasClass('checked')){            
+                $(this).prev().attr("checked",true);            
+            }else{
+                $(this).prev().attr("checked",false);
+            }
+        });
+ 
+        //输入框+默认文本交互
+        //页面加载时判断输入框是否为空或者为默认文本，是则清空输入框并显示默认文本层，否则隐藏默认文本层
+        if($.trim($('.inp-acc').val())==""||$.trim($('.inp-acc').val())=="请输入账号") $('.inp-acc').val("").siblings('.placeholder').show();
+        else $('.inp-acc').siblings('.placeholder').hide();
+        if($.trim($('.inp-pass').val())=="") $('.inp-pass').val("").siblings('.placeholder').show();
+        else $('.inp-pass').siblings('.placeholder').hide();
+ 
+        //点击默认文本层时，给输入框获取焦点
+        $('.placeholder').click(function(){
+            $(this).hide().siblings('.inp').focus();
+        });
+ 
+        $('.inp').focus(function(){
+            $(this).addClass('focus').siblings('.placeholder').hide();
+        }).blur(function(){
+            $(this).removeClass('focus');
+            if($.trim($('.inp-acc').val())==""||$.trim($('.inp-acc').val())=="请输入账号") $('.inp-acc').val("").siblings('.placeholder').show();
+            if($.trim($('.inp-pass').val())=="") $('.inp-pass').val("").siblings('.placeholder').show();
+        });
+ 
+        // .keyup(function(){
+        //     if($.trim($('.inp-acc').val())==""||$.trim($('.inp-acc').val())=="请输入账号") $('.inp-acc').val("").siblings('.placeholder').show();
+        //     else $('.inp-acc').siblings('.placeholder').hide();
+        //     if($.trim($('.inp-pass').val())=="") $('.inp-pass').val("").siblings('.placeholder').show();
+        //     else $('.inp-pass').siblings('.placeholder').hide();
+        // })
+        //按钮点击事件仅供示范输入有误时的交互
+        //$('.btn').click(function(){
+        //    $('.inp-pass').closest('.relative').addClass('error');
+        //});
+
+        
+        if(!Commonjs.isEmpty(Commonjs.getCookie("loginUser"))
+        	//&& !Commonjs.isEmpty(Commonjs.getCookie("loginPass")) 
+            ){
+			var uname = Commonjs.getCookie("loginUser");
+	 		//var upwd = Commonjs.getCookie("loginPass");
+	 		$('span[class="placeholder"]').each(function(){
+	 			$(this).text('');
+	 		})
+			//$("#loginPass").val(upwd);
+			$("#loginAcc").val(uname);
+			$("#rememberuser").attr('checked','checked');
+		}
+     	
+       	var n = $('#loginAcc').val();
+		var p = $('#loginPass').val();
+		if(!Commonjs.isEmpty(n)){
+			 $('#loginAcc').next().text('');
+		}
+		if(!Commonjs.isEmpty(p)){
+		 	$('#loginPass').next().text('');
+		}
+        
+    })
+   
+   	function setCss(o,cs){
+	   	if(!Commonjs.isEmpty(o.value)){
+	   		$('.'+cs).closest('.relative').removeClass('error');
+	   	}
+   	}
+   
+   function doLogin(){
+		Commonjs.delCookie("token");
+		$('#logininfoid').html('正在登录..');	
+		var n = $('#loginAcc').val();
+		var p = $('#loginPass').val();
+		
+        var f = false;
+		if(Commonjs.isEmpty(n)){
+			$('.label-acc').closest('.relative').addClass('error');
+			f = true;
+		}
+		if(Commonjs.isEmpty(p)){
+			$('.inp-pass').closest('.relative').addClass('error');
+			f = true;
+		}
+		if(f){
+			$('#logininfoid').html('');	
+			return ;
+		}
+		
+		if($("#rememberuser").attr("checked")=='checked'){
+			Commonjs.setCookie("loginUser",n,365); //设置cookie的时间为一年，记住用户名
+		}else{
+			Commonjs.delCookie("loginUser");	
+		}
+		
+		var Service = {};
+		var page = {};
+		var code = 2006;
+		//Service.HosId = Commonjs.hospitalId();
+		Service.UserName = n;
+		Service.PassWord = $.md5(p).toUpperCase();
+		var param = {};
+		var params = Commonjs.getParams(code,Service);//获取参数
+		param.params = Commonjs.jsonToString(params);
+		Commonjs.ajax('../../backstage/login.do',param,function(d){
+			if(d.RespCode != 10000){
+				$('#logininfoid').html('<font color=red>'+d.RespMessage+'</font>');	
+			}else{
+				Commonjs.login2Url();
+			}
+		});
+		
+	}
+    
+    	
+    
+    
+</script>
+    </body>
+</html>

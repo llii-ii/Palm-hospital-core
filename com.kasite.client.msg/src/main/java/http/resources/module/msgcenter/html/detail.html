@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>详情</title>
+	    <script src="../js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="detail">
+				<div class="title">预约信息</div>
+				<ul>
+					<li><label>科室</label>神经外科</li>
+					<li><label>医生</label>某某某</li>
+					<li><label>就诊时间</label>2017年06月06日 周二 下午</li>
+					<li><label>门诊挂号费</label>￥20</li>
+				</ul>
+				<ul>
+					<li><label>就诊人</label>某某某</li>
+					<li><label>预约号源</label>15:30 13</li>
+				</ul>
+				<div class="more">不再接受此类消息 <div class="circle"></div></div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.more').click(function(){
+				$(this).find('.circle').toggleClass('cur');
+			})
+		})
+	</script>
+</html>

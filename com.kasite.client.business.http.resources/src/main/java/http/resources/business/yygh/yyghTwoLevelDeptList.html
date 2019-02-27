@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>二级科室选择</title>
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main">
+	<div class="h45">
+    	<ul class="com-lab">
+        	<li class="curr"><a href="javascript:;">科室</a></li>
+        	<li><a href="历史就诊医生.html">历史就诊医生</a></li>
+        </ul>
+    </div>
+    <div class="h40">
+    	<div class="searchhold">
+        	<div class="ser-into"><i class="sicon icon-search"></i>搜索科室或医生</div>
+        	<div class="ser-main c-hide">
+            	<i class="sicon icon-search"></i>
+                <input type="search" class="ser-input" placeholder="搜索科室或医生" />
+                <a href="搜索.html" class="ser-btn">搜索</a>
+            </div>
+        </div>
+    </div>
+    <div class="deptspace"></div>
+    <div class="depthold c-border-tb">
+    	<h4 class="dh-title">滑动选择门诊科室</h4>
+    	<div class="dept-box">
+            <div class="dept-left">
+                <ul>
+                    <li class="curr"><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                    <li><a href="javascript:;">儿内科</a></li>
+                </ul>
+            </div>
+            <div class="dept-right">
+                <ul>
+                    <li><a href="医生列表.html">儿内科儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                    <li><a href="医生列表.html">儿内科</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.dept-box').height($(window).height() - $('.com-lab').height() - $('.searchhold').height() - $('.deptspace').height() - 84);
+	$(window).resize(function(){
+		$('.dept-box').height($(window).height() - $('.com-lab').height() - $('.searchhold').height() - $('.deptspace').height() - 84);
+	});
+});
+//科室选择
+$('.c-main').on('click','.dept-left li',function(){
+	$(this).addClass('curr').siblings().removeClass('curr');
+});
+//搜索
+$('.c-main').on('click','.ser-into',function(){
+	$('.ser-into').hide();
+	$('.ser-main').show();
+	$('.ser-input').focus();
+});
+</script>
+</body>
+</html>

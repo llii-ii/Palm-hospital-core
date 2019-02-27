@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>预览</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.vote3{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.vote3-top{
+				padding: 0.5rem;
+				background: #5eafff;
+				color: #fff;
+				text-align: center;
+			}
+			.vote3-top h2{
+				font-size: 0.42rem;
+				margin-top: 0;
+				margin-bottom: 0.2rem;
+				margin-top: 0;
+			}
+			.vote3-top p{
+				font-size: 0.28rem;
+			}
+			.vote3-top-info{
+				border-top: 1px solid #fff;
+			}
+			.vote3-top-info p{
+				padding-top: 0.26rem;
+				padding-bottom: 0;
+				margin-top: 0;
+				text-align: left;
+				margin-bottom: 0;
+			}
+			.vote3-top-info p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .02rem;
+			}
+			.vote3-list{
+				padding-top: 0.3rem;
+				padding-bottom: 0.3rem;
+				background: #fff;
+			}
+			.vote3-list li{
+				position: relative;
+				font-size: 0.26rem;
+				color: #333333;
+				padding: 0.15rem 0.54rem 0.15rem 1.28rem;
+				cursor: pointer;
+			}
+			.vote3-list input{
+				position: relative;
+				font-size: 0.26rem;
+				color: #333333;
+				padding: 0.15rem 0.54rem 0.15rem 0.7rem;
+			}
+			.vote3-list li:after{
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0.62rem;
+				top: 50%;
+				margin-top: -.15rem;
+				width: 0.3rem;
+				height: 0.3rem;
+				background-image: url(../../img/icon-vote-6.png);
+				background-position: center;
+				background-size: 0.3rem;
+				background-repeat: no-repeat;
+			}
+			.vote3-list li.active span{
+				color: #2988fc;
+			}
+			.vote3-list li.active:after{
+				background-image: url(../../img/icon-vote-5.png);
+			}
+			.vote3-list li span{
+				float: right;
+				color: #999;
+			}
+			.vote3-list-pro{
+				position: absolute;
+				left: 1.28rem;
+				bottom: 0;
+				right: 0.54rem;
+				height: 0.15rem;
+			}
+			.vote3-list-pro div{
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				background: #2988fc;
+			}
+			.vote3-title{
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .5rem;
+				padding-top: .3rem;
+				margin-bottom: -.3rem;
+			}
+			.vote3-star{
+				padding-top: 0.6rem;
+				padding-bottom: 0.4rem;
+				padding-left: .5rem;
+				background: #fff;
+			}
+			.vote3-star-item{
+				float: left;
+				margin-right: .1rem;
+				width: 0.44rem;
+				height: 0.44rem;
+				background-image: url(../../img/icon-vote-9.png);
+				background-position:-.43rem .03rem;
+				background-repeat: no-repeat;
+				background-size:.83rem .33rem;
+			}
+			.vote3-star-item.active{
+				background-position:.03rem .03rem;
+			}
+			.btn{
+				position: relative;
+				width: 100%;
+			}
+			.btn.btn-border{
+				position: relative;
+				background-image: none;
+				color: #2988fc;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote3">
+	        	<div class="vote3-top">
+	        		<h2 id="title"></h2>
+	        		<p id="beginintro"></p>
+	        		<div class="vote3-top-info">
+	        			<p><img src="../../img/icon-vote-3.png"/> <span id ="count"></span>人参与</p>
+	        			<p><img src="../../img/icon-vote-4.png"/> <span id ="endtime"></span>截止</p>
+	        		</div>
+	        	</div>
+	        	
+	        	<div id="list">
+	        	</div>
+	        </div>
+		</div>
+		<div style="position: fixed;left: 0;right: 0;height: 1rem;bottom: 0;background: #fff;">
+			<div class="x-row boxflex">
+				<div class="x-row-cols" onclick="window.history.back();"><div class="btn btn-border">返回</div></div>
+				<div class="x-row-cols" onclick="updateVote()"><div class="btn">发布</div></div>
+			</div>
+		</div>
+		<!-- <div class="btn" onclick="window.history.back();">返回</div> -->
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		 var uid;	
+		 var id;
+		$(document).ready(function(){
+			id = Commonjs.getUrlParam("themeid");
+		 	getVoteById();
+			
+			$(document).on('click','.vote3-list li',function(){
+				var _this = $(this);
+				_this.toggleClass('active');
+				//单选、复选
+				if(_this.parent().attr('value')==0){
+					_this.siblings().removeClass('active');
+				}
+			})
+			$(document).on('click','.vote3-star-item',function(){
+				var _this = $(this);
+				_this.addClass('active');
+				_this.prevAll().addClass('active');
+				_this.nextAll().removeClass('active');
+			}) 
+		})
+		
+		//根据ID获取投票信息
+		function getVoteById() {
+			var apiData = {};
+			apiData.id = id;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetVoteQuestionInfoById/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if (dd.Data.length > 0) {
+						var result = dd.Data[0];
+						$("#title").html(result.Title);
+						$("#beginintro").html(result.BeginIntro);
+						//$("#endingintro").val(result.EndingIntro);
+						$("#endtime").html(result.EndTime);
+						$('#count').html(result.Count);
+						uid = result.Uid;
+						GetQuestionList();
+					}
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			},{async:false});
+        }
+		
+		//获取问题列表
+		function GetQuestionList() {
+			var apiData = {};
+			apiData.id = uid;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQuestionList/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					var html = [];
+					Commonjs.BaseForeach(dd.Data,
+						function(i, item) {
+						var Questtype = formatterQuesttype(item.Questtype);
+						html.push('<p class="vote3-title">'+item.Sortnum+'.'+item.Questname+'（'+Questtype+'）</p>'); 
+						
+						if(item.Questtype==0 || item.Questtype==1){
+							html.push('<ul id="'+item.Id+'" value="'+item.Questtype+'" class="vote3-list">');
+						}
+						
+						if(item.Questtype==2){
+							html.push('<ul id="'+item.Id+'" value="'+item.Questtype+'" class="vote3-list">');
+							html.push('<input class="quest" type="text" placeholder="请输入" />');
+						}
+						if(item.Questtype==3){
+							html.push('<ul id="'+item.Id+'" value="'+item.Questtype+'" class="vote3-star ell">');
+							html.push('<div name="'+item.Id+'" value="1" class="vote3-star-item"></div>');
+							html.push('<div name="'+item.Id+'" value="2" class="vote3-star-item"></div>');
+							html.push('<div name="'+item.Id+'" value="3" class="vote3-star-item"></div>');
+							html.push('<div name="'+item.Id+'" value="4" class="vote3-star-item"></div>');
+							html.push('<div name="'+item.Id+'" value="5" class="vote3-star-item"></div>');
+						}
+						html.push('</ul>');
+					});
+			        $('#list').append(html.join(''));
+			        getQuestionItemByQuestionId();
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			},{async:false});
+		}
+		
+		//获取问题选项列表
+		function getQuestionItemByQuestionId() {
+			var apiData = {};
+			apiData.id = uid;
+			apiData.tag = "uid";
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQuestionItemList/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					if (Commonjs.ListIsNotNull(dd.Data)) {
+						Commonjs.BaseForeach(dd.Data,
+						function(i, item) {
+							if(!Commonjs.isEmpty(item.Itemvalue)){
+								var html = [];
+								var questType = $('#'+item.Questid).attr('value');
+								html.push('<li id="'+item.Id+'" class="redio">'+item.Itemvalue+'</li>');
+								$('#'+item.Questid).append(html.join(''))
+							}
+						});
+					}
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			},{async:false});
+		}
+		
+		//修改-发布
+		function updateVote() {
+			var apiData = {};
+			apiData.id = id;
+			apiData.status = 1;
+			apiData.operatorId = Commonjs.getOpenId();
+			apiData.operatorName = Commonjs.getOpenId();
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/UpdateVoteQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					myLayer.alert("发布成功");
+					window.location.href = 'index.html';
+				} else {
+					myLayer.alert(dd.RespMessage,3000);
+				}
+			});
+		}
+		
+		function formatterQuesttype(value) {
+			var html = [];
+			if (value == 0) {
+				html.push('单选');
+			} else if (value == 1) {
+				html.push('多选');
+			} else if (value == 2) {
+				html.push('问答');
+			} else if (value == 3) {
+				html.push('打分');
+			} else {
+				html.push('单选');
+			}
+			return html.join('')
+		}
+	</script>
+</html>

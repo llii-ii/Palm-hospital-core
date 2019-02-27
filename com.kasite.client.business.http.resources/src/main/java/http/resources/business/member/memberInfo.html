@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>就诊人详情</title>
+     <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+<div class="c-main pb15">
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li>
+            	<div class="c-list-key c-999 pr15">姓名</div>
+            	<div class="c-list-info c-t-right" id="memberName"></div>
+            </li>
+            <li>
+            	<div class="c-list-key c-999 pr15">证件类型</div>
+            	<div class="c-list-info c-t-right" id="certType"></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">证件号码</div>
+            	<div class="c-list-info c-t-right" id="certNum"></div>
+            </li>
+        	<li>
+            	<div class="c-list-key c-999 pr15">手机号码</div>
+            	<div class="c-list-info c-t-right" id="mobile"></div>
+            </li>
+            <li>
+            	<div class="c-list-key c-999 pr15">是否儿童</div>
+            	<div class="c-list-info c-t-right" id="isChildren"></div>
+            </li>
+            <li id='guardian_li_name'>
+            	<div class="c-list-key c-999 pr15">监护人姓名</div>
+            	<div class="c-list-info c-t-right" id="guardianName"></div>
+            </li>
+            <li id='guardian_li_certtype'>
+            	<div class="c-list-key c-999 pr15">监护人证件类型</div>
+            	<div class="c-list-info c-t-right" id="guardianCertType"></div>
+            </li>
+            <li id='guardian_li_certnum'>
+            	<div class="c-list-key c-999 pr15">监护人证件号码</div>
+            	<div class="c-list-info c-t-right" id="guardianCertNum"></div>
+            </li>
+        	<li class="c-list-a">
+            	<a id="bindClinicCard" href="javascript:void(0);" class="c-arrow-r">
+                    <div class="c-list-key c-999 pr15">就诊卡</div>
+                    <div class="c-list-info c-t-right" id="cardNo"></div>
+            	</a>
+            </li>
+        	<li class="c-list-a">
+            	<a id="bindHospitalNo" href="javascript:void(0);"  class="c-arrow-r">
+                    <div class="c-list-key c-999 pr15">住院号</div>
+                    <div class="c-list-info c-t-right" id="hospitalNo"></div>
+            	</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mt10 c-border-tb">
+    	<ul class="c-list c-f15">
+        	<li id="setDefault">
+            	<div class="c-list-key c-ffac0b pr15">设为默认就诊人</div>
+            	<div class="c-list-info c-t-right">
+                	<div class="input-checkbox">
+                    	<div class="input-pack">
+                            <i class="sicon"></i>
+                            <input type="checkbox" name="n1" id="isDefault" />
+                    	</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="mt20 plr15">
+    	<a href="javascript:;" class="c-btn c-btn-gray" id="unbind">解除绑定</a>
+    </div>
+</div>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+<script type="text/javascript" src="js/memberInfo.js?v=201901152112"></script>
+</body>
+</html>

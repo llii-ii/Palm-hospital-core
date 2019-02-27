@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kasite.client.hospay.module.bill.dao.ThreePartyBalanceDao">
+
+    <!-- 这条SQL为汇总三方账单明细数据
+	3.mysqlSummaryThreePartyBalance
+		注意：此SQL使用到了三张表进行关联 分别是 p_qlcBalance,p_Bill,p_His_Bill
+			为了确保订单的唯一关联性,所以在使用left join 时除on全流程orderId外,
+			如 p_qlcBalance表 与 p_Bill表关联时还需添加 and channelOrderId 相等的比较
+			如 p_qlcBalance表 与 P_His_Bill表关联时还需要添加 and HisOrderId 相等的比较
+			需特别注意的是 orderState 为1和为2的情况
+
+	这条SQL为查看当前汇总完的三方汇总账单明细数据是否还有缺失
+	4.mysqlQueryHisBillNotExitThreePartyBalance()
+		注意：这边的select里的子句得根据医院的实际实施情况来决定
+			1.以下关联条件时需要注意使用 p_QLCBalance表中的HisOrderId和p_his_bill表中的HISOrderId匹配
+			2.注意第一点，否则会匹配到错误的数据
+	-->
+
+    <sql id="ThreePartyBalanceResult">
+        orderId,hisOrderId,channelOrderId,serviceId,reserveId,priceName,receivableMoney,
+        alreadyReceivedMoney,refundMoney,alreadyRefundMoney,orderMemo,cardNo,operator,
+        operatorName,createDate,lastDate,channelId,payUpdateKey,qlcOrderState,hisOrderState,
+        channelOrderState,errorState,checkState,bizType,exeState,isSyn
+    </sql>
+
+    <!-- 在统计三方对账时如果出现异常订单,就保存到p_exceptionBill表中进行留档-->
+    <insert id="insertExceptionBill">
+        INSERT INTO p_exceptionBill
+        <trim prefix="(" suffix=")">
+            <include refid="ThreePartyBalanceResult"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{threePartyBalance.orderId,jdbcType=VARCHAR},
+            #{threePartyBalance.hisOrderId,jdbcType=VARCHAR},
+            #{threePartyBalance.channelOrderId,jdbcType=VARCHAR},
+            #{threePartyBalance.serviceId,jdbcType=VARCHAR},
+            #{threePartyBalance.reserveId,jdbcType=VARCHAR},
+            #{threePartyBalance.priceName,jdbcType=VARCHAR},
+            #{threePartyBalance.receivableMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.alreadyReceivedMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.refundMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.alreadyRefundMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.orderMemo,jdbcType=VARCHAR},
+            #{threePartyBalance.cardNo,jdbcType=VARCHAR},
+            #{threePartyBalance.operator,jdbcType=VARCHAR},
+            #{threePartyBalance.operatorName,jdbcType=VARCHAR},
+            #{threePartyBalance.createDate},
+            #{threePartyBalance.lastDate},
+            #{threePartyBalance.channelId,jdbcType=VARCHAR},
+            #{threePartyBalance.payUpdateKey,jdbcType=VARCHAR},
+            #{threePartyBalance.qlcOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.hisOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.channelOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.errorState,jdbcType=VARCHAR},
+            #{threePartyBalance.checkState,jdbcType=VARCHAR},
+            #{threePartyBalance.bizType,jdbcType=VARCHAR},
+            #{threePartyBalance.exeState,jdbcType=VARCHAR},
+            #{threePartyBalance.isSyn,jdbcType=VARCHAR}
+        </trim>
+    </insert>
+
+    <!-- 保存三方汇总账单明细数据(由于数据条数太多,要多次读写数据库,在效率上太低,所以使用批量插入)-->
+    <insert id="insertThreePartyBill">
+        insert into P_ThreePartyBalance
+        <trim prefix="(" suffix=")">
+            <include refid="ThreePartyBalanceResult"/>
+        </trim>
+        VALUES
+        <foreach collection="list" item="threePartyBalance" separator=",">
+            (#{threePartyBalance.orderId,jdbcType=VARCHAR},
+            #{threePartyBalance.hisOrderId,jdbcType=VARCHAR},
+            #{threePartyBalance.channelOrderId,jdbcType=VARCHAR},
+            #{threePartyBalance.serviceId,jdbcType=VARCHAR},
+            #{threePartyBalance.reserveId,jdbcType=VARCHAR},
+            #{threePartyBalance.priceName,jdbcType=VARCHAR},
+            #{threePartyBalance.receivableMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.alreadyReceivedMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.refundMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.alreadyRefundMoney,jdbcType=VARCHAR},
+            #{threePartyBalance.orderMemo,jdbcType=VARCHAR},
+            #{threePartyBalance.cardNo,jdbcType=VARCHAR},
+            #{threePartyBalance.operator,jdbcType=VARCHAR},
+            #{threePartyBalance.operatorName,jdbcType=VARCHAR},
+            #{threePartyBalance.createDate},
+            #{threePartyBalance.lastDate},
+            #{threePartyBalance.channelId,jdbcType=VARCHAR},
+            #{threePartyBalance.payUpdateKey,jdbcType=VARCHAR},
+            #{threePartyBalance.qlcOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.hisOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.channelOrderState,jdbcType=VARCHAR},
+            #{threePartyBalance.errorState,jdbcType=VARCHAR},
+            #{threePartyBalance.checkState,jdbcType=VARCHAR},
+            #{threePartyBalance.bizType,jdbcType=VARCHAR},
+            #{threePartyBalance.exeState,jdbcType=VARCHAR},
+            #{threePartyBalance.isSyn,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 保存异常的三方汇总账单明细数据-->
+    <insert id="insertThreeParty" >
+        insert into P_ThreePartyBalance
+            <trim prefix="(" suffix=")">
+                <include refid="ThreePartyBalanceResult"/>
+            </trim>
+        VALUES
+            (#{errorThreePartyBalance.orderId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.hisOrderId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.channelOrderId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.serviceId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.reserveId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.priceName,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.receivableMoney,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.alreadyReceivedMoney,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.refundMoney,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.alreadyRefundMoney,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.orderMemo,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.cardNo,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.operator,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.operatorName,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.createDate},
+            #{errorThreePartyBalance.lastDate},
+            #{errorThreePartyBalance.channelId,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.payUpdateKey,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.qlcOrderState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.hisOrderState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.channelOrderState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.errorState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.checkState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.bizType,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.exeState,jdbcType=VARCHAR},
+            #{errorThreePartyBalance.isSyn,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <!-- 更新三方汇总明细账单数据表中的订单的业务执行状态-->
+    <update id="addPendingOrder">
+        update
+        p_threePartyBalance p
+        SET
+        p.bizType = #{bizType,jdbcType=VARCHAR},p.exeState='0'
+        <where>
+            1 = 1
+            <if test="orderId !='' and orderId != null">
+                AND p.orderId = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="hisOrderId !='' and hisOrderId != null">
+                AND p.hisOrderId = #{hisOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderId !='' and channelOrderId != null">
+                AND p.channelOrderId = #{channelOrderId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+
+    <!-- 更新订单执行状态-->
+    <update id="updateThreePartyBalanceExeState">
+        update p_threePartyBalance p
+        <set>
+            p.exeState = #{exeState,jdbcType=VARCHAR}
+            <if test="price !='' and price != null">
+                ,p.alreadyRefundMoney = #{price,jdbcType=VARCHAR},p.refundMoney = #{price,jdbcType=VARCHAR}
+            </if>
+        </set>
+        <where>
+            1 = 1
+            <if test="orderId !='' and orderId != null">
+                AND p.orderId = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="hisOrderId !='' and hisOrderId != null">
+                AND p.hisOrderId = #{hisOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderId !='' and channelOrderId != null">
+                AND p.channelOrderId = #{channelOrderId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+
+    <!-- 更新存在异常三方对账账单明细数据
+         注意：reserveId 如果暂未使用的话可以使用如下节点进行数据的补充
+              如果已使用的话请更换节点，如无空节点也可不更新
+    -->
+    <update id="updateThreePartyBillData">
+        update p_threePartyBalance p
+        <set>
+            p.hisorderId = #{errorThreePartyBalance.hisOrderId,jdbcType=VARCHAR},
+            p.reserveid = '通过HIS账单校准后补齐数据',
+            p.hisorderstate = #{errorThreePartyBalance.qlcOrderState,jdbcType=VARCHAR},
+            p.errorstate = '1',
+            p.checkState = #{errorThreePartyBalance.checkState,jdbcType=VARCHAR},
+            p.isSyn = #{errorThreePartyBalance.isSyn,jdbcType=VARCHAR}
+            <if test="errorThreePartyBalance.qlcOrderState == 1">
+                ,p.receivableMoney = #{errorThreePartyBalance.alreadyReceivedMoney,jdbcType=VARCHAR}
+            </if>
+            <if test="errorThreePartyBalance.qlcOrderState == 2">
+                ,p.alreadyRefundMoney = #{errorThreePartyBalance.refundMoney,jdbcType=VARCHAR}
+            </if>
+        </set>
+        <where>
+            1 = 1
+            <if test="errorThreePartyBalance.orderId !='' and errorThreePartyBalance.orderId != null">
+                AND p.orderId = #{errorThreePartyBalance.orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="errorThreePartyBalance.qlcOrderState !='' and errorThreePartyBalance.qlcOrderState != null">
+                AND p.qlcOrderState = #{errorThreePartyBalance.qlcOrderState,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+
+    <!-- 三方汇总订单明细数据表进行去重 -->
+    <delete id="deleteThreePartyBalance">
+          delete from p_threePartyBalance
+          where 1=1
+          AND
+            bizType=''
+          AND
+            exeState='0'
+          AND
+            createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 汇总三方账单明细数据 由于多数的数据库的金额单位已是分,所以这边不做*100的动作，
+                           但是如需转换可以使用如下语句 CAST(xxx AS DECIMAL(10,2))*100-->
+    <select id="summaryThreePartyBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance"
+            parameterType="string">
+        SELECT ob.orderId,ph.hisOrderId,pb.orderNo channelOrderId,ob.serviceId,ob.reserveId,ob.priceName,ob.orderMemo,ob.cardNo,ph.payMoney receivableMoney,
+        pb.transactions alreadyReceivedMoney,(CASE WHEN ph.refundMoney != 0 THEN 0 END)refundMoney,(CASE WHEN pb.alreadyRefundMoney != 0 THEN 0 END)alreadyRefundMoney,
+        ob.createDate,	ob.channelId,ob.payUpdateKey,ob.orderState QLCOrderState,ph.HisOrderState HisOrderState,pb.orderType ChannelOrderState
+        FROM p_qlcBalance ob
+        LEFT JOIN (
+            SELECT	b.businessOrderId,	b.orderNo,	b.orderType, b.transactions transactions,b.transactions  alreadyRefundMoney
+            FROM	p_bill b
+            WHERE	b.orderType  = '1'
+            AND b.transTime BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        ) pb
+          ON
+            ob.orderId = pb.businessOrderId
+          AND
+            ob.payUpdateKey = pb.orderNo
+        LEFT JOIN (
+            SELECT	p.hisOrderState,	p.orderId,	p.payMoney  payMoney,	p.hisOrderId,	p.payMoney  refundMoney,p.CreateDate
+            FROM	p_his_bill p
+            WHERE	p.HisOrderType = '1'
+            AND p.TransDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        ) ph
+          ON
+            ob.orderId = ph.orderId
+          AND
+            ob.reserveId = ph.hisOrderId
+        WHERE
+          ob.orderState = '1'
+        AND
+          ob.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        UNION ALL
+        SELECT	ob.orderId,	ph.hisOrderId,	pb.orderNo channelOrderId,	ob.serviceId,	ob.reserveId,	ob.priceName,	ob.orderMemo,	ob.cardNo,
+            (CASE WHEN ph.payMoney != 0 THEN 0 END) receivableMoney,	(CASE WHEN pb.transactions != 0 THEN 0 END) alreadyReceivedMoney,	ph.refundMoney refundMoney,	pb.alreadyRefundMoney alreadyRefundMoney,
+            ob.createDate,	ob.channelId,	ob.payUpdateKey,	ob.orderState QLCOrderState,	ph.HisOrderState HisOrderState,	pb.orderType ChannelOrderState
+        FROM	p_qlcBalance ob
+        LEFT JOIN (
+            SELECT	b.businessOrderId,b.refundOrderNo orderNo,	b.orderType, ABS(b.transactions)  transactions,	ABS(b.transactions) alreadyRefundMoney
+            FROM	p_bill b
+            WHERE	b.orderType = '2'
+            AND b.transTime BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        ) pb
+          ON
+            ob.orderId = pb.businessOrderId
+          AND
+            ob.payUpdateKey = pb.orderNo
+        LEFT JOIN (
+            SELECT	p.hisOrderState,p.refundOrderId orderId,ABS(p.payMoney)  payMoney,p.hisOrderId,ABS(p.payMoney) refundMoney,	p.CreateDate
+            FROM	p_his_bill p
+            WHERE	p.HisOrderType = '2'
+            AND p.TransDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        ) ph
+          ON
+            ob.orderId = ph.orderId
+          AND
+            ob.reserveId = ph.hisOrderId
+        WHERE
+          ob.orderState = '2'
+        AND
+          ob.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 汇总三方账单明细数据 由于多数的数据库的金额单位已是分,所以这边不做*100的动作，
+                           但是如需转换可以使用如下语句 CAST(xxx AS DECIMAL(10,2))*100
+         注意：两方账单比较特殊,在汇总全流程时不需要与p_bill进行校准，且三方汇总时已p_bill表为主-->
+    <select id="summaryTwoPartyBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance"
+            parameterType="string">
+        SELECT ob.orderId,pb.merchNo channelOrderId,ob.serviceId,ob.reserveId,ob.priceName,ob.orderMemo,ob.cardNo, ob.operator,ob.operatorName,ob.price receivableMoney,pb.transactions alreadyReceivedMoney,
+            (CASE WHEN ob.price != 0 THEN 0 END) refundMoney,pb.refundPrice alreadyRefundMoney,(CASE WHEN ob.createDate IS NULL THEN pb.transDate ELSE ob.createDate END ) createDate,ob.channelId,ob.payUpdateKey,ob.orderState QLCOrderState,pb.orderType ChannelOrderState
+        FROM
+            p_bill pb
+        LEFT JOIN(
+            SELECT o.orderId,o.serviceId,o.reserveId,o.priceName,o.orderMemo,o.cardNo,o.operator,o.operatorName,
+                o.price,o.createDate,o.channelId,o.payUpdateKey,o.orderState
+            FROM
+                p_qlcBalance o
+            WHERE
+                o.orderState = '1'
+            AND o.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        )ob ON ob.orderId = pb.orderId
+        AND ob.payUpdateKey = pb.merchNo
+        WHERE pb.orderType = '1'
+        AND pb.ORDERID LIKE '%BAFY%'
+        AND pb.transDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ob.orderId,pb.merchNo channelOrderId,ob.serviceId,ob.reserveId,ob.priceName,ob.orderMemo,ob.cardNo, ob.operator,ob.operatorName,
+            (CASE WHEN ob.price != 0 THEN 0	END) receivableMoney,pb.transactions alreadyReceivedMoney,
+            ob.price refundMoney,pb.refundPrice alreadyRefundMoney,(CASE WHEN ob.createDate IS NULL THEN pb.transDate ELSE ob.createDate END ) createDate,ob.channelId,ob.payUpdateKey,ob.orderState QLCOrderState,pb.orderType ChannelOrderState
+        FROM
+          p_bill pb
+        LEFT JOIN (
+            SELECT o.orderId,o.serviceId,o.reserveId,o.priceName,o.orderMemo,o.cardNo,o.operator,o.operatorName,
+                o.price,o.createDate,o.channelId,o.payUpdateKey,o.orderState
+            FROM
+                p_qlcBalance o
+            WHERE
+                o.orderState = '2'
+            AND o.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        ) ob ON ob.orderId = pb.orderId
+        AND ob.payUpdateKey = pb.refundMerchNo
+        WHERE pb.orderType = '2'
+        AND pb.ORDERID LIKE '%BAFY%'
+        AND pb.transDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+
+    </select>
+
+    <!-- 查询已存在业务的异常订单-->
+    <select id="queryExitsErrorBills"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance">
+        SELECT
+          <include refid="ThreePartyBalanceResult"/>
+        FROM
+          p_threePartyBalance p
+        WHERE
+          p.bizType != ''
+        AND
+          p.exeState != '0'
+        AND
+          p.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询当前订单是否在P_Bill表中-->
+    <select id="queryOrderExistBill" resultType="java.lang.Boolean">
+        SELECT count(*) FROM P_Bill p
+        where
+          p.merchNo = #{orderId,jdbcType=VARCHAR}
+        AND
+          p.orderType = #{orderType,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询当前订单是否在P_His_Bill表中-->
+    <select id="queryOrderExistHisBill" resultType="java.lang.Boolean">
+        SELECT count(*) FROM P_His_Bill p
+        where
+          p.refundOrderId = #{orderId,jdbcType=VARCHAR}
+        AND
+          p.hisBizState = #{orderType,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 再将异常的三方汇总订单明细数据到异常数据表,并防止重复 -->
+    <select id="queryExceptionBillWhetherNull" resultType="java.lang.Boolean">
+        SELECT count(*) FROM p_exceptionBill p
+        WHERE 1 = 1
+        <trim>
+            <if test="threePartyBalance.orderId !='' and threePartyBalance.orderId != null">
+                AND p.orderId = #{threePartyBalance.orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="threePartyBalance.hisOrderId !='' and threePartyBalance.hisOrderId != null">
+                AND p.hisOrderId = #{threePartyBalance.hisOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="threePartyBalance.channelOrderId !='' and threePartyBalance.channelOrderId != null">
+                AND p.channelOrderId = #{threePartyBalance.channelOrderId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 查询需要执行业务的订单-->
+    <select id="queryExistBizOrder" resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance">
+        SELECT
+          <include refid="ThreePartyBalanceResult"/>
+        FROM
+          p_threePartyBalance p
+        where
+          (p.bizType='2' or p.bizType='3')
+        AND
+          p.exeState='0'
+    </select>
+
+    <!-- 查询三方汇总账单明细数据 用于前端页面展示 -->
+    <select id="queryThreePartyBillDetail"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance">
+        SELECT
+        <include refid="ThreePartyBalanceResult"/>
+        FROM
+        p_threePartyBalance p
+        <where>
+              1 = 1
+            and
+              p.createDate BETWEEN #{queryBillParam.startDate,jdbcType=VARCHAR} and #{queryBillParam.endDate,jdbcType=VARCHAR}
+            <choose>
+                <when test="queryBillParam.orderId != '' and queryBillParam.orderId != null">
+                    <choose>
+                        <when test="queryBillParam.channelOrderType == 1">
+                            AND p.orderId = #{queryBillParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                        <when test="queryBillParam.channelOrderType == 2">
+                            AND p.channelOrderId = #{queryBillParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                        <when test="queryBillParam.channelOrderType == 3">
+                            AND p.hisOrderId = #{queryBillParam.orderId,jdbcType=VARCHAR}
+                        </when>
+                    </choose>
+                </when>
+            </choose>
+            <if test="queryBillParam.orderType != '' and queryBillParam.orderType != null">
+                AND p.qlcOrderState = #{queryBillParam.orderType,jdbcType=VARCHAR}
+            </if>
+            <!-- 由于此字段比较特殊,所以需要做一些逻辑处理 1. 前端传入的checkState状态为2时，查询的是已经处理完成的(账平处置后)
+			     2. 如果传入的checkState不为2时，将查询当前订单的所有的情况 -->
+            <choose>
+                <when test="queryBillParam.checkState != '' and queryBillParam.checkState != null">
+                    <choose>
+                        <when test="queryBillParam.checkState == 2">
+                            AND p.checkState != '0' AND p.exeState='2'
+                        </when>
+                        <otherwise>
+                            <choose>
+                                <when test="queryBillParam.checkState == 0">
+                                    AND p.checkState = #{queryBillParam.checkState,jdbcType=VARCHAR}
+                                </when>
+                                <otherwise>
+                                    AND p.checkState = #{queryBillParam.checkState,jdbcType=VARCHAR} AND p.exeState !=
+                                    '2'
+                                </otherwise>
+                            </choose>
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+            <if test="queryBillParam.channelId != '' and queryBillParam.channelId != null">
+                AND p.channelId = #{queryBillParam.channelId,jdbcType=VARCHAR}
+            </if>
+            <if test="queryBillParam.errorState == '-1' and queryBillParam.checkState == '' or queryBillParam.checkState == null">
+                and p.errorState = '-1'
+            </if>
+            <!-- 根据前端传入的执行状态进行查询 -->
+            <if test="queryBillParam.exeState != '' and queryBillParam.exeState != null">
+                and p.exeState != #{queryBillParam.exeState,jdbcType=VARCHAR}
+            </if>
+        </where>
+        Order By p.createDate desc
+    </select>
+
+    <!-- 查询当前存在已执行业务的异常订单是否在表中-->
+    <select id="queryOrderExist" resultType="java.lang.Integer">
+        select count(*)
+        from
+          p_threePartyBalance p
+        WHERE
+          1=1
+        AND
+          p.bizType != ''
+        <if test="orderId != '' and orderId != null">
+            AND p.orderId = #{orderId,jdbcType=VARCHAR}
+        </if>
+        <if test="channelOrderId != '' and channelOrderId != null">
+            AND p.channelOrderId = #{channelOrderId,jdbcType=VARCHAR}
+        </if>
+        <if test="hisOrderId != '' and hisOrderId != null">
+            AND p.hisOrderId = #{hisOrderId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 查询订单创建时间-->
+    <select id="queryOrderCreateDate" resultType="java.lang.String">
+        SELECT DATE_FORMAT(p.createDate,'%Y-%m-%d') createDate
+        from
+        p_threePartyBalance p
+        <where>
+            1 = 1
+            <if test="bizType != '' and bizType != null">
+                AND p.bizType = #{bizType,jdbcType=VARCHAR}
+            </if>
+            <if test="orderId != '' and orderId != null">
+                AND p.orderId = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderId != '' and channelOrderId != null">
+                AND p.channelOrderId = #{channelOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="hisOrderId != '' and hisOrderId != null">
+                AND p.hisOrderId = #{hisOrderId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询三方汇总明细数据表中的异常账单笔数-->
+    <select id="queryErrorNum" resultType="java.lang.Integer">
+        SELECT COUNT(*) errorNum
+        from
+          p_threePartyBalance o
+        WHERE
+          (o.hisOrderState = '' or o.channelOrderState = '')
+        AND
+          o.exeState != '2'
+        AND
+          o.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询当前异常订单在三方汇总订单数据表中相应正常的那笔订单-->
+    <select id="queryErrorThreePartyBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.dbo.ThreePartyBalance">
+        SELECT
+            <include refid="ThreePartyBalanceResult"/>
+        FROM
+            p_threePartyBalance p
+        WHERE
+            p.orderId = #{bill.orderId}
+        AND
+            p.channelOrderId = #{bill.payUpdateKey}
+        AND
+            p.qlcOrderState = #{bill.orderType}
+    </select>
+
+    <!-- 注意：这边的select里的子句得根据医院的实际实施情况来决定
+			1.以下关联条件时需要注意使用 p_QLCBalance表中的reserveId存储(HisOrderId)和p_his_bill表中的HISOrderId匹配
+			2.h.orderId = q.orderId 注意p_His_Bill表中的全流程订单保存的字段是否不是在orderId字段上
+			3.注意第一点，否则会匹配到错误的数据-->
+    <select id="queryHisBillNotExitThreePartyBalance"
+            resultType="com.kasite.client.hospay.module.bill.entity.bill.bo.ErrorHisBills">
+        SELECT f.orderId,f.hisOrderId,f.hisOrderState orderType,q.payupdatekey,f.TRANSDATE createDate,q.serviceId,q.reserveId,q.priceName,
+			   f.totalMoney receivableMoney,q.orderMemo,q.cardNo,q.operator,q.operatorName,q.channelId
+        FROM p_his_bill f LEFT JOIN p_QLCBalance q
+        ON f.orderid = q.orderid
+		WHERE not exists
+            (select h.hisOrderId from p_QLCBalance q
+                    left join p_his_bill h
+                        on h.orderId = q.orderId
+                    and q.reserveId = h.hisOrderId
+                    WHERE q.createDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+                    and h.hisOrderId = f.hisOrderId
+            )
+            and f.TransDate BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

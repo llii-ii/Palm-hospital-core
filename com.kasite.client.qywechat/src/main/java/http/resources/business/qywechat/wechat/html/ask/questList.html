@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>问题列表</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.vote5{
+				padding-bottom: 1rem;
+			}
+			.vote5-form li{
+				position: relative;
+				padding: 0.3rem;
+				background: #fff;
+				border-top: 1px solid #f2f4f5;
+			}
+			.vote5-form-addbtn{
+				line-height: 1rem;
+				background: #fff;
+				text-align: center;
+				color: #2988fc;
+				font-size: 0.3rem;
+				border-top: 1px solid #f2f4f5;
+			}
+			.btn{
+				position: relative;
+				width: 100%;
+			}
+			.btn.btn-border{
+				position: relative;
+				background-image: none;
+				color: #2988fc;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote5">
+	        	<!-- <ul class="vote5-form">
+	        		<li>1.来院方式（单选）</li>
+	        		<li>2.年收入区间（多选）</li>
+	        	</ul> -->
+	        	<div class="vote5-form-addbtn" onclick="addQuest()">
+	        		+&nbsp;新增题目
+	        	</div>
+	        </div>
+	    <div style="position: fixed;left: 0;right: 0;height: 1rem;bottom: 0;background: #fff;">
+			<div class="x-row boxflex">
+				<div class="x-row-cols" onclick="view();"><div class="btn btn-border">预览</div></div>
+				<div class="x-row-cols" onclick="end()"><div class="btn">完成</div></div>
+			</div>
+		</div>
+	        <!-- <div class="btn" onclick="end()">完成</div> -->
+	        <!-- <div class="btn" onclick="view()">预览</div> -->
+		</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		var uid;
+		var id;
+		$(function(){
+			uid = Commonjs.getUrlParam("uid");
+			id = Commonjs.getUrlParam("themeid");
+			GetQuestionList();
+		});
+		
+		//监听返回按钮事件
+	    pushHistory();  
+	    window.addEventListener("popstate", function(e) {  
+	        window.location.href = 'edit.html?id='+id;
+		}, false);  
+	    function pushHistory() {  
+	        var state = {  
+	            title: "title",  
+	            url: "#"  
+	        };  
+	        window.history.pushState(state, "title", "#");  
+	    }
+		
+		//获取问题列表
+		function GetQuestionList() {
+			var apiData = {};
+			apiData.id = uid;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQuestionList/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					var html = [];
+					html.push('<ul class="vote5-form">');
+					Commonjs.BaseForeach(dd.Data,
+						function(i, item) {
+						var Questtype = formatterQuesttype(item.Questtype);
+						html.push('<li onclick="updateQuest('+item.Id+')">'+item.Sortnum+'.'+item.Questname+'（'+Questtype+'）</li>');
+					});
+					
+					html.push('</ul>');
+			        $('.vote5').before(html.join(''));
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+		
+		function updateQuest(id){
+			window.location.href = 'updateQuest.html?id='+id;
+		}
+		
+		function addQuest(){
+			window.location.href = 'addQuest.html?uid='+uid;
+		}
+		
+		function end(){
+			window.location.href = 'index.html';
+		}
+		
+		function view(){
+			window.location.href = 'view.html?themeid='+id;
+		}
+		
+		function formatterQuesttype(value) {
+			var html = [];
+			if (value == 0) {
+				html.push('单选');
+			} else if (value == 1) {
+				html.push('多选');
+			} else if (value == 2) {
+				html.push('问答');
+			} else if (value == 3) {
+				html.push('打分');
+			} else {
+				html.push('单选');
+			}
+			return html.join('')
+		}
+	</script>
+</html>

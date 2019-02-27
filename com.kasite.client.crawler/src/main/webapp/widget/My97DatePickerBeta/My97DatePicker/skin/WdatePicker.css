@@ -1,0 +1,12 @@
+.Wdate{
+	border:#f6f7fa 1px solid;
+	height:20px;
+    background-color:#f6f7fa;
+	/*background:#f6f7fa url(datePicker.gif) no-repeat right;*/
+}
+.Wdate::-ms-clear{display:none;}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}

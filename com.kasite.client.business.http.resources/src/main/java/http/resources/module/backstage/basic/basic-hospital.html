@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+       	<script type="text/javascript" src="../commons/js/business-all.js"></script>
+        <script type="text/javascript"  charset="utf-8"  src="../commons/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8"  src="../commons/ueditor/ueditor.all.js"> </script>
+        <script type="text/javascript"  charset="utf-8"  src="../commons/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="js/basic-hospital.js"></script>
+        
+        <script type="text/javascript" src="../commons/upload/upload.js"></script>
+         <script type="text/javascript">
+	    window.UEDITOR_HOME_URL="../commons/ueditor/";
+	</script>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <!--main content-->
+       <div class="container-wrap">
+        	<div class="main-header"  style="top :0px;left:1px;">
+                <ul class="clearfix">
+                    <li><span><a href="javascript:window.location.href='basic-hospital.html';" class="curr">医院信息</a></span></li>
+                    <li class="last"><span><a href="javascript:window.location.href='basic-dept.html';">科室医生</a></span></li>
+                </ul>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                	<div class="doctor-info-top">
+                	    <a href="javascript:;" class="btn" id="cancel">取消</a>
+                    	<a href="javascript:;" class="btn" id="edit-btns">编辑</a>
+                    </div>
+                    <div class="doctor-info-wrap clearfix">
+                    
+                    	<div class="doctor-info-fl fl ">
+                    	 <div class="p20" style="position:relative">
+                    	 <div class="doctor-scroll-pane">
+                    	  <div class="p20">
+<!--                    	 -->
+<!--                                	<div class="p20">-->
+                    	 
+                        	<table class="table-form table-text doctor-table-box">
+                                <tr>
+                                    <td class="t">
+                                        医院名称
+                                    </td>
+                                    <td>
+                                    	<select id="hosNameSelect" class="select" style="width:300px;">
+	                                     	<!-- <option value="0" >三甲</option>
+	                                     	<option value="1">三乙</option>
+	                                     	<option value="2">三丙</option>
+	                                     	<option value="3">二甲</option>
+	                                     	<option value="4">二乙</option>
+	                                     	<option value="5">二丙</option>
+	                                     	<option value="6">一甲</option>
+	                                     	<option value="7">一乙</option>
+	                                     	<option value="8">一丙</option>  -->	
+	                                     </select>
+                                        <div class="table-input" style="display:none" id="hosName"></div> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        医院等级
+                                    </td>
+                                    <td>
+<!--                                        <div class="table-input" id="hosLevel">二级乙等</div>-->
+                                      <div id="_hoslevel"></div>
+                                     <div  id="hosLevels"><select id="hosLevel" class="select w150">
+                                     	<option value="0" >三甲</option>
+                                     	<option value="1">三乙</option>
+                                     	<option value="2">三丙</option>
+                                     	<option value="3">二甲</option>
+                                     	<option value="4">二乙</option>
+                                     	<option value="5">二丙</option>
+                                     	<option value="6">一甲</option>
+                                     	<option value="7">一乙</option>
+                                     	<option value="8">一丙</option> 	
+                                     </select></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        医院总机
+                                    </td>
+                                    <td>
+                                        <div class="table-input" id="hosTel"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                      经度                       
+                                    </td>
+                                    <td>
+                                        <div class="table-input map ask" id="hosX"></div>
+                                    </td>
+                                </tr>
+                                                   <tr>
+                                    <td class="t">
+                                       纬度
+                                    </td>
+                                    <td>
+                                        <div class="table-input " id="hosY"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        所在省市
+                                    </td>
+                                    <td>
+                                        <div class="table-input" id="hosProvince"></div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="t">
+                                        医院地址
+                                    </td>
+                                    <td>
+                                        <div class="table-input" id="hosAddr"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t">
+                                        交通路线
+                                    </td>
+                                    <td>
+                                        <div class="table-input" id="hosRoute"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="t" style="vertical-align:top;">
+                                        医院简介
+                                    </td>
+                                    <td>
+                                    <div id="showInfo"></div>
+                                    <div style="display:none;width:96%;height:450px;" id="showBrief" >
+                                        <script id="editor" type="text/plain" style="width:100%;height:150px;"></script>
+<!--                                        <div class="table-textarea" id="hosRemark">本公司成立于2000年初，位于121311123123东葛路圆湖北路，我只是测试一下而已，交通方便.医院名称，医院类型，医院登记可以从boss上改了卡斯就分开来的撒酒疯。</div>-->
+                                   </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="doctor-info-fr fr" id="pic">
+<!--                        	<div class="doctor-info-img"><a href="#"><img id="hosImg" src="../images/demo/2.jpg" /><span>编辑图片</span></a></div>-->
+							<img src="http://f1.yihuimg.com/TFS/upfile/WBJ/1024727/2014-07-23/003320_1406097193619_fullsize.jpg" id="tempImg1" style="height:120px;width:120px;"/>
+							<img src="http://f1.yihuimg.com/TFS/upfile/WBJ/1024727/2014-07-23/003320_1406097193619_fullsize.jpg" id="tempImg2" style="height:120px;width:120px;"/>
+							<img src="http://f1.yihuimg.com/TFS/upfile/WBJ/1024727/2014-07-23/003320_1406097193619_fullsize.jpg" id="tempImg3" style="height:120px;width:120px;"/>
+                        	  <div  id="updateSmallImg" class="doctor-info-img"> 
+                        	  <input type="file" title="点击上传图片" value="点击上传图片" id="fileDeal" />
+						</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--/main content-->
+    </body>
+</html>

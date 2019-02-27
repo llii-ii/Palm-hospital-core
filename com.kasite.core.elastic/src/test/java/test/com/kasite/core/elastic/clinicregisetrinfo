@@ -1,0 +1,67 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } ,
+	        "patientId": {
+	"type": "keyword"
+},
+ "clinicNum": {
+	"type": "keyword"
+},
+ "medicalNum": {
+	"type": "keyword"
+},
+ "medicalType": {
+	"type": "keyword"
+},
+ "clinicDate": {
+"format": "YYYY-MM-dd",	"type": "date"
+},
+ "timeId": {
+	"type": "keyword"
+},
+ "departmentId": {
+	"type": "keyword"
+},
+ "departmentName": {
+	"type": "keyword"
+},
+ "doctorId": {
+	"type": "keyword"
+},
+ "doctorName": {
+	"type": "keyword"
+},
+ "medicalExpenses": {
+	"type": "integer"
+},
+ "clinicCard": {
+	"type": "keyword"
+},
+ "ghFree": {
+	"type": "integer"
+},
+ "lastmodify": {
+"format": "YYYY-MM-dd HH:mm:ss",
+	"type": "date"
+}
+
+
+     	 }
+    }
+  }
+}

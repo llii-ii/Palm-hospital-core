@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1,
+        "template_id":"d364b64acf5c4ec4be95f54f5dd628a4",
+        "content":"{{first.value}}</br>就诊人：{{keyword1.value}}变量长度20个字符</br>处方号：{{keyword2.value}}变量长度20个字符</br>退款金额：{{keyword3.value}}变量长度20个字符</br>{{remark.value}}",
+        "deputy_industry":"医药医疗",
+        "example":"您好!您的医嘱订单取消成功已退费</br>就诊人：张三</br>处方号：12345</br>退款金额：10.00</br>款项将原路返回您的支付账户。",
+        "primary_industry":"医疗护理",
+        "title":"处方订单取消通知"
+    },
+    {
+        "id": 2,
+        "template_id":"618fe769a5c247d5932470ec32561732",
+         "title":"处方缴费完成提醒",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+         "content":"{{first.value}}<br/>处方号：{{keyword1.value}}变量长度20个字符<br/>就诊人：{{keyword2.value}}变量长度20个字符<br/>总费用：{{keyword3.value}}变量长度20个字符<br/>缴费时间：{{keyword4.value}}变量长度20个字符<br/>{{remark.value}}",
+         "example":"您好，您开的处方已支付完成。<br/>处方号：20171220153962110872<br/>就诊人：张三<br/>总费用：666.00元<br/>缴费时间：2017年12月21日 18:36<br/>点击进入查看详情"
+    },
+    {
+        "id": 3,
+        "template_id":"213170cfc87f4fec9cdbf3328ce39126",
+        "title":"排队通知",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+        "content":"{{first.value}}<br/>排队：{{keyword1.value}}<br/>医生：{{keyword2.value}}<br/>科室：{{keyword3.value}}<br/>医院：{{keyword4.value}}<br/>时间：{{keyword5.value}}<br/>{{remark.value}}",
+        "example":"尊敬的张先生，您的挂号候诊/检查/检验/取药情况<br/>排队：前面还有10人，您的序号是23号<br/>医生：张医生<br/>科室：内科门诊<br/>医院：广州红十字会医院<br/>时间：上午9：00－10：00<br/>欢迎您的使用，祝您早日康复！"
+    },
+    {
+        "id": 4,
+        "template_id":"bc68157f194d4ad3bd22a41c7378569a",
+        "title":"就诊卡充值成功通知",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+        "content":"{{first.value}}<br/>就诊人：{{keyword1.value}}<br/>就诊卡类型：{{keyword2.value}}<br/>就诊卡号：{{keyword3.value}}<br/>充值金额：{{keyword4.value}}<br/>{{remark.value}}",
+        "example":"你好，尾号为8888的就诊卡已充值100元。<br/>就诊人：淋淋雨<br/>就诊卡类型：京医通卡<br/>就诊卡号：88888888<br/>充值金额：220元<br/>详情"
+    },
+    {
+        "id": 5,
+        "template_id":"976367c2b5644e33b6b6e75485a0f303",
+        "title":"住院预交金充值成功",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+        "content":"{{first.value}}<br/>患者姓名：{{keyword1.value}}<br/>住院号：{{keyword2.value}}<br/>充值金额：{{keyword3.value}}<br/>{{remark.value}}",
+        "example":"您已充值成功！<br/>患者姓名：张三<br/>住院号：Z123456<br/>充值金额：100<br/>祝您身体健康！"
+    },
+    {
+        "id": 6,
+        "template_id":"6c3aabd7e0874c4ab96bd46a2922aac3",
+        "title":"住院预交金充值成功",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+        "content":"{{first.value}}<br/>患者姓名：{{keyword1.value}}<br/>住院号：{{keyword2.value}}<br/>充值金额：{{keyword3.value}}<br/>{{remark.value}}",
+        "example":"您好，您的挂号已取消成功。<br/>就诊人姓名：张三<br/>就诊时间：2015-3-10 上午<br/>科室：风湿科<br/>医生：陈佳<br/>感谢您的使用"
+    },
+    {
+        "id": 7,
+        "template_id":"adb79fb4131a44f0be3f6539bb185459",
+        "title":"预约挂号成功通知",
+         "primary_industry":"医疗护理",
+         "deputy_industry":"医药医疗",
+        "content":"{{first.value}}<br/>就诊人：{{keyword1.value}}<br/>就诊卡号：{{keyword2.value}}<br/>挂号科室：{{keyword3.value}}<br/>看诊医生：{{keyword4.value}}<br/>就诊时间：{{keyword5.value}}<br/>{{remark.value}}",
+        "example":"你好，你有一项新的预约成功记录。<br/>就诊人：梁XX<br/>就诊卡号：511521********1392<br/>挂号科室：内科-心内科<br/>看诊医生：肖红t<br/>就诊时间：2015-08-11<br/>号签：第7号,请于08月11日上午08：00以前到四川省人民医院取号。"
+    }
+]

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+</head>
+<body>
+<div class="com-title">对账文件下载</div>
+<div class="wrapper">
+    <div class="down-box">
+        <div class="dnb-tip"><i class="icon icon-tip" id="pointThis"></i></div>
+        <div class="form-hold">
+            <div class="preform mt30">
+                <label class="form-title">交易渠道选择：</label>
+                <div class="form-con" id="channelId">
+                    <label class="radio mr30 checked" data-toggle="radio">
+                        <input type="radio" class="c-hide" name="qd" checked="checked" value="" />
+                        <i class="icon-radio"></i>所有交易渠道
+                    </label>
+                </div>
+            </div>
+            <div class="preform mt30">
+                <label class="form-title">对账文件类型：</label>
+                <div class="form-con">
+                    <label class="radio mr30 checked" data-toggle="radio">
+                        <input type="radio" class="c-hide" name="wj" checked="checked" value="SY" />
+                        <i class="icon-radio"></i>所有对账文
+                    </label>
+                    <label class="radio mr30" data-toggle="radio">
+                        <input type="radio" class="c-hide" name="wj" value="ZF" />
+                        <i class="icon-radio"></i>智付系统对账文件
+                    </label>
+                    <label class="radio mr30" data-toggle="radio">
+                        <input type="radio" class="c-hide" name="wj" value="MERCH" />
+                        <i class="icon-radio"></i>支付渠道对账文件
+                    </label>
+                    <label class="radio mr30" data-toggle="radio">
+                        <input type="radio" class="c-hide" name="wj" value="HIS" />
+                        <i class="icon-radio"></i>医院系统对账文件
+                    </label>
+                </div>
+            </div>
+            <div class="preform mt30">
+                <label class="form-title">对账文件时间：</label>
+                <div class="form-con">
+                    <div class="date-wrap mr5 mb10">
+                        <input type="text" placeholder="请选择" class="date-txt datetimepicker" id="queryDate"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dnb-bot"><a href="javascript:downloadFile();" class="c-btn c-btn-blue mb10"><i class="icon icon-download"></i>Excel下载</a></div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+<link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../widget/laydate/laydate.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript" src="js/bill-download.js"></script>
+</body>
+</html>

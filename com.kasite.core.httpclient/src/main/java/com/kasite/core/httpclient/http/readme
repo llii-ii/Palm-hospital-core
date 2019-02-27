@@ -1,0 +1,17 @@
+String param= "<soapenvaddurl>http://123123.com</soapenvaddurl>123123";
+IParseParamUrl ret = IParseParamUrl.getInstance().parse(param);
+System.out.println(ret.url());
+System.out.println(ret.param());
+
+//print
+http://123123.com
+123123
+
+
+HttpPost request = new HttpPost();
+String soapXml = "<soapenvaddsoapheader><A>12312</A><b>123123</b></soapenvaddsoapheader>12222222";
+String result = IParseParamHeader.getInstance().parseParam2Header(request, soapXml);
+System.out.println(result);
+
+//print
+12222222

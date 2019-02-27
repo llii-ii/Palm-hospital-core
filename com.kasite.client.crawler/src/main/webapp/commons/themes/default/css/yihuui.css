@@ -1,0 +1,56 @@
+.tb-member{font-size: 14px;font-family:"Microsoft Yahei";border:0;margin:0;border-collapse:collapse;border-spacing:0;}
+.tb-member th { height:25px; line-height:25px; background-color:#f6f6f6; border-top:1px solid #ddd; border-bottom:1px solid #ddd; text-align:center; color:#555;}
+.tb-member td { padding:3px; line-height:25px; color:#333; text-align:center; border-bottom:1px solid #f5f5f5;}
+.check-all { vertical-align:middle;}  
+.sort-rel { position:relative; _top:4px;}
+.sort-down { display:inline-block; width:6px; height:9px; background:url(../images/bmgl/icons.gif) no-repeat -120px 0; vertical-align:middle;}
+.sort-up { display:inline-block; width:6px; height:9px; background:url(../images/bmgl/icons.gif) no-repeat -110px 0; vertical-align:middle;}
+.th-name { display:inline-block; vertical-align:middle;}
+.btn-edit { display:inline-block; width:17px; height:17px; background:url(../images/bmgl/icons.gif) no-repeat -30px 0; vertical-align:middle;}
+.btn-del { display:inline-block; width:17px; height:17px; background:url(../images/bmgl/icons.gif) no-repeat -70px 0; vertical-align:middle;}
+
+
+.mt5 { margin-top:5px; }
+.mt8 { margin-top:8px;}
+.mt10 { margin-top: 10px; }
+.mt15 { margin-top:15px;}
+.mt20 { margin-top:20px; }
+.mt25 { margin-top: 25px; }
+.mr5 { margin-right:5px; }
+.mr8 { margin-right: 8px; }
+.mr10 { margin-right:10px; }
+.mr15 { margin-right:15px; }
+.mr25 { margin-right:25px; }
+.mr45 { margin-right:45px;}
+.mb5 { margin-bottom:5px;}
+.mb8 { margin-bottom:8px;}
+.mb10 { margin-bottom:10px;}
+.mb15 { margin-bottom:15px;}
+.mb25 { margin-bottom:25px;}
+.ml5 { margin-left:5px;}
+.ml10 { margin-left: 10px; }
+.ml15 { margin-left:15px;}
+.ml20 { margin-left: 20px; }
+.ml25 { margin-left: 25px; }
+.ml30 { margin-left:30px; }
+.ml60 { margin-left:60px; }
+.ml70 { margin-left:70px; }
+
+.pb5 { padding-bottom: 5px; }
+.pb10 { padding-bottom: 10px; }
+.pt10 { padding-top:10px;}
+.pt20 { padding-top:20px;}
+.pl5 { padding-left:5px;}
+.pl10 { padding-left:10px;}
+.pl20 { padding-left:20px;}
+.pl30 { padding-left: 30px; }
+.pl120 { padding-left:120px;}
+.pl70 { padding-left:70px; _padding-left:0px; *padding-left:0px; }
+.pl15 { padding-left: 15px; }
+.pl35 { padding-left: 35px; }
+.pl27 { padding-left: 27px; }
+.pl47 { padding-left: 47px; }
+.pr5 { padding-right:5px;}
+.pr10 { padding-right:10px; }
+.p13 { padding:13px;}
+.p25 { padding:25px;}

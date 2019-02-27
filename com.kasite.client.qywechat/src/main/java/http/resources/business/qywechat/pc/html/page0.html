@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>故障报修</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					<div class="widget navy-bg text-center" onclick="ps()">
+	                    <div class="">
+	                        <i class="fa fa-shield fa-4x"></i>
+	                        <h3 class="font-bold no-margins">维修人员管理</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="x-row-cols " style="width: 140px;"></div>
+				<div class="x-row-cols " style="width: 140px;"></div>
+				<div class="x-row-cols " style="margin-left:420px;"></div>
+			</div>
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 200px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>订单状态：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control" >
+									<option value="">请选择</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>申请时间：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="d5221" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'yyyy-MM-dd ',maxDate:'#F{$dp.$D(\'d5222\')}'})" style="width:120px!important;"  class="form-control form-group" placeholder="开始时间">
+					  			<label style="padding-left: 10px;">至</label>
+					  			<input id="d5222" type="text" name="endTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd ',minDate:'#F{$dp.$D(\'d5221\')}'})" class="form-control form-group" style="width:120px!important;" placeholder="结束时间">
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:620px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>故障标题：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 200px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>受理人：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>维修人：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:620px;">
+						<button type="button" class="btn btn-primary pull-right">查询</button>
+					</div>
+				</div>
+			</div>
+			
+			<p id="toolbar">
+				<button type="button" onclick="sl()" class="btn btn-primary">批量受理</button>
+				<button type="button" class="btn btn-danger">批量驳回</button>
+			</p>
+			
+			<table id="exampleTablePagination" 
+		    	data-toggle="table" 
+		    	data-url="../js/data/bootstrap_table_test.json" 
+		    	data-mobile-responsive="true" 
+		    	data-pagination="true" 
+		    	data-toolbar="#toolbar"
+		    	>
+	            <thead>
+	                <tr>
+	                    <th data-field="state" data-checkbox="true"></th>
+	                    <th data-field="id" >ID</th>
+	                    <th data-field="name" data-align="center">订单号</th>
+	                    <th data-field="name" data-align="center">故障标题</th>
+	                    <th data-field="name" data-align="center">故障描述</th>
+	                    <th data-field="name" data-align="center">订单状态</th>
+	                    <th data-field="name" data-align="center">受理人</th>
+	                    <th data-field="name" data-align="center">维修人</th>
+	                    <th data-field="name" data-align="center">申请时间</th>
+	                    <th data-field="name" data-align="center" data-formatter="formatter2" >验收结果</th>
+	                    <th data-formatter="formatter" data-align="center">操作</th>
+	                </tr>
+	            </thead>
+	        </table>
+		</div>
+	</body>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		function formatter(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:;" style="color:#3685ff;font-size:12px;padding:0 6px;">受理</a>');
+			html.push('<a href="javascript:;" style="color:#3685ff;font-size:12px;padding:0 6px;">驳回</a>');
+			html.push('<a href="javascript:;" onclick="ps()" style="color:#3685ff;font-size:12px;padding:0 6px;">分配维修员</a>');
+			html.push('<a href="javascript:;" onclick="openWindow()" style="color:#3685ff;font-size:12px;padding:0 6px;">详情</a>');
+			return html.join('')
+		}
+		
+		function formatter2(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:;" onclick="openWindow()" style="color:#333;font-size:12px;padding:0 6px;">验收完成</a>');
+			return html.join('')
+		}
+		
+		function sl(){
+			System.alert('受理成功');
+		}
+		
+		function ps(){
+			System.openWindow({
+				id:'ps',
+				title:'维修人员设置',
+				url:'personSetting.html',
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function openWindow(){
+			System.openWindow({
+				id:'xq',
+				title:'详情',
+				url:'page0-0.html',
+				width:'800',
+				height:'600',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+	</script>
+</html>

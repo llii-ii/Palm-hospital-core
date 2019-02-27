@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>新增商户</title>
+    <link rel="stylesheet" href="../../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../plugin/layui/css/layui.css" type="text/css" />
+    <link rel="stylesheet" href="../../plugin/layer/theme/default/layer.css" type="text/css" />
+</head>
+<body>
+    <div class="x-body">
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">商户号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="merchAccount" 
+                         class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+			      <label class="layui-form-label">商户类型</label>
+			      <div class="layui-input-block">
+			        <select style="height: 35px;width: 190px;"  id="merchType">
+			          <option value="">请选择商户类型</option>
+			        </select>
+			      </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_pass" class="layui-form-label">银行号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="bankNo" 
+                         class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"> 银行简称
+                </label>
+                <div class="layui-input-inline">
+                    <select style="height: 35px;width: 190px;"  id="bankShort">
+                      <option value="">请选择银行简称</option>
+                    </select>
+                </div>
+            </div>
+           <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">支付配置</label>
+		    <div class="layui-input-block">
+		      <textarea id="config" placeholder="请输入内容" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"> </label>
+                <button id="ok" class="layui-btn" type="button" onclick="add()"></button>
+                <button class="layui-btn" type="button" onclick="cancelFun()">取消</button>
+            </div>
+
+    </div>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+<script type="text/javascript">
+$(function () {
+	
+    $.ajax({
+        url:"../../channel/get-merch-type.do",    
+        dataType:"json",   
+        async:true,
+        data:{
+            },    
+        type:"post",  
+     
+        success:function(data){
+            var list = data.list;
+            var shortList = data.shortList;
+            for (var i = 0; i < list.length; i++) {
+            	var name;
+            	if("WX"==list[i].MERCHTYPE){
+            		name="微信";
+            	}else if("YL"==list[i].MERCHTYPE){
+            		name="银联";
+            	}else if("ZFB"==list[i].MERCHTYPE){
+                    name="支付宝";
+                }
+            		
+                var rl = '<option value="'+list[i].MERCHTYPE+'" >'+name+'</option>';
+                $("#merchType").append(rl);
+          }
+            for (var i = 0; i < shortList.length; i++) {
+                var rr = '<option value="'+shortList[i].KEYWORD+'" >'+shortList[i].VALUE+'</option>';
+                $("#bankShort").append(rr);
+            	
+            }
+            $("#bankShort").find("option:contains('"+shortName+"')").attr("selected",true)
+            $("#merchType").find("option[value='"+type+"']").attr("selected",true);
+        },
+        error:function(){
+            layer.msg('请求出错，请联系管理员');
+        }
+    });
+});
+var code =  parent.data.code;
+var acc =  parent.data.acc;
+var type =  parent.data.type;
+var bank =  parent.data.bank;
+var shortName =  parent.data.shortName;
+var config =  parent.data.config;
+if(parent.data.code==0){
+	$("#ok").text("增加");
+}else{
+    $("#merchAccount").val(acc);
+    $("#merchType").val(type);
+    $("#bankNo").val(bank);
+    $("#bankShort").val(shortName);
+    console.log(shortName);
+    $("#config").val(config);
+    $("#ok").text("修改");
+   
+}
+  function add(){
+	
+	  var merchAccount = $("#merchAccount").val();
+      var merchType = $("#merchType").val();
+      var bankNo = $("#bankNo").val();
+      var bankShort = $("#bankShort").val();
+      var config = $("#config").val();
+	  if(merchAccount==null || merchAccount==""){
+          layer.msg('请输入商户号');
+          return;
+      }
+      if(merchType==null || merchType==""){
+          layer.msg('请选择商户类型');
+          return;
+      }
+      var flag = CheckBankNo(bankNo);
+      if(!flag){
+          return;
+      }
+      if(bankShort==null || bankShort==""){
+          layer.msg('请输入银行简称');
+          return;
+      }
+      if(config==null || config==""){
+          layer.msg('请输入支付配置');
+          return;
+      }
+      var xml = validateXML(config);
+      if(xml.error_code!=0){
+    	  layer.msg("XML格式有误");
+    	  return;
+      }
+      $.ajax({
+           url:"../../channel/merch-add-update.do",    
+           dataType:"json",   
+           async:true,
+           data:{
+               merchAccount:merchAccount,
+               merchType:merchType,
+               bankNo:bankNo,
+               bankShort:bankShort,
+               config:config,
+               code:code,
+               },    
+           type:"post",  
+        
+           success:function(data){
+               var code = data.retCode;
+               if(code== -14008){
+                    layer.msg('会话过期');
+               }else if(code){
+                   layer.alert("操作成功",function(){
+                	   window.parent.refresh();
+                       //window.parent.location.reload;
+                       console.log(window.parent.location);
+                       var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                       parent.layer.close(index);
+                   })
+               }else{
+                   layer.msg('操作失败');
+               }
+               
+           },
+       
+           error:function(){
+               layer.msg('请求出错，请联系管理员');
+           }
+       });
+  
+   
+  }
+  
+//银行卡号Luhn校验算法
+  //luhn校验规则：16位银行卡号（19位通用）: 
+  //1.将未带校验位的 15（或18）位卡号从右依次编号 1 到 15（18），位于奇数位号上的数字乘以 2。
+  //2.将奇位乘积的个十位全部相加，再加上所有偶数位上的数字。
+  //3.将加法和加上校验位能被 10 整除。
+  
+  //bankno为银行卡号
+   function luhnCheck(bankno){
+       var lastNum=bankno.substr(bankno.length-1,1);//取出最后一位（与luhn进行比较）
+   
+       var first15Num=bankno.substr(0,bankno.length-1);//前15或18位
+       var newArr=new Array();
+       for(var i=first15Num.length-1;i>-1;i--){    //前15或18位倒序存进数组
+           newArr.push(first15Num.substr(i,1));
+       }
+       var arrJiShu=new Array();  //奇数位*2的积 <9
+       var arrJiShu2=new Array(); //奇数位*2的积 >9
+       
+      var arrOuShu=new Array();  //偶数位数组
+       for(var j=0;j<newArr.length;j++){
+          if((j+1)%2==1){//奇数位
+               if(parseInt(newArr[j])*2<9)
+               arrJiShu.push(parseInt(newArr[j])*2);
+               else
+               arrJiShu2.push(parseInt(newArr[j])*2);
+           }
+           else //偶数位
+           arrOuShu.push(newArr[j]);
+      }
+       
+       var jishu_child1=new Array();//奇数位*2 >9 的分割之后的数组个位数
+       var jishu_child2=new Array();//奇数位*2 >9 的分割之后的数组十位数
+       for(var h=0;h<arrJiShu2.length;h++){
+           jishu_child1.push(parseInt(arrJiShu2[h])%10);
+           jishu_child2.push(parseInt(arrJiShu2[h])/10);
+       }        
+       
+       var sumJiShu=0; //奇数位*2 < 9 的数组之和
+       var sumOuShu=0; //偶数位数组之和
+       var sumJiShuChild1=0; //奇数位*2 >9 的分割之后的数组个位数之和
+       var sumJiShuChild2=0; //奇数位*2 >9 的分割之后的数组十位数之和
+       var sumTotal=0;
+       for(var m=0;m<arrJiShu.length;m++){
+           sumJiShu=sumJiShu+parseInt(arrJiShu[m]);
+       }
+       
+       for(var n=0;n<arrOuShu.length;n++){
+           sumOuShu=sumOuShu+parseInt(arrOuShu[n]);
+       }
+       
+       for(var p=0;p<jishu_child1.length;p++){
+           sumJiShuChild1=sumJiShuChild1+parseInt(jishu_child1[p]);
+           sumJiShuChild2=sumJiShuChild2+parseInt(jishu_child2[p]);
+       }      
+       //计算总和
+       sumTotal=parseInt(sumJiShu)+parseInt(sumOuShu)+parseInt(sumJiShuChild1)+parseInt(sumJiShuChild2);
+       
+       //计算luhn值
+      var k= parseInt(sumTotal)%10==0?10:parseInt(sumTotal)%10;        
+       var luhn= 10-k;
+       
+       if(lastNum==luhn){
+         console.log("验证通过");
+           return true;
+       }else{
+          layer.msg("银行卡号必须符合luhn校验");
+           return false;
+       }        
+   }
+   
+   //检查银行卡号
+   function CheckBankNo(bankno) {
+       var bankno = bankno.replace(/\s/g,'');
+       if(bankno == "") {
+           layer.msg("请填写银行卡号");
+           return false;
+       }
+       if(bankno.length < 16 || bankno.length > 19) {
+           layer.msg("银行卡号长度必须在16到19之间");
+           return false;
+       }
+       var num = /^\d*$/;//全数字
+       if(!num.exec(bankno)) {
+           layer.msg("银行卡号必须全为数字");
+           return false;
+       }
+       //开头6位
+       var strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+       if(strBin.indexOf(bankno.substring(0, 2)) == -1) {
+           layer.msg("银行卡号开头6位不符合规范");
+           return false;
+       }
+       //Luhn校验
+       if(!luhnCheck(bankno)){
+           return false;
+       }
+       return true;
+   }
+ //取消 关闭弹窗
+ function cancelFun(){
+	 var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+     parent.layer.close(index);
+ }
+ 
+//XML校验
+ function validateXML(xmlContent){   
+     //errorCode 0是xml正确，1是xml错误，2是无法验证   
+     var xmlDoc,errorMessage,errorCode = 0;   
+     // code for IE   
+     if (window.ActiveXObject)   
+     {   
+         xmlDoc  = new ActiveXObject("Microsoft.XMLDOM");   
+         xmlDoc.async="false";   
+         xmlDoc.loadXML(xmlContent);   
+    
+         if(xmlDoc.parseError.errorCode!=0)   
+         {   
+             errorMessage="错误code: " + xmlDoc.parseError.errorCode + "\n";   
+             errorMessage=errorMessage+"错误原因: " + xmlDoc.parseError.reason;   
+             errorMessage=errorMessage+"错误位置: " + xmlDoc.parseError.line;   
+             errorCode = 1;   
+         }   
+         else   
+         {   
+             errorMessage = "格式正确";   
+         }   
+     }   
+     // code for Mozilla, Firefox, Opera, chrome, safari,etc.   
+     else if (document.implementation.createDocument)   
+     {   
+         var parser=new DOMParser();   
+         xmlDoc = parser.parseFromString(xmlContent,"text/xml");   
+         var error = xmlDoc.getElementsByTagName("parsererror");   
+         if (error.length > 0)   
+         {   
+                if(xmlDoc.documentElement.nodeName=="parsererror"){   
+                 errorCode = 1;   
+                 errorMessage = xmlDoc.documentElement.childNodes[0].nodeValue;   
+             } else {   
+                 errorCode = 1;   
+                 errorMessage = xmlDoc.getElementsByTagName("parsererror")[0].innerHTML;   
+             }   
+         }   
+         else   
+         {   
+             errorMessage = "格式正确";   
+         }   
+     }   
+     else   
+     {   
+         errorCode = 2;   
+         errorMessage = "浏览器不支持验证，无法验证xml正确性";   
+     }   
+     return {   
+         "msg":errorMessage,    
+         "error_code":errorCode   
+     };   
+ } 
+       
+</script>
+</body>
+</html>

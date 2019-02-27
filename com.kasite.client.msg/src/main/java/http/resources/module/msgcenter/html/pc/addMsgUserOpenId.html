@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>新增会员</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+            <div class="ibox-content">
+            		<div class="row">
+					  	<div class="col-sm-6">
+					  		<div class="form-group">
+						    	<label class="col-sm-2 control-label">卡号类型</label>
+						    	<div class="col-sm-10">
+						      		<select class="form-control" id="cardType">
+						      			<option value="1">门诊</option>
+						      			<option value="2">住院</option>
+						      		</select>
+						    	</div>
+						  	</div>
+					  		<div class="form-group">
+						    	<label class="col-sm-2 control-label">渠道类型</label>
+						    	<div class="col-sm-10">
+						      		<select class="form-control" id="openType">
+						      			<option value="1">微信</option>
+						      			<option value="2">支付宝</option>
+						      		</select>
+						    	</div>
+						  	</div>
+					  	</div>
+					  	<div class="col-sm-6">
+					  		<div class="form-group">
+						    	<label class="col-sm-2 control-label">卡号</label>
+						    	<div class="col-sm-10">
+						      		<input type="text" class="form-control" placeholder="请输入" id="cardNo"/>
+						    	</div>
+						  	</div>
+					  		<div class="form-group">
+						    	<label class="col-sm-2 control-label">微信/支付宝OpenId</label>
+						    	<div class="col-sm-10">
+						      		<input type="text" class="form-control" placeholder="请输入" id="openId"/>
+						    	</div>
+						  	</div>
+					  	</div>
+				  	</div>
+				  	
+				  	<div class="form-group">
+				    	<div class="col-sm-offset-2 col-sm-10">
+				      		<button onclick="saveData()"  class="btn btn-w-m btn-success">保存</button>
+				    	</div>
+				  	</div>
+            </div>
+	</body>
+	<script>
+	function saveData(){
+		var param = {};
+		var apiData = {};
+		apiData.cardType = $("#cardType").val();
+		apiData.cardNo = $("#cardNo").val();
+		apiData.openType = $("#openType").val();
+		apiData.openId = $("#openId").val();
+		apiData.operatorId = Commonjs.getUrlParam("userId");
+		apiData.orgId = Commonjs.hospitalId();
+		apiData.operatorName = Commonjs.getUrlParam("userName");
+		apiData.state = 1;
+		param.api = '';
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/AddMsgUserOpenId/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				window.location.href='msgUserList.html?userId='+Commonjs.getUrlParam("userId")+'&userName='+Commonjs.getUrlParam("userName");
+			} else {
+				alert(d.RespMessage);// 错误提示
+			}
+		});
+	}
+	</script>
+</html>

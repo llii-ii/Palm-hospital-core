@@ -1,0 +1,23 @@
+#卡斯特配置中心连接配置。默认是不开启，读取本地配置文件
+kasite:
+    appConfig:
+        #是否开启中心连接
+        isConnectionKastieCenter: true
+        #配置中心地址 如果不开启连接中心的时候可以注释 中心的url地址
+        centerUrl: https://verification.kasitesoft.com,http://verification2.kasitesoft.com
+        #配置中心申请的appId（必须）
+        appId: KASTIE-CLIENT-CRAWLER.MICRO.test
+        #配置中心申请的密码（必须） 
+        appSecret: Xv1m6XyDtz1D0KIEUo4GI
+        #组织机构代码（必须）
+        orgCode: TEST
+        #本地保存配置文件的目录（必须）
+        configPath: /Users/daiyanshui/Desktop/Config
+        #中心获取的配置 公钥 （必须）
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhEJRYdtg9ipmUJ5d/JNBJdGctLquG2zTxTSA7qz7g+b/RXSsPYPj18GVtjMhsGymKEBm75raxAlw21A5qV+UGX/5uEmqn2hZCBfwzlScNofxs/uErXUOTrwLGRHdMVShuGH8k1KTx95M1b8RiUCZCOh3K0nk11slWiYdEDIFDdp4eDUP3YAmxHhuBiH80Nyf/D/EqhcK9POCD2HVRkP0O2SPTmZeBBtMROrAVUa8rzHAyOzG9tormbdNK5a4c/tjjISfvv7gqfCw9U7mlgEjo3tevEnJH3jVmgroPDVE8Pb9yuWyZ1ip5mYYeY7zzCG/XEYQHRedhUkfnOU7zmLozQIDAQAB
+        #远程更新私钥
+        privateKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJUtQjAcWlNfWpEGAJwlQ8yarb8r0CqIKjIlGg8XSde1elVYv/+Qqt4caSwsNewek8WodyN9dZVlX8mwZ9dKFsENmYc2LT1C0OQmmBA7L6y0wIFPDjB1JsBGGOEPybnZProrH1KX/o+gywEVHA6Jc0kkOk4Su6mMchQHxlpnB2lFAgMBAAECgYBsIlyCJ2tKWCp8SY+ToGefHtinZQkGa6G6q65SFh2O4ZwF1cmHZcSWMJ4ESR/lQtz3QIDsFvtvCgb/WoJLSwdmVBGxCrV37APIyNv4HTEQNqxHgtCw9OIhVCqY/S21+HdPd/EevJI4L5kzizk/iIZuZScrfU/Yz4gKIjaTCn7bGQJBAPCUvRkFCjdCfIF2CxrQBlSMlBSO13hviCk7UjNtkB8Tg7pYm2ZfOmQwPa9XwhRJcg4gS3NskWFSPZedvDVO91cCQQCevNUVVGqbO92lNw15C5aDOjK/slDoAY/UdkfvSBxJX9yMeLFobpp5EfJJ2/6XQM1gwqIFK+epcaFr++JbT87DAkBhTSb12Y36L4+/pIh1PbFxvLGfZu5KrYE6e92RIzzo9LGQSon/a4BoSQKJykqafeH9SJ57fmuGGwcCLS+Tt+5dAkBnnOaRp6p2bVs97nNy4Wd7fM+HZUN+TRavHg3SWIVuN45kepuCiT93a4l1QI4r+HaWhDTxnzj112AAdkfIRo21AkEAogyby6Zd4z/oav2/nj2QxK/toSecHJAdzkM4WB9s8PSNRtV9Dyic48js+HUiWhrXUX5wJITdKIDQejrzqZg0rQ==
+    logFileZipConfig:
+        - dirs: D:\wxEventLog
+          url: https://wechatcenter.kasitesoft.com/api/weixin/scan/wx53cf738a20d74bb5/upload.do
+          isupdate: false

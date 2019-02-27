@@ -1,0 +1,213 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } 
+ 		,"patientId": {
+			"type": "keyword"
+		}
+ 		,"inHospitalNum": {
+			"type": "keyword"
+		}
+ 		,"receiptNum": {
+			"type": "keyword"
+		}
+ 		,"invoiceNum": {
+			"type": "keyword"
+		}
+ 		,"settlementType": {
+			"type": "keyword"
+		}
+ 		,"billType": {
+			"type": "keyword"
+		}
+ 		,"invoiceDate": {
+			"format": "YYYY-MM-dd",			"type": "date"
+		}
+ 		,"printDate": {
+			"format": "YYYY-MM-dd",			"type": "date"
+		}
+ 		,"invoiceAmount": {
+			"type": "integer"
+		}
+ 		,"settlementSeqNo": {
+			"type": "keyword"
+		}
+ 		,"settlementTimes": {
+			"type": "keyword"
+		}
+ 		,"medicalLnsuranceNo": {
+			"type": "keyword"
+		}
+ 		,"commercialInsurancePay": {
+			"type": "integer"
+		}
+ 		,"selfAccountPay": {
+			"type": "integer"
+		}
+ 		,"selfCashPay": {
+			"type": "integer"
+		}
+ 		,"selfFee": {
+			"type": "integer"
+		}
+ 		,"selfPayA": {
+			"type": "integer"
+		}
+ 		,"selfPayB": {
+			"type": "integer"
+		}
+ 		,"selfPayInsufficient": {
+			"type": "integer"
+		}
+ 		,"selfPayAboveLimit": {
+			"type": "integer"
+		}
+ 		,"selfPayInit": {
+			"type": "integer"
+		}
+ 		,"selfPayChildA": {
+			"type": "integer"
+		}
+ 		,"selfPayChildB": {
+			"type": "integer"
+		}
+ 		,"selfPayChildC": {
+			"type": "integer"
+		}
+ 		,"miFundPay": {
+			"type": "integer"
+		}
+ 		,"basicFundPay": {
+			"type": "integer"
+		}
+ 		,"largeFundPay": {
+			"type": "integer"
+		}
+ 		,"otherFundPay": {
+			"type": "integer"
+		}
+ 		,"localFundPay": {
+			"type": "integer"
+		}
+ 		,"localFundNormalPartPay": {
+			"type": "integer"
+		}
+ 		,"localFundOverPartPay": {
+			"type": "integer"
+		}
+ 		,"retiredMiFundPay": {
+			"type": "integer"
+		}
+ 		,"servantPay": {
+			"type": "integer"
+		}
+ 		,"familyCoFundPay": {
+			"type": "integer"
+		}
+ 		,"injuryInsuranceFundPay": {
+			"type": "integer"
+		}
+ 		,"enterpriseFundPay": {
+			"type": "integer"
+		}
+ 		,"ruralFundPay": {
+			"type": "integer"
+		}
+ 		,"childFundPayA": {
+			"type": "integer"
+		}
+ 		,"childFundPayB": {
+			"type": "integer"
+		}
+ 		,"childFundPayC": {
+			"type": "integer"
+		}
+ 		,"childbirthFundPay": {
+			"type": "integer"
+		}
+ 		,"retiredAidFundPay": {
+			"type": "integer"
+		}
+ 		,"disabledSoldierAidFundPay": {
+			"type": "integer"
+		}
+ 		,"coCorpPay": {
+			"type": "integer"
+		}
+ 		,"difficultAidFundPay": {
+			"type": "integer"
+		}
+ 		,"laborModelFundPay": {
+			"type": "integer"
+		}
+ 		,"healthFundPay": {
+			"type": "integer"
+		}
+ 		,"oldWorkerFundPay": {
+			"type": "integer"
+		}
+ 		,"basicFundAvailableBefore": {
+			"type": "integer"
+		}
+ 		,"localFundAvailableBefore": {
+			"type": "integer"
+		}
+ 		,"selfAccountBefore": {
+			"type": "integer"
+		}
+ 		,"basicFundAvailableAfter": {
+			"type": "integer"
+		}
+ 		,"localFundAvailableAfter": {
+			"type": "integer"
+		}
+ 		,"selfAccountAfter": {
+			"type": "integer"
+		}
+ 		,"SelfPaySectorBefore": {
+			"type": "integer"
+		}
+ 		,"selfPaySectorAfter": {
+			"type": "integer"
+		}
+ 		,"laborFundAvailableBefore": {
+			"type": "integer"
+		}
+ 		,"laborFundAvailableAfter": {
+			"type": "integer"
+		}
+ 		,"childFundAvailableBefore": {
+			"type": "integer"
+		}
+ 		,"childFundAvailableAfter": {
+			"type": "integer"
+		}
+ 		,"hospitalCost": {
+			"type": "integer"
+		}
+ 		,"seriousDiseasePay": {
+			"type": "integer"
+		}
+ 		,"lastmodify": {
+			"format": "YYYY-MM-dd HH:mm:ss",
+			"type": "date"
+		}
+
+     	 }
+    }
+  }
+}

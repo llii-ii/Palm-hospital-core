@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>学分管理</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 200px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>姓名：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="membername" type="text" class="form-control" name="" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:200px;">
+						<span style="padding-left: 20px;"><button type="button" class="btn btn-primary" onclick="refresh()">查询</button></span>
+					</div>
+				</div>
+			</div>
+			
+			<p id="toolbar">
+				<button type="button" onclick="clearAll()" class="btn btn-primary">全员学分清零</button>
+			</p>
+			
+			<table id="queryMemberCredits" >
+
+	        </table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+	var allMemberIds = '';
+	var allMemberCredits = '';
+	$(function(){
+		queryMemberCredits();
+	});
+
+	function queryMemberCredits(){
+		$('#queryMemberCredits').bootstrapTable({
+			url: '/wsgw/qyWeChat/QueryMemberCredits/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 10,                     //每页的记录行数（*）
+	        queryParams : function (params) {
+	        	var apiData = {};
+	        	apiData.memberName = $("#membername").val();
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	        {
+	            field: 'Membername',
+	            title: '姓名',
+	            align: 'center',
+	            valign: 'middle',
+	        }, {
+	            field: 'AllCredits',
+	            title: '当前学分',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            title: '操作',
+	            align: 'center',
+	            valign: 'middle',
+	            formatter: formatter
+	        },],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        		top.location = "http://"+window.location.host;
+	        	}else if(res.RespCode == 10000){
+	        		if(res.Data == undefined){
+		       			return [];
+		       		}else{
+		       			return res.Data;
+		       		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+
+	        },
+	        onLoadError: function () {
+	            //alert("数据加载失败！");
+	        },
+		});
+	}
+	
+	
+		function formatter(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:bg(\''+row.Memberid+'\');" style="color:#3685ff;font-size:12px;padding:0 6px;">学分变更</a>');
+			html.push('<a href="javascript:cl(\''+row.Memberid+'\','+row.AllCredits+');" style="color:#3685ff;font-size:12px;padding:0 6px;">学分清零</a>');
+			html.push('<a href="javascript:;" onclick="ps(\''+row.Memberid+'\')" style="color:#3685ff;font-size:12px;padding:0 6px;">学分记录</a>');
+			return html.join('')
+		}
+		
+		//清空全员学分
+		function clearAll(){
+			System.confirm({
+			  	title:'',
+			  	text:'确认清零全员学分？',
+			  	type:'info',
+			  	callback:function(bool){
+					if(bool){
+			        	var apiData = {};	
+			        	apiData.updateType = "allClear";
+			     		var param = {};
+			     		param.apiParam = Commonjs.getApiReqParams(apiData);
+			     		Commonjs.ajax('/wsgw/qyWeChat/UpdateMemberCredits/callApi.do',param,function(dd){
+			     			if(dd.RespCode == 10000){
+			     				alert("清零全员学分成功");
+			     				refresh();
+			     			}else {
+			     				alert("清零全员学分失败请联系管理员");
+			     			}
+			     		});
+					}
+				}
+			})
+		}
+		
+		//清空单人学分
+		function cl(memberId,allCredits){
+			System.confirm({
+			  	title:'',
+			  	text:'确认清零学分？',
+			  	type:'info',
+			  	callback:function(bool){
+					if(bool){
+			        	var apiData = {};	
+			    		apiData.memberId = memberId;
+			    		apiData.credits = 0-parseInt(allCredits);
+			    		apiData.updateType = "oneClear";
+			     		var param = {};
+			     		param.apiParam = Commonjs.getApiReqParams(apiData);
+			     		Commonjs.ajax('/wsgw/qyWeChat/UpdateMemberCredits/callApi.do',param,function(dd){
+			     			if(dd.RespCode == 10000){
+			     				alert("清空学分成功");
+			     				refresh();
+			     			}else {
+			     				alert("清空学分失败请联系管理员");
+			     			}
+			     		});
+					}
+				}
+			});
+		}
+		
+		function bg(Memberid){
+			System.openWindow({
+				id:'updateMemberCredits',
+				title:'变更学分',
+				url:'updateMemberCredits.html?memberId='+Memberid,
+				width:'300',
+				height:'230',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					refresh();
+				}
+			});
+		}
+		
+		function ps(memberId){
+			System.openWindow({
+				id:'queryMemberCreditsInfo',
+				title:'学分记录',
+				url:'queryMemberCreditsInfo.html?memberId='+memberId,
+				width:'500',
+				height:'800',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		//查询刷新
+		function refresh(){
+			$("#queryMemberCredits").bootstrapTable('destroy');
+			queryMemberCredits();
+		}
+	</script>
+</html>

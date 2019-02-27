@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>满意度调查 - 创建问卷 - 调查设置</title>
+    <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+	<link rel="stylesheet" href="../commons/themes/default/css/SimpleTree.css" type="text/css"></link>
+	<link href="../commons/themes/default/css/leftnav.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="../commons/themes/default/css/htfk.css" type="text/css"></link>
+	<script type="text/javascript" src="./js/upsamples.js"></script>    
+    <script type="text/javascript" src="../commons/js/SimpleTree/SimpleTree.js"></script>
+	<script type="text/javascript" src="../commons/upload/upload.js"></script>	
+	<script type="text/javascript" src="../commons/js/My97DatePicker/WdatePicker.js"></script>	
+</head>
+<body>
+
+<div class="hidden">
+  <div>
+  
+ <!-- 问卷样本导入开始 -->
+  <div class="ml20 mt15 mb25 mr15 main-myd" id="four" style="">
+    	<h2 class="relative pb10 bb-ccc"><span class="f18 f-yahei" id="subjectspan"></span><div class="absolute myd-step-4" style="right:0; top:0;"></div></h2>
+        <div class="mt10 tip-myd relative" style="position:relative;">
+        	<span class="c-org">上传说明</span>
+            <ul class="c-999">
+            	<li>文件必须包含列：姓名、性别、电话、就诊科室</li>
+                <li>文件可选包含列：就诊医生、疾病诊断、病案号</li>
+            </ul>           
+            <input id="samplesup" style="right:20px; top:35px;z-index:999; filter:alpha(opacity=0);opacity:0;" onchange=upload("samplesup"); type="file" name="0" class="absolute btn-upload"/>
+            <button class="absolute btn-upload" style="right:20px; top:35px;" ></button>
+        </div>
+        <input type="hidden" id="SubjectId"/>
+        <div class="mt20 myd-box-gray" id="nohave" style="display: none;">
+        	<div class="pl15 myd-gray-tit"><strong>样本信息</strong></div>
+            <div class="myd-gray-con">
+            	<div class="clearfix" style="padding:35px 0 35px 220px;">
+                    <i class="fl icon-dl"></i>
+                    <div class="fl ml15 c-555" style="width:400px;">
+                        <h4 class="f24 f-yahei" style="line-height:1.5">您尚未上传样本！</h4>
+                        <div class="mt5 f14 f-yahei"> 请按模板格式制作样本，然后上传，<a href="/WbjUI/servlet/ActionServlet?bizAction=samplesmodel&date=date()" class="c-007">下载模板</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt20 clearfix" id="haveshow" style="display: none;">
+            <div class="fl myd-box-blue" style=" width:184px;">
+                <div class="myd-blue-tit"><strong>样本概况</strong></div>
+                <div class="myd-blue-con" style="">
+                    <ul  id="showdept" class="myd-blue-ul" style="height:250px; overflow:auto;">                    
+                    </ul>
+                    <a href="javascript:;" onclick="getnoOptiondept()" class="c-007">提取预约数据</a>
+                </div>
+            </div>
+            <div class="ml5 fl" style="width:80%;">
+            <div id="samplediv" class=""></div>
+            
+             <div class="p5 clearfix" style="border:1px solid #f6f6f6; border-top:none;"><input type="button"  onclick="getxj()" class="fr btn-gray-xl mr10 mt5 mb5" value="+ 增加信息" /></div>
+             <div class="pager_container" >
+                  <input id="pagenumber" value="1" type="hidden" />
+                  <div id="pager"></div>
+             </div>
+            </div>
+           
+        </div>
+        <div class="mt15 t-rig"><!--  <input type="button" class="btn-blue-xl" value="确定调查" onclick="gowjfb()" />--><input type="button" class="btn-blue-l mr10" value="返回" onclick="goreturn()" /></div>
+        
+      </div>
+ <!-- 问卷样本导入结束 -->
+ 
+
+  </div>
+</div>
+
+<!--提示弹窗-->
+<div class="pop" id="alertSucc" style="display: none;">
+  <div class="mask"></div>
+  <!--[if lte IE 6]><iframe class="mask-iframe" frameborder="0"></iframe><![endif]-->
+  <div class="popbox popbox-w430">
+    <div class="pop-tit relative f14 c-222 bold">提示</div>
+    <div class="pop-main" style="padding:35px 25px;">
+		<div class="f14"><i class="icon-loading mr25"></i>数据导入中，请稍后……</div>
+    </div>
+  </div>
+</div>
+
+<!--新增信息弹窗-->
+<div class="pop" id="addSample" style="display: none;">
+  <div class="mask"></div>
+  <!--[if lte IE 6]><iframe class="mask-iframe" frameborder="0"></iframe><![endif]-->
+  <div class="popbox popbox-w430">
+  <form id="add_f">
+    <div class="pop-tit relative f14 c-222 bold">新增信息<a href="javascript:;" class="btn-close absolute" onclick="closepop('addSample')"></a></div>
+    <div class="pop-main" style="padding:15px">
+         
+		<div class=" clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>姓名：</label><input type="text" id="username" class="inp-txt validate[required,maxSize[5],custom[chinaenglishnumber]]" /></div>
+		<div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>性别：</label><select  id="sex" class="pop-sel" style="width:180px"><option value="1">男</option><option value="2">女</option><option value="3">未知</option></select></div>
+        <div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>电话：</label><input type="text" id="moblie" class="inp-txt validate[required]" /></div>
+		<div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>就诊科室：</label><input id="deptname" type="text" class="inp-txt validate[required,maxSize[10],custom[chinaenglishnumber]]" /></div>
+    	<div class="mt15 clearfix"><label class="fl" style="width:120px">就诊医生：</label><input id="doctorname" type="text" class="inp-txt validate[maxSize[5],custom[chinaenglishnumber]]" /></div>
+        <div class="mt15 clearfix"><label class="fl" style="width:120px">疾病诊断：</label><input id="treatres" type="text" class="inp-txt validate[maxSize[20]]" /></div>
+        <div class="mt15 clearfix"><label class="fl" style="width:120px">病案号：</label><input id="casehistoryid" type="text" class="inp-txt validate[maxSize[10],custom[chinaenglishnumber]]" /></div>
+    </div>
+    <div class="pop-btns t-rig" style="padding-left:0;">
+      <input type="submit" class="btn-blue mr10" onclick="addSamples()"  value="确认" /><input type="button" class=" btn-gray-s mr25" value="取消" onclick="closepop('addSample')" />
+    </div>
+    </form>
+  </div>
+</div>
+
+<!--修改样本弹窗-->
+<div class="pop" id="modifySample" style="display: none;">
+  <div class="mask"></div>
+  <!--[if lte IE 6]><iframe class="mask-iframe" frameborder="0"></iframe><![endif]-->
+  <div class="popbox popbox-w430">
+   <form id="update_f">
+    <div class="pop-tit relative f14 c-222 bold">修改样本<a href="javascript:;" class="btn-close absolute" onclick="closepop('modifySample')"></a></div>
+    <div class="pop-main" style="padding:15px">
+        <input type="hidden" id="bj_SampleId"/>
+        <input type="hidden" id="bj_SubjectId"/>
+		<div class=" clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>姓名：</label><input type="text" id="bj_username" class="inp-txt validate[required,maxSize[5],custom[chinaenglishnumber]]" /></div>
+		<div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>性别：</label><select  id="bj_sex" class="pop-sel" style="width:180px"><option value="1">男</option><option value="2">女</option><option value="3">未知</option></select></div>
+    <div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>电话：</label><input type="text" id="bj_moblie" class="inp-txt validate[required]" /></div>
+		<div class="mt15 clearfix"><label class="fl" style="width:120px"><span class="c-f00">*</span>就诊科室：</label><input id="bj_deptname" type="text" class="inp-txt validate[required,maxSize[10],custom[chinaenglishnumber]]" /></div>
+    <div class="mt15 clearfix"><label class="fl" style="width:120px">就诊医生：</label><input id="bj_doctorname" type="text" class="inp-txt validate[maxSize[5],custom[chinaenglishnumber]]" /></div>
+    <div class="mt15 clearfix"><label class="fl" style="width:120px">疾病诊断：</label><input id="bj_treatres" type="text" class="inp-txt validate[maxSize[20]]" /></div>
+    <div class="mt15 clearfix"><label class="fl" style="width:120px">病案号：</label><input id="bj_casehistoryid" type="text" class="inp-txt validate[maxSize[10],custom[chinaenglishnumber]]" /></div>
+    </div>
+    <div class="pop-btns t-rig" style="padding-left:0;">
+      <input type="submit" class="btn-blue mr10" onclick="updateSamples()" value="确认" /><input type="button" class=" btn-gray-s mr25" value="取消" onclick="closepop('modifySample')" />
+    </div>
+    </form>
+  </div>
+</div>
+<!--预约患者信息提取弹窗-->
+<div class="pop" id="getYYHZInfo" style="display: none;">
+  <div class="mask"></div>
+  <!--[if lte IE 6]><iframe class="mask-iframe" frameborder="0"></iframe><![endif]-->
+  <div class="popbox popbox-w430">
+  <form id="yyhz">
+    <div class="pop-tit relative f14 c-222 bold">预约患者信息提取<a href="javascript:;" class="btn-close absolute" onclick="closepop('getYYHZInfo')"></a></div>
+    <div class="pop-main" style="padding:15px">
+        <input type="hidden" id="orderdeptname"/>
+		<div class="clearfix"><label class="fl">就诊科室：</label>
+		<!--  <input type="text"  id="orderdeptid" class="cus-sel-chosed" value="" onclick="showtree(this)" disabled  style="width:150px; border:none; outline:none;" />-->
+		
+		<div class="fl relative" style="width:321px; z-index:2">
+          <div class="cus-sel-chosed" id="cusSelChosed"></div>
+          
+       <!-- <div id="cusSelList"  style="position:absolute; z-index:99999;display: none;position: absolute; overflow: auto; width: 180px; height: 200px; border: 1px; background-color: #F0F8FF;" >
+					 <ul  id="treeid" ></ul>
+	  
+        </div> -->
+        
+        <input type="hidden" id="orderdeptid" />
+          <div class="absolute cus-sel-list" id="cusSelList" style="display:none;overflow: auto; width: 220px; height: 400px;">
+                <div id="treeid" class="st_tree"></div>
+          </div>
+          
+        </div>
+		</div>
+		<div class="mt15 clearfix">
+        	<label class="fl">就诊日期：</label>
+             <div class="fl xzrq" onClick="WdatePicker({el:'DateTimeStart',isShowClear:true,readOnly:true})">
+<!--            	<span class="fl">2014-04-22</span>-->
+                <input class="fl Wdate validate[required,custom[date]]" style="height:26px;border: 0px;text-align:left;margin-left: 0px; width:120px;" id="DateTimeStart" onClick="WdatePicker({el:'DateTimeStart',isShowClear:true,readOnly:true})" />
+                
+            </div>
+            <span class="fl ml5 mr5">到</span>
+              <div class="fl xzrq" onClick="WdatePicker({el:'DateTimeEnd',isShowClear:true,readOnly:true})">
+<!--            	<span class="fl">2014-04-22</span>-->
+                <input class="fl Wdate validate[required,custom[date]]" style="height:26px;border: 0px;text-align:left;margin-left: 0px;width:120px;" id="DateTimeEnd" onClick="WdatePicker({el:'DateTimeEnd',isShowClear:true,readOnly:true})" />
+                
+            </div>
+        </div>
+        <div class="mt15"><label class="fl">人员数量：</label><input type="text" id="num" class="inp-txt validate[required,custom[integer],min[1]]" style="width:130px;" /></div>
+    </div>
+    <div class="pop-btns t-rig">
+      <input type="submit" class="btn-blue mr25" onclick="orderUp()" value="确认" />
+    </div>
+    </form>
+  </div>
+</div>
+<!--错误样本数据列表弹窗 -->
+<div class="pop" id="errorDataList" style="display: none;">
+  
+ 
+ 
+    <div class="pop-tit relative f14 c-222 bold"><!-- <a href="javascript:;" class="btn-close absolute" onclick="closepop('errorDataList')"></a> --></div>
+    <div class="pop-main" style="padding:15px">
+    	<div>一共导入<span class="c-org" id="drtotal"></span>条，错误<span class="c-f00" id="errornum"></span>条</div>
+    	<div id="drerrordetail" style="height:250px; overflow-x:hidden; overflow-y:scroll;"></div>
+    
+             
+    </div>
+    <!-- <div class="pop-btns t-rig" style="padding-left:0;">
+      <input type="button" class="btn-blue mr25" onclick="closepop('errorDataList')" value="确认" />
+    </div> -->
+  </div>
+
+
+</body>
+</html>

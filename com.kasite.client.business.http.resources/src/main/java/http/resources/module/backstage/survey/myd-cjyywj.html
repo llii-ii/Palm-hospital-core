@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>创建问卷</title>
+     	<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+     	<script type="text/javascript" src="./js/myd-cjyywj.js"></script>
+     </head>
+    <body>
+      <div id="mainTabCon">
+          <div class="main-tab-con">
+              <div class="template-wrap">
+                  <div class="tpl-type">
+                      <ul id="tplTab">
+                          <li><a href="javascript:;" onclick="showMode(1,5582)">门诊患者</a></li>
+                          <li><a href="javascript:;" onclick="showMode(2,5590)">住院患者</a></li>
+                          <li><a href="javascript:;" onclick="showMode(3,5593)">手术患者</a></li>
+                      </ul>
+                  </div>
+                  <div id="tplTabCon">
+                      <div class="tpl-tab-con" id="tab1">
+                      </div>
+                      <div class="tpl-tab-con" id="tab2">
+                      </div>
+                      <div class="tpl-tab-con" id="tab3">
+                      </div>
+                  </div>
+            </div>
+        </div>
+       </div>
+    </body>
+	<script type="text/javascript">
+	    $(function(){
+	        $('#tplTab li').removeClass('on').eq(0).addClass('on');
+	        $('#tplTabCon .tpl-tab-con').hide().eq(0).show();
+	        $('#tplTab li').click(function(event) {
+	            $('#tplTab li').removeClass('on');
+	            $(this).addClass('on');
+	            $('#tplTabCon .tpl-tab-con').hide().eq($(this).index()).show();
+	        });
+	    })
+	</script>
+</html>

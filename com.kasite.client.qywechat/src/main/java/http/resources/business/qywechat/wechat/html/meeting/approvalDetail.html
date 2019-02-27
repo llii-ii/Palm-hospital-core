@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>请假审批明细</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			.act2{
+				line-height: 1.4;
+			}
+			.act2-title{
+				position: relative;
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .55rem;
+				padding-top: .3rem;
+				padding-bottom: .3rem;
+				font-weight: bold;
+			}
+			.act2-title:before{
+				content: '';
+				display: block;
+				width: 0.06rem;
+				height: 0.3rem;
+				background-color: #2988fc;
+				position: absolute;
+				left: 0.38rem;
+				top: 50%;
+				margin-top: -.15rem;
+				border-radius: 0.06rem;
+				-webkit-border-radius: 0.06rem;
+			}
+			.act2-title span{
+				float: right;
+				color: #999;
+				font-weight: normal;
+				padding-right: 0.38rem;
+			}
+			.act2-status{
+				float: right;
+				color: #3fc385!important;
+				font-size: 0.24rem;
+			}
+			.act2-person{
+				background: #fff;
+				padding:0 0.54rem 0.54rem 0.54rem;
+			}
+			.act2-person li{
+				position: relative;
+				float: left;
+				display: block;
+				padding: 0 0.17rem 0 0.4rem;
+				font-size: 0.28rem;
+				line-height: 0.46rem;
+				color: #333;
+				background: #f7fbff;
+				border-radius: 0.1rem;
+				-webkit-border-radius: 0.1rem;
+				margin-right: 0.56rem;
+				margin-bottom: 0.1rem;
+			}
+			.act2-person li img{
+				width: .46rem;
+				height: .46rem;
+				position: absolute;
+				z-index: 1;
+				left: -.2rem;
+				top: 0;
+			}
+			.act2-content{
+				position: relative;
+				background: #fff;
+				padding: 0 0.5rem 0.2rem 0.5rem;
+			}
+			.act2-content label{
+				display: inline-block;
+				width: 1.4rem;
+				color: #2988fc;
+				font-size: 0.26rem;
+				margin-bottom: 0.2rem;
+			}
+			.act2-content span{
+				font-size: 0.26rem;
+			}
+			.act2-btn{
+				color: #fff;
+				float: right;
+				padding: 0.16rem 0.2rem;
+				background: #2988fc;
+				border-radius: 0.1rem;
+				margin-top: 0.25rem;
+				margin-right: 0.35rem;
+				font-weight: bold;
+				font-size: 0.28rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="act2">
+	        	<p class="act2-title">会议请假审批<span class="act2-status" id="appStatus"></span></p>
+	        	<div class="act2-content">
+	        		<div><label>审批编号：</label><span id="approvalId"></span></div>
+	        		<div><label>请假会议：</label><span id="title"></span></div>
+	        		<div><label>请假原因：</label><span id="reason"></span></div>
+	        	</div>
+	        	<p class="act2-title" style="margin-top: 0.2rem;">审批流程</p>
+	       		<div class="act2-content" id="lc">
+	        		  <!--<div><b>管理员</b><span class="act2-status"></span></div>-->
+	        	</div>
+	        	<!-- <div class="act2-btn" onclick="window.location.href = 'detail3.html'">+ 添加备注</div>  -->
+	        	<div class="act2-btn" style="display:none;" onclick="window.location.href = 'index.html'">返回首页</div>
+	        </div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+	var approvalId = Commonjs.getUrlParam("approvalId");
+	//var title = Commonjs.getUrlParam("title");
+	var reason = Commonjs.getUrlParam("reason");
+	$(function(){
+		if(reason != '' && reason != null && reason != undefined){
+			$(".act2-btn").show();
+		}
+		queryMeetingApproval();
+		$("#approvalId").text(approvalId);
+	});
+	//获取审核详情
+ 	function queryMeetingApproval(){
+		var apiData = {};	
+    	apiData.id = -1;
+    	apiData.approvalId = approvalId;
+    	apiData.status = -1;
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingApproval/callApi.do',param,function(dd){
+			if(dd.RespCode == 10000){
+				$("#title").text(dd.Data[0].Meetingtitle);
+				$("#reason").text(dd.Data[0].Reason);
+				var html = '';
+				if(dd.Data[0].Status == 0){
+					$("#appStatus").text("待审批");
+				}else if(dd.Data[0].Status == 1){
+					$("#appStatus").text("通过");
+					html = '<div><b>'+dd.Data[0].Operatorname+'</b><span class="act2-status">'+dd.Data[0].Remark+'</span></div>';
+				}else if(dd.Data[0].Status == 2){
+					$("#appStatus").text("驳回");
+					html = '<div><b>'+dd.Data[0].Operatorname+'</b><span class="act2-status">'+dd.Data[0].Remark+'</span></div>';
+				}
+				$("#lc").html(html);
+			}
+		},{async:false});
+	} 
+	</script>
+</html>

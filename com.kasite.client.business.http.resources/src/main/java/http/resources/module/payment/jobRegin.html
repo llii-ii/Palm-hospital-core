@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>账单下载Job重启</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+</head>
+
+<body>
+	<figure>
+		<div class="c-main">
+			<label for="from">选择日期：</label>
+			<input type="text" id="from" name="from">
+			<label for="to">-</label>
+			<input type="text" id="to" name="to">
+			<p><button onclick="javascript:download('orderCheckJob');">重新下载旧系统的全流程订单信息</button></p>
+			<p><button onclick="javascript:download('hisBillJob');">重新下载his账单信息</button></p>
+			<p><button onclick="javascript:download('billJob');">重新下载商户(微信/支付宝)账单信息</button></p>
+			<p><button onclick="javascript:download('billCheckJob');">重新开启对账</button></p>
+			<p><button onclick="javascript:download('billSyschroJob');">账单同步</button></p>
+			<p><button onclick="javascript:download('bankCheckJob');">银行勾兑账单</button></p>
+			<p><button onclick="javascript:download('channelBankCheckJob');">渠道关联银行账号账单金额统计</button></p>
+			<p><button onclick="javascript:download('payWayDayStatisticsJob');">交易日报表统计</button></p>
+		</div>
+	</figure>
+</body>
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+	$(function() {
+	    $( "#from" ).datepicker({
+	      defaultDate: "+1w",
+	      changeMonth: true,
+	      numberOfMonths: 1,
+	      dateFormat:"yy-mm-dd",
+	      onClose: function( selectedDate ) {
+	        $( "#to" ).datepicker( "option", "minDate", selectedDate);
+	      }
+	    });
+	    $( "#to" ).datepicker({
+	      defaultDate: "+1w",
+	      changeMonth: true,
+	      numberOfMonths: 1,
+	      dateFormat:"yy-mm-dd",
+	      onClose: function( selectedDate ) {
+	        $( "#from" ).datepicker( "option", "maxDate", selectedDate);
+	      }
+	    });
+	});
+	function download(jobname){
+		var startDateVal = $("#from").val();
+		var endDateVal = $("#to").val();
+		$.ajax({
+			type: "GET",
+			url: location.protocol + '//' + location.host + '/api/'+jobname+'/doDownloadData.do',
+			data: {
+				startDate: startDateVal,
+				endDate: endDateVal
+			},
+			async: false,
+			timeout : 30000,
+			cache : true,
+			dataType: 'json',
+			success: function(data){
+				//$("#resultSet").val(JSON.stringify(data.result));
+ 			},
+ 			error:"查询报错！"
+		});
+	}
+	
+</script>
+ 	
+</html>

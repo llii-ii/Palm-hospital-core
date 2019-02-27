@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+		<script src="../../js/jquery-1.7.2.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+		<script src="../../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery-ui-1.9m7.js"></script>
+		<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+		<script type="text/javascript" src="../../js/jquery.uniform.js"></script>
+		<script type="text/javascript" src="../../js/jquery.busy.js"></script>
+		<script type="text/javascript" src="../../js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.mCustomScrollbar.js"></script>
+		<script type="text/javascript" src="../../js/store.js"></script>
+		<script type="text/javascript" src="../../js/json2.js"></script>
+		<script type="text/javascript" src="../../js/jquery.scroll-follow.js"></script>
+		<script type="text/javascript" src="../../js/realesoft.js"></script>
+		<script type="text/javascript" src="../../js/Validform_v5.0.js"></script>
+		<script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.fixedheadertable.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easytabs.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.spin.js"></script>
+		<script type="text/javascript" src="../../js/general.js"></script>
+		<script type="text/javascript" src="../../js/jquery.bottomTipbar.js"></script>
+		<script type="text/javascript" src="../../js/pmc-general.js"></script>
+		<script src="../../js/app.js" type="text/javascript"></script>
+		<script src="../../js/jquery.nicescroll.min.js" type="text/javascript"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.widget label, span {
+			    font-size: 12px;
+			    position: relative;
+			}
+			h1, .h1, h2, .h2, h3, .h3{
+				margin-top:30px;
+			}
+			.widget {
+			    margin-bottom: 15px;
+			}
+		</style>
+		<!-- END THEME STYLES -->
+		<script>
+			jQuery(document).ready(function() {
+			    //add by wangn 2015-10-26 
+			    var d = new Date();
+			    var str = d.getFullYear();
+			    $("#copy-date").html('2004-'+str);
+			    //add end
+				App.init(); // initlayout and core plugins
+				$("input, textarea").uniform();
+			  	$("select").uniform();
+			  	$(".page-sidebar-menu li").bind("click",function(e){
+			  		//清除主屏幕内容
+					
+					/*$(".sub-menu").empty().width(100);
+					$(".page-content").empty();
+					$(".sub-left-menu,.sub-right-menu").empty().css("background","#FFF");
+					$(".third-menu").empty().height(40).css("background","#FFF");*/
+				});
+			  	
+			  	$(".page-sidebar-menu li").bind("click",function(){
+			  	/* 注释掉 ，解决backspace回退 问题 和 二级菜单空白区域 点击问题 。
+			  		if($(this).find("ul").hasClass("sub-menu")) {
+			  			$(".page-content").css("margin-left","180px");
+						$(".third-menu").css("margin-left","180px");
+						$(this).addClass("active ").siblings("li").removeClass("active");
+						$(this).find("ul li:eq(0)").addClass("active").siblings("li").removeClass("active");
+						var href = $(this).find("a").attr("href");
+						window.location.href = href;
+			  		} else {
+			  			$(".page-content").css("margin-left","80px");
+						$(".third-menu").css("margin-left","80px");
+						$(".page-sidebar-menu li:gt(0)").removeClass("open");
+						$(".sub-menu").hide();
+						$(this).addClass("active ").siblings("li").removeClass("active");
+			  		}*/
+			  	});
+			  	$(".sub-menu").bind("click",function(e){
+			  		//e.stopPropagation();
+			  	});
+		
+				$(".sub-menu > li").bind("click",function(e){
+					//e.stopPropagation();
+					$(this).addClass("active").siblings("li").removeClass("active");
+					$(this).parent(".sub-menu").parent("li").removeClass("open").addClass("active ").siblings("li").removeClass("active");
+				});
+				
+				$(".sub-menu").niceScroll({cursorcolor:"#CCC"});
+				
+			});
+			$(window).resize(function() {
+				
+				//各种高度设定
+				$(".sub-menu").height($(window).height() + 8);
+				if($("body").find(".third-menu > ul > li").html()) {
+					$(".page-content").height($(window).height() );
+					$(".sub-left-menu").height($(window).height() );
+					$(".sub-right-menu").height($(window).height() );
+				} else {
+					$(".page-content").height($(window).height() );
+				}
+				if($("body").find(".sub-left-menu").html()) {
+					$(".page-content").css("padding-left","290px");
+				}
+				if($("body").find(".sub-right-menu").html()) {
+					$(".page-content").css("padding-right","210px");
+				}
+				$(".sub-menu").getNiceScroll().resize();
+				
+			});
+		
+		  </script>
+		<!-- END JAVASCRIPTS -->
+	</head>
+	<body>
+		<div class="third-menu tabbable">
+		    <ul class="nav nav-tabs" id="myTab">
+				<li>
+				 	<a href="./p-0-usermanager.html">用户管理</a>
+				</li>
+				<li>
+				 	<a href="./p-0-rolemanager.html">角色管理</a>
+				</li>
+				<li>
+					<a href="./p-0-mechanismmanager.html">机构管理</a>
+				</li>
+				<li class="active">
+					<a href="./p-0-equipmentmanager.html">设备管理</a>
+				</li>
+			</ul>
+		</div>
+		
+		<!-- BEGIN LEFT MENU -->
+	    <div class="sub-left-menu">
+			<script type="text/javascript" src="../../js/jquery.ztree.all-3.1.js"></script>
+			<link rel="stylesheet" href="../../css/zTreeStyle.css" type="text/css" />
+			<script type="text/javascript">
+				 var zTree;//树
+				 var setting;//参数设置
+				 var zTreeNodes = [] ;//数据
+				 var setting = {
+						 data : {
+						 	key : {
+						 		name : "name"
+						 		},
+							 simpleData : {
+								 enable : true,
+								 idKey : "id",
+								 pIdKey : "parentId",
+								 rootPId : 1
+							 }
+						 	},
+						 callback: {
+								onClick: zTreeOnClick
+							}
+						 };
+			
+				 //所选节点
+				 function getSelectedNodes(){
+					  var selectedNode = zTree.getCheckedNodes();
+					  for(var i=0;i<selectedNode.length;i++)
+					  {
+					   alert(selectedNode[i].id);
+					  }
+				 }
+				 function zTreeOnClick(event, treeId, treeNode){
+					 //var url = "/PMC/app/plugins/platform/pages/organization/form?organizationId="+treeNode.id;
+					 //$("#middleFrame").attr("src",url);
+					 //window.parent.leftNodeClick(treeNode.id, treeNode);
+				 }
+				 
+				 $(document).ready(function(){
+					 $.ajax({
+						 async : false,
+						 cache:false,
+						 type: 'GET',
+						 dataType : "json",
+						 url: "../../data/tree-data.json",//请求的action路径
+						 error: function () {//请求失败处理函数
+						 	//alert('请求失败');
+							 requestError();
+						 },
+						 success:function(data){ //请求成功后处理函数。
+						 	zTreeNodes = data; //把后台封装好的简单Json格式赋给treeNodes
+						 	zTree = $.fn.zTree.init($("#organizationTree"), setting, zTreeNodes);
+						 	
+//						 	if(zTreeNodes.length > 0)
+//							{
+//						 		var treeNodes = zTree.getNodes();
+//								window.parent.leftNodeClick(treeNodes[0].id);
+//						 		//window.parent.leftNodeClick(null);
+//							}
+//						 	else
+//							{
+//						 		window.parent.leftNodeClick();
+//							}
+						 }
+						 });
+					 
+				 });
+			  </script>
+			  
+			<div id="77fd4f71-695e-4865-ab9d-fec30377bfeb" style="min-width: 240px;">
+				
+					<div class="widget-head">
+						<span class="icon-tree"></span>
+						<h2>机构树</h2>
+					</div>
+				
+				
+				<div id="organizationTreeDiv" class="body" style="overflow: auto;min-height: 450px;">
+					<div>
+						<ul id="organizationTree" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+			
+			<div id="request-error-dialog-confirm77fd4f71-695e-4865-ab9d-fec30377bfeb" title="请求失败！" style="display: none;">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>向服务器请求数据失败,请重试一次.</p>
+			</div>
+			
+			
+			<script>
+				function requestError()
+				{
+					$( "#request-error-dialog-confirm77fd4f71-695e-4865-ab9d-fec30377bfeb" ).dialog( "open" );
+					return false;
+				}
+			
+				$(document).ready(function(){
+			
+					$( "#request-error-dialog-confirm77fd4f71-695e-4865-ab9d-fec30377bfeb" ).dialog({
+						resizable: false,
+						height:160,
+						autoOpen: false,
+						modal: true,
+						show: "blind",
+						hide: "explode",
+						buttons: {
+							"确定": function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				});
+			
+			</script></div>
+				<!-- END LEFT MENU -->
+					<!-- BEGIN LEFT MENU -->
+			    
+				<!-- END LEFT MENU -->
+			    <!-- BEGIN PAGE -->
+			<div id="a4338bf1-a89d-4928-87f8-5127014b0daa">
+				
+				<div class="page-content" style="top: 39px;left: 280px;">
+					<iframe src="p-0-equipmentmanager-1.html" name="middleFrame" width="100%"  height="100%" id="middleFrame" frameborder="0" scrolling="no"></iframe>
+				</div>
+			<script type="text/javascript">
+//				function reinitIframe() { //alert("dd");
+//					var height = $('#middleFrame').contents().find("body").height();
+//					$('#middleFrame').height(height);
+//					$('#organizationTreeDiv').height(height - 50);
+//					sizePane();
+//				}
+//				window.setInterval("reinitIframe()", 500);	
+			
+				//å·¦è¾¹çç»ç»æ èç¹ç¹å»æ¶ååºæ¹æ³
+				function leftNodeClick(id)
+				{
+					if(id != null){
+						var url = "/PMC/app/plugins/deviceManage/pages/deviceList?searchOrganizationId="+id;
+						$("#middleFrame").attr("src",url);
+					}
+					else
+					{
+						var url = "/PMC/app/plugins/deviceManage/pages/deviceList";
+						$("#middleFrame").attr("src",url);
+					}
+				}		
+			
+			</script>
+	</div>
+    <!-- END PAGE -->
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+		function addUser(){
+			document.location.href="./p-0-updateuser.html";
+		}
+	</script>
+</html>

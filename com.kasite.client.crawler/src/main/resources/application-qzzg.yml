@@ -1,0 +1,105 @@
+#卡斯特配置中心连接配置。是否开启
+kasite:
+    #是否开启中心连接
+    isConnectionKastieCenter: false
+    #配置中心地址
+    centerUrl: 127.0.0.1:8666
+    #配置中心申请的appId
+    appId: KASITE-CLIENT-CRAWLER
+    #配置中心申请的密码
+    appSecret: zzXHt3e7wrKQ8eD3L
+    #泉州市正骨医院的组织机构代码
+    orgCode: 135050300065
+    #本地保存配置文件的目录
+    configPath: /Users/daiyanshui/Desktop/Config
+    #中心获取的配置 公钥
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyFvk7xCEWfwzD6Me4H3Q6EyI5s3++uKK0bmIs+sOS+m+9WphC4LzaIXHH4tYbnP6o9OttehwnninTYDd93yQo+tOI5jGQZyxuT1DpwZ8eB5bIw1gKKrlmuhs03BDD86XtbR306REkJ7XR1kbXMfFX9qBalPB7ElvuH2V3Ek62IsVwQyhotL8Acskt7nO7WY6Y+zUAdIeD/MRvp+VvNzhze0Cr4NFT5BTRdAyaQL8ny8ZH18hRvcU5wuElwK5SRHoFpdtYVziWOQZYxzSqdTVUuV0XAjAG4ZH7EgSx0J+6LOHrhHrggcxznOKlxv1m6XyDtz1D0KIEUo4GIs1mrgn2wIDAQAB#RPC服务需要对应的配置信息
+#平安商保医院配置
+pingan: 
+    #医院编码
+    senderCode: 400041186
+    #第三方编码，1 市医保、2 省医保 、3 新农合 、4 自费、5 公费医疗
+    intermediaryCode: 
+    #第三方名称,市医保、省医保 、新农合 、自费、公费医疗
+    intermediaryName: 
+#启动RPC相关配置
+rpc:
+    appId: crawler
+    appName: 数据抓取项目
+    port: 12345
+#上饶健康档案云平台的配置信息
+datacloud:
+    #是否开启验证： true 开启  false 关闭
+    isCheck: false
+    file:
+        #上传验证标准 及上传规范
+        data: standard/dev/data.xls
+        #上传验证标准字典值
+        dict: standard/dev/dict.xls
+        #个性化字典值
+        mydict: standard/dev/dict.xml
+        #执行sql语句并将执行结果写入到当前文件夹下
+        execute: standard/sql
+    api: 
+        #接口地址 获取 公钥地址
+        publickey: http://27.154.233.186:9999/api/v1.0/organizations/jkzl/key
+        #上传文件地址
+        upload: http://27.154.233.186:9999/api/packages
+        zkUpload: http://27.154.233.186:9999/api/qcPackages
+    group:
+        #机构代码
+        org_code: jkzl
+        #应用安全码
+        appSecret: y6hmrGAyeGMHnKEO
+        #标准版本号
+        inner_version: 59083976eebd
+        #应用ID
+        appKey: HFvHcC8YH2
+        #共钥
+        publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCfTfToGlB7r64rj9euN6MOyWTfT4Fc0sRCiyGFoQ03U7/Arl3VLWMgOtziDfhzZ6WGV+oYmWmc/uBHFYlQ4RatEDkVA2LuMkQv69dqZ4XmdL2vQrkMOLu97U1U1R9w3UjFb1vtRaiBQpD948DpM89Q0YJh8IPhPx6i2ArGrXvxCwIDAQAB
+    fileupload: 
+        filepath: 
+            #zip 压缩后保存的目录
+            zip: user.dir/file/zip
+            #上传数据文件的存放目录
+            data: user.dir/file/data
+            #上传日志存放目录
+            log: user.dir/file/error
+            #数据采集的时候每次采集多少调--分页查询。
+            pageSize: 100
+            #开启线程数
+            threads: 40
+            #临时保存多久的文件 默认 7 天超过7天的数据直接删除。
+            tempdates: 2
+            #是否开启上传／验证本地文件的时候可以关闭，验证后再上传其实就是关闭打包作业 true 开启上传／false关闭上传
+            isUpload: false
+#ES相关配置信息
+elastic:
+    url: 127.0.0.1:9200
+#数据源配置：这里用的数据源是 阿里的Druid 启动的时候偏慢
+spring:
+    datasource:
+        saveSqlLog: true
+        showSql: true
+        alias: hisdb
+        #oracle mysql sqlserver
+        dbType: oracle
+        ip: 172.18.20.163
+        databaseName: hisdb
+        url: jdbc:oracle:thin:@//172.18.20.163:1521/basic
+        username: yygh
+        password: jkzl123456
+        #连接池的配置信息
+        initialSize: 10
+        minIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000

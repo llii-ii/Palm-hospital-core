@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>活动详细</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>发起人：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="operatorName"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>活动主题：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="title"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>创建时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="insertTime"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>参与人数：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="partNumber"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>活动时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="activityTime"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>活动地点：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="place"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>活动内容：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="intro"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="margin-left:160px;margin-bottom: 16px;">
+					<div class="addimg">
+						<div class="addimg-has">
+							<img id="imgView" src="../js/webCom1.0/css/skin/yqw/img/addImg.png" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>参与人员：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="checksName"></div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>报名截止时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;" id="expireTime"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script>
+		var acid = Commonjs.getUrlParam("id");
+		var acUUid = '';
+		$(function(){
+			getActivityInfo();
+			getPeopleList(0);
+		});
+		//获取活动信息
+		function getActivityInfo(){
+			var apiData = {};	
+    		apiData.id = acid;
+    		apiData.status = -1;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryActivityById/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				acUUid = dd.Data[0].Activityid;
+     				$("#operatorName").text(dd.Data[0].Operatorname);
+     				$("#title").text(dd.Data[0].Title);
+     				$("#insertTime").text(dd.Data[0].Inserttime);
+     				$("#activityTime").text(dd.Data[0].Starttime + "~" + dd.Data[0].Endtime);
+     				$("#place").text(dd.Data[0].Place);
+     				$("#intro").html(dd.Data[0].Intro);
+     				$("#partNumber").text(dd.Data[0].Totalnumber+"人");
+     				$("#expireTime").text(dd.Data[0].Expiretime);
+     				if(dd.Data[0].ImgUrl != ''){
+    					//展示图片
+    					$("#imgView").attr("src", dd.Data[0].ImgUrl);
+    					$("#imgView").css("width","50%");
+    					$("#imgView").css("height","50%"); 
+     				}
+     			}
+     		},{async:false});
+		}
+		
+		//获取参与人
+		function getPeopleList(memberType){
+			var apiData = {};	
+            apiData.uid = acUUid;
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var names = '';
+					var ids = '';
+					for(var i = 0;i<dd.Data.length; i++){
+						var id = dd.Data[i].Memberid;
+						if(dd.Data[i].IsDept == 1){
+							id = "d_" + id;
+						}
+						names = names + dd.Data[i].Membername + ",";
+						ids = ids + id + ",";
+					}
+			        $("#checksName").text(names.substring(0,names.length-1));
+    			}else{
+					$("#checksName").text("暂无参与人");
+    			}
+    		},{async:false});		
+		}
+	</script>
+</html>

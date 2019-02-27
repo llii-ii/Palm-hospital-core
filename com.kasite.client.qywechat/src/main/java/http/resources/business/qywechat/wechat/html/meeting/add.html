@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>会议申请</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+		<style type="text/css">
+			.vote5{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.vote5-form{
+				padding: 0 0.4rem 0 0.25rem;
+				background: #fff;
+				margin-top: 0.12rem;
+			}
+			.vote5-form li{
+				position: relative;
+			}
+			.vote5-form li:after{
+				position: absolute;
+				content: '';
+				display: block;
+				height: 0;
+				left: -.25rem;
+				right: -.4rem;
+				bottom: 0;
+				border-bottom: 1px solid #f2f4f5;
+			}
+			.vote5-form li.noline:after{
+				display: none;
+			}
+			.vote5-form label{
+				color: #191919;
+				font-size: 0.3rem;
+			}
+			.vote5-form label span{
+				color: #ccc;
+				padding-left: 0.1rem;
+				font-size: 0.24rem;
+			}
+			.vote5-form input{
+				display: block;
+				font-size: 0.3rem;
+				line-height: 0.6rem;
+				height: 0.6rem;
+				padding: 0 .4rem 0 0.12rem;
+				margin-top: 0.24rem;
+				text-align: right;
+				float: right;
+			}
+			.vote5-form .x-row{
+				position: relative;
+				line-height: 1rem;
+			}
+			.vote5-form li:last-child:after{
+				display: none;
+			}
+			.right-arrow{
+				position: absolute;
+				right: 0;
+				top: 0.4rem;
+				width: 0.13rem;
+			}
+			.rc{
+				line-height: 0.34rem;
+				padding-right: 0.5rem;
+				display: inline-block;
+				cursor: pointer;
+			}
+			.rc:before{
+				content: '';
+				display: block;
+				width: 0.34rem;
+				height: 0.34rem;
+				margin-right: 0.1rem;
+				float: left;
+				background-image: url(../../img/icon-vote-6.png);
+				background-size: 0.31rem;
+				background-position: 0 .01rem;
+				background-repeat: no-repeat;
+			}
+			.rc.active:before{
+				background-image: url(../../img/icon-vote-5.png);
+			}
+			textarea{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote5">
+	        	<ul class="vote5-form">
+	        		<li class="x-row" onclick="hysj()">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议日期</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="input-hysj" type="text" unselectable="on" onfocus="this.blur()" placeholder="请选择会议日期" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="cst()">
+						<div class="x-row-cols " style="width: 2rem;"><label>开始时间</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="st" type="text" unselectable="on" onfocus="this.blur()" placeholder="请选择开始时间" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="cet()">
+						<div class="x-row-cols " style="width: 2rem;"><label>结束时间</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="et" type="text" unselectable="on" onfocus="this.blur()" placeholder="请选择结束时间" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row"> 
+						<div class="x-row-cols " style="width: 2rem;"><label>参会人数</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input type="text" id="number" placeholder="请输入人数" />
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="address();">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议地点</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="addressId" type="hidden" value=""  />
+							<input id="address" type="text" unselectable="on" onfocus="this.blur()" placeholder="请选择会议地点" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        	</ul>
+	        	<ul class="vote5-form">
+	        		<li class="x-row">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议主题</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="title" type="text" placeholder="请输入会议主题" />
+						</div>
+	        		</li>
+	        		<li class="x-row"> 
+						<div class="x-row-cols " style="width: 100%;"><label>会议议题</label></div>
+						<div class="x-row-cols ">
+							<textarea id="content" type="text" rows="5" placeholder="请输入会议议题"></textarea>
+						</div>
+	        		</li>
+	        		<li class="x-row">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议附件</label></div>
+ 						<div class="x-row-cols " style="margin-left:2rem;position: relative;">
+							<input name="newsFile" id="attachment" type="file" placeholder="请上传会议附件" onchange="upload('attachment')" accept="image/jpg,image/jpeg,image/gif,image/png" style="opacity: 0;position: absolute;left: 0;top: 0;height: 0.6rem;width: 100%;" />
+							<input type="text" readonly="readonly" id="attachmentName" placeholder="请上传会议附件" />
+							<input type="hidden"  id="attachmentUrl" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div> 
+	        		</li>
+	        	</ul>
+	        	<ul class="vote5-form">
+	        		<li class="x-row">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议学分</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="credits" type="text" placeholder="请输入会议学分" />
+						</div>
+	        		</li>
+	        	</ul>
+	        	<ul class="vote5-form">
+	        		<li class="x-row" onclick="openContact(1)">
+						<div class="x-row-cols " style="width: 2rem;"><label>记录人员</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input type="hidden" id="recordId" />
+							<input unselectable="on" onfocus="this.blur()" id="recordName" type="text" readonly="readonly" placeholder="请选择记录人员" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="openContact(0)">
+						<div class="x-row-cols " style="width: 2rem;"><label>参会人员</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input type="hidden" id="checksId" />
+							<input unselectable="on" onfocus="this.blur()" id="checksName" type="text" readonly="readonly" placeholder="请选择参会人员" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        	</ul>
+	        	<ul class="vote5-form">
+	        		<li class="x-row" onclick="ctx()">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议提醒</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="inputtx" unselectable="on" onfocus="this.blur()" type="text" placeholder="请选择" />
+							<input id="remind" type="hidden" placeholder="请选择" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row" onclick="cqd()">
+						<div class="x-row-cols " style="width: 2rem;"><label>会议签到</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input id="inputqd" unselectable="on" onfocus="this.blur()" type="text" placeholder="请选择" />
+							<input id="signin" type="hidden" placeholder="请选择" />
+							<img class="right-arrow" src="../../img/icon-vote-2.png" />
+						</div>
+	        		</li>
+	        		<li class="x-row">
+						<div class="x-row-cols " style="width: 2rem;"><label>消息推送</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;text-align: right;">
+							<span class="rc ell active">推送</span>
+							<span class="rc ell">不推送</span>
+						</div>
+	        		</li>
+	        	</ul>
+	        </div>
+	        <div class="x-row boxflex foot">
+				<div class="x-row-cols left" onclick="applyMeeting(0);">存为草稿</div>
+				<div class="x-row-cols right" onclick="applyMeeting(1);">发布</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>	
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	<script src="../../js/base.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../../../module/backstage/commons/upload/upload.js"></script>
+	<script type="text/javascript">
+		var memberIds = "";
+		var memberNames = "";
+		var selectedDepartmentArray0=[];
+		var selectedUserArray0=[];
+		var selectedDepartmentArray1=[];
+		var selectedUserArray1=[];
+		var changePeopleFlag = false;
+		$(document).ready(function(){
+			getWxConfig();
+			$(document).on('click','.rc',function(e){
+				var _this = $(this);
+				_this.siblings().removeClass('active');
+				_this.addClass('active');
+			});
+		})
+			
+        //会议申请
+        function applyMeeting(status){
+			var meetingdate = $("#input-hysj").val();//会议日期
+        	var timestart = $("#st").val();//会议时间
+        	var timeend = $("#et").val();//会议时间
+        	var number = $("#number").val();//参会人数
+        	
+        	var address = $("#address").val();
+        	var addressId = $("#addressId").val();
+
+        	var ispush = 0;//推送
+        	if($('[class="rc ell active"]').text() == '推送'){
+        		ispush = 1;
+        	}else {
+        		ispush = 0;
+        	}
+        	
+         	var title = $("#title").val();//主题
+         	var content = $("#content").val();//议题
+         	var credits = $("#credits").val();//学分
+         	var remind = $("#remind").val();//提醒 
+         	var signin = $("#signin").val();//签到
+
+        	var checksId = $("#checksId").val();
+        	if(meetingdate == ''){
+        		myLayer.alert("请选择会议日期");
+        	}else if(timestart == ''){
+        		myLayer.alert("请选择会议开始时间");
+        	}else if(timeend == ''){
+        		myLayer.alert("会议结束时间选择");
+        	}else if(number == ''){
+        		myLayer.alert("未输入参会人数");
+        	}
+        	else if(addressId == ''){
+        		myLayer.alert("未选择会议地点");
+        	}else if(checksId == ''){
+        		myLayer.alert("未选择参会人员");
+        	} 
+        	else if(title == ''){
+        		myLayer.alert("未输入会议主题");
+        	}else {
+        		var apiData = {};
+        		apiData.meetingDate = meetingdate;
+        		apiData.content = content;
+        		apiData.timeStart = timestart;
+        		apiData.timeEnd = timeend;
+        		
+        		apiData.address = address;
+        		apiData.addressId = addressId;
+        		
+        		apiData.number = number;
+        		apiData.title = title;
+        		apiData.remind = remind;
+        		apiData.credits = credits;	
+        		apiData.signin = signin;
+        		
+        		if($("#attachmentUrl").val() != ''){
+            		apiData.url = $("#attachmentUrl").val();
+            		apiData.fileName = $("#attachmentName").val();
+        		}
+
+        		apiData.ispush = ispush;
+        		if(status == 0){
+        			apiData.status = status;
+        		}else{
+                	var time1 = meetingdate + ' ' + timestart;//会议开始时间
+                	var time2 = meetingdate + ' ' + timeend;//会议结束时间
+                	if(judgeTime(time1)){
+                		//未开始
+                		apiData.status = 1;
+                	}else if(!judgeTime(time2)){
+                		//已结束
+                		apiData.status = 3;
+                	}else if(!judgeTime(time1) && judgeTime(time2)){
+                		//进行中
+                		apiData.status = 2;
+                	}
+        		}
+         		var param = {};
+         		param.apiParam = Commonjs.getApiReqParams(apiData);
+           		Commonjs.ajax('/wsgw/qyWeChat/ApplyMeeting/callApi.do',param,function(dd){
+           			if(dd.RespCode == 10000){
+           				changeChecksPeople(dd.RespMessage);
+           				if($("#recordId").val() != ''){
+           					changeRecordPeople(dd.RespMessage);
+           				}
+           				
+         				if(changePeopleFlag && ispush == 1){
+         					meetingPush(dd.RespMessage);
+         				}
+           				if(status == 0){
+           					myLayer.alert('存为草稿成功');
+               			    window.location.href = 'index.html';
+           				}else if(status == 1){
+           					myLayer.alert('发布成功'); 
+               			    window.location.href = 'index.html';
+           				}
+           			}else if(dd.RespCode == -30000){
+           				myLayer.alert('申请失败请联系管理员！');
+           			    window.location.href = 'index.html';
+           			}else if(dd.RespCode == 500){
+           				myLayer.alert("请将信息填写完整后重试！");
+           			}
+           		},{async:false});  				
+        	} 
+        }
+        
+		function address(){			
+			System.openWindow({
+				id:'queryMeetingRoom',
+				title:'请选择会议室',
+				url:'queryMeetingRoom.html',
+				width:'100%',
+				height:'100%',
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function ccResult(selectRoom,selectRoomId){
+			$('#address').val(selectRoom);
+			$('#addressId').val(selectRoomId);
+		}
+		
+		function hysj(){
+			var inputhysj = $('#input-hysj');
+			var dtpicker = new mui.DtPicker({
+			    type: "date",//设置日历初始视图模式 
+			    beginDate: new Date(2018, 01, 01),//设置开始日期 
+			    endDate: new Date(2024, 12, 12),//设置结束日期 
+			    value: inputhysj.val(),//设置默认标签区域提示语 
+			}) 
+			dtpicker.show(function(e) {
+			    inputhysj.val(e.value);
+			})
+		}
+		
+		function cst(){
+			var inputst = $('#st');
+			var inputet = $('#et');
+			var dtpicker = new mui.DtPicker({
+			    type: "time",//设置日历初始视图模式 
+			    //beginDate: new Date(2015, 04, 25),//设置开始日期 
+			    endDate: new Date(inputet.val().replace(/-/g,'/')),//设置结束日期 
+			    value: inputst.val(),//设置默认标签区域提示语 
+			}) 
+			dtpicker.show(function(e) {
+			    inputst.val(e.value);
+			})
+		}
+		
+		function cet(){
+			var inputst = $('#st');
+			var inputet = $('#et');
+			var dtpicker = new mui.DtPicker({
+			    type: "time",//设置日历初始视图模式 
+			    beginDate: new Date(inputst.val().replace(/-/g,'/')),//设置开始日期 
+			    //endDate: new Date(inputst.val().replace(/-/g,'/')),//设置结束日期 
+			    value: inputet.val(),//设置默认标签区域提示语 
+			}) 
+			dtpicker.show(function(e) {
+				if(inputst.val() >= e){
+					inputet.val("");
+					myLayer.alert("时间选择错误请重新选择");
+				}else {
+					inputet.val(e.value);
+				}
+			   
+			})
+		}
+		
+		function ctx(){
+			var inputtx = $('#inputtx');
+			var remind = $('#remind');
+			var picker = new mui.PopPicker();
+			picker.setData([{
+			    value: "0",
+			    text: "不提醒"
+			}, {
+			    value: "5",
+			    text: "提前5分钟"
+			}, {
+			    value: "15",
+			    text: "提前15分钟"
+			}, {
+			    value: "30",
+			    text: "提前30分钟"
+			}, {
+			    value: "45",
+			    text: "提前45分钟"
+			}, {
+			    value: "60",
+			    text: "提前1小时"
+			}, {
+			    value: "1440",
+			    text: "提前1天"
+			}])
+			//picker.pickers[0].setSelectedIndex(4, 100);
+			picker.pickers[0].setSelectedValue(inputtx.val(), 100);
+			picker.show(function(SelectedItem) {
+				console.log(SelectedItem);
+				inputtx.val(SelectedItem[0].text);
+				remind.val(SelectedItem[0].value);
+			})
+		}
+		
+		function cqd(){
+			var inputqd = $('#inputqd');
+			var signin = $('#signin');
+			var picker = new mui.PopPicker();
+			picker.setData([{
+			    value: "0",
+			    text: "不签到"
+			}, 
+/* 			{
+			    value: "1",
+			    text: "定位签到"
+			}, */
+			{
+			    value: "2",
+			    text: "扫码签到"
+			}])
+			//picker.pickers[0].setSelectedIndex(4, 100);
+			picker.pickers[0].setSelectedValue(inputqd.val(), 100);
+			picker.show(function(SelectedItem) {
+				console.log(SelectedItem);
+				signin.val(SelectedItem[0].value);
+				inputqd.val(SelectedItem[0].text);
+			})
+		};
+		
+		//获取微信配置	
+		function getWxConfig(){
+			var apiData = {};	
+			apiData.url = location.href.split('#')[0];
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('../../../../../wsgw/qyWeChat/GetQyWxConfigInfo/callApi.do',param,function(dd){
+				if(dd.RespCode==10000){
+					var data = JSON.parse(dd.RespMessage);
+					wx.config({
+					    beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+					    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端myLayer.alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					    appId: data.appId, // 必填，企业微信的corpID
+					    timestamp: data.timestamp, // 必填，生成签名的时间戳
+					    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+					    signature: data.signature,// 必填，签名，见 附录-JS-SDK使用权限签名算法
+					    jsApiList: [
+							    'selectEnterpriseContact',
+						    	'chooseImage',
+						    	'uploadImage',
+						    	'previewImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+				}else{
+					myLayer.alert("获取企业微信配置异常！");
+				}
+			},{async:false});
+		}
+		
+		//打开通讯录
+		function openContact(type){	
+			var selectedDepartmentArray;
+			var selectedUserArray;
+			if(type == 0){
+				selectedDepartmentArray = selectedDepartmentArray0;
+				selectedUserArray = selectedUserArray0;
+			}else if(type == 1){
+				selectedDepartmentArray = selectedDepartmentArray1;
+				selectedUserArray = selectedUserArray1;
+			}
+			wx.invoke("selectEnterpriseContact", {
+			          "fromDepartmentId": -1,// 必填，表示打开的通讯录从指定的部门开始展示，-1表示自己所在部门开始, 0表示从最上层开始
+			          "mode": "multi",// 必填，选择模式，single表示单选，multi表示多选
+			          "type": ["department","user"],// 必填，选择限制类型，指定department、user中的一个或者多个
+			          "selectedDepartmentIds": selectedDepartmentArray,// 非必填，已选部门ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+			          // 非必填，已选用户ID列表。用于多次选人时可重入，single模式下请勿填入多个id
+			          "selectedUserIds": selectedUserArray 
+			},function(res){
+				if (res.err_msg == "selectEnterpriseContact:ok") {
+					if(typeof res.result == 'string'){
+						res.result = JSON.parse(res.result) //由于目前各个终端尚未完全兼容，需要开发者额外判断result类型以保证在各个终端的兼容性
+			        }
+					// 已选的部门列表 选择限制类型为user时无部门数据
+				    selectedDepartmentList = res.result.departmentList;
+				    selectedDepartmentArray = [];
+				    for (var i = 0; i < selectedDepartmentList.length; i++){
+				    	var department = selectedDepartmentList[i];
+				        if(department!=null){
+					    	var departmentId = department.id;// 已选的单个部门ID
+					        var departemntName = department.name;// 已选的单个部门名称
+							if(type == 0){
+								selectedDepartmentArray0.push(departmentId);
+							}else if(type == 1){
+								selectedDepartmentArray1.push(departmentId);
+							}
+					        //selectedDepartmentArray.push(departmentId);
+					        memberIds += "d_"+departmentId+",";
+							memberNames += departemntName+",";
+					    }
+				    } 
+				    
+				    selectedUserList = res.result.userList; // 已选的成员列表
+				    selectedUserArray = [];
+				    for (var i = 0; i < selectedUserList.length; i++){
+				    	var user = selectedUserList[i];
+				        if(user!=null){
+				        	var userId = user.id; // 已选的单个成员ID
+					    	var userName = user.name;// 已选的单个成员名称
+					   	 	//var userAvatar= user.avatar;// 已选的单个成员头像
+							if(type == 0){
+								selectedUserArray0.push(userId);
+							}else if(type == 1){
+								selectedUserArray1.push(userId);
+							}
+	                        //selectedUserArray.push(userId);
+	                        memberIds += userId+",";
+							memberNames += userName+",";
+	                    }
+				    }
+				    memberNames = memberNames.substr(0, memberNames.length-1);
+				    if(type == 0){
+						$("#checksName").val(memberNames);
+						$("#checksId").val(memberIds);
+				    }else if(type == 1){
+						$("#recordName").val(memberNames);
+						$("#recordId").val(memberIds);
+				    }
+
+		        	memberIds = "";
+					memberNames = "";
+				}
+			});
+		}
+		
+		//添加参与人
+		function changeChecksPeople(meetingUUid){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberIds = $("#checksId").val();
+            apiData.memberNames = $("#checksName").val();
+            apiData.memberType = 0;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				changePeopleFlag = true;
+    			}else{
+    				changePeopleFlag = false;
+    				myLayer.alert(dd.RespMessage,3000);
+    			}
+    		},{async:false});
+	
+		}
+		
+		//添加记录人
+		function changeRecordPeople(meetingUUid){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberIds = $("#recordId").val();
+            apiData.memberNames = $("#recordName").val();
+            apiData.memberType = 1;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				changePeopleFlag = true;
+    			}else{
+    				changePeopleFlag = false;
+    				myLayer.alert(dd.RespMessage,3000);
+    			}
+    		},{async:false});
+	
+		}
+		//上传图片
+        function upload(id) {
+			
+			var filePath = $("#"+id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.')+1,filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\')+1,filePath.length);
+			if(type.toLowerCase() != 'jpg' && type.toLowerCase() != 'gif'
+				&&type.toLowerCase() != 'png'&&type.toLowerCase() != 'jpeg'){
+				myLayer.alert('图片格式必须为.jpeg|.gif|.jpg|.png');
+				return ;
+			}
+	        var arrID = [ id ];
+			$.yihuUpload.ajaxFileUpload( {
+				url : '../../../../../../upload/uploadFile.do', // 用于文件上传的服务器端请求地址
+				secureuri : false,// 一般设置为false
+				fileElementId : arrID,// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token='+Commonjs.getToken(),						
+				dataType : 'json',// 返回值类型 一般设置为json
+				success : function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host +"/"+uri;
+					var uri_target_type = uri_target.substring(uri_target.lastIndexOf('.'),uri_target.length).toLowerCase();
+					uri_target = uri_target.substring(0,uri_target.lastIndexOf('.')) + uri_target_type;
+					//保存文件名和URL
+					$("#attachmentUrl").val(uri_target);
+					$("#attachmentName").val(filename);
+					
+				},
+				error : function(data, status, e) {
+					myLayer.alert("图片上传失败：建议您选择不超过1M的图片且在良好的网络环境下继续上传",3000);
+				}
+			});
+        }
+		
+		//消息推送
+		function meetingPush(uid){
+			var checksId = $("#checksId").val();
+			var recordIds = $("#recordId").val().split(",");
+			
+			if(recordId != ''){
+				for(var i = 0;i < recordIds.length;i++){
+					if(checksId.indexOf(recordIds[i]) < 0){
+						checksId = checksId + "," + recordIds[i];
+					}
+				}
+			}
+			var apiData = {};	
+            apiData.uid = uid;
+            apiData.memberIds = checksId;
+            apiData.type = 1;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HYGL');
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		console.log(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/ActivityMeetingPush/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    			}else{
+    				myLayer.alert(dd.RespMessage,3000);
+    			}
+    		},{async:false});
+		}
+		
+		//判断时间是否过期
+		function judgeTime(time){
+			var strtime = time.replace("/-/g", "/");//时间转换
+			//时间
+			var date1=new Date(strtime);
+			//现在时间
+			var date2=new Date();
+			//判断时间是否过期
+			return date1>date2?true:false;
+		}
+	</script>
+</html>

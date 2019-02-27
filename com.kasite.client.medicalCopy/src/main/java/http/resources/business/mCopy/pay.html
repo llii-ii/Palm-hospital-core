@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>确认订单</title>
+	    <script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="css/wechat/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wechat/index.css"/>
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/tab.css" type="text/css" />
+				<style>
+			.copyright > div {
+			    line-height: 3rem;
+			    z-index: -1;
+			}
+			.list-date .edit {
+			    font-size: 0.3rem;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div class="mui-content" style="margin-bottom: 1rem;">
+					<div class="list-top">
+				<div class="avatar"><img class="radius100" src="../mCopy/img/wechat/avatar.png"/></div>
+				<div class="name" id = "name"></div>
+				<div class="info" ><span>病案号：</span><span id="PatientId">*</span></div>
+				<div class="info" ><span>身份证号：</span><span id="IdCard">*</span></div>
+			</div>
+			<div id = "caseLise"></div>
+			
+			<div class="list-date">收件信息</div>
+			<div class="list-address">
+				<span class="name" id="addressee"></span><span class="phone"></span>
+				<div class="addr"><img src="../mCopy/img/wechat/icon-3.png"/></div>
+			</div>
+			<div class="list-date"><span class="edit" onclick="sureAddress()">重填地址</span></div>
+			<div class="list-li mt" style="margin-top: 0.5rem;"><label>身份认证</label><span><img class="icon-7" src="../mCopy/img/wechat/icon-7.png"/>认证通过</span></div>
+		</div>
+		<div class="list-footer">
+			<span>总计：</span><span class="price"></span>
+			<div class="btn" onclick="submit()">立即支付</div>
+		</div>
+		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/common.js"></script>
+		<script type="text/javascript" src="js/wechat/pay.js"></script>
+
+	</body>
+</html>

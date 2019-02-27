@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>新增商户</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../plugin/layui/css/layui.css" type="text/css" />
+    <link rel="stylesheet" href="../plugin/layer/theme/default/layer.css" type="text/css" />
+</head>
+<body>
+    <div class="x-body">
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">商户号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="merchAccount" 
+                         class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+			      <label class="layui-form-label">商户类型</label>
+			      <div class="layui-input-block">
+			        <select style="height: 35px;width: 190px;"  id="merchType">
+			          <option value="">请选择商户类型</option>
+			        </select>
+			      </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_pass" class="layui-form-label">银行号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="bankNo" 
+                         class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"> 银行简称
+                </label>
+                <div class="layui-input-inline">
+                    <select style="height: 35px;width: 190px;"  id="bankShort">
+                      <option value="">请选择银行简称</option>
+                    </select>
+                </div>
+            </div>
+           <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">支付配置</label>
+		    <div class="layui-input-block">
+		      <textarea id="config" placeholder="请输入内容" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+            <!-- <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"> </label>
+                <button id="ok" class="layui-btn" type="button" onclick="add()"></button>
+                <button class="layui-btn" type="button" onclick="cancelFun()">取消</button>
+            </div> -->
+
+    </div>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../plugin/layer/layer.js"></script>
+<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+<script type="text/javascript">
+$(function () {
+	var code =  parent.data.code;
+	var acc =  parent.data.acc;
+	var type =  parent.data.type;
+	var bank =  parent.data.bank;
+	var shortName =  parent.data.shortName;
+	var config =  parent.data.config;
+	if(parent.data.code==0){
+		$("#ok").text("增加");
+	}else{
+	    $("#merchAccount").val(acc);
+	    $("#merchType").val(type);
+	    $("#bankNo").val(bank);
+	    $("#bankShort").val(shortName);
+	    console.log(shortName);
+	    $("#config").val(config);
+	    $("#ok").text("修改");
+	   
+	}
+	loadData(shortName, type);
+});
+   
+ function loadData(shortName, type){
+	 var Service = {};
+	 var param = {};
+	 param.reqParam = Commonjs.getApiReqParams(Service);
+	 Commonjs.ajaxSync('/channel/get-merch-type.do', param, function(d){
+		 if(d.RespCode == 10000){
+			 var list = d.merchTypeList;
+	         var bankInfoMap = d.bankMap;
+	         for (var i = 0; i < list.length; i++) {
+	        	var name;
+            	if("wechat"==list[i].merchType){
+            		name="微信";
+            	}else if("yl"==list[i].merchType){
+            		name="银联";
+            	}else if("zfb"==list[i].merchType){
+                    name="支付宝";
+                }
+	            var rl = '<option value="'+list[i].merchType+'" >'+name+'</option>';
+	            $("#merchType").append(rl);
+	       	}
+	         $.each(bankInfoMap, function (index,item) {
+	         	var rr = '<option value="'+index+'" >'+item+'</option>';
+	             $("#bankShort").append(rr);
+	         });
+	         $("#bankShort").find("option:contains('"+shortName+"')").attr("selected",true)
+	         $("#merchType").find("option[value='"+type+"']").attr("selected",true);
+		 }else{
+			 layer.msg('请求出错，请联系管理员');
+		 }
+	 });
+ }   
+</script>
+</body>
+</html>

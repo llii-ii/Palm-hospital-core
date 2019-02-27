@@ -1,0 +1,63 @@
+病人ID	patientId	是	String
+住院号	inHospitalNum	是	String
+单据号	receiptNum	是	String
+发票号	invoiceNum	是	String
+结算方式	settlementType	是	字典
+账单类型	billType	是	字典
+票据产生日期	invoiceDate	是	Date
+发票打印日期	printDate	是	Date
+发票总金额	invoiceAmount	是	Currency
+结算序号	settlementSeqNo	否	String
+结算批次	settlementTimes	否	String
+医保流水号	medicalLnsuranceNo	否	String
+商业保险支付金额	commercialInsurancePay	否	Currency
+个人账户支付金额	selfAccountPay	否	Currency
+个人支付金额	selfCashPay	否	Currency
+自费费用	selfFee	否	Currency
+自付一金额	selfPayA	否	Currency
+自付二金额	selfPayB	否	Currency
+医保余额不足自付金额	selfPayInsufficient	否	Currency
+超限额自付金额	selfPayAboveLimit	否	Currency
+不足起付线自付金额	selfPayInit	否	Currency
+少儿起付线到 5000 部 分比例自付金额	selfPayChildA	否	Currency
+少儿 5000 到 10000部分比例自付金额	selfPayChildB	否	Currency
+少儿 10000 以上部分 比例自付金额	selfPayChildC	否	Currency
+医保基金支付总金额	miFundPay	否	Currency
+基本医保统筹基金支 付金额	basicFundPay	否	Currency
+大额医疗互助基金支付金额 	largeFundPay	否	Currency
+其他基金支付总金额	otherFundPay	否	Currency
+地方补充医保基金支付金额	localFundPay	否	Currency
+地方补充医保基金正常部分支付金额	localFundNormalPartPay	否	Currency
+地方补充医保基金超出限额补偿金额	localFundOverPartPay	否	Currency
+离退休医保基金支付金额	retiredMiFundPay	否	Currency
+公务员医疗补助支付金额	servantPay	否	Currency
+家属统筹医疗基金支付金额	familyCoFundPay	否	Currency
+工伤保险基金支付金额	injuryInsuranceFundPay	否	Currency
+企业补充医保基金支付金额	enterpriseFundPay	否	Currency
+农村医保基金支付金额	ruralFundPay	否	Currency
+少儿起付线到 5000 部分基金支付金额	childFundPayA	否	Currency
+少儿 5000 到 10000 部分基金支付金额	childFundPayB	否	Currency
+少儿 10000 以上部分 基金支付金额	childFundPayC	否	Currency
+生育医保基金支付金额	childbirthFundPay	否	Currency
+离退休人员补助基金支付金额	retiredAidFundPay	否	Currency
+残疾军人补助基金支付金额	disabledSoldierAidFundPay	否	Currency
+统筹单位支付金额	coCorpPay	否	Currency
+困难救助基金支出	difficultAidFundPay	否	Currency
+劳模基金支出	laborModelFundPay	否	Currency
+保健基金支出	healthFundPay	否	Currency
+建国前老工人基金支出	oldWorkerFundPay	否	Currency
+记帐前基本医保统筹 基金可用限额	basicFundAvailableBefore	否	Currency
+记帐前地方补充医保基金可用限额	localFundAvailableBefore	否	Currency
+记帐前个人帐户余额	selfAccountBefore	否	Currency
+记帐后基本医保统筹 基金可用限额	basicFundAvailableAfter	否	Currency
+记帐后地方补充医保 基金可用限额	localFundAvailableAfter	否	Currency
+记帐后个人帐户余额	selfAccountAfter	否	Currency
+记账前自付段余额	SelfPaySectorBefore	否	Currency
+记账后自付段余额	selfPaySectorAfter	否	Currency
+记帐前劳务工合作医 疗基金可用限额	laborFundAvailableBefore	否	Currency
+记帐后劳务工合作医 疗基金可用限额	laborFundAvailableAfter	否	Currency
+记帐前少儿基本医疗 统筹可用限额	childFundAvailableBefore	否	Currency
+记帐后少儿基本医疗 统筹可用限额	childFundAvailableAfter	否	Currency
+医院承担费用 	hospitalCost	否	Currency
+本次大病合规费用	seriousDiseasePay	否	Currency
+最后修改时间	lastmodify	是	DateTime

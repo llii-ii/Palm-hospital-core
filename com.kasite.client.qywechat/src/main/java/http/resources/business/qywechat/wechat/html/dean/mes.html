@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>留言回复</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			.vote5{
+				padding-bottom: 1rem;
+			}
+			.vote5-form li{
+				position: relative;
+				background: #fff;
+				margin-top: 0.3rem;
+				padding-left: 0.25rem;
+				padding-right: 0.4rem;
+			}
+			.vote5-form li:after{
+				position: absolute;
+				content: '';
+				display: block;
+				height: 0;
+				left: -.25rem;
+				right: -.4rem;
+				bottom: 0;
+				border-bottom: 1px solid #f2f4f5;
+			}
+			.vote5-form li.noline:after{
+				display: none;
+			}
+			.vote5-form label{
+				color: #191919;
+				font-size: 0.3rem;
+			}
+			.vote5-form input{
+				display: block;
+				font-size: 0.3rem;
+				line-height: 0.6rem;
+				height: 0.6rem;
+				padding: 0 .4rem 0 0.12rem;
+				margin-top: 0.24rem;
+				text-align: right;
+				float: right;
+			}
+			.vote5-form .x-row{
+				position: relative;
+				line-height: 1rem;
+			}
+			.vote5-form li textarea{
+				width: 100%;
+				margin-top: 0.1rem;
+				padding: 0.2rem 0.1rem;
+			}
+			.mt20{padding-top: 0.2rem;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="vote5">
+	        	<ul class="vote5-form">
+	        		<li class="x-row">
+						<div class="x-row-cols " style="width: 2rem;"><label>标题</label></div>
+						<div class="x-row-cols " style="margin-left:2rem;">
+							<input type="text" placeholder="请输入标题" />
+						</div>
+	        		</li>
+	        		<li>
+						<div class="mt20">回复内容：</div>
+						<div><textarea name="reason" rows="8" placeholder="请描述驳回原因"></textarea></div>
+	        		</li>
+	        	</ul>
+	        </div>
+	        <div class="btn">提交</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	</script>
+</html>

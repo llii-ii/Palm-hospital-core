@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>智慧病房</title>
+        <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+	    <link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />  
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	    <script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+</head>
+<body>
+	<div class="container">
+		<div class="con-top">
+			<div class="con-box">
+				<div class="con-box-info">
+					<img class="icon" src="img/icon-5.png"/>
+					<span class="name"><span id="memberName_">--</span>(<span id="sex_">--</span>)</span>
+					<br>
+					<span class="num">住院号：<span id="hospitalNo_">--</span></span>
+					<span class="addr">病区：<span id="inHospitalDept_">--</span></span>
+				</div>
+				<div class="x-row boxflex">
+					<div class="x-row-cols">入院日期：<span id="inHospitalDate_">--</span></div>
+					<div class="x-row-cols">住院天数：<span id="inHospitalDays_">--</span>天</div>
+				</div>
+				<div class="x-row boxflex">
+					<div class="x-row-cols">押金余额：<span id="balance_">--</span>元</div>
+					<div class="x-row-cols">住院总费用：<span id="allFree_">--</span>元</div>
+				</div>
+			</div>
+		</div>
+		<div class="con-round">
+			<div class="con-round-li one">
+				<div class="status">建设中</div>
+				<img src="img/icon-1.png"/>
+				<div class="title">费用清单</div>
+			</div>
+			<div class="con-round-li two">
+				<div class="status">建设中</div>
+				<img src="img/icon-2.png"/>
+				<div class="title">医技预约</div>
+			</div>
+			<div class="con-round-li three" id="payFeeList_">
+				<img src="img/icon-3.png"/>
+				<div class="title">缴费记录</div>
+			</div>
+			<div class="con-round-li four" id="hospitalNoRechargeQr_">
+				<img src="img/icon-4.png"/>
+				<div class="title">住院预交金充值</div>
+			</div>
+		</div>
+		<div class="con-footer">信息中心与卡思特联合开发</div>
+	</div>
+</body>
+<script>
+
+var orderId = "";
+var guideId = "";
+var isOk = false;
+var hisMemberId = "";
+function checkStatus(){
+	
+}
+
+//查询信息点相关信息
+$(function() {
+	//获取二维码信息Id
+	orderId = Commonjs.getUrlParam("orderId");
+	guideId = Commonjs.getUrlParam("guid");
+	//获取二维码信息点 
+	getGuide(guideId);
+	token = Commonjs.getToken();
+	$("#hospitalNoRechargeQr_").click(function(){
+		if(!isOk){
+			myLayer.alert('病人已出院', 3000);
+			closeWindow();
+		}else{
+			window.location.href = Commonjs.goToUrl("/business_59/inHospital/hospitalNoRechargeQr.html?ServiceId=007&guid="+guideId);
+		}
+	});
+	
+	$("#payFeeList_").click(function(){
+		if(!isOk){
+			myLayer.alert('病人已出院', 3000);
+			closeWindow();
+		}else{
+			window.location.href = Commonjs.goToUrl("/business_59/inHospital/payFeeList.html?hisMemberId="+hisMemberId);
+		}
+	});
+	
+	
+});
+
+/**
+ * 获取信息点
+ * @param guideId
+ * @returns
+ */
+function getGuide(orderId){
+	var param={};
+	param.api="OrderId";
+	var data={};
+	data.GuideId = orderId;
+	param.apiParam = Commonjs.getApiReqParams(data);
+	Commonjs.ajax('/wsgw/smartPay/GetGuide/callApi.do',param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			if(!Commonjs.isEmpty(jsons.RespCode)) {
+				if(jsons.RespCode == 10000) {
+					if(Commonjs.ListIsNull(jsons.Data)) {
+						var data = jsons.Data[0];
+						if(Commonjs.isEmpty(data.Content)) {
+							myLayer.alert("获取住院用户信息错误！请重新扫描！");
+							return;
+						}
+						var guideContent = JSON.parse(data.Content);
+						if(!Commonjs.isEmpty( guideContent.hisMemberId)){
+							$("#hisMemberId").val(guideContent.hisMemberId);
+						}
+						var patientName = guideContent.memberName;
+						var hospitalNo = "";
+						var cardType = guideContent.cardType;
+						var sex = guideContent.sex;
+						if(cardType == 14){
+							hospitalNo = guideContent.cardNo;
+						}
+						getInHospitalInfo(hospitalNo);
+						$("#memberName_").html(patientName);
+						$("#hospitalNo_").html(hospitalNo);
+						$("#sex_").html(sex);
+					}
+				} else {
+					myLayer.alert(jsons.RespMessage, 3000);
+				}
+			} else {
+				myLayer.alert("返回码为空");
+			}
+		} else {
+			//通信失败
+			myLayer.alert('网络繁忙,请刷新后重试', 3000);
+		}
+	},{async:false});
+}
+/**
+ * 查询住院信息
+ * @returns
+ */
+function getInHospitalInfo(hospitalNo){
+	var apiData = {};
+	apiData.HospitalNo = hospitalNo;
+	var page = {};
+	page.PIndex = 0;
+	page.PSize = 1;
+	var param = {};
+	param.api = 'callHis';
+	apiData._CardNo = hospitalNo;//"1900873";
+	//@PostMapping("/{diyUrl}/{diyModule}/{api}/{callType}/{soapReturnFormat}/{format}/callApi.do")
+	param.apiParam = Commonjs.getApiReqParams(apiData, page);
+	Commonjs.ajax('../../wsgw/His_GetZyxxs_Url/His_GetZyxxs/queryHospitalNo/soap2/ret/json/callApi.do', param, function(jsons) {
+		if(!Commonjs.isEmpty(jsons)) {
+			if(!Commonjs.isEmpty(jsons.RespCode)) {
+				if(jsons.RespCode == 10000) {
+					if(Commonjs.isNotNull(jsons.result)) {
+						var result = jsons.result;
+						var resultJson = $.parseJSON(result);
+						if(resultJson.code == 200){
+							var guideContent = resultJson.data[0];
+							if(guideContent){
+								var inHospitalDate = guideContent.RYRQ00;
+								var inHospitalDays = guideContent.ZYTS00;
+								var balance = guideContent.YJJE00;
+								var allFree = guideContent.ZFJE00;
+								var inHospitalDept = guideContent.ZYBQ00;
+								hisMemberId = guideContent.BRID00;//病人ID
+								if(!hisMemberId){
+									myLayer.alert('病人ID为空', 3000);
+								}
+								//就是组合，你可以判断第一位为0-1-2-3就可以
+								// 判断 这3个 20，21，22
+								var status = guideContent.BRZT00;		
+								if(status ){
+									var s = status*1;
+									if(s == 20 || s==21 || s==22){
+										isOk = true;	
+									}
+								}
+								if(!isOk){
+									myLayer.alert('病人已出院', 3000);
+									closeWindow();
+								}
+//								getInHospitalInfo(hospitalNo);
+								if(Commonjs.isNotNull(inHospitalDate)){
+									$("#inHospitalDate_").html(inHospitalDate);
+								}
+								if(Commonjs.isNotNull(inHospitalDays)){
+									$("#inHospitalDays_").html(inHospitalDays);
+								}
+								if(Commonjs.isNotNull(balance)){
+									$("#balance_").html(balance);
+								}
+								if(Commonjs.isNotNull(allFree)){
+									$("#allFree_").html(allFree);
+								}
+								if(Commonjs.isNotNull(inHospitalDept)){
+									$("#inHospitalDept_").html(inHospitalDept);
+								}
+							}
+						}
+						
+						
+					}
+				} else {
+					myLayer.alert(jsons.RespMessage, 3000);
+				}
+			} else {
+				myLayer.alert("返回码为空");
+			}
+		} else {
+			//通信失败
+			myLayer.alert('网络繁忙,请刷新后重试', 3000);
+		}
+	},{async:false});
+}
+
+function closeWindow(){
+	var userAgent = navigator.userAgent.toLowerCase();
+	if(userAgent.indexOf("alipay")>-1){
+		AlipayJSBridge.call('closeWebview'); 
+	}else{
+		WeixinJSBridge.call('closeWindow');
+	}
+}
+ 
+window.onload = function(){
+	
+};
+
+
+</script>
+
+</html>

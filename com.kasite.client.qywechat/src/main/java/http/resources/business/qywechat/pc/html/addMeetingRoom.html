@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>新增会议室</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议室名称：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input id="roomName" type="text" class="form-control" value="" placeholder="请输入" />
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>可容纳人数：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input id="accommodate" type="text" class="form-control" value="" placeholder="请输入" />
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议室地址：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<input id="roomAddress" type="text" class="form-control" value="" placeholder="请输入" />
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>设备：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;" id="meetingEquipment">
+
+                    </div>                  
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>开放状态：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;">
+						<div class="radio i-checks">
+                            <label><input type="radio" checked="" value="0" name="a"> <i></i> 开放</label>
+                        </div>
+                        <div class="radio i-checks">
+                            <label><input type="radio" value=1 name="a"> <i></i> 停用</label>
+                        </div>
+                    </div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					
+				</div>
+				<div class="x-row-cols" style="margin-left:140px;">
+					<button id="addMR" type="button" class="btn btn-primary btn-w-m" onclick="addMeetingRoom()">发布</button>
+					<button id="updateMR" type="button" class="btn btn-primary btn-w-m" onclick="updateMeetingRoom()">修改</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var id = Commonjs.getUrlParam("id");
+		var ids = '';//已选设备集
+		$(document).ready(function () {
+			queryMeetingEquipment();
+			queryMeetingEquipmentById();
+        });
+		
+        function add(){
+        	System.openWindow({
+				id:'queryMeetingEquipment',
+				title:'设备管理',
+				url:'queryMeetingEquipment.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					queryMeetingEquipment();
+					queryMeetingEquipmentById();
+				}
+			});
+        }
+   
+        function queryMeetingEquipment(){
+        	$("#meetingEquipment").html('');
+            var apiData = {};	
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingEquipment/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				var html = "";
+    				for(var i = 0;i < dd.Data.length;i++){
+    					html += '<div class="checkbox i-checks">';
+    					html += '<label><input type="checkbox" value="'+dd.Data[i].Id+'" name="'+dd.Data[i].Name+'"><i></i>'+dd.Data[i].Name+'</label>'
+    					html += '</div>';
+    				}
+    				html += '<a style="padding: 8px 12px;line-height: 1;font-size: 24px;color: #1ab394;" onclick="add()"><i class="fa fa-plus-circle"></i></a>';
+    				$("#meetingEquipment").append(html);
+    				$('.i-checks').iCheck({
+    	            	checkboxClass: 'icheckbox_square-green',
+    	                radioClass: 'iradio_square-green',
+    	            });
+    			}else if(dd.RespCode == -14018){
+    				alert("获取设备列表失败，请重试！");
+    			}
+    		});
+        }
+        
+        function queryMeetingEquipmentById(){
+			if(id != '' && id != null && id != undefined){
+				$("#addMR").hide();
+	            var apiData = {};	
+	            apiData.id = id;
+	    		var param = {};
+	    		param.apiParam = Commonjs.getApiReqParams(apiData);
+	    		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingRoom/callApi.do',param,function(dd){
+	    			if(dd.RespCode == 10000){
+	    	         	$('#roomName').val(dd.Data[0].Name);
+	    	        	$('#accommodate').val(dd.Data[0].Accommodate);
+	    	        	$('#roomAddress').val(dd.Data[0].Place);
+	    	        	ids = dd.Data[0].Equipmentid.split(",");
+	    	        	for(var i = 0;i < ids.length;i++){
+	    	        		$('input[type="checkbox"]').each(function(){
+	    	             		if($(this).attr("name") == ids[i]){	
+	    	             			$(this).parent().addClass("checked");
+	    	             		}
+	    	             	});
+	    	        	}
+	    			}
+	    		});
+			}else{
+				$("#updateMR").hide();
+			}
+        }
+        
+        //新增会议室
+        function addMeetingRoom(){
+        	var equipmentId = '';
+         	$('input[type="checkbox"]:checked').each(function(){
+         		equipmentId = equipmentId + $(this).val() + ",";
+         	});
+         	var roomName = $('#roomName').val();
+        	var accommodate = $('#accommodate').val();
+        	var roomAddress = $('#roomAddress').val();
+        	if(roomName == ''){
+        		alert('未输入会议室名称');
+        	}else if(accommodate == ''){
+        		alert('未输入可容纳人数');
+        	}else if(roomAddress == ''){
+        		alert('未输入会议室地址');
+        	}else if(equipmentId == ''){
+        		alert('未选择设备');
+        	}else {
+        		var apiData = {};	
+        		apiData.name = roomName;
+        		apiData.accommodate = accommodate;
+        		apiData.place = roomAddress;
+        		apiData.equipmentId = equipmentId.substring(0,equipmentId.length-1);
+        		apiData.status = $('input[type="radio"]:checked').val();
+         		var param = {};
+         		param.apiParam = Commonjs.getApiReqParams(apiData);
+         		Commonjs.ajax('/wsgw/qyWeChat/AddMeetingRoom/callApi.do',param,function(dd){
+         			if(dd.RespCode == 10000){
+         				alert("新增成功");
+         			}else if(dd.RespCode == -30000){
+         				alert("新增失败请联系管理员！");
+         			}
+         		});
+        	}  
+        }
+        
+        //修改会议室信息
+        function updateMeetingRoom(){
+        	var equipmentId = '';
+         	$('input[type="checkbox"]').each(function(){
+         		if($(this).parent().attr("class").indexOf("checked") >= 1){
+         			equipmentId = equipmentId + $(this).val() + ",";
+         		}
+         	});
+         	var roomName = $('#roomName').val();
+        	var accommodate = $('#accommodate').val();
+        	var roomAddress = $('#roomAddress').val();
+        	if(roomName == ''){
+        		alert('未输入会议室名称');
+        	}else if(accommodate == ''){
+        		alert('未输入可容纳人数');
+        	}else if(roomAddress == ''){
+        		alert('未输入会议室地址');
+        	}else if(equipmentId == ''){
+        		alert('未选择设备');
+        	}else {
+            	var apiData = {};	
+            	apiData.id = id;
+        		apiData.name = roomName;
+        		apiData.accommodate = accommodate;
+        		apiData.place = roomAddress;
+        		apiData.equipmentId = equipmentId.substring(0,equipmentId.length-1);
+        		apiData.status = $('input[type="radio"]:checked').val();
+         		var param = {};
+         		param.apiParam = Commonjs.getApiReqParams(apiData);
+         		Commonjs.ajax('/wsgw/qyWeChat/UpdateMeetingRoom/callApi.do',param,function(dd){
+         			if(dd.RespCode == 10000){
+         				alert("修改成功");
+         			}else if(dd.RespCode == -30000){
+         				alert("修改失败请联系管理员！");
+         			}
+         		});
+        	} 
+        }
+        
+	</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script type="text/javascript" src="../commons/js/business-all.js"></script>
+    	<script type="text/javascript" src="js/member.js"></script>
+    	<style type='text/css'>
+        	.mt6{ 
+				overflow-y: auto; 
+				overflow-x: hidden; 
+				margin-top: 5px; 
+				margin-left: 12px; 
+				padding-top: -2px; 
+				padding-bottom: 5px; 
+				} 
+		</style>
+    </head>
+    <body onload="$('#loading-mask').fadeOut('slow');">
+     	<div id="loading-mask"
+				style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: #D2E0F2; z-index: 20000">
+				<div id="pageloading"
+					style="position: absolute; top: 50%; left: 50%; margin: -120px 0px 0px -120px; text-align: center;  width:200px;  border:1px solid #a6bccb;  background-color:#fff;padding: 10px; background: #fff; color: #555;">
+					<img src="../commons/images/loading.gif" align="absmiddle" />
+					正在加载中,请稍候...
+				</div>
+			</div>
+        <div class="container-wrap">
+        	<div class="main-header" style="top:0px; left: 0px;">
+                <ul class="clearfix">
+                    <li><span><a href="javascript:void(0);" class="curr">用户信息管理</a></span></li>
+                </ul>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                	<div class="p10">
+                	<div class="querybar clearfix" style="margin-left:10px;">
+                    		<table class="table-form pop-manage-form">
+                    		<tr>
+                    			<td >
+                    				<label class="fl mr10">姓名</label>
+                    				<input type="text" id="name" class="fl text w115 mr20">
+                    				<label class="fl mr10">身份证号</label>
+                    				<input type="text" id="idCardNo" class="fl text w115 mr20">
+                    				<label class="fl mr10">就诊卡号</label>
+                    				<input type="text" id="cardNo" class="fl text w115 mr20" >
+                            		<a href="javascript:;" class="btn btn-gray" id="queryBut" onclick="query();">查询</a>
+                    			</td>
+                    		</tr>
+                        	</table>
+                        </div>
+                         </div>
+                	
+                    <div class="info-record-table">
+                    	<table class="tb" width="100%" >
+                            <tr >                                                                                                                                                                        
+                                <th>姓名</th>
+                                <th>身份证号</th>
+                                <th>就诊卡号</th>
+                                <th>手机号</th>
+                                <th>操作</th>
+                            </tr>
+                        </table>
+                        <div class="mt6">
+                            <table class="tb" width="100%" style="margin-top:0;" id="memberInfo">
+                            	<tr style="display:none;" >
+                                    <th>姓名</th>
+	                                <th>身份证号</th>
+	                                <th>就诊卡号</th>
+	                                <th>手机号</th>
+                                	<th><a href="javascript:;" class="btn btn-gray" id="queryBut" onclick="">解绑</a></th>
+                                </tr>
+                            </table>
+                         </div>
+                    </div>
+                   
+                      <div class="pager_container" >
+                                <input id="totalcount" type="hidden" value="0" />
+                                <input id="pagenumber" type="hidden" value="1" />
+                                <div id="pager"></div>
+                      </div>
+                     <div class="mobile-box" style="display:none">
+                       	<table class="table-form mt10">
+                           	<tr>
+                               	<td class="t">
+                                   	<sub>&lowast;</sub> 手机号
+                                   </td>
+                                   <td>
+                                   	<input type="text" class="text w250" id="newMobile" />
+                                   </td>
+                               </tr>
+                               <tr>
+                           </table>
+                       </div>         
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

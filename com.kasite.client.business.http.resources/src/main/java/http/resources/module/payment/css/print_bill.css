@@ -1,0 +1,27 @@
+.printDiv{
+	width:100%;
+	margin-top: 2px;
+	margin-bottom: 30px;
+}
+.printDivS{
+	width:80%;
+}
+.printDiv p{
+	font-size:12px;
+}
+.print{
+	margin-right: 10px;
+	margin-top: 5px;
+}
+.print td{
+	font-size:12px;
+	border:1px solid #000000;
+}
+.print th{
+	font-size:10px;
+	line-height: 13px;
+	border:1px solid #000000;
+}
+.printDivBox{ margin-bottom: 10px;margin-right: 110px;}
+.printDivHold{ margin-top:10px; line-height:25px;}
+.printDivHold h4{font-size:12px; line-height:25px;}

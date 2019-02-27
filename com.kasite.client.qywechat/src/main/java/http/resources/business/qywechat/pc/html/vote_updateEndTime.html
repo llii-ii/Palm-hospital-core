@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<meta name="skin" content="mes">
+		<script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../common/js/base.js"></script>
+		<script type="text/javascript" src="../../common/js/common.js"></script>
+		<title>截止时间</title>
+		<style type="text/css"></style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width:200px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label>修改为：</label></div>
+				<div class="x-row-cols " style="margin-left:100px;">
+					<input type="text" class="form-control" readonly="readonly" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" name="endtime" id="endtime" value="" /></div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100px;">
+					<label></label>
+				</div>
+				<div class="x-row-cols " style="margin-left:100px;padding-top: 8px;">
+					<button type="button" class="btn btn-w-m btn-primary" onclick="clo()">保存</button></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">var id;
+		$(function() {
+			id = Commonjs.getUrlParam("id");
+			endTime = Commonjs.getUrlParam("endTime");
+			endTime = formatUnixtimestamp(Math.floor(endTime / 1000));
+			$("#endtime").val(endTime);
+		});
+
+		function clo() {
+			var endtime = $("#endtime").val();
+			if (Commonjs.isEmpty(endtime)) {
+				alert("请输入截止日期！");
+				return;
+			}
+			var apiData = {};
+			apiData.id = id;
+			apiData.endTime = endtime;
+			var param = {};
+			param.apiParam = Commonjs.getApiReqParams(apiData);
+			Commonjs.ajax('/wsgw/qyWeChat/UpdateVoteQuestion/callApi.do', param,
+			function(dd) {
+				if (dd.RespCode == 10000) {
+					alert("修改成功");
+					//调用父窗口的刷新查询方法
+					parent.refresh();
+					System.closeThisWindow();
+				} else {
+					alert(dd.RespMessage);
+				}
+			});
+		}
+		
+		function formatUnixtimestamp (unixtimestamp){
+	        var unixtimestamp = new Date(unixtimestamp*1000);
+	        var year = 1900 + unixtimestamp.getYear();
+	        var month = "0" + (unixtimestamp.getMonth() + 1);
+	        var date = "0" + unixtimestamp.getDate();
+	        var hour = "0" + unixtimestamp.getHours();
+	        var minute = "0" + unixtimestamp.getMinutes();
+	        var second = "0" + unixtimestamp.getSeconds();
+	        return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+	            + " " + hour.substring(hour.length-2, hour.length) + ":"
+	            + minute.substring(minute.length-2, minute.length) + ":"
+	            + second.substring(second.length-2, second.length);
+		 }
+
+	</script>
+</html>

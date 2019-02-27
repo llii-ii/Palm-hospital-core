@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>会议申请</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>会议日期：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input readonly="readonly" id="meetingdate" type="text" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="form-control form-group" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>会议时间：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input readonly="readonly" id="d5221" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'HH:mm',maxDate:'#F{$dp.$D(\'d5222\')}'})" style="width:140px!important;"  class="form-control form-group" placeholder="开始时间">
+				  			<label style="padding-left: 10px;">至</label>
+				  			<input readonly="readonly" id="d5222" type="text" name="endTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'HH:mm',minDate:'#F{$dp.$D(\'d5221\')}'})" class="form-control form-group" style="width:140px!important;" placeholder="结束时间">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>参会人数：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input id="number" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>会议地点：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<select id="address" name="" class="form-control">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>记录人员：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input id="recordId" type="hidden"  value="" >
+							<input id="recordName" type="text" onfocus="cc('record')" value="" class="form-control" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>参会人员：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input id="checksId" type="hidden"  value="" >
+							<input id="checksName" type="text" onfocus="cc('checks')" value="" class="form-control" placeholder="请选择">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>会议提醒：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<select id="remind" name="" class="form-control">
+								<option value="0">不提醒</option>
+								<option value="5">5分钟</option>
+								<option value="15">15分钟 </option>
+								<option value="30">30分钟</option>
+								<option value="45">45分钟</option>
+								<option value="60">1小时</option>
+								<option value="1440">1天</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>会议签到：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<select id="signin" name="" class="form-control">
+								<option value="0">不签到</option>
+								<!-- <option value="1">定位签到</option> -->
+								<option value="2">扫码签到</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>消息推送：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<div style="padding: 8px 12px;">
+								<div class="radio i-checks">
+	                                <label><input type="radio" value="1" name="a"> <i></i> 推送</label>
+	                            </div>
+	                            <div class="radio i-checks">
+	                                <label><input type="radio" checked="" value="0" name="a"> <i></i> 不推送</label>
+	                            </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row-cols " style="margin-left:50%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>会议学分：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input id="credits" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label><span class="red">*</span>会议主题：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<input id="title" type="text" value="" class="form-control" placeholder="请输入">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>会议议题：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:140px;">
+							<textarea id="editor" component="editor" style="width:100%;height:300px;"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 100%;">
+					<div class="x-row">
+						<div class="x-row-cols text-right" style="width: 140px;">
+							<label>上传附件：</label>
+						</div>
+						<input type="hidden" id="attachmentUrl" name="attachmentUrl" value=""/>
+						<input type="hidden" id="attachmentName" name="attachmentUrl" value=""/>
+						<label style="display:none;" id="fileSign"></label>
+						<div class="x-row-cols " style="margin-left:140px;padding-top: 5px;">
+							<input type="file" name="newsFile" id="attachment" onchange="upload('attachment')" value="点击上传" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 140px;">
+					
+				</div>
+				<div class="x-row-cols text-center" style="margin-left:140px;">
+					<button onclick="applyMeeting(1)" type="button" class="btn btn-primary btn-w-m">发布</button>
+					<button onclick="applyMeeting(0)" type="button" class="btn btn-w-m btn-border">存为草稿</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../../module/backstage/commons/upload/upload.js?v=1.012"></script>
+	<script>
+		var meetingId = Commonjs.getUrlParam("meetingId");
+		var type = Commonjs.getUrlParam("type");
+		var meetingUUid = '';
+		var changePeopleflag = false;
+		$(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+			queryMeetingRoom();
+			if(meetingId != '' && meetingId != null){
+				queryMeetingInfo();
+				getPeopleList(1);
+				getPeopleList(0);
+	        	
+			}
+			if(type == 'copyMeeting' ){
+				meetingId = '';
+			}
+        });
+        
+        //定义全局的选中输入框对象
+        var cd = null;
+        function cc(o){
+        	
+        	//把选中的项放到缓存
+        	if(o == 'record'){
+            	window.localStorage.setItem('checksId',$("#recordId").val());
+            	window.localStorage.setItem('checksName',$("#recordName").val());
+        	}else  if(o == 'checks'){
+            	window.localStorage.setItem('checksId',$("#checksId").val());
+            	window.localStorage.setItem('checksName',$("#checksName").val());
+        	}
+
+        	window.localStorage.setItem('checksType',o);
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'deptUser.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+        
+        //接收子页面传来的参数
+        function ccResult(ids,names,type){
+        	if(type == 'record'){
+        		$("#recordId").val(ids);
+        		$("#recordName").val(names);
+        	}else  if(type == 'checks'){
+        		$("#checksId").val(ids);
+        		$("#checksName").val(names);
+        	}
+        }
+        
+        //获取会议室列表
+        function queryMeetingRoom(){
+        	var apiData = {};	
+    		apiData.status = 0;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryMeetingRoom/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				for(var i = 0; i<dd.Data.length;i++){
+     					$("#address").append("<option value='"+dd.Data[i].Id+"'>"+dd.Data[i].Name+"</option>");
+     				}
+     			}
+     		},{async:false});
+        }
+        
+        //获取会议信息
+		function queryMeetingInfo(){
+			var apiData = {};	
+    		apiData.id = meetingId;
+    		apiData.status = -1;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryMeeting/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				meetingUUid = dd.Data[0].Meetingid;
+     	        	$("#meetingdate").val(dd.Data[0].Meetingdate);
+     	        	$("#d5221").val(dd.Data[0].Timestart);
+     	        	$("#d5222").val(dd.Data[0].Timeend);
+     	        	$("#number").val(dd.Data[0].Number);
+     	        	$("#address option[value='"+dd.Data[0].Addressid+"']").attr("selected","selected"); 
+     	        	$("#title").val(dd.Data[0].Title);
+     	        	$("#remind option[value='"+dd.Data[0].Remind+"']").attr("selected","selected");
+     	        	$("#editor").val(dd.Data[0].Content);
+     	        	$("#credits").val(dd.Data[0].Credits);	
+            		$("#signin option[value='"+dd.Data[0].Signin+"']").attr("selected","selected");
+            		$("#attachmentUrl").val(dd.Data[0].FileUrl);
+            		$("#attachmentName").val(dd.Data[0].FileName);
+            		if(dd.Data[0].FileUrl != ''){
+            			$("#fileSign").text("已关联附件："+dd.Data[0].FileName+",如需修改请重新上传！");
+            			$("#fileSign").show();
+            		}
+            		if(dd.Data[0].Ispush == 0){
+            			$("input[type='radio'][value='0']").iCheck('check');
+            		}else if(dd.Data[0].Ispush == 1){
+            			$("input[type='radio'][value='1']").iCheck('check');
+            		}
+            		
+     			}else if(dd.RespCode == -14018){
+     				alert('获取会议信息失败请联系管理员！');
+     			}
+     		},{async:false});
+        }
+        
+		//获取已有的参与人/记录人
+		function getPeopleList(memberType){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var names = '';
+					var ids = '';
+					if(dd.Data != undefined){
+						for(var i = 0;i<dd.Data.length; i++){
+							var id = dd.Data[i].Memberid;
+							if(dd.Data[i].IsDept == 1){
+								id = "d_" + id;
+							}
+							names = names + dd.Data[i].Membername + ",";
+							ids = ids + id + ",";
+						}
+						if(memberType == 1){
+				        	$("#recordName").val(names.substring(0,names.length-1));
+				        	$("#recordId").val(ids.substring(0,ids.length-1)); 
+						}else if(memberType == 0){
+				        	$("#checksName").val(names.substring(0,names.length-1));
+				        	$("#checksId").val(ids.substring(0,ids.length-1)); 
+						}
+					}
+    			}else{
+					if(memberType == 1){
+						console.log("暂无记录人");
+					}else if(memberType == 0){
+						console.log("暂无参与人");
+					}
+    				
+    			}
+    		},{async:false});		
+		}
+        
+        
+        //会议申请
+        function applyMeeting(status){
+        	var meetingdate = $("#meetingdate").val();//会议日期
+        	var timestart = $("#d5221").val();//会议时间
+        	var timeend = $("#d5222").val();//会议时间
+        	var number = $("#number").val();//参会人数
+        	var address = $("#address option:selected").text();
+        	var addressId = $("#address option:selected").val();
+        	var ispush = $('input[type="radio"]:checked').val();
+         	var title = $("#title").val();
+        	var checksId = $("#checksId").val();
+        	if(meetingdate == ''){
+        		alert("请选择会议日期");
+        	}else if(timestart == ''){
+        		alert("请选择会议开始时间");
+        	}else if(timeend == ''){
+        		alert("会议结束时间选择");
+        	}else if(number == ''){
+        		alert("未输入参会人数");
+        	}else if(addressId == ''){
+        		alert("未选择会议地点");
+        	}else if(checksId == ''){
+        		alert("未选择参会人员");
+        	}else if(title == ''){
+        		alert("未输入会议主题");
+        	}else {
+        		var apiData = {};
+    			if(meetingId != '' && meetingId != null){
+    				apiData.id = meetingId;
+    			}
+        		apiData.meetingDate = meetingdate;
+        		apiData.content = $("#editor").val();
+        		apiData.timeStart = timestart;
+        		apiData.timeEnd = timeend;
+        		apiData.address = address;
+        		apiData.addressId = addressId;
+        		apiData.number = number;
+        		apiData.title = title;
+        		apiData.remind = $("#remind option:selected").val();
+        		apiData.credits = $("#credits").val();	
+        		apiData.signin = $("#signin option:selected").val();
+        		apiData.url = $("#attachmentUrl").val();
+        		apiData.fileName = $("#attachmentName").val();
+        		apiData.attachmentType = 1;
+        		//apiData.checksId = checksId;
+        		//apiData.checksName = #("#checksName").val();
+        		if(ispush != undefined && ispush != '' && ispush != null){
+        			apiData.ispush = ispush;
+        		}else{
+        			apiData.ispush = 0;
+        		}
+        		
+        		if(status == 0){
+        			apiData.status = status;
+        		}else{
+                	var time1 = meetingdate + ' ' + timestart;//会议开始时间
+                	var time2 = meetingdate + ' ' + timeend;//会议结束时间
+                	if(judgeTime(time1)){
+                		//未开始
+                		apiData.status = 1;
+                	}else if(!judgeTime(time2)){
+                		//已结束
+                		apiData.status = 3;
+                	}else if(!judgeTime(time1) && judgeTime(time2)){
+                		//进行中
+                		apiData.status = 2;
+                	}
+        		}
+        		
+        		apiData.meetingId = meetingUUid;
+         		var param = {};
+         		param.apiParam = Commonjs.getApiReqParams(apiData);
+    			if(meetingId != '' && meetingId != null){
+             		Commonjs.ajax('/wsgw/qyWeChat/UpdateMeeting/callApi.do',param,function(dd){
+             			if(dd.RespCode == 10000){
+             				var flag = false;
+             				changeChecksPeople();
+             				if($("#recordId").val() != ''){
+             					changeRecordPeople();
+             	            }
+             				//if(changePeopleflag && ispush == 1){
+             					//meetingPush(meetingUUid);
+             				//}
+             				alert('修改成功');
+             				parent.refresh();
+    						System.closeThisWindow();
+             			}else if(dd.RespCode == -30000 || dd.RespCode == -20000){
+             				alert("修改失败请联系管理员！");
+             			}else if(dd.RespCode == 500){
+             				alert("请将信息填写完整后重试！");
+             			}
+             		},{async:false});
+    			}else{
+             		Commonjs.ajax('/wsgw/qyWeChat/ApplyMeeting/callApi.do',param,function(dd){
+             			if(dd.RespCode == 10000){
+             				meetingUUid = dd.RespMessage;
+             				
+             				changeChecksPeople();
+             				if($("#recordId").val() != ''){
+             					changeRecordPeople();
+             	            }
+             				if(changePeopleflag && ispush == 1){
+             					meetingPush(meetingUUid);
+             				}
+             				if(status == 0){
+             					alert('存为草稿成功');
+             				}else if(status == 1){
+             					alert('发布成功');
+             				}
+             				parent.refresh();
+    						System.closeThisWindow();
+             			}else if(dd.RespCode == -30000){
+             				alert("申请失败请联系管理员！");
+             			}else if(dd.RespCode == 500){
+             				alert("请将信息填写完整后重试！");
+             			}else {
+             				alert(dd.RespMessage);
+             			}
+             		},{async:false});  				
+    			}
+        	} 
+        }
+        
+        
+		//上传图片
+        function upload(id) {
+			var filePath = $("#"+id).val();
+			var type = filePath.substring(filePath.lastIndexOf('.')+1,filePath.length);
+			var filename = filePath.substring(filePath.lastIndexOf('\\')+1,filePath.length);
+	        var arrID = [ id ];
+			$.yihuUpload.ajaxFileUpload( {
+				url : '/upload/uploadFile.do', // 用于文件上传的服务器端请求地址
+				secureuri : false,// 一般设置为false
+				fileElementId : arrID,// 文件上传空间的id属性 <input type="file" id="file" name="file" />
+				data: 'token='+Commonjs.getToken(),						
+				dataType : 'json',// 返回值类型 一般设置为json
+				success : function(data, status) {
+					var uri = data.url;
+					var uri_target = location.protocol + '//' + location.host +"/"+uri;
+					//保存文件名和URL
+					$("#attachmentUrl").val(uri_target);
+					$("#attachmentName").val(filename);
+					
+					console.log("attachmentUrl="+$("#attachmentUrl").val());
+					//解决onchange只触发一次的问题
+					//$("#"+id).replaceWith('<input type="file" name="newsFile" id="'+id+'" onchange="upload(\''+id+'\')"  value="" />');
+				},
+				error : function(data, status, e) {
+					alert("上传失败：建议您选择不超过1M的附件且在良好的网络环境下继续上传");
+				}
+			});
+        }
+		
+		//添加参与人
+		function changeChecksPeople(){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberIds = $("#checksId").val();
+            apiData.memberNames = $("#checksName").val();
+            apiData.memberType = 0;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				changePeopleflag = true;
+    			}else{
+    				changePeopleflag = false;
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+	
+		}
+		
+		//添加记录人
+		function changeRecordPeople(){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberIds = $("#recordId").val();
+            apiData.memberNames = $("#recordName").val();
+            apiData.memberType = 1;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+    				changePeopleflag = true;
+    			}else{
+    				changePeopleflag = false;
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+	
+		}
+		
+		//消息推送
+		function meetingPush(uid){
+			var checksId = $("#checksId").val();
+			var recordIds = $("#recordId").val().split(",");
+			
+			if(recordId != ''){
+				for(var i = 0;i < recordIds.length;i++){
+					if(checksId.indexOf(recordIds[i]) < 0){
+						checksId = checksId + "," + recordIds[i];
+					}
+				}
+			}
+			var apiData = {};	
+            apiData.uid = uid;
+            apiData.memberIds = checksId;
+            apiData.type = 1;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HYGL');
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		console.log(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/ActivityMeetingPush/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					
+    			}else{
+    				alert(dd.RespMessage);
+    			}
+    		},{async:false});
+		}
+		
+		
+		//判断时间是否过期
+		function judgeTime(time){
+			var strtime = time.replace("/-/g", "/");//时间转换
+			//时间
+			var date1=new Date(strtime);
+			//现在时间
+			var date2=new Date();
+			//判断时间是否过期
+			return date1>date2?true:false;
+		}
+	</script>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>电话调研 - 收集设置</title>
+        <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+        <script type="text/javascript" src="./js/jquery.json-2.3.min.js"></script>	 
+        <script type="text/javascript" src="./js/myd-dhdy-collet.js"></script>	
+        
+        <script type="text/javascript" src="./js/yihu.js"></script> 
+    </head>
+    <body>
+    <div class=" clearfix" style="margin-bottom: 25px;">
+            <div class="main-tit"><h2>收集设置</h2></div>
+            <div class="pl30 pt20">
+                 <div class="f12">需要收集<input type="text" id="needSurvey" class="input-text input-text-s ml5 mr5" style="width:53px;" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />份</div>
+                <form id='dataForm' method="post" style="padding-top: 0px;margin-top: 0px;"  enctype="multipart/form-data"> 
+                <div class="mt20 f12">样本信息<input type="button" class="btn btn-gray btn-w65 ml5" value="导入" onclick="$('#upload').click();" />
+                <input type="file" id="upload" name="upload" onchange="uploadData();" style="display: none;"/>
+                </div>
+               </form>
+                <div class="mt45 c-org"><i class="icon icon-light"></i>温馨提示：</div>
+                <ul class="f12">
+                    <li class="mt25"><span class="c-org">*</span> 请按模板格式（<a href="/WbjUI/servlet/ActionServlet?bizAction=samplesmodel&amp;date=date()" class="c-007">下载模板</a>）制作样本，然后导入样本</li>
+                    <li class="mt10"><span class="c-org">*</span> 样本必填项：姓名、性别、电话，若性别不详，可用"未知"替代</li>
+                    <li class="mt10"><span class="c-org">*</span> 样本可选项：就诊科室，就诊医生，疾病诊断，病案号，其他</li>
+                    <li class="mt10"><span class="c-org">*</span> 由于调研存在许多不定因素，建议导入的样本信息大于需要收集的份数，如需收集50份，至少需要导入300份样本信息为宜</li>
+                </ul>
+                <!--导入样本信息后显示-->
+                <div class="import-data">
+                    <div>已验证 <span class="c-org" id="rightVal">0</span> 条，验证失败 <span class="c-org" id="errorVal">0</span> 条</div>
+                    <div class="mt20">
+                        <table class="tb tb-hover tb-border" id="tableShow">
+                            <tr>
+                                <th width="40px">序号</th>
+                                <th width="80px">姓名</th>
+                                <th width="50px">性别</th>
+                                <th width="">电话</th>
+                                <th width="">就诊科室</th>
+                                 <th width="">就诊医生</th>
+                                 <th width="">疾病诊断</th>
+                                 <th width="">病案号</th>
+                                  <th width="">其他</th>
+                                <th width="150px">操作</th>
+                            </tr>
+<!--                            <tr>-->
+<!--                                <td>1</td>-->
+<!--                                <td><span class="imp-name">刘德华话</span></td>-->
+<!--                                <td><span class="imp-sex">男</span></td>-->
+<!--                                <td><span class="imp-phone">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzks">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzys">12345678901</span></td>-->
+<!--                                <td><span class="imp-jbzd">12345678901</span></td>-->
+<!--                                <td><span class="imp-bnh">12345678901</span></td>-->
+<!--                                <td><span class="imp-qt">12345678901</span></td>-->
+<!--                                <td><input type="button" class="btn btn-w50 btn-gray mr10 btn-edit2" value="编辑" /><input type="button" class="btn btn-gray btn-w50 btn-del2" value="删除" /></td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>2</td>-->
+<!--                                <td><span class="imp-name">刘德华话</span></td>-->
+<!--                                <td><span class="imp-sex">男</span></td>-->
+<!--                                <td><span class="imp-phone">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzks">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzys">12345678901</span></td>-->
+<!--                                 <td><span class="imp-jbzd">12345678901</span></td>-->
+<!--                                <td><span class="imp-bnh">12345678901</span></td>-->
+<!--                                <td><span class="imp-qt">12345678901</span></td>-->
+<!--                                <td><input type="button" class="btn btn-w50 btn-gray mr10 btn-edit2" value="编辑" /><input type="button" class="btn btn-gray btn-w50 btn-del2" value="删除" /></td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>3</td>-->
+<!--                                <td><span class="imp-name dataerror">刘德华话</span></td>-->
+<!--                                <td><span class="imp-sex dataerror">男</span></td>-->
+<!--                                <td><span class="imp-phone dataerror">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzks">12345678901</span></td>-->
+<!--                                <td><span class="imp-jzys">12345678901</span></td>-->
+<!--                                 <td><span class="imp-jbzd">12345678901</span></td>-->
+<!--                                <td><span class="imp-bnh">12345678901</span></td>-->
+<!--                                <td><span class="imp-qt">12345678901</span></td>-->
+<!--                                <td><input type="button" class="btn btn-w50 btn-gray mr10 btn-edit2" value="编辑" /><input type="button" class="btn btn-gray btn-w50 btn-del2" value="删除" /></td>-->
+<!--                            </tr>-->
+                        </table>
+                    </div>
+                </div>
+                <!--/导入样本信息后显示-->
+                <div class="mt30">
+                    <input type="button" class="btn btn-w100" value="下一步" onclick="nextBut();"   />
+                </div>
+            </div>
+        </div>
+<div class="mask" style="display: none;" ></div>
+<div class="popbox popbox-w600" id="setting3"  style="display: none;">
+    <div class="pop-header">设置<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting3')"></a></div>
+    <div class="pop-con-box">
+        <div class="pop-con">
+            <div class="f12">本次调研需收取一定的费用，具体的金额商务人员会在您提交后的一个工作日内与业务联系人确认</div>
+            <div class="mt50" style="font-size:0;padding-bottom:70px;">
+                <span class="f12">业务联系人</span>
+                <input type="text" class="input-text input-text-s input-text-w150 ml10 mr30" id="ContactPerson" />
+                <span class="f12">联系人电话</span>
+                <input type="text" class="input-text input-text-s input-text-w150 ml10" id="ContactPhone" />
+            </div>
+        </div>
+    </div>
+    <div class="pop-footer t-right"><input type="button" class="btn btn-w100 mr10" value="确定" onclick="submintBut();" /><input type="button" class="btn btn-gray btn-w100" value="取消" onclick="closepop('setting3');" /></div>
+</div>
+<!---->
+<!--<div class="mask" style="display: none;" ></div>-->
+<!--<div class="popbox" style="width: 250px;margin-left: -200px;margin-top: -210px;" id="loadingV" style="display: none;" >-->
+<!--    <div class="pop-header">努力加载中...<a href="javascript:;" class="icon btn-closepop" onclick="closepop('loadingV')"></a></div>-->
+<!--    <div class="pop-con-box">-->
+<!--        <div id="box" style="width:44px;margin-top: 20px;height: 44px;margin-bottom: 20px;margin-left: 90px;line-height:44px;text-align:center;background: url(images/investjd.png);"></div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="mask" ></div>-->
+<!--<div class="popbox" style="width: 300px;margin-left: -300px;margin-top: -210px;" id="loadingV" >-->
+<!--    <div class="pop-header">消息正在加载请稍后<a href="javascript:;" class="icon btn-closepop" onclick="closepop('loadingV')"></a></div>-->
+<!--    <div class="pop-con-box">-->
+<!--        <div class="pop-con">-->
+<!--        <div id="box" style="width:44px;height:44px;line-height:44px;text-align:center;background: url(images/investjd.png);"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script type="text/javascript">
+
+var errorList=[];
+var rightList=[];
+//table表格排序
+function tableSort(){
+	 errorList=[];
+	 rightList=[];
+var trList=$("#tableShow tr:not(:first)");
+ $("#tableShow tr:not(:first)").remove();
+// $("#tableShow").append(trList);
+ $.each(trList,function(i,item){
+	var aa= $(item).find(".dataerror");
+	if(aa.length==0){
+		rightList[rightList.length]=item;
+	}else{
+		errorList[errorList.length]=item;
+	};
+ });
+ $.each(errorList,function(i,item){
+	 var tdhtml=$(item).find('td').eq(0).html(i+1);
+//	 alert(tdhtml);
+	 $("#tableShow").append(item);
+ });
+ $.each(rightList,function(i,item){
+	 var tdhtml=$(item).find('td').eq(0).html(errorList.length+i+1);
+//	 alert(tdhtml);
+	 $("#tableShow").append(item);
+ });
+ 
+ $("#rightVal").text(rightList.length);
+ 
+ $("#errorVal").text(errorList.length);
+}
+
+$('.btn-edit2[value!="保存"]').live('click',function(){
+	$('.btn-edit2[value="保存"]').attr('value','编辑').addClass('btn-gray');
+    $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',false);
+    $('.editable').removeClass('editable');
+    $(this).attr('value','保存').removeClass('btn-gray');
+    $(this).closest('tr').addClass('editable');
+    $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+})
+$('.btn-edit2[value="保存"]').live('click',function(){
+    $(this).attr('value','编辑').addClass('btn-gray');
+    $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',false);
+    $(this).closest('tr').removeClass('editable');
+    tableSort();
+})
+$('.btn-del2').live('click',function(){
+    $(this).closest('tr').remove();
+    tableSort();
+})
+ $('.editable').find('.imp-name').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeName(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+ });
+
+$('.editable').find('.imp-sex').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeSex(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+
+
+$('.editable').find('.imp-phone').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgePhone(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+
+$('.editable').find('.imp-jzks').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeJzks(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+$('.editable').find('.imp-jzys').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeJzys(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+
+$('.editable').find('.imp-jbzd').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeJbzd(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+
+$('.editable').find('.imp-bnh').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeBnh(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+$('.editable').find('.imp-qt').live('mouseout',function(){
+	 var val=$(this).text();
+	val=trim(val);
+	 var html=judgeQt(val);
+	 $(this).closest('td').html(html);
+	 $('.editable').find('.imp-name,.imp-sex,.imp-phone,.imp-jzks,.imp-jzys,.imp-jbzd,.imp-bnh,.imp-qt').attr('contenteditable',true);
+});
+
+$('.dataerror').live('mouseover',function(){
+  //  if($(this).closest('.editable').length==0){
+        if($('#popTip').length==0) {
+            $('<div id="popTip"><span class="poptip-arr">◆</span><em class="poptip-arr1">◆</em><p id="popTipTxt"></p></div>').appendTo('body');
+        }
+        $('#popTipTxt').text($(this).attr('data-alt'));
+        var dataerrorPos=$(this).offset(),
+            dataerrorWidth=$(this).outerWidth();
+        $('#popTip').css({left:dataerrorPos.left+(dataerrorWidth-$('#popTip').outerWidth())/2,top:dataerrorPos.top-$('#popTip').outerHeight()-10}).stop().fadeIn('fast');
+ //   }
+}).live('mouseout',function(){
+    $('#popTip').hide();
+})
+
+/*弹窗事件*/
+function showpop(id){
+    $('#'+id).prev('.mask').show().end().fadeIn();
+    setPopAlign(id);
+}
+
+function closepop(id){
+    $('#'+id).prev('.mask').hide().end().fadeOut();
+}
+
+/* 弹窗弹出时设置弹窗垂直居中 */
+function setPopAlign(id){
+    var winClientHeight= $(window).height();
+    var popboxCon=$("#"+id).find(".pop-con-box").eq(0);
+    var popboxConHeight=$("#"+id).find(".pop-con").eq(0).outerHeight();
+    var popboxHeader=$("#"+id).find(".pop-header").eq(0);
+    var popboxHeaderHeight=popboxHeader.outerHeight();
+    var popboxFooter=$("#"+id).find(".pop-footer").eq(0);
+    var popboxFooterHeight=popboxFooter.outerHeight();
+
+    var popboxHeight=popboxConHeight+popboxHeaderHeight+popboxFooterHeight;
+
+    if(popboxHeight>=winClientHeight) {
+        popboxCon.height(winClientHeight-popboxHeaderHeight-popboxFooterHeight).css({"overflow-y":"auto"}).find(".pop-con").css({paddingRight:0}); 
+        $("#"+id).css({marginTop:"-"+winClientHeight/2+"px"});
+    }
+    else {
+        popboxCon.height(popboxConHeight).css({"overflow-y":""}).find(".pop-con").css({paddingRight:20}); 
+        // popboxHeight=popboxHeight; 
+        // alert(popboxHeight);
+        $("#"+id).css({marginTop:"-"+popboxHeight/2+"px"});
+    }
+}
+setPopAlign('setting3');
+</script>
+    </body>
+</html>

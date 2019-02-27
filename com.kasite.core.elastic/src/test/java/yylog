@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "2",
+      "number_of_replicas": "0"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+        "respcontent": {
+          "analyzer": "yihu",
+          "type": "text"
+        },
+        "inserttime": {
+          "format": "YYYY-MM-dd HH:mm:ss",
+          "type": "date"
+        },
+        "resptime": {
+          "format": "YYYY-MM-dd HH:mm:ss",
+          "type": "date"
+        },
+        "orderid": {
+          "type": "keyword"
+        },
+        "reqtime": {
+          "format": "YYYY-MM-dd HH:mm:ss",
+          "type": "date"
+        },
+        "ip": {
+          "type": "keyword"
+        },
+        "mobile": {
+          "type": "keyword"
+        },
+        "reqcontent": {
+          "analyzer": "yihu",
+          "type": "text"
+        },
+        "registerdate": {
+          "format": "YYYY-MM-dd HH:mm:ss",
+          "type": "date"
+        },
+        "cardno": {
+          "type": "keyword"
+        },
+        "orderuid": {
+          "type": "keyword"
+        },
+        "otherparam2": {
+          "analyzer": "yihu",
+          "type": "text"
+        },
+        "otherparam1": {
+          "analyzer": "yihu",
+          "type": "text"
+        },
+        "times": {
+          "type": "long"
+        },
+        "hospitalid": {
+          "type": "integer"
+        },
+        "modeid": {
+          "type": "keyword"
+        },
+        "hospitalname": {
+          "type": "keyword"
+        },
+        "regsn": {
+          "type": "integer"
+        },
+        "resultcode": {
+          "type": "keyword"
+        },
+        "calltype": {
+          "type": "keyword"
+        },
+        "operatorid": {
+          "type": "keyword"
+        },
+        "methodname": {
+          "type": "keyword"
+        },
+        "operatorname": {
+          "type": "keyword"
+        },
+        "username": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

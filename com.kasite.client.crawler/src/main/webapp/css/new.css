@@ -1,0 +1,4 @@
+@charset "utf-8";
+.new-c-nowrap {max-width:120px; _width:100%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.im-group-iconfont {padding-bottom:4px; display:inline-block;}
+.im-group-iconfont i.iconfont {font-size:38px; line-height:1; color:#c2c2c2;}

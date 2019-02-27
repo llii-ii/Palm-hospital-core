@@ -1,0 +1,414 @@
+/*-------------------------
+	Simple reset
+--------------------------*/
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+
+/*-------------------------
+	General Styles
+--------------------------*/
+
+
+html{
+	
+}
+
+body{	
+	background: rgb(34, 37, 42);
+	min-height: 560px;
+    /*padding: 70px 0 0;*/
+	font:14px/1.3 'Segoe UI',Arial, sans-serif;
+}
+
+a, a:visited {
+	text-decoration:none;
+	outline:none;
+	color:#54a6de;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+section, footer{
+	display: block;
+}
+
+#index-menu{
+	position: absolute;
+    top: 0;
+    height: 70px;
+    width: 100%;
+    z-index: 999;
+}
+#index-menu .topbar-box{
+	min-width: 1000px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#index-menu .logo-cell {
+	width: 306px;
+    height: 60px;
+    margin-right: 84px;
+    position: relative;
+    float: left!important;
+    display: block;   
+    background: url(../img/logo.jpg) no-repeat;
+    background-position:center center
+}
+
+
+/*----------------------------
+	Styling the forms
+-----------------------------*/
+
+
+#Container{
+	width:1200px;
+	height:321px;
+	margin:0 auto;
+	position:relative;
+	z-index:1;
+	
+	-moz-perspective: 800px;
+	-webkit-perspective: 800px;
+	perspective: 800px;
+}
+#introduce{
+    height:430px;
+    width:700px; 
+    position: absolute;
+    top: 70px;
+    /* left: 100px; */
+    /* z-index: 9999; */
+    /*background: url(../img/loginbg.png) no-repeat;
+    background-position:right center*/
+}
+#introduce dl {
+	padding-left: 50px;
+}
+#introduce dd {
+    padding: 22px 0 22px 0px;
+}
+#introduce dd h3{
+	font-size: 28px;
+    line-height: 1em;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px #008aff;
+    color: white;
+}
+#introduce dd p{
+	line-height: 1em;
+    margin-top: 12px;
+    color: white;
+    text-indent: 2em;
+}
+
+#operation{  
+    position: absolute;
+    right: 100px;
+    top: 120px;
+    /* z-index: 9999; */
+}
+.login-box-logo {
+    width: 209px;
+    height: 50px;
+    float: left;
+    background: url(../../images/OpenAPM.png) no-repeat 0 0;
+}
+.login-box-title {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    margin-top: 3px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0d86cd;
+    padding-left: 10px;
+    border-left: 1px solid #f6f7f8;
+}
+
+#wrapper {
+    width: 370px;
+    padding: 0 20px 0 20px;
+    position: relative;
+}
+#content {
+    width: 370px;
+    background-color: #fff;
+    text-align: left;
+}
+#header {
+    width: 350px;
+    background: #2E363F;
+    padding: 15px 0 5px 20px;
+    border-bottom: #b2ccd0 solid 1px;
+    height: 42px;
+    display: block;
+}
+#darkbanner {
+    margin: 20px 0 0 -18px;
+    padding: 8px 10px 10px 40px;
+    background: #C3C1C1;
+    position: relative;
+    width: 320px;
+}
+#darkbannerwrap {    
+    width: 18px;
+    height: 10px;
+    margin: 0 0 20px -18px;
+    position: relative;
+}
+#operation fieldset {
+    width: 330px;
+    border: 0;
+    margin: 0px;
+    display: block;
+    margin-top: -30px;
+    background-color: #fff;
+    padding-top: 20px;
+    padding: 20px;
+}
+#operation fieldset p {
+    color: #333333;
+}
+#operation input {
+    height: 20px;
+    width: 238px;
+    /*_width: 237px;*/
+    margin-bottom: 15px;
+    padding: 3px;
+    font: 16px 'Lucida Grande', arial, sans-serif;
+    visibility: hidden;
+}
+#operation label {
+    float: left;
+    text-align: right;
+    width: 70px;
+    font-weight: bold;
+    margin-right: 10px;
+    padding-top: 7px;
+}
+#operation .form button {
+    display: block;
+    float: left;
+    margin: 0 3px 0 80px;
+    /*_margin-left: 42px;*/
+}
+.form button[type] {
+    padding: 5px 10px 5px 7px;
+    line-height: 17px;
+}
+.form button {
+    width: auto;
+    overflow: visible;
+    padding: 4px 10px 3px 7px;
+}
+.form button {
+    display: block;
+    float: left;
+    margin: 0 7px 0 160px;
+    background-color: #1F90D0;
+    border: 1px solid #0080CC;
+    font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+    font-size: 100%;
+    line-height: 130%;
+    text-decoration: none;
+    font-weight: bold;
+    color: #e8f7df;
+    cursor: pointer;
+    padding: 5px 10px 6px 7px;
+    _margin-left: 82px;
+}
+
+
+
+
+#external_username{
+	position: absolute;
+    top: 291px;
+    right: 142px;
+}
+
+#external_pwd{
+	position: absolute;
+    top: 335px;
+    right: 142px;
+}
+.external_input{
+	height: 20px;
+    width: 238px;
+    padding: 3px;
+    font: 16px 'Lucida Grande', arial, sans-serif;
+}
+#external_sub{
+    position: absolute;
+    top: 360px;
+    right: 190px;
+    width: 206px;
+}
+#external_sub2{
+    position: absolute;
+    top: 400px;
+    right: 190px;
+    width: 206px;
+}
+#external_sub3{
+    position: absolute;
+    top: 480px;
+    right: 190px;
+    width: 206px;
+}
+
+#external_sub button {
+    display: block;
+    float: left;
+    margin: 0 3px 0 80px;
+}
+#external_sub button[type] {
+    padding: 5px 10px 5px 7px;
+    line-height: 17px;
+}
+#external_sub button {
+    width: auto;
+    overflow: visible;
+    padding: 4px 10px 3px 7px;
+}
+#external_sub button {
+    display: block;
+    float: left;
+    margin: 0 7px 0 0px;
+    background-color: #1F90D0;
+    border: 1px solid #0080CC;
+    font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+    font-size: 100%;
+    line-height: 130%;
+    text-decoration: none;
+    font-weight: bold;
+    color: #e8f7df;
+    cursor: pointer;
+    padding: 5px 10px 6px 7px;
+    _margin-left: 82px;
+}
+#external_sub2 button {
+    display: block;
+    float: left;
+    margin: 0 7px 0 0px;
+    background-color: #1F90D0;
+    border: 1px solid #0080CC;
+    font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+    font-size: 100%;
+    line-height: 130%;
+    text-decoration: none;
+    font-weight: bold;
+    color: #e8f7df;
+    cursor: pointer;
+    padding: 5px 10px 6px 7px;
+    _margin-left: 82px;
+}
+#external_sub .forgottenpassword {
+    margin-top: 7px;
+    list-style: none;
+}
+#external_sub .forgottenpassword a {
+    color: #717171;
+}
+#external_sub .forgottenpassword li {
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    float: left;
+    line-height: 31px;
+    height: 31px;
+    color: #6F6F6F;
+}
+#external_sub .remember_password{
+	vertical-align: middle;
+}
+
+#external_sub3 .other_login_title {
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+    z-index: 16;
+    padding-bottom: 15px;
+}
+#external_sub3 .pcjkzl-btn-item {
+    display: block;
+    margin-right: 25px;
+    color: #00C;
+    text-decoration: underline;
+    padding-left: 24px;
+    cursor: pointer;
+    font-size: 12px;
+    background-image: url(/ApmWeb/app/img/jkzl.png);
+    background-repeat: no-repeat;
+    width: 0;
+    height: 20px;
+    overflow: hidden;
+}
+
+
+/*----------------------------
+	The Footer
+-----------------------------*/
+
+
+footer{
+	background-color: #111111;
+	bottom: 0;
+	box-shadow: 0 -1px 2px #111111;
+	height: 45px;
+	left: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 100000;
+}
+
+footer h2{
+    color: #EEEEEE;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    padding: 13px 0 0;
+}
+
+footer h2 i{
+	font-style:normal;
+	color:#888;
+}
+
+footer a.tzine,a.tzine:visited{
+	color: #999999;
+	font-size: 12px;
+	left: 50%;
+	margin: 16px 0 0 110px;
+	position: absolute;
+	text-decoration: none;
+	top: 0;
+}
+
+footer a i{
+	color:#ccc;
+	font-style: normal;
+}
+
+footer a i b{
+	color:#c92020;
+	font-weight: normal;
+}
+
+#triangle-topright {
+    width: 0;
+    height: 0;
+    border-top: 12px solid #5A5A5A;
+    border-left: 18px solid transparent; 
+    position: relative;
+    margin: 0 0 0 -18px;
+}

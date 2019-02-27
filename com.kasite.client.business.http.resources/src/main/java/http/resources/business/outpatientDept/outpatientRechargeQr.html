@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>就诊卡充值</title>
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/base.css" type="text/css" />
+<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+</head>
+
+<body>
+	<div class="c-main pb15">
+		<div class="result-box mt10 c-border-tb">
+			<p>
+				<img id="imgLogo" alt="" class="result-tb" />
+			</p>
+			<p class="c-f15 mt10" id="pHosName"></p>
+			<p class="c-f13 c-999 mt15">就诊卡智付系统</p>
+		</div>
+		<div class="c-border-b mt10">
+			<input type="hidden" id="hisMemberId">
+			<ul class="c-list c-f14 pt10">
+				<li >
+					<div class="c-list-key c-666 pr15">
+						<i class="sicon icon-memtb1"></i>就诊人
+					</div>
+					<div class="c-list-info c-t-right" id="memberName"></div>
+				</li>
+				<li>
+					<div class="c-list-key c-666 pr15">
+						<i class="sicon icon-memtb5"></i>就诊卡号
+					</div>
+					<div class="c-list-info c-t-right" id="cardNo"></div>
+				</li>
+				<li>
+	            	<div class="c-list-key c-666 pr15"><i class="sicon icon-memtb6"></i>就诊卡余额</div>
+	            	<div class="c-list-info c-t-right" id="cardBalance">￥0</div>
+	            </li>
+			</ul>
+		</div>
+		<div class="charge-box c-border-tb">
+			<ul class="clearfix">
+				<li class="curr"><a href="javascript:;">￥<label>10</label></a></li>
+				<li><a href="javascript:;">￥<label>20</label></a></li>
+				<li><a href="javascript:;">￥<label>50</label></a></li>
+				<li><a href="javascript:;">￥<label>100</label></a></li>
+				<li><a href="javascript:;">￥<label>200</label></a></li>
+				<li><a href="javascript:;">￥<label>500</label></a></li>
+				<li class="charge-input"><input type="number" class="charge-text" id="chargeInput" placeholder="点击输入请他金额" /></li>
+			</ul>
+			<div class="c-f15 mt5">
+				充值金额：<span class="c-ffac0b">￥<i id="chargeNum">10</i></span>
+			</div>
+		</div>
+		<div class="mt20 plr15">
+			<a href="javascript:;" class="c-btn c-btn-blue" id="chargeBtn">去充值</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js?v=201901152112"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/appConfig.js"></script>
+	<script type="text/javascript" src="js/outpatientRechargeQr.js?v=201901180951"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } 
+ 		,"patientId": {
+			"type": "keyword"
+		}
+ 		,"clinicCaseId": {
+			"type": "keyword"
+		}
+ 		,"clinicNum": {
+			"type": "keyword"
+		}
+ 		,"medicalNum": {
+			"type": "keyword"
+		}
+ 		,"firstVisit": {
+			"type": "keyword"
+		}
+ 		,"allergies": {
+			"type": "keyword"
+		}
+ 		,"socialhistory": {
+			"type": "keyword"
+		}
+ 		,"historyOfpastillness": {
+			"type": "keyword"
+		}
+ 		,"historyPresentIllness": {
+			"type": "keyword"
+		}
+ 		,"pastDiseaseHistory": {
+			"type": "keyword"
+		}
+ 		,"complained": {
+			"type": "keyword"
+		}
+ 		,"complication": {
+			"type": "keyword"
+		}
+ 		,"physicalExam": {
+			"type": "keyword"
+		}
+ 		,"familyHistory": {
+			"type": "keyword"
+		}
+ 		,"description": {
+			"type": "keyword"
+		}
+ 		,"doctorRemark": {
+			"type": "keyword"
+		}
+ 		,"diseases": {
+			"type": "keyword"
+		}
+ 		,"totalRecordInfo": {
+			"type": "keyword"
+		}
+ 		,"lastmodify": {
+			"format": "YYYY-MM-dd HH:mm:ss",
+			"type": "date"
+		}
+
+     	 }
+    }
+  }
+}

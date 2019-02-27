@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>智付系统</title>
+    <link rel="stylesheet" href="../widget/artDialog/4.1.7/css/artDialog.css" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <style type="text/css">
+		thead.show{
+			position:fixed;
+			top:0
+		}
+		thead.show tr{
+			display:block;
+		} 
+		thead.show tr th{
+			float:left;
+			box-sizing: border-box;
+		}        
+    </style>
+</head>
+<body>
+	<div class="com-title">渠道管理</div>
+	<div class="wrapper">
+	    <div class="dnb-tip mt20"><i class="icon icon-tip"></i>如需新增交易渠道或修改支付规则，请联系超级管理员；</div>
+	    <div class="mt20">
+		    <!-- <a href="渠道管理-新增渠道.html" class="c-btn c-btn-blue"><i class="icon icon-add"></i>新增渠道</a></div> -->
+		    <div class="mt20">
+		    	<input type="text" class="input-text" style="display: none;" id="pagenumber_" value="1" />
+		        <table class="tb tb-l c-t-center">
+		            <thead>
+		                <tr>
+		                    <th width="10%">交易渠道名称</th>
+		                    <th width="10%">交易渠道</th>
+		                    <th width="10%">渠道是否启用</th>
+		                    <th width="10%">支付方式</th>
+		                    <th width="15%">渠道商户号</th>
+		                    <th width="15%">渠道商户代码</th>
+		                    <th width="25%">关联银行</th>
+		                    <th width="5%">详情</th>
+		                </tr>
+		            </thead>
+		            <tbody id="channelMerchTab">
+		            </tbody>
+		        </table>
+		        <div class="page-hold" id="pager">
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../widget/nicescroll/3.6.0/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="../widget/placeholder/2.0.7/js/jquery.placeholder.min.js"></script>
+	<script type="text/javascript" src="../widget/artDialog/4.1.7/js/artDialog.js"></script>
+	<script type="text/javascript" src="../js/public.js"></script>
+	<script type="text/javascript" src="../js/jquery.util.js"></script>
+	<script type="text/javascript" src="../commons/js/common.js?time=New Date()"></script>
+	<script type="text/javascript" src="../commons/js/jquery.json.min.js"></script>
+	<script type="text/javascript" src="../commons/js/jquery.pager.js"></script>
+	<script type="text/javascript" src="js/channelMerchList.js"></script>
+	<script>
+		$(function () {
+            var number = $("thead").offset().top
+			$(window).scroll(function(){
+	            if ($(window).scrollTop()>number){
+	                $("thead").addClass("show");
+	                $("#channelMerchTab").css("padding-top","35px")
+	                $("thead").css("width",$("#channelMerchTab").width());
+	            }else{
+	            	$("thead").removeClass("show")
+	            	$("#channelMerchTab").css("padding-top","0")
+	            }
+	        });
+			
+		})
+	</script>
+</body>
+</html>

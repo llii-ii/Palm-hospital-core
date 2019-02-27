@@ -1,0 +1,242 @@
+﻿<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="author" content="yihu.com"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <script src="../../../cross/js/jquery/2.1.3/jquery.js"></script>
+    <script src="js/dialog-plus.min.js"></script>
+    <link rel="stylesheet" href="css/ui-dialog.min.css"/>
+    <link rel="stylesheet" href="../../../iconfont/iconfont.css"/>
+    <style>
+body {  margin:20px; font-family: Helvetica, arial, sans-serif; font-size: 14px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; background-color: white; padding: 30px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -moz-tap-highlight-color: rgba(0, 0, 0, 0); -ms-touch-action: none; -moz-user-select: -moz-none; -webkit-touch-callout: none; }
+body > *:first-child { margin-top: 0 !important; }
+body > *:last-child { margin-bottom: 0 !important; }
+a { color: #4183C4; }
+h1, h2, h3, h4, h5, h6 { margin: 20px 0 10px; padding: 0; font-weight: bold; -webkit-font-smoothing: antialiased; cursor: text; position: relative; }
+h1 { font-size: 28px; color: black; text-align: center; }
+h6 { text-align: center; }
+h2 { font-size: 24px; border-bottom: 1px solid #cccccc; color: black; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+h5 { font-size: 14px; }
+h6 { color: #777777; font-size: 14px; }
+p, blockquote, ul, ol, dl, li, table, pre { margin: 15px 0; }
+body > h2:first-child { margin-top: 0; padding-top: 0; }
+body > h1:first-child { margin-top: 0; padding-top: 0; }
+body > h1:first-child + h2 { margin-top: 0; padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0; padding-top: 0; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0; padding-top: 0; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0; }
+li p.first { display: inline-block; }
+li { margin: 0; }
+ul, ol { padding-left: 30px; }
+ul :first-child, ol :first-child { margin-top: 0; }
+dl { padding: 0; }
+dl dt { font-size: 14px; font-weight: bold; font-style: italic; padding: 0; margin: 15px 0 5px; }
+dl dd { margin: 0 0 15px; padding: 0 15px; }
+blockquote { border-left: 2px solid #dddddd; padding: 0 15px; color: #777777; }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+table { padding: 0; border-collapse: collapse; }
+tr { background-color: white; margin: 0; padding: 0; }
+th { font-weight: bold; text-align: left; margin: 0; padding: 6px 13px; }
+td { text-align: left; margin: 0; padding: 6px 13px; }
+th :first-child, td :first-child { margin-top: 0; }
+th :last-child, td :last-child { margin-bottom: 0; }
+img { max-width: 100%; }
+pre{ padding:10px; background: #f3f3f3; color:green}
+/*避免对话框样式被工具生成的全局样式污染*/
+
+
+
+</style>
+    <title>artDialog</title>
+    </head>
+    <body>
+<h1>对话框使用示例</h1>
+
+<h3><span>普通对话框,只有“确定”</span></h3>
+<button id="Btn1">运行</button>
+<script>
+    $(function () {
+        $('#Btn1').on('click', function () {
+           dialog({title:'我是标题党', content:'我是内容', ok: function (){alert("这里是回调事件")} }).showModal();
+        });
+    });
+</script>
+<pre>
+
+            dialog({title:'我是标题党', content:'我是内容', ok: function () {alert("这里是回调事件")} }).showModal();
+
+	   //点击遮罩层自动关闭 quickClose: true
+</pre>
+<br/>
+
+
+<h3><span>普通对话框，有“确定”和“取消”</span></h3>
+<button id="btn2">运行</button>
+<script>
+    $(function () {
+        $('#btn2').on('click', function () {
+            dialog({title:'请注意!', content:'内容内容内容内容内容内容', ok: function (){alert("你点了确定")}, cancel: function () {alert("你点了取消")} }).showModal();
+        });
+    });
+</script>
+<pre>
+
+            dialog({title:'请注意!', content:'内容内容内容内容内容内容', ok: function (){alert("你点了确定")}, cancel: function () {alert("你点了取消")} }).showModal();
+
+</pre>
+<br/>
+
+<h3><span>普通对话框，三个自定义按钮</span></h3>
+<button id="btn3">运行</button>
+<script>
+    $(function () {
+        $('#btn3').on('click', function () {
+            dialog({
+                title:'我是标题君!',
+                content:'内容内容内容内容内容内容',
+                button: [
+                            {value: '普通',callback: function(){} },
+                            {value: '二逼',callback: function(){} },
+                            {value: '文艺',callback: function(){} }
+                        ]
+                }).showModal();
+        });
+    });
+</script>
+<pre>
+            dialog({
+                title:'我是标题君!',
+                content:'内容内容内容内容内容内容',
+                button: [
+                            {value: '普通',callback: function(){} },
+                            {value: '二逼',callback: function(){} },
+                            {value: '文艺',callback: function(){} }
+                        ]
+                }).showModal();
+</pre>
+<br/>
+
+
+<h3><span>普通对话框，多个自定义按钮</span></h3>
+<button id="btn4">运行</button>
+<script>
+    $(function () {
+        $('#btn4').on('click', function () {
+            dialog({
+                content: 'Hello World!',
+                button: [
+                            {value: '同意',callback: function () { this.content('你同意了'); return false;} },
+                            {value: '不同意',callback: function () {this.content('你不同意');return false;} },
+                            {value: '无效按钮', disabled: true},
+                            {value: '关闭我'}
+                        ]
+                }).showModal();
+            });
+    });
+</script>
+<pre>
+            dialog({
+                content: 'Hello World!',
+                button: [
+                            {value: '同意',callback: function () { this.content('你同意了'); return false;} },
+                            {value: '不同意',callback: function () {this.content('你不同意');return false;} },
+                            {value: '无效按钮', disabled: true},
+                            {value: '关闭我'}
+                        ]
+                }).showModal();
+            });
+</pre>
+<br/>
+
+
+<h3><span>无按钮无标题对话框，定时关闭</span></h3>
+
+<button id="btn5">运行</button>
+<script>
+    $(function () {
+        $('#btn5').on('click', function () {
+           dialog({contentType:'tipsbox' , content:'对话框将在三秒内关闭'}).showModal();
+           
+        });
+    });
+</script>
+<pre>
+           dialog({contentType:'tipsbox', content:'对话框将在三秒内关闭'}).showModal();
+           
+           //自动关闭时间 closeTime: 3000   （默认三秒）
+</pre>
+<br/>
+
+<h3><span>无按钮无标题对话框，定时关闭(黑色)</span></h3>
+
+<button id="btn5-1">运行</button>
+<script>
+    $(function () {
+        $('#btn5-1').on('click', function () {
+           dialog({contentType:'tipsbox', skin:'bk-popup' , content:'对话框将在三秒内关闭'}).showModal();
+           
+        });
+    });
+</script>
+<pre>
+           dialog({contentType:'tipsbox', skin:'bk-popup' , content:'对话框将在三秒内关闭'}).showModal();
+           
+           //自动关闭时间 closeTime: 3000   （默认三秒）
+</pre>
+<br/>
+
+<h3><span>加载中请稍候</span></h3>
+<button id="loading1">运行</button>
+<script>
+    $(function () {
+        $('#loading1').on('click', function () {
+            dialog({contentType:'load'}).showModal();
+        });
+    });
+</script>
+<pre>
+
+ 	dialog({contentType:'load'}).showModal();
+	
+    	//contentType 值为 'load' 默认提示语是 '加载中，请稍候...'  , 可自行修改 content 的 值； 例如 ： content : '列表数据载入中，请稍候...'
+</pre>
+<br/>
+
+
+<h3><span>数据载入中请稍候</span></h3>
+<p>关闭对话框的方法：close(), 移除对话框方法：remove()</p>
+<button id="loading2">运行</button>
+<script>
+    $(function () {
+        $('#loading2').on('click', function () {
+            var d = dialog({contentType:'jsonload'}).showModal();
+            setTimeout(function () {
+                d.close().remove()
+            }, 1500);
+        });
+    });
+</script>
+<pre>
+
+            var d = dialog({contentType:'jsonload'}).showModal();
+            
+            //数据载入完 关闭:   d.close().remove();
+            
+            //contentType 值为 'jsonload' 默认提示语是 '数据载入中，请稍候...'  , 可自行修改 content 的 值； 例如 ： content : '列表数据载入中，请稍候...'
+
+</pre>
+<br/>
+
+
+<p>
+<h3><a href="api/index.html">更详细的使用示例请参见官方文档</a></h3>
+</p>
+</body>
+</html>

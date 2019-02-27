@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>电话调研</title>
+		<script type="text/javascript" src="../commons/js/survey-all.js"></script>
+		<script type="text/javascript" src="./js/myd-jgtj-list.js"></script>
+	</head>
+	<body>
+		<div class="clearfix">
+			<div class="main-tit">
+				<h2>
+					问卷结果
+				</h2>
+			</div>
+			<div class="p20">
+			
+				<div class="mb15">
+					<center><span style="font-size: 18px;color: black;">《</span><span id="subjecttitle" style="font-size: 18px;color: black;"></span><span style="font-size: 18px;color: black;">》--满意度调查</span></center>
+				</div>
+				<div class="relative f12">
+<!--					共有-->
+<!--					<span class="c-org">50</span> 条-->
+                   
+<!--                   状态： -->
+                    <select id="statusV" style="display: none;">
+                   <option value="">全部</option>
+                   <option value="2">已完成</option>
+                    <option value="1">待调查</option>
+                     <option value="3">呼叫中</option>
+                   </select>
+                   
+<!--                   <input type="button" class="btn btn-w100" value="查询" onclick="search();">-->
+
+					
+					
+<!--					<a href="/WbjUI/wbj2/business/survey/downFile/wavepad.rar" class="absolute" -->
+<!--						style="right: 15px; top: 0;"  id="xzyy"  >下载语音播放器 </a>	-->
+<!--						-->
+						<a href="" class="absolute" id="tjgk"
+						style="right: 115px; top: 0;">统计概况 </a>
+						<!--<a href="javascript:;" class="btn btn-w-auto btn-gray fr" id="backBtn" onclick="window.history.back(-1)" style="margin: 10px;"><i class="icon icon-back"></i>返回</a>
+						
+				--></div>
+				<div class="mt45">
+					<table class="tb tb-hover" width="100%" id="tableShow" >
+						<tr>
+							<th width="50">
+<!--								<input type="checkbox" name="dhdy" />-->
+                            序号
+							</th>
+							<th>
+								答题者
+							</th>
+							<th >
+								答题状态
+							</th>
+							<th >
+								答卷时间
+							</th>
+							<th >
+								操作
+							</th>
+						</tr>
+            	<td colspan="5">
+								<div class="pager_container">
+									<input id="pagenumber" name="pagenumber" type="hidden"
+										value="1" />
+									<input id="pagesize" name="pagesize" value="10" type="hidden" />
+									<input id="defaultsize" name="defaultsize" value="10"
+										type="hidden" />
+									<div id="pager" class='pager'></div>
+								</div>
+							</td>
+            </tr>
+					</table>
+				</div>
+			</div>
+		</div>
+<div class="mask" style="display: none;" ></div>
+<div class="popbox popbox-w600" id="setting3"  style="display: none;" >
+    <div class="pop-header">下载<a href="javascript:;" class="icon btn-closepop" onclick="closepop('setting3')"></a></div>
+    <div class="pop-con-box">
+        <div class="pop-con" id="Context">
+          
+        </div>
+    </div>
+<!--    <div class="pop-footer t-right"><input type="button" class="btn btn-w100 mr10" value="确定" onclick="submintBut();" /><input type="button" class="btn btn-gray btn-w100" value="取消" onclick="closepop('setting3');" /></div>-->
+</div>
+	</body>
+	<script type="text/javascript">
+	/*弹窗事件*/
+	function showpop(id){
+	    $('#'+id).prev('.mask').show().end().fadeIn();
+	    setPopAlign(id);
+	}
+
+	function closepop(id){
+	    $('#'+id).prev('.mask').hide().end().fadeOut();
+	}
+
+	/* 弹窗弹出时设置弹窗垂直居中 */
+	function setPopAlign(id){
+	    var winClientHeight= $(window).height();
+	    var popboxCon=$("#"+id).find(".pop-con-box").eq(0);
+	    var popboxConHeight=$("#"+id).find(".pop-con").eq(0).outerHeight();
+	    var popboxHeader=$("#"+id).find(".pop-header").eq(0);
+	    var popboxHeaderHeight=popboxHeader.outerHeight();
+	    var popboxFooter=$("#"+id).find(".pop-footer").eq(0);
+	    var popboxFooterHeight=popboxFooter.outerHeight();
+
+	    var popboxHeight=popboxConHeight+popboxHeaderHeight+popboxFooterHeight;
+
+	    if(popboxHeight>=winClientHeight) {
+	        popboxCon.height(winClientHeight-popboxHeaderHeight-popboxFooterHeight).css({"overflow-y":"auto"}).find(".pop-con").css({paddingRight:0}); 
+	        $("#"+id).css({marginTop:"-"+winClientHeight/2+"px"});
+	    }
+	    else {
+	        popboxCon.height(popboxConHeight).css({"overflow-y":""}).find(".pop-con").css({paddingRight:20}); 
+	        // popboxHeight=popboxHeight; 
+	        // alert(popboxHeight);
+	        $("#"+id).css({marginTop:"-"+popboxHeight/2+"px"});
+	    }
+	}
+	</script>
+</html>

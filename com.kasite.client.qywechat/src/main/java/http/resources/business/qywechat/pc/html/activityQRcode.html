@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>活动预览二维码</title>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 500px;">
+			<div class="x-row">
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;">
+						<div>
+						<img id="qr" alt="" src="" height="150px" width="150px">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/webCom1.0/js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var acUUid = Commonjs.getUrlParam("acUUid");
+
+		$(document).ready(function () {
+			getActivityInfo();
+			//$("#qr").attr('src',dd.Data[0].QrPicUrl);	
+        });
+		//获取活动信息
+		function getActivityInfo(){
+			var apiData = {};	
+    		//apiData.id = acid;
+    		apiData.activityId = acUUid;
+    		apiData.status = -1;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HDYQ');
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryActivityById/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				$("#qr").attr('src',dd.Data[0].QrPicUrl);
+     				//parent.QRcodeReturn(dd.Data[0].Id,acUUid);
+     			}
+     		},{async:false});
+		}
+        
+
+	</script>
+</html>

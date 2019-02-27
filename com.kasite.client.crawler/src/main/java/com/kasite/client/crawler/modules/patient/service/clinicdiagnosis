@@ -1,0 +1,63 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    }
+  },
+  "mappings": {
+    "logtable": {
+      "dynamic": "true",
+      "_all": {
+        "enabled": false
+      },
+      "properties": {
+      		"inserttime": {
+	          "format": "YYYY-MM-dd HH:mm:ss",
+	          "type": "date"
+	        } ,
+	         "patientId": {
+					"type": "keyword"
+				},
+				 "clinicNum": {
+					"type": "keyword"
+				},
+				 "medicalNum": {
+					"type": "keyword"
+				},
+				 "diagnosisName": {
+					"type": "keyword"
+				},
+				 "diagnosisCode": {
+					"type": "keyword"
+				},
+				 "sort": {
+					"type": "keyword"
+				},
+				 "diagnosisType": {
+					"type": "keyword"
+				},
+				 "diagnosisDate": {
+					"format": "YYYY-MM-dd",	"type": "date"
+				},
+				 "doctor": {
+					"type": "keyword"
+				},
+				 "resultCode": {
+					"type": "keyword"
+				},
+				 "doctorCode": {
+					"type": "keyword"
+				},
+				 "diagnosisNatureCode": {
+					"type": "keyword"
+				},
+				 "lastmodify": {
+				"format": "YYYY-MM-dd HH:mm:ss",
+					"type": "date"
+				}
+
+     	 }
+    }
+  }
+}

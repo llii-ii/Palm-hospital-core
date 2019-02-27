@@ -1,0 +1,52 @@
+body { *background:url(about:blank) fixed; _height: 100%; _overflow:hidden;}
+.c { clear:both;}
+/*margin+padding*/
+.mt3 { margin-top: 3px;}
+.mt12 { margin-top: 12px;}
+.h-300-auto{height:300px;overflow:auto;}
+.ml100 { margin-left: 100px;}
+.ml255 { margin-left: 255px;}
+.ml220 { margin-left: 220px;}
+.ml295 { margin-left: 295px;}
+
+/*组织架构明细*/
+.group-tree-w { position: absolute; left: 0; top:0; width: 255px; height: 100%; background-color:#f7f8f9; overflow: auto;}
+.group-tree-w295 { width: 295px;}
+.group-tree-btn a {padding-left:6px; padding-right:6px; }
+.w75 { width: 75px;}
+.w90 { width: 90px;}
+.w130 { width: 130px;}
+.w135 { width: 135px;}
+.w230 { width: 230px;}
+.w340 { width: 340px;}
+.compare-grouptree-w { width: 320px;}
+.compare-grouptree { height: 520px; background-color:#f7f8f9; overflow: auto;}
+.compare-divarea { padding:240px 80px 0 90px;}
+.compare-divarea i.iconfont {color: #a7a7a7; font-size: 32px}
+.ztree-w { position: absolute; left: 0; top:54px; right: 0; bottom:0; width: 100%; overflow: auto; _height:expression(document.documentElement.clientHeight-54);}
+.ztree-hasbottom { bottom:29px; _height:expression(document.documentElement.clientHeight-54-48);}
+.fixedtree { position: fixed; _position:absolute; _top:expression(document.documentElement.scrollTop+(parseInt(this.currentStyle.marginTop,10)||0)); _height:expression(document.documentElement.clientHeight-2); overflow: hidden;}
+.savegroup { position: absolute; left: 0; bottom:0; width: 100%;}
+
+.clearsearch { display: none; position: absolute; right:75px; top:8px; line-height: 1; cursor: pointer;}
+.searchinput { width: 215px;}
+.search-overlay { display: none; position: absolute; left: -1px; top:63px; width: 100%; height: 247px; border:1px solid #e1e1e1; border-top:0 none; background-color:#fff; z-index: 2; overflow: auto;}
+.search-overlay input { vertical-align: middle;}
+.selectedstaff li { padding:5px 0; font-size:14px;}
+.selectedstaff input { margin-right: 5px; vertical-align: middle;}
+.add-del-w { width: 100px; margin-left: 10px; margin-top: 200px;}
+.form-horizontal-w75 .control-label { width: 75px;}
+.form-horizontal-w75 .control-form { margin-left: 75px;}
+
+.pop-ztree-w .iconfont { position: absolute; right:8px; top:5px; cursor:pointer;}
+.pop-ztree-w .pop-ztree-chosed .input-text { cursor:pointer;}
+.pop-ztree-w .pop-ztree { display: none; position: absolute; left: 0; top:32px; width: 240px; height: 240px; border-color:#40d0a7; overflow: auto; z-index: 2; background-color:#fff;}
+.compare-divarea-s { padding:260px 20px 0; width: 60px;}
+
+.edit-people-dialog dd {margin-bottom:10px; display:block;}
+.edit-people-dialog .fl .form-auto label.control-label , .upper-lower-form .form-auto label.control-label {width:100px;}
+.edit-people-dialog .fr .form-auto label.control-label {width:130px;}
+.edit-people-dialog .form-auto .control-form , .upper-lower-form .form-auto .control-text {margin-left:10px;}
+.personnel-manage-search.show label.control-label {width:98px; text-align:right;}
+.edit-people-step_box.curr {display:block;}
+.user-detail-info .form-inline .control-group {margin-bottom:0px !important;}

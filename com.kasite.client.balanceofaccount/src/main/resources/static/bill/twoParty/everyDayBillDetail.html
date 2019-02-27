@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>账单列表</title>
+    <link rel="stylesheet" href="../../balanceofaccount/common/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/cross/css/page.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/artDialog/4.1.7/css/artDialog.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../balanceofaccount/common/widget/datetimepicker/2.1.9/css/jquery.datetimepicker.css" type="text/css" />
+</head>
+<body>
+<div class="container-wrap"><div class="comtop"><i class="cicon icon-duizhang"></i>对账管理</div>
+    <div class="scroll-pane jspScrollable" style="top: 0px;">
+        <div class="ptb10 plr5">
+            <div class="tabs tabs-four">
+                <div class="tabs-hd clearfix">
+                    <a id="everyDayBill" href="everyDayBill.html" ><span>每日账单</span></a>
+                    <a id="everyDayBillDetail" href="everyDayBillDetail.html" class="curr"><span>账单列表</span></a>
+                    <a id="classifySummaryBill" href="classifySummaryBill.html"><span>分类汇总账单</span></a>
+                    <a id="alwaysRefund" href="alwaysRefund.html"><span>实时退款</span></a>
+                </div>
+                <div class="tabs-bd p10">
+                    <div class="form-layout form-inline">
+                        <div class="control-group">
+                            <label class="control-label mr10">交易日期</label>
+                            <div class="control-form mr10">
+                                <input placeholder="请输入" class="input-text input-text-w110" id="date_timepicker_start">
+                            </div>
+                            <label class="control-label mr10">至</label>
+                            <input placeholder="请输入" class="input-text input-text-w110" id="date_timepicker_end">
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label mr10">订单号</label>
+                            <div class="control-form">
+                                <div class="form-select">
+                                    <select id="channelOrderType"class="select select-w125">
+                                        <option value="">-查询所有-</option>
+                                        <option value="1">-全流程订单号-</option>
+                                        <option value="2">-渠道订单号-</option>
+                                    </select>
+                                </div>
+                                <div class="form-select">
+                                    <input id="orderId" placeholder="请输入对应的订单号" class="select select-w125" style="display: none;width: 150px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label mr10">订单类型</label>
+                            <div class="control-form">
+                                <div class="form-select">
+                                    <select id="orderType"class="select select-w125">
+                                        <option value="">-查询所有-</option>
+                                        <option value="1">-支付订单-</option>
+                                        <option value="2">-退款订单-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label mr10">交易渠道</label>
+                            <div class="control-form">
+                                <div class="form-select">
+                                    <select id="channelId"class="select select-w125">
+                                        <option value="">-查询所有-</option>
+                                        <option value="100123">-微信-</option>
+                                        <option value="100125">-支付宝-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label mr10">对账结果</label>
+                            <div class="control-form">
+                                <div class="form-select">
+                                    <select id="checkState"class="select select-w125">
+                                        <option value="">-查询所有-</option>
+                                        <option value="0">-账平-</option>
+                                        <option value="1">-长款-</option>
+                                        <option value="-1">-短款-</option>
+                                        <option value="2">-账平(处置后)-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="javascript:void(0)" onclick="loadData(1)" class="c-btn c-btn-gray">查询</a>
+                        <a href="javascript:download();" class="c-btn c-btn-gray ml10"><i class="cicon icon-daochu"></i>导出xsl</a>
+                    </div>
+                    <div class="pb40">
+                        <table id="billDateTable" class="cell-border hover c-t-center c-f14" cellspacing="0" width="100%">
+
+                        </table>
+                    </div>
+                    <!-- 操作人json格式化-->
+                    <div id="showReqResultJsonDiv" class="c-hide" style="max-height:850px; width:550px;overflow:auto;">
+                        <div id="jsonFormat" class="jsonformat-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="logMessage" style="display:none;">
+    <div id ="dealContent"></div>
+</div>
+
+<script type="text/javascript" src="../../balanceofaccount/common/cross/js/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/js/base.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/js/jsonFormat.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/datetimepicker/2.1.9/js/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/artDialog/4.1.7/js/artDialog.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/jscrollpane/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/cross/js/cross.ui.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/widget/echarecharts/js/echarts.min.js"></script>
+<script type="text/javascript" src="../../balanceofaccount/common/js/common.js"></script>
+<script type="text/javascript" src="js/everyDayBillDetail.js"></script>
+</body>
+</html>

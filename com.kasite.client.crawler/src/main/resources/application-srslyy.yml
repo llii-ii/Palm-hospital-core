@@ -1,0 +1,102 @@
+#市立配置信息。
+#RPC服务需要对应的配置信息
+rpc:
+    startRpc: false
+    appId: Crawler
+    appName: 数据抓取项目
+    port: 12345
+#上饶健康档案云平台的配置信息
+kasite:
+    db:
+        #oracle mysql sqlserver
+        dbType: oracle
+        ip: 119.19.19.3
+        port: 1521
+        showSql: true
+        alias: hisdb
+        username: yh
+        password: yh
+        databaseName: hisdb
+        validationQuery: select 1 from dual
+    zk:
+        #oracle mysql sqlserver
+        dbType: sqlserver
+        ip: 119.19.19.27
+        port: 1433  
+        showSql: true
+        alias: his_ecg     
+        username: Sa
+        password: MedExSQLServerAdmin   
+        databaseName: PACSTOHIS   
+        validationQuery: select 2
+    appConfig:
+        isConnectionKastieCenter: false
+        centerUrl: 127.0.0.1:8666
+        appId: KASITE-CLIENT-CRAWLER
+        appSecret: zzXHt3e7wrKQ8eD3L
+        orgCode: 135050300065
+        configPath: D:\Client
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyFvk7xCEWfwzD6Me4H3Q6EyI5s3++uKK0bmIs+sOS+m+9WphC4LzaIXHH4tYbnP6o9OttehwnninTYDd93yQo+tOI5jGQZyxuT1DpwZ8eB5bIw1gKKrlmuhs03BDD86XtbR306REkJ7XR1kbXMfFX9qBalPB7ElvuH2V3Ek62IsVwQyhotL8Acskt7nO7WY6Y+zUAdIeD/MRvp+VvNzhze0Cr4NFT5BTRdAyaQL8ny8ZH18hRvcU5wuElwK5SRHoFpdtYVziWOQZYxzSqdTVUuV0XAjAG4ZH7EgSx0J+6LOHrhHrggcxznOKlxv1m6XyDtz1D0KIEUo4GIs1mrgn2wIDAQAB
+datacloud:
+    #是否开启验证： true 开启  false 关闭
+    isCheck: true
+    #是否打印调试语句： true 开启  false 关闭
+    isPrint: false
+    #是否开启数据采集作业： true 开启  false 关闭
+    isStartJob: true
+    #前置机是否开启上报(上报数、作业时间、在线情况、获取sql)： true 开启  false 关闭
+    isStartReport: false
+    #是否质控后台
+    isZK: false
+    file:
+        #上传验证标准 及上传规范
+        data: standard/data.xlsx
+        #上传验证标准字典值
+        dict: standard/dict.xlsx
+        #上传验证标准 上传规则
+        rule: standard/srslyy/rule.xlsx
+        #个性化字典值
+        mydict: standard/dict.xml
+        #执行sql语句并将执行结果写入到当前文件夹下
+        execute: standard/sql
+    api: 
+        #接口地址 获取 公钥地址
+        publickey: http://10.56.0.2:9999/api/v1.0/organizations/492240421/key
+        #上传文件地址
+        upload: http://10.56.0.2:9999/api/packages
+        #质控包上传地址
+        zkUpload: http://10.56.0.2:9999/api/qcPackages
+        #基础信息医疗资源上传地址
+        basicUpload: http://10.56.0.2:9999/api
+        #质控系统地址
+        medicalUrl: http://127.0.0.1:8080/
+    group:
+        #机构代码
+        org_code: 492240421
+        #应用安全码
+        appSecret: MNhQXnCSaaRc8kcS
+        #1.54 标准版本号
+        inner_version: 5b7d3fb0017f
+        #应用ID
+        appKey: u5GEgEuoyc
+        #共钥
+        publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCanRya8VMtkA2GCuayJqgKwzOTgZxyflAhFUg5IsFgJNTb8sa02PXDcl7Q2TcLrslsQM2fQhQnj45Ly8TZ/4uy0rgiyo1PeOf654mUFfxqOVudJdlMc9ymwIfrnJ9B0vdsreW/6qZ/UW2m+K73eOVQWf5LCakkqW1On1qFWPQzXQIDAQAB
+    fileupload: 
+        filepath: 
+            #zip 压缩后保存的目录
+            zip: user.dir/file/zip
+            #上传数据文件的存放目录
+            data: user.dir/file/data
+            #上传日志存放目录
+            log: user.dir/file/error
+            #数据采集的时候每次采集多少调--分页查询。
+            pageSize: 100
+            #开启线程数
+            threads: 40
+            #临时保存多久的文件 默认 7 天超过7天的数据直接删除。
+            tempdates: 7
+            #是否开启上传／验证本地文件的时候可以关闭，验证后再上传其实就是关闭打包作业 true 开启上传／false关闭上传
+            isUpload: false
+#ES相关配置信息
+elastic:
+    url: 127.0.0.1:9200

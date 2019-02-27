@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>活动明细</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	    	    <link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+		<style type="text/css">
+			.act2{
+				line-height: 1.4;
+				padding-bottom: 1rem;
+			}
+			.act2-top{
+				padding: 0.5rem;
+				background: #5eafff;
+				color: #fff;
+				text-align: center;
+			}
+			.act2-top h2{
+				font-size: 0.42rem;
+				margin-top: 0;
+				margin-bottom: 0.2rem;
+				margin-top: 0;
+			}
+			.act2-top p{
+				font-size: 0.28rem;
+			}
+			.act2-top-info{
+				border-top: 1px solid #fff;
+			}
+			.act2-top-info p{
+				padding-top: 0.26rem;
+				padding-bottom: 0;
+				margin-top: 0;
+				text-align: left;
+				margin-bottom: 0;
+			}
+			.act2-top-info p img{
+				width: 0.3rem;
+				float: left;
+				margin-right: 0.15rem;
+				position: relative;
+				top: .02rem;
+			}
+			.act2-list{
+				padding-top: 0.3rem;
+				padding-bottom: 0.3rem;
+				background: #fff;
+			}
+			.act2-list li{
+				position: relative;
+				line-height: 1rem;
+				font-size: 0.26rem;
+				color: #333333;
+				padding-left: 1.28rem;
+				padding-right: 0.54rem;
+			}
+			.act2-list li:after{
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0.62rem;
+				top: 50%;
+				margin-top: -.15rem;
+				width: 0.3rem;
+				height: 0.3rem;
+				background-image: url(../../img/icon-vote-6.png);
+				background-position: center;
+				background-size: 0.3rem;
+				background-repeat: no-repeat;
+			}
+			.act2-list li.active span{
+				color: #2988fc;
+			}
+			.act2-list li.active:after{
+				background-image: url(../../img/icon-vote-5.png);
+			}
+			.act2-list li span{
+				float: right;
+				color: #999;
+			}
+			.act2-list-pro{
+				position: absolute;
+				left: 1.28rem;
+				bottom: 0;
+				right: 0.54rem;
+				height: 0.15rem;
+			}
+			.act2-list-pro div{
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				background: #2988fc;
+			}
+			.act2-title{
+				position: relative;
+				color: #1a1a1a;
+				font-size: 0.3rem;
+				background: #fff;
+				margin:0;
+				padding-left: .55rem;
+				padding-top: .3rem;
+				padding-bottom: .3rem;
+				font-weight: bold;
+			}
+			.act2-title:before{
+				content: '';
+				display: block;
+				width: 0.06rem;
+				height: 0.3rem;
+				background-color: #2988fc;
+				position: absolute;
+				left: 0.38rem;
+				top: 50%;
+				margin-top: -.13rem;
+				border-radius: 0.06rem;
+				-webkit-border-radius: 0.06rem;
+			}
+			.act2-title span{
+				float: right;
+				color: #999;
+				font-weight: normal;
+				padding-right: 0.38rem;
+			}
+			.act2-content{
+				background: #fff;
+				padding:0.1rem 0.38rem 0.38rem 0.38rem;
+				font-size: 0.26rem;
+				line-height: 1.2;
+			}
+			.act2-person{
+				background: #fff;
+				padding:0 0.54rem 0.54rem 0.54rem;
+			}
+			.act2-person li{
+				position: relative;
+				float: left;
+				display: block;
+				padding: 0 0.17rem 0 0.4rem;
+				font-size: 0.28rem;
+				line-height: 0.46rem;
+				color: #333;
+				background: #f7fbff;
+				border-radius: 0.1rem;
+				-webkit-border-radius: 0.1rem;
+				margin-right: 0.56rem;
+				margin-bottom: 0.1rem;
+			}
+			.act2-person li img{
+				width: .46rem;
+				height: .46rem;
+				position: absolute;
+				z-index: 1;
+				left: -.2rem;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+	        <div class="act2">
+	        	<div class="act2-top">
+	        		<h2 id="title"></h2>
+	        		<p id="expiretime"></p>
+	        		<div class="act2-top-info">
+	        			<p><img src="../../img/icon-vote-3.png"/><span id="checksName"></span></p>
+	        			<p><img src="../../img/icon-vote-4.png"/><span id="activityTime"></span></p>
+	        			<p><img src="../../img/icon-vote-11.png"/><span id="place"></span></p>
+	        		</div>
+	        	</div>
+	        	
+	        	<p class="act2-title">活动说明</p>
+	        	<div class="act2-content"></div>
+	        	
+	        	<p class="act2-title">已报名<span id="partNumber">0人</span></p>
+	        	<ul class="ell act2-person">
+<!-- 	        		<li>
+	        			<img src="../../img/icon-active-0.png"/>主要为范围
+	        		</li>
+	        		<li>
+	        			<img src="../../img/icon-active-0.png"/>主要为
+	        		</li>
+	        		<li>
+	        			<img src="../../img/icon-active-0.png"/>主要为
+	        		</li>
+	        		<li>
+	        			<img src="../../img/icon-active-0.png"/>主要为
+	        		</li> -->
+	        	</ul>
+	        </div>
+		</div>
+		
+		<div class="btn" id="partActivity" onclick="partActivity()">我要报名</div>
+		<div class="btn" id="gotoChat" onclick="gotoChat()" style="display:none;">进入群聊</div>
+		<div class="btn" id="returnAddHtml" onclick="returnAddHtml()" style="display:none;">返回</div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../../common/js/common.js"></script>
+	<script type="text/javascript">
+		var acId = Commonjs.getUrlParam("acId");
+		var acUUid = Commonjs.getUrlParam("activityId");
+		var memberName = '';
+		var partNumber = 0;
+		var totalNumber = 0;
+		$(function(){
+			if(acUUid != '' && acUUid != null && acUUid != undefined ){
+				if(Commonjs.getUrlParam("preview") == 'backstage'){
+					$("#returnAddHtml").show();
+				}
+				$("#partActivity").hide();
+ 				$("#gotoChat").hide();
+			}
+			getActivityInfo();
+			getPeopleList(0);
+			getPeopleList(2);
+		});
+		
+
+		//获取活动信息
+		function getActivityInfo(){
+			var apiData = {};	
+    		apiData.id = acId;
+    		apiData.activityId = acUUid;
+    		apiData.status = -1;
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryActivityById/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				acUUid = dd.Data[0].Activityid;
+     				memberName = dd.Data[0].LoginMemberName;
+     				acId = dd.Data[0].Id;
+     				totalNumber = dd.Data[0].TotalNumber;
+     				$(".act2-content").html(dd.Data[0].Intro);
+     				$("#title").text(dd.Data[0].Title);
+     				$("#expiretime").text(dd.Data[0].Expiretime+"报名截止");
+     				$("#activityTime").text(dd.Data[0].Starttime + '~' + dd.Data[0].Endtime);
+     				$("#place").text(dd.Data[0].Place);
+     				if(dd.Data[0].Status == 10){
+     					$("#partActivity").hide();
+     					$("#gotoChat").hide();
+     				}else {
+     					var curTime = Date.parse(new Date());
+     					var expiretime = Date.parse(dd.Data[0].Expiretime);
+     					var dateSpan = Math.abs(curTime - expiretime);
+     					var iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+         				if(iDays > 0){
+         					$("#partActivity").hide();
+         					$("#gotoChat").hide();
+         				}
+     				}
+     			}
+     		},{async:false});
+		}
+		
+		//获取参与人
+		function getPeopleList(memberType){
+			var apiData = {};	
+            apiData.uid = acUUid;
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var names = '';
+					var html = '';
+					var openId = Commonjs.getOpenId();
+					for(var i = 0;i<dd.Data.length; i++){
+						names = names + dd.Data[i].Membername + ",";
+						if(dd.Data[i].MemberAvatar == ''){
+							html += '<li><img src="../../img/icon-active-0.png"/>'+dd.Data[i].Membername+'</li>';
+						}else {
+							html += '<li><img src="'+dd.Data[i].MemberAvatar+'"/>'+dd.Data[i].Membername+'</li>';
+						}
+					}
+    				if(memberType == 0){
+    			        $("#checksName").text(names.substring(0,names.length-1));
+    				}else if(memberType == 2){
+    					partNumber = dd.Data.length;
+    					$("#partNumber").text(partNumber+'人');
+    					$(".act2-person").append(html);
+    					for(var i = 0;i<dd.Data.length; i++){
+    						if(openId == dd.Data[i].Memberid){
+    	     					$("#partActivity").hide();
+    	     					$("#gotoChat").show();
+    	     					break;
+    						}
+    					}
+    				}
+    			}else{
+					$("#checksName").val("暂无参与人");
+    			}
+    		},{async:false});		
+		}
+		
+		//进入群聊
+		function gotoChat(){
+			var apiData = {};	
+	        apiData.activityId = acUUid;
+	    	var param = {};
+	    	param.apiParam = Commonjs.getApiReqParams(apiData);
+	    	Commonjs.ajax('/wsgw/qyWeChat/QwActivityGroupChat/callApi.do',param,function(dd){
+	    		if(dd.RespCode == 10000){
+	    			myLayer.alert('加入群聊成功');
+	    			$("#gotoChat").hide();
+	    		}else{
+	    			myLayer.alert(dd.RespMessage,3000);
+	    		}
+	    	},{async:false});
+		}
+		
+		//报名活动
+		function partActivity(){
+			if(totalNumber!= 0 && totalNumber <= partNumber){
+				myLayer.alert("参与人数已满");
+			}else{
+				var apiData = {};	
+		        apiData.uid = acUUid;
+		        apiData.memberIds = Commonjs.getOpenId();
+		        apiData.memberNames = memberName;
+		        apiData.memberType = 2;
+		    	var param = {};
+		    	param.apiParam = Commonjs.getApiReqParams(apiData);
+		    	Commonjs.ajax('/wsgw/qyWeChat/AddToMember/callApi.do',param,function(dd){
+		    		if(dd.RespCode == 10000){
+		    			myLayer.alert("报名成功");
+		    			$("#partNumber").text((partNumber+1)+'人');
+		    			$(".act2-person").append('<li><img src="../../img/icon-active-0.png"/>'+memberName+'</li>');
+	 					$("#partActivity").hide();
+	 					$("#gotoChat").show();
+		    		}else{
+		    			myLayer.alert(dd.RespMessage,3000);
+		    		}
+		    	},{async:false});
+			}
+		}
+		
+		//预览返回
+		function returnAddHtml(){
+			var url = 'addActivity.html?acId='+acId;
+		    location.href = Commonjs.goToUrl(url); 
+		}
+	</script>
+	
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>事项审批</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 250px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>审批状态：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select id="status" name="" class="form-control">
+									<option value="0">待审批</option>
+									<option value="1">通过</option>
+									<option value="2">驳回</option>
+									<option value="-1">全部</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="width: 420px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>提交时间：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input id="d5221" type="text" name="beginTime" validate="" value="" component="dateTime" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},dateFmt:'yyyy-MM-dd ',maxDate:'#F{$dp.$D(\'d5222\')}'})" style="width:120px!important;"  class="form-control form-group" placeholder="开始时间">
+					  			<label style="padding-left: 10px;">至</label>
+					  			<input id="d5222" type="text" name="endTime" validate="" value="" component="dateTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd ',minDate:'#F{$dp.$D(\'d5221\')}'})" class="form-control form-group" style="width:120px!important;" placeholder="结束时间">
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:670px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>申请人：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="memberName" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 250px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>申请编号：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" class="form-control" name="" id="approvalId" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:250px;">
+						<span style="padding-left: 20px;"><button type="button" class="btn btn-primary" onclick="refresh()">查询</button></span>
+					</div>
+				</div>
+			</div>
+			
+			<table id="queryMeetingApproval" >
+
+	        </table>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+	
+		$(function(){
+			queryMeetingApproval();
+		});
+	
+		function queryMeetingApproval(){
+			$('#queryMeetingApproval').bootstrapTable({
+				url: '/wsgw/qyWeChat/QueryMeetingApproval/callApi.do',  //请求后台的URL（*）
+		        method: 'POST',                      //请求方式（*）
+		        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		        pagination: true,                   //是否显示分页（*）
+		        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+		        pageSize: 10,                     //每页的记录行数（*）
+		        queryParams : function (params) {
+		        	var apiData = {};
+		        	apiData.id = -1;
+		        	apiData.approvalId = $("#approvalId").val();
+		        	apiData.status = $("#status option:selected").val();
+		        	apiData.startTime = $("#d5221").val();
+		        	apiData.endTime = $("#d5222").val();
+		        	apiData.memberName = $("#memberName").val();
+		        	var temp = {   
+		                     rows: params.limit,                         //页面大小
+		                     page: (params.offset / params.limit) + 1,   //页码
+		                     sort: params.sort,      //排序列名  
+		                     sortOrder: params.order, //排位命令（desc，asc） 
+		                     token : Commonjs.getToken(),
+		                     apiParam : Commonjs.getApiReqParams(apiData)
+		                 };
+		            return temp;
+		        },
+		        columns: [
+		        {
+		            field: 'Approvalid',
+		            title: '审批编号',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Inserttime',
+		            title: '提交时间',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Meetingtitle',
+		            title: '请假会议',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Inserttime',
+		            title: '提交时间',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Membername',
+		            title: '申请人',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Deptname',
+		            title: '申请人部门',
+		            align: 'center',
+		            valign: 'middle',
+		        }, {
+		            field: 'Reason',
+		            title: '请假原因',
+		            align: 'center',
+		            valign: 'middle',
+		        },{
+		            title: '审批状态',
+		            align: 'center',
+		            valign: 'middle',
+		            formatter:function(value, row, index){
+		            	if(row.Status == 0){
+		            		return "待审批";
+		            	}else if(row.Status == 1){
+		            		return "通过";
+		            	}else if(row.Status == 2){
+		            		return "驳回";
+		            	}
+		            }
+		        },{
+		            title: '操作',
+		            align: 'center',
+		            valign: 'middle',
+		            formatter: formatter
+		        },],
+		        responseHandler: function(res) {
+		        	if(res.RespCode == 401){
+		        		alert(res.RespMessage);
+		        		top.location = "http://"+window.location.host;
+		        	}else if(res.RespCode == 10000){
+		        		if(res.Data == undefined){
+			       			return [];
+			       		}else{
+			       			return res.Data;
+			       		}
+		        	}
+		        },
+		        onLoadSuccess: function (result) {
+
+		        },
+		        onLoadError: function () {
+		            //alert("数据加载失败！");
+		        },
+			});
+		}
+
+		function formatter(value, row, index){
+			var html = [];
+ 			if(row.MeetingPublisher == 0 && row.Status == 0){
+				html.push('<a href="javascript:sp('+row.Id+',\''+row.Meetingid+'\',\''+row.Memberid+'\');" style="color:#3685ff;font-size:12px;padding:0 6px;">审批</a>');
+			}else {
+				html.push('<a href="javascript:;" style="color:#3685ff;font-size:12px;padding:0 6px;opacity: 0.2">审批</a>');
+			} 
+			html.push('<a href="javascript:xq('+row.Id+');" style="color:#3685ff;font-size:12px;padding:0 6px;">查看详情</a>');
+			return html.join('')
+		}
+		
+		function sp(id,meetingId,memberId){
+			System.openWindow({
+				id:'updateMeetingApproval',
+				title:'审批',
+				url:'updateMeetingApproval.html?id='+id+'&meetingId='+meetingId+'&memberId='+memberId,
+				width:'500',
+				height:'300',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					refresh();
+				}
+			});
+		}
+		
+		function xq(id){
+			System.openWindow({
+				id:'MeetingApprovalDetail',
+				title:'审批详情',
+				url:'MeetingApprovalDetail.html?id='+id,
+				width:'500',
+				height:'800',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		//查询刷新
+		function refresh(){
+			$("#queryMeetingApproval").bootstrapTable('destroy');
+			queryMeetingApproval();
+		}
+	</script>
+</html>

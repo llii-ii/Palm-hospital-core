@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../js/webCom1.0/component/chosen/css/chosen.css"/>
+		<title>维修人员设置</title>
+		<style type="text/css">
+			.chosen-container-multi .chosen-choices{
+				padding-right: 50px;
+			}
+			.chosen-container-multi .fa{
+				font-size: 20px;
+			}
+			.chosen-container-btn{
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 34px;
+				text-align: center;
+				line-height: 37px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<p>
+		<div class="chosen-container chosen-container-multi" style="width: 100%;" title="">
+			<ul id="chosen-choices" class="chosen-choices">
+				<!-- <li class="search-choice"><sp  an>小明</span><a class="search-choice-close" data-option-array-index="9"></a></li> -->
+			</ul>
+			<div class="chosen-container-btn" onclick="cc()">
+				<i class="fa fa-plus-circle"></i>
+			</div>
+			<input id="checksId" type="hidden"  value="" >
+			<input id="checksName" type="hidden"  value="" >
+		</div>
+		</p>
+		<p class="text-right">
+			<button type="button" onclick="ok()" class="btn btn-primary">确认</button>
+		</p>
+	</body>
+	<script>
+		$(function(){
+			getPsList();
+		}); 
+		
+		//TO DO 获取已有的维修人员
+		function getPsList(){
+			var values = [];
+        	values.push('<li class="search-choice"><span>zabbix</span><a class="search-choice-close" onclick="deletePs(\'d_1\',\'zabbix\')" data-option-array-index="9"></a></li>');
+        	values.push('<li class="search-choice"><span>日春集团</span><a class="search-choice-close" onclick="deletePs(\'d_2\',\'日春集团\')"  data-option-array-index="9"></a></li>');
+        	values.push('<li class="search-choice"><span>吴发栋</span><a class="search-choice-close" onclick="deletePs(\'WuFaDong\',\'吴发栋\')" data-option-array-index="9"></a></li>');
+        	$('#chosen-choices').html(values.join(''));
+        	$("#checksName").val("zabbix,日春集团,吴发栋");
+        	$("#checksId").val("d_2,d_1,WuFaDong");
+		}
+		
+		System.ready(function(){
+			$(document).on('click','.search-choice',function(){
+				var _this = $(this);
+				_this.remove();
+			})
+		})
+		
+		function ok(){
+			//TO DO 保存维修人员
+			
+			alert("id="+$("#checksId").val());
+			alert("名称="+$("#checksName").val());
+			System.closeThisWindow();
+		}
+		
+		//删除
+		function deletePs(id,name){
+			var arrIdList = $("#checksId").val().split(',');
+			var arrNameList = $("#checksName").val().split(',');
+			arrIdList.splice($.inArray(id+"",arrIdList),1);
+			arrNameList.splice($.inArray(name+"",arrNameList),1);
+			$("#checksId").val(arrIdList.join(','));
+        	$("#checksName").val(arrNameList.join(','));
+		}
+		
+		//定义全局的选中输入框对象
+         var cd = null;
+        function cc(){
+        	cd = $('#chosen-choices');
+        	var values = [];
+        	cd.find('.search-choice').each(function(){
+        		values.push($(this).text().Trim());
+        	})
+        	//把选中的项放到缓存
+        	window.localStorage.setItem('checksId',$("#checksId").val());
+        	window.localStorage.setItem('checksName',$("#checksName").val());
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'deptUser.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		} 
+		
+		//接收子页面传来的参数
+        function ccResult(checksId,checksName){
+        	console.log(checksId);
+        	console.log(checksName);
+        	$("#checksName").val(checksName);
+        	$("#checksId").val(checksId);
+        	var values = [];
+        	checksName.split(',').forEach(function(item,index){
+        		values.push('<li class="search-choice"><span>'+item+'</span><a class="search-choice-close" data-option-array-index="9"></a></li>');
+        	})
+        	cd.html('');
+        	cd.html(values.join(''));
+        }
+        
+	</script>
+</html>

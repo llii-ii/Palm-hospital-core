@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+         <link rel="stylesheet" href="../../commons/css/base.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/index.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/safe.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/page.css" type="text/css" />
+        <link rel="stylesheet" href="../../commons/css/Pager.css" type="text/css"/>
+		<script type="text/javascript" src="../../commons/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="../../commons/js/jquery.datetimepicker.js"></script>
+		<link rel="stylesheet" href="../../commons/css/jquery.datetimepicker.css" type="text/css" />
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		<script type="text/javascript" src="../../commons/js/base.js?version=1.0"></script>
+        <script type="text/javascript" src="../../commons/js/common.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+        <script type="text/javascript" src="../../commons/js/jquery.pager.js"></script>
+		<script type="text/javascript" src="./js/home_page.js?version=1.0"></script>
+		<script src="../../commons/highcharts/js/highcharts.js"></script>
+		<script src="../../commons/highcharts/js/exporting.js"></script>
+		<script src="../../commons/highcharts/js/highcharts-3d.js"></script>
+    </head>
+    <body>
+        <!--main content-->
+        <div class="container-wrap">
+            <div class="main-header hidden">
+                <div class="fl ml20 mt15 f14 c-222">统计概况</div>
+            </div>
+            <div class="scroll-pane jspScrollable">
+                <div class="container">
+                    <div class="p20 bg-grey">
+                        <div class="sec summary-sec">
+                            <div class="sec-header">
+                                <h5 class="fl">概要</h5>
+                                <div class="fr">
+                                    <ul class="summary-tab" id="summaryTab">
+                                        <li class="current"><a href="javascript:getDCsummary('Y');">昨天</a></li>
+                                        <li class="last"><a href="javascript:getDCsummary('H');">历史</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="sec-con" id="summaryTabCon">
+                                <div class="summary-tab-con">
+                                    <table class="table-form table-summary" width="100%">
+                                        <tr>
+                                            <td>
+                                                <div class="p20 tdbg">
+                                                    <div class="f12">新增关注</div>
+                                                    <div id ="type1" class="summary-num c-red">0</div>
+                                                </div>
+                                            </td>
+<!--                                             <td> -->
+<!--                                                 <div class="p20 tdbg"> -->
+<!--                                                     <div class="f12">活跃用户</div> -->
+<!--                                                     <div id ="type2" class="summary-num c-red">0</div> -->
+<!--                                                 </div> -->
+<!--                                             </td> -->
+                                            <td>
+                                                <div class="p20">
+                                                    <div class="f12">绑定就诊卡数</div>
+                                                    <div id ="type3" class="summary-num">0</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="p20">
+                                                    <div class="f12">门诊人数</div>
+                                                    <div id ="type4" class="summary-num">0</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="p20">
+                                                    <div class="f12">成交次数</div>
+                                                    <div id ="type5" class="summary-num">0</div>
+                                                </div>
+                                            </td>
+                                            <td class="last">
+                                                <div class="p20">
+                                                    <div class="f12">成交金额</div>
+                                                    <div id ="type6" class="summary-num"><font color=red>￥</font>0.00</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sec relative hidden">
+                            <div class="sec-header">
+                                <h5>整体趋势</h5>
+                                <div class="fr">
+                                    <div class="fl mr25" id="btn-blue-1">
+                                        <i class="fl mr10 circlebg circlebg-blue t-sortby" id="btn-week-1">周</i>
+                                        <i class="fl mr10 circlebg circlebg-blue" id="btn-month-1">月</i>
+                                        <!--<i class="fl circlebg circlebg-red">年</i>
+                                    --></div>
+                                    <div class="fl date-wrap" >
+                                        <input type="text" class="date-txt datetimepicker" value="2015-05-25" id="datepickerA1" readonly/>
+                                    </div>
+                                    <div class="fl ml5 mr5">-</div>
+                                    <div class="fl date-wrap">
+                                        <input type="text" class="date-txt datetimepicker" value="2015-05-25" id="datepickerA2" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sec-con">
+                                <div class="trend-tab-wrap clearfix">
+                                    <ul class="trend-tab" id="trendTab1">
+                                        <li><a href="javascript:setSelType(1);">新增关注</a></li>
+<!--                                         <li><a href="javascript:setSelType(2);">活跃用户</a></li> -->
+                                        <li><a href="javascript:setSelType(3);">绑定就诊卡数</a></li>
+                                        <li><a href="javascript:setSelType(4);">门诊人数</a></li>
+                                        <li><a href="javascript:setSelType(5);">成交次数</a></li>
+                                        <li><a href="javascript:setSelType(6);">成交金额</a></li>
+                                    </ul>
+                                </div>
+                                <div id="trendTabCon1">
+                                    <div class="trend-tab-con">
+                                    	<div id='newConcernDiv' style="width: 90%"></div>
+                                    </div>
+<!--                                     <div class="trend-tab-con"> -->
+<!--                                     	<div id='activeUserDiv' style="width: 90%"></div> -->
+<!--                                     </div> -->
+                                    <div class="trend-tab-con">
+                                    	<div id='bindCardDiv' style="width: 90%"></div>
+                                    </div>
+                                    <div class="trend-tab-con">
+                                    	<div id='clinicNumDiv' style="width: 90%"></div>
+                                    </div>
+                                    <div class="trend-tab-con">
+                                    	<div id='strikeTimeDiv' style="width: 90%;"></div>
+                                    </div>
+                                    <div class="trend-tab-con">
+                                    	<div id='strikeAmountDiv' style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript:;" class="btn-showdetail"></a>
+                            <div class="absolute trend-detail">
+                                <div class="sec-header"><h5>整体趋势数据明细</h5></div>
+                                <div class="sec-con p20" style="padding-top:0;">
+                                    <table class="tb" width="100%" id="alltableid">
+                                        <tr>
+                                            <th>日期</th>
+                                            <th>新增关注</th>
+<!--                                             <th>活跃用户</th> -->
+                                            <th>绑定就诊卡数</th>
+                                            <th>门诊人数</th>
+                                            <th>成交次数</th>
+                                            <th class="last">成交金额</th>
+                                        </tr>
+                                    </table>
+                                    <div class="pager_container" >
+		                                <input id="totalcount" type="hidden" value="0" />
+										<input id="pagenumber" type="hidden" value="1" />
+										<div id="pager"></div>
+									</div>
+                                </div>
+                                <a href="javascript:;" class="btn-hidedetail"></a>
+                            </div>
+                        </div>
+                        <div class="sec">
+                            <div class="sec-header">
+                                <h5>患者来源</h5>
+                                <div class="fr">
+                                    <div class="fl mr25" id="btn-blue-2">
+                                        <i class="fl mr10 circlebg circlebg-blue t-sortby" id="btn-week-2">周</i>
+                                        <i class="fl mr10 circlebg circlebg-blue" id="btn-month-2">月</i>
+                                        <!--<i class="fl circlebg circlebg-red">年</i>
+                                    --></div>
+                                    <div class="fl date-wrap">
+                                        <input type="text" class="date-txt datetimepicker" value="2015-05-25" id="datepickerB1" readonly/>
+                                    </div>
+                                    <div class="fl ml5 mr5">-</div>
+                                    <div class="fl date-wrap">
+                                        <input type="text" class="date-txt datetimepicker" value="2015-05-25" id="datepickerB2" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="sec-con">
+                                <div class="trend-tab-wrap clearfix">
+                                    <ul class="trend-tab" id="trendTab2">
+                                        <li><a href="javascript:setSelTypeHzly(3);">累计绑定就诊卡数</a></li>
+                                        <li><a href="javascript:setSelTypeHzly(4);">累计线上门诊人数</a></li>
+                                    </ul>
+                                </div>
+                                <div id="trendTabCon2">
+                                    <div class="trend-tab-con">
+                                         <div id='allBindCardDiv' style="width: 90%"></div>
+                                    </div>
+                                    <div class="trend-tab-con relative">
+                                        <div id='allClinicNumDiv' style="width: 90%"></div>
+                                        <div class="pop-info pop-info-b">
+                                            <em class="pop-info-arr"><em class="pop-info-arr1"></em></em>
+                                            <!--<div class="pop-info-txt f12"><i class="icon icon-rmb"></i>滑过图表某块内容显示的提示窗</div>
+                                        --></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--/main content-->
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#datepickerA1,#datepickerA2,#datepickerB1,#datepickerB2').datetimepicker({
+	        yearOffset:0,
+	        lang:'ch',
+	        timepicker:false,
+	        format:'Y-m-d',
+	        formatDate:'Y/m/d',
+	        // minDate:'-1970/01/02', // yesterday is minimum date
+	        //maxDate:'+1970/01/02', // and tommorow is maximum date calendar
+	        yearStart:2000,
+			yearEnd:2999,
+	    });
+        
+        $('#datepickerA1').datetimepicker({value:Commonjs.getDate(-7)});
+        $('#datepickerA2').datetimepicker({value:Commonjs.getDate(-1)});
+        $('#datepickerB1').datetimepicker({value:Commonjs.getDate(-7)});
+        $('#datepickerB2').datetimepicker({value:Commonjs.getDate(-1)});
+        
+        $('#layer').click(function(){
+            var artBox=art.dialog({
+                lock: true,
+                icon:'question',
+                opacity:0.4,
+                width: 250,
+                title:'提示',
+                content: '页面模板会覆盖编辑区域已有组件，是否继续？',
+                ok: function () {
+                    
+                },
+                cancel: true
+            });         
+        });
+
+        //概要内容切换
+        $('#summaryTab li').click(function(){
+            $(this).siblings().removeClass('current').end().addClass('current');
+            //$('#summaryTabCon .summary-tab-con').hide().eq($(this).index()).show();
+        });
+
+
+        $('.btn-showdetail').click(function(){
+            $('.trend-detail').animate({'left':0},500);
+        });
+        $('.btn-hidedetail').click(function(){
+            $('.trend-detail').animate({'left':'100%'},500);
+        });
+
+        var setTab1=new setTab('trendTab1','trendTabCon1');
+        var setTab2=new setTab('trendTab2','trendTabCon2');
+    });
+   
+</script>
+    </body>
+</html>

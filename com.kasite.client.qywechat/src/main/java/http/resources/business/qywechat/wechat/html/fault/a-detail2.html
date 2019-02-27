@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>订单详情</title>
+	    <script src="../../js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/fault.css"/>
+		<style type="text/css">
+			.container{padding-bottom: 1rem;}
+			.f-detail{margin-bottom: 0;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="f-detail">
+				<div class="main-title">订单编号：123456</div>
+				<div class="status green">已验收</div>
+				<!--<div class="status red">待处理</div>-->
+			</div>
+			<ul id="father" class="chosen-list">
+        		<li class="active more">
+        			<span>产品部</span>
+        		</li>
+        		<li class="more">
+        			<span>总经办</span>
+        		</li>
+        		<li class="more">
+        			<span>研发部</span>
+        		</li>
+        		<li class="more">
+        			<span>运维部</span>
+        		</li>
+        	</ul>
+        	
+        	<div id="children" style="display: none;">
+	        	<div class="chosen-back">产品部</div>
+	        	<ul class="chosen-list" >
+	        		<li class="active">
+	        			<span>张伟</span>
+	        		</li>
+	        		<li>
+	        			<span>张伟伟</span>
+	        		</li>
+	        	</ul>
+        	</div>
+			<div class="btn" onclick="window.location.href = 'a-detail3.html'">分配</div>
+		</div>
+		<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(document).on('click','.chosen-list li',function(){
+					var _this = $(this);
+					_this.toggleClass('active');
+				})
+				$(document).on('click','.chosen-back',function(){
+					var _this = $(this);
+					$('#father').show();
+					$('#children').hide();
+				})
+				$(document).on('click','.chosen-list span',function(e){
+					e.stopPropagation();
+					var _this = $(this);
+					$('#father').hide();
+					$('#children').show();
+				})
+			})
+		</script>
+	</body>
+</html>

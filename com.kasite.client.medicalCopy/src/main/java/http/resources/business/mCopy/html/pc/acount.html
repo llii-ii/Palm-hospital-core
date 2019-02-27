@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <link rel="shortcut icon" href="../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>费用对账管理</title>
+		<style type="text/css">
+			/*查询表单*/
+			.form-horizontal .form-group{
+				margin-left: 0;
+				margin-right: 0;
+			}
+			.form-group{
+				margin-bottom: 10px!important;
+			}
+			.form-inline .form-group label{
+				min-width: 70px;
+			}
+			.form-group input,.form-group select{
+				width: 220px!important;
+				margin-right: 20px;
+			}
+			.form-group .btn{
+				margin-right: 15px;
+			}
+			/*查询表单*/
+			.formatter-control .form-group{
+				position: relative;
+				display: none;
+				width: 140px;
+				margin-bottom: 0;
+			}
+			.formatter-control .form-group .glyphicon.glyphicon-remove{
+				min-width: 22px;
+    			min-height: 19px;
+    			padding: 0;
+    			line-height: 20px;
+    			background: #fd6246;
+    			border-color: #fd6246;
+    			margin-left: -30px;
+    			margin-right: 20px;
+			    border-radius: 50%;
+			    -webkit-border-radius: 50%;
+			    -moz-border-radius: 50%;
+			    -ms-border-radius: 50%;
+			    -o-border-radius: 550%;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="wrapper-content">
+			<div class="stip-top">
+				<div component="breadcrumb"></div>
+				
+	        	<div class="form-inline">
+	        		<div class="form-group">
+		        		<label>订单号</label>
+		        		<select name="" class="form-control" component="chosen" style="width:120px;" id="choose">
+							<option value="orderId" >申请单号</option>
+						</select>
+		            	<input class="form-control" type="text" name="" id="chooseText" value=""/>
+	            	</div>
+	            	<div class="form-group" style="margin-right:54px;margin-left:26px;">
+		        		<label>订单类型</label>
+		            	<select name="" class="form-control" component="chosen" style="width:280px;" id="orderType">
+							<option value=""></option>
+							<option value="1" >支付订单</option>
+						</select>
+	            	</div>
+	            	<div class="form-group">
+		        		<label>交易渠道</label>
+		            	<select name="" class="form-control" component="chosen" style="width:220px;margin-right:50px;" id="payChannel">
+		            		<option value=""></option>
+		            		<option value="1">微信</option>
+		            	</select>
+	            	</div>
+	            	<div class="form-group">
+		        		<label>对账结果</label>
+		            	<select name="" class="form-control" component="chosen" style="width:344px;margin-right:50px;" id="accountResult">
+		            		<option value=""></option>
+		            		<option value="1">长款</option>
+		            		<option value="2">帐平</option>
+		            		<option value="3">短款</option>
+		            	</select>
+	            	</div>
+	            	<div class="form-group">
+		        		<label>交易日期</label>	        		
+		            	<input id="st" class="form-control datatime" component="dateTime" onClick="WdatePicker()" style="width: 350px;" type="text" placeholder="请选择开始时间">
+		            	<!--<input  id="st" type="text"   name="startTime" component="dateTime" class="form-control search-input" placeholder="请选择开始时间" style="width:240px;" >至-->
+		            	<input id="et" class="form-control datatime" component="dateTime" onClick="WdatePicker()" style="width: 350px;" type="text" placeholder="请选择结束时间">
+		            	<!--<input id="et" type="text"  name="endTime" component="dateTime" class="form-control search-input" placeholder="请选择结束时间" style="margin-left:20px;width:240px;margin-right:46px;">-->
+	            	</div>
+	            	<div class="form-group">
+		        		<!--<label>账目状态</label>
+		            	<select name="" class="form-control" >
+		            		<option value="">已支付</option>
+		            	</select>
+		            	<select name="" class="form-control" >
+		            		<option value="">已支付</option>
+		            	</select>-->
+		            	<button type="button" class="btn" onclick="refresh()">查询</button>
+	            	</div>
+	        	</div>
+        	</div>
+		    
+		    <table id="exampleTablePagination" ></table>
+		</div>
+	</body>
+</html>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table.js"></script>
+<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script type="text/javascript" src="../../js/pc/webCom1.0/component/dateTime/My97DatePicker/WdatePicker.js"></script>
+<script src="../../js/pc/acount.js"></script>

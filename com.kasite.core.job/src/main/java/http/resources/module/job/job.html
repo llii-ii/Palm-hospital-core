@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>定时任务管理</title>
+</head>
+<body style="background: #fff;">
+	
+	<div style="width:99%;margin:10px 0px 0px 5px;">
+		<textarea  rows="10" style="width:99%;resize: none;" id="scheduler">
+			
+		</textarea>
+	</div>
+	<div style="width:99%;border:1px solid gray;margin:10px 0px 0px 5px;height:100px;">
+		<div style="margin:5px 0px 0px 5px;">
+			任务ID:
+			<input type="text" id="jobId"/>
+		</div>
+		<div style="display:inline-block;width:99%">
+			<a href="javascript:addSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">添加任务</a>
+	    	<a href="javascript:updateSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">修改任务</a>
+	    	<a href="javascript:delSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">删除任务</a>
+	    	<a href="javascript:runSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">立即执行</a>
+	    	<a href="javascript:pauseSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">暂停任务</a>
+	    	<a href="javascript:resumeSchedulerJob();"  style="width:90px;float:left;margin:20px 0px 0px 10px;">恢复任务</a>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="/module/backstage/commons/js/common.js"></script>
+<script type="text/javascript" src="js/job.js"></script>
+</html>

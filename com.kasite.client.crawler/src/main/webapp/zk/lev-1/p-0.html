@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="../../commons/css/artDialog.css" type="text/css" />
+		<style>
+			button.btn{
+				-webkit-border-radius: 0 !important;
+			    -moz-border-radius: 0 !important;
+			    border-radius: 0 !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-list-alt"></i> 数据标准集
+			</div>
+		</div>
+		<div class="widget">
+			<table id="showTable" name="showTable" class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th class="w150">标准集名称</th>
+						<th scope="col">描述</th>
+						<th class="w100">版本</th>
+						<th class="center w80">版本历史</th>
+						<th class="center w150">发布</th>
+						<th class="center w150">编辑</th>
+						<th class="center w150">删除</th>
+					</tr>
+				</thead>
+				<tbody id = "dataList">
+				</tbody>
+			</table>
+			<div class="datatable-footer">
+				<div class="dataTables_info"></div>
+				<div id="pagination" class="pagination pagination-small dataTables_paginate"><li class="active prev">前一页</li><li class="active">1</li><li><a href="#">2</a></li><input type="text" style="text-align:center;height:28px;line-height:28px;margin:0 2px;" id="jump-index" title="请输入正整数" size="1"><button style="height:28px;font-size:12px;line-height:22px;float:right;padding:0 5px;border:1px solid #CCC;background:#EEE;" href="#">转到</button><li class="next"><a href="#">下一页</a></li></div>
+			</div>
+			<button onclick="downloadReport()" type="button" class="btn btn-primary">新增</button>
+		</div>
+		
+		<div id="release" style="display:none;">
+			<label class="control-label" for="tableName">选择所发布医院</label>
+		    <div class="box">
+	        	<select class="select w150" id='formmatchrule'>
+	        		<option value=''>--请选择--</option>
+	        	</select> 
+            </div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../js/layer/layer.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../commons/js/common.js"></script>
+	<script type="text/javascript" src="../../commons/js/jquery.artDialog.js"></script>
+	<script type="text/javascript">
+		var pageSize = 10;
+		var releaseHtml = null;
+		//发布弹窗
+		function releaseStandard(id,name){
+		    var artBox=art.dialog({
+		        lock: true,
+		        opacity:0.4,
+		        top : 8, 
+		        width: 620,
+		        title:'所发医院',
+		        content: releaseHtml,
+		        ok: function () {
+		        	return release(id,name);
+		        },
+		        cancel: true
+		    });	
+		}
+		
+		$(function(){
+			getHos();
+			releaseHtml = $("#release").html();
+			$("#release").html("");
+		});
+		
+		function release(id,name){
+			
+		    layer.open({
+				content: '您要发布标准集“'+name+'”吗？',
+		    	btn:['确定','取消'],
+		    	yes: function(index, layero){
+		    		var param = {};
+				  	param.id = id;
+				  	param.type = "1";
+				  	var _d = _ajax('../../standard/releaseFile.do',param,false);
+				  	if(_d.respCode == 10000){
+				  		Commonjs.alert("发布成功");
+					}else{
+						Commonjs.alert("发布失败");
+					}
+				  	layer.closeAll();
+				  	queryWJData(0);
+		    	}
+		    });  
+		}
+		
+		function getHos(){
+			var html = '';
+			var param = {};
+			var d = _ajax('../../online/getAllHos.do',param,false);
+			$.each(d.data.result,function(i,o) {			
+				html+= '<option value="'+o.id+'">'+o.name+'</option>';
+			});
+			$("#formmatchrule option").eq(0).nextAll().remove();
+			$(html).insertAfter($("#formmatchrule option").eq(0));
+		}
+		
+		//删除弹窗
+		function deleteCriterion(id,name,currently){
+			if(currently == 1){
+				Commonjs.alert("该标准集已经发布，不能删除！");
+			}else{
+				//页面层
+				layer.open({
+					content: '您确定要删除标准集“'+name+'”吗？',
+			    	btn:['确定','取消'],
+			    	yes: function(index, layero){
+				    	var param = {};
+					  	param.id = id;
+					  	var _d = _ajax('../../standard/delStandard.do',param,false);
+					  	queryWJData(0);
+					  	layer.closeAll();
+			    	},
+			    	title:'删除'
+			    }); 
+			}
+
+		}
+		
+		$(document).ready(function(){
+			var param = {};
+			param.pageSize = pageSize;
+			param.PageStart = 0;
+			param.standardType = 1;
+			var d = _ajax('../../standard/getStandardList.do',param,false);
+			loadData(d.data.result);
+			$(".dataTables_info").text("总共:"+d.data.totalProperty+"条");
+			$("#pagination").pagination(d.data.totalProperty, {
+		        items_per_page: pageSize,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		        	queryWJData(pageNo);
+		        }
+			});
+		});
+		
+		function downloadReport(){
+			 document.location.href='./p-0-2.html?standardType=1';
+		}
+		
+
+		function queryWJData(num){
+			var param = {};
+			param.pageSize = pageSize;
+			param.PageStart = num;
+			param.standardType = 1;
+			var d = _ajax('../../standard/getStandardList.do',param,false);
+			$(".dataTables_info").text("总共:"+d.data.totalProperty+"条");
+			loadData(d.data.result);
+		}
+
+		function loadData(d){
+			var html = '';
+		
+			if(d.length){
+				$.each(d,function(i,o) {			
+					if(o.currently == 1){
+						html+= '<tr><td style=""><span style="padding-left: 5px;padding-right: 5px;color:red;">'+o.name+'</span></td>';
+					}else{
+						html+= '<tr><td style=""><span style="padding-left: 5px;padding-right: 5px;">'+o.name+'</span></td>';
+					}
+					html+= '<td>'+o.describe+'</td>';
+					html+= '<td>'+o.version+'</td>'; 
+					html+= '<td class="center"><a style="padding-left: 5px;padding-right: 5px;" href="./p-0-4.html"><img src="../img/ico_scheduler_step.png" title="版本历史" alt="版本历史"></a></td>';
+					html+= '<td class="center"><a href="javascript:void(0)" onclick="release(\''+o.id+'\',\''+o.name+'\')" title="发布"><i class="fa fa-share-square-o fa-lg" style="line-height: normal !important;color: black;"></i></a></td>'; 
+			     	html+= '<td class="center"><a style="padding-left: 5px;padding-right: 5px;" href="./p-0-3.html?type=1&id='+o.id+'"><img src="../img/edit_ICON.png" title="编辑" alt="编辑"></a></td>';
+			     	html+= '<td class="center"><a href="javascript:void(0)" onclick="deleteCriterion(\''+o.id+'\',\''+o.name+'\',\''+o.currently+'\');"><img src="../img/delete_ICON.png" title="删除" alt="删除"></a></td></tr>';	
+				});
+			
+			}else{
+				html += '<tr align=center><td colspan=7><font color=red>未找到相关数据!</font></td></tr>';
+			}
+			
+			$("#dataList").empty();
+			$("#dataList").append(html);
+		}
+		
+		
+		//ajax
+		function _ajax(url,param,flag){
+			
+			var obj = null;
+			try{
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: param,
+					async: flag,
+					timeout : 8000,
+					dataType: 'json',
+					success: function(data){
+						obj = data;
+		 			}
+				});
+			}catch(err){
+				ComWbj.artTips("提示","error",err,2,null);
+			}
+			if(!flag) return obj;
+		}
+	</script>
+</html>

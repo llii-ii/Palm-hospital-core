@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+<!--	<div class="header-wrap">
+			<div class="header-feature fix">
+				<div class="dropdown">
+				  	<button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	用户名
+				    	<span class="caret"></span>
+				  	</button>
+				  	<ul class="dropdown-menu" aria-labelledby="dLabel">
+				    	<li>
+							<a href="javascript:;"><i class="fa fa-home"></i></a>
+						</li>
+						<li>
+							<a href="javascript:;"><i class="fa fa-home"></i></a>
+						</li>
+				  	</ul>
+				</div>
+				<ul class="header-feature-menu fix">
+					<li>
+						<a href="javascript:;"><i class="fa fa-home"></i></a>
+					</li>
+					<li>
+						<a href="javascript:;"><i class="fa fa-bell"></i></a>
+					</li>
+					<li>
+						<a href="javascript:;"><i class="fa fa-cloud-download"></i></a>
+					</li>
+				</ul>
+			</div>
+		</div>-->
+		<div class="page-container" style="top: 0px;">
+			<div class="page-sidebar">
+				<ul class="page-sidebar-menu">
+					<li class="ava active">
+						<a href="main.html">
+							<i class="fa fa-home"></i><span class="title">首页</span>
+						</a>
+					</li>
+					<li class="ava">
+						<a href="javascript:;">
+							<i class="fa fa-tachometer"></i><span class="title">运行监控</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="active">
+								<a href="lev-0/p-0.html">
+									<i class="fa bg-grey fa-link fa-2x"></i>连通状态
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-1.html">
+									<i class="fa bg-blue fa-list-alt fa-2x"></i>上报明细
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-2.html">
+									<i class="fa bg-purple fa-pie-chart fa-2x"></i>数据占比
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-3.html">
+									<i class="fa bg-green fa-dashboard fa-2x"></i>数据统计
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-4.html">
+									<i class="fa bg-orange fa-signal fa-2x"></i>数据上报趋势
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-5.html">
+									<i class="fa bg-purple fa-area-chart fa-2x"></i>作业执行效率
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-6.html">
+									<i class="fa bg-green fa-signal fa-2x"></i>作业历史趋势
+								</a>
+							</li>
+							<li>
+								<a href="lev-0/p-7.html">
+									<i class="fa bg-red fa-bar-chart fa-2x"></i>执行效率趋势
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="ava">
+						<a href="javascript:;">
+							<i class="fa fa-creative-commons"></i><span class="title">标准管理</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="active">
+								<a href="lev-1/p-0.html">
+									<i class="fa bg-blue fa-database fa-2x"></i>数据标准
+								</a>
+							</li>
+							<li>
+								<a href="lev-1/p-1.html">
+									<i class="fa bg-purple fa-check-square fa-2x"></i>校验规则标准
+								</a>
+							</li>
+							<li>
+								<a href="lev-1/p-2.html">
+									<i class="fa bg-orange fa-random fa-2x"></i>值域标准
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="ava">
+						<a href="javascript:;">
+							<i class="fa fa-cogs"></i><span class="title">系统管理</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="active">
+								<a href="lev-2/p-0-usermanager.html">
+									<i class="fa bg-blue fa-users fa-2x"></i>基础数据
+								</a>
+							</li>
+							<li>
+								<a href="lev-2/p-1.html">
+									<i class="fa bg-green fa-cog fa-2x"></i>系统设置
+								</a>
+							</li>
+							<li>
+								<a href="lev-2/p-2.html">
+									<i class="fa bg-purple fa-info-circle fa-2x"></i>日志管理
+								</a>
+							</li>
+							<li>
+								<a href="sql/sql.html">
+									<i class="fa bg-purple fa-info-circle fa-2x"></i>执行SQL</br>(直连)
+								</a>
+							</li>
+							<li>
+								<a href="sql/sql2.html">
+									<i class="fa bg-purple fa-info-circle fa-2x"></i>执行SQL</br>(单向)
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="page-content">
+				<iframe id="pagecontent" src="main.html" style="width: 100%;height: 100%;" frameborder="0" width="100%" height="100%"></iframe>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(document).on('click','.ava',function(e){
+				S.stopBubble(e);
+				var _this = $(this);
+				$('.ava.active').removeClass('active');
+				_this.addClass('active');
+				//如果有子级
+				var w = 0;
+				var lw = $('.page-sidebar-menu').width();
+				var lsw = $('.page-sidebar-menu .sub-menu').width();
+				w = lw+(_this.find('.sub-menu').length>0?lsw:0);
+				$('.page-content').animate({
+					'left':w
+				},300);
+				var href = _this.find('a').attr('href').Trim();
+				if(href == 'javascript:;'||href == '#'||href == ''){
+					if(_this.find('.sub-menu li.active').length>0){
+						submenuclick(_this.find('.sub-menu li.active'));
+					}
+				}else{
+					$('#pagecontent').attr('src',href);
+				}
+			})
+			
+			$(document).on('click','.sub-menu li',function(e){
+				S.stopBubble(e);
+				submenuclick($(this));
+			})
+			
+			function submenuclick(_this){
+				var href = _this.find('a').attr('href').Trim();
+				_this.parents('.sub-menu').find('li.active').removeClass('active');
+				_this.addClass('active');
+				if(href == 'javascript:;'||href == '#'||href == ''){
+					$('#pagecontent').removeAttr('src');
+				}else{
+					$('#pagecontent').attr('src',href);
+				}
+			}
+		})
+	</script>
+</html>

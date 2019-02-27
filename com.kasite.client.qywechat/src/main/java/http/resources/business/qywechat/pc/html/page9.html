@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>院长开讲</title>
+		<style type="text/css">
+			.widget{
+				margin-right: 10px;
+			}
+			.person{
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="ibox-content">
+			<div class="form-inline" style="max-width: 1000px;">
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>可见范围：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<input type="text" readonly="readonly" style="cursor: pointer;" onclick="ps()" class="form-control" name="" id="" value="" placeholder="请选择" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							<label>管理员：</label>
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;">
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button onclick="del(this)" type="button" class="person btn btn-xs">张三<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						</div>
+					</div>
+				</div>
+				<div class="x-row">
+					<div class="x-row-cols " style="width: 240px;">
+						<div class="x-row">
+							<div class="x-row-cols " style="width: 100px;">
+								<label>状态：</label>
+							</div>
+							<div class="x-row-cols " style="margin-left:100px;">
+								<select name="" class="form-control" >
+									<option value="">已发送</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="x-row-cols " style="margin-left:240px;">
+						<button type="button" class="btn btn-primary pull-right">查询</button>
+					</div>
+				</div>
+			</div>
+			
+			<p id="toolbar">
+				<button type="button" onclick="add()" class="btn btn-primary">发开讲</button>
+			</p>
+			
+			<table id="exampleTablePagination" 
+		    	data-toggle="table" 
+		    	data-url="../js/data/bootstrap_table_test.json" 
+		    	data-mobile-responsive="true" 
+		    	data-pagination="true" 
+		    	data-toolbar="#toolbar"
+		    	>
+	            <thead>
+	                <tr>
+	                    <!--<th data-field="state" data-checkbox="true"></th>
+	                    <th data-field="id" >ID</th>-->
+	                    <th data-formatter="formatter1" data-field="name" data-align="center">状态</th>
+	                    <th data-field="name" data-align="center">消息类型</th>
+	                    <th data-field="name" data-align="center">消息主题</th>
+	                    <th data-field="name" data-align="center">时间</th>
+	                    <th data-formatter="formatter" data-align="center">操作</th>
+	                </tr>
+	            </thead>
+	        </table>
+		</div>
+	</body>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+		function formatter(value, row, index){
+			var html = [];
+			html.push('<a href="javascript:ch();" style="color:#3685ff;font-size:12px;padding:0 6px;">撤回</a>');
+			html.push('<a href="javascript:ck();" style="color:#3685ff;font-size:12px;padding:0 6px;">查看留言</a>');
+			return html.join('')
+		}
+		
+		function formatter1(value, row, index){
+			var html = [];
+			html.push('<div class="badge badge-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 已发送</div>');
+			return html.join('')
+		}
+		
+		function del(o){
+			var _this = $(o);
+			System.confirm({
+			  	title:'',
+			  	text:'确定删除？',
+			  	type:'info',
+			  	callback:function(bool){
+					if(bool){
+						_this.remove();
+					}
+				}
+			})
+		}
+		
+		function ch(o){
+			var _this = $(o);
+			System.confirm({
+			  	title:'',
+			  	text:'是否撤回该条信息？',
+			  	type:'info',
+			  	callback:function(bool){
+					if(bool){
+						
+					}
+				}
+			})
+		}
+		
+		function ps(){
+			System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'tree2.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function add(){
+			System.openWindow({
+				id:'page9-0',
+				title:'发布开讲',
+				url:'page9-0.html',
+				width:'100%',
+				height:'100%',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+		
+		function ck(){
+			System.openWindow({
+				id:'page9-2',
+				title:'留言',
+				url:'page9-2.html',
+				width:'800',
+				height:'500',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+	</script>
+</html>

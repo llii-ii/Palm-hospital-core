@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="type" content="app">
+	    <title>订单详情</title>
+	    <script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="css/wechat/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wechat/index.css"/>
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/qlcstyle.css" type="text/css" />
+		<link rel="stylesheet" href="https://v1kstcdn.kasitesoft.com/common/css/tab.css" type="text/css" />
+				<style>
+			.copyright > div {
+			    line-height: 3rem;
+			    z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content"  style="margin-bottom: 1rem;">
+			<div class="detail">
+				<div class="detail-top">
+					<p>订单类型：<span>病历复印</span></p>
+					<p>订单状态：<span>申请成功</span></p>
+					<p>申请单号：<span id = "courierNumber"></span></p>
+				</div>
+			</div>
+			<div class="list-li"><label class="status">未支付</label><span class="blue" id="totalMoney"></span></div>
+			<div id = "caseLise"></div>
+		
+			<div class="list-date">收件信息</div>
+			<div class="list-address" style="border-bottom: 1px solid #f2f3f4;">
+				<span class="name"></span><span class="phone"></span>
+				<div class="addr"><img src="../mCopy/img/wechat/icon-3.png"/></div>
+			</div>
+			
+<!-- 			<div class="list-li mt" onclick="expressInfo()" style="margin-top: 0rem;"><label>物流信息</label><span><img class="right" src="img/wechat/icon-right.png"/></span></div>
+ -->			
+			<div class="list-li mt" ><label>身份认证</label><span id="authentication"></span></div>
+		</div>
+		<div class="i-footer">
+			<div class="b-1" onclick="cancel()">取消复印</div>
+			<div class="b-2" onclick="wxPay()">支付</div>
+		</div>
+
+		
+		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+		<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/common.js"></script>
+		<script type="text/javascript" src="js/wechat/detail.js"></script>
+		
+	</body>
+</html>

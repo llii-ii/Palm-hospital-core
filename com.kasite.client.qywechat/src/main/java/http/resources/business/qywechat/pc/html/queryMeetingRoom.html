@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>会议室管理</title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body class="children-page">
+		<p id="toolbar">
+			<button type="button" onclick="add('')" class="btn btn-primary">新增会议室</button>
+		</p>
+		
+		<table id="queryMeetingRoom">
+        </table>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://v1kstcdn.kasitesoft.com/common/js/base.js"></script>
+	<script type="text/javascript" src="../../../../common/js/common.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../js/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+	$(function(){
+		queryMeetingRoom();
+	});
+
+	function queryMeetingRoom(){
+		$('#queryMeetingRoom').bootstrapTable({
+			url: '/wsgw/qyWeChat/QueryMeetingRoom/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 10,                     //每页的记录行数（*）
+	        queryParams : function (params) {
+	        	var apiData = {};
+	        	apiData.status = 0;
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	        {
+	            field: 'Name',
+	            title: '名称',
+	            align: 'center',
+	            valign: 'middle',
+	        }, {
+	            field: 'Accommodate',
+	            title: '可容纳人数',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Place',
+	            title: '地址',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            field: 'Equipmentid',
+	            title: '设备',
+	            align: 'center',
+	            valign: 'middle',
+	        },{
+	            title: '操作',
+	            align: 'center',
+	            valign: 'middle',
+	            formatter: formatter
+	        },],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        		top.location = "http://"+window.location.host;
+	        	}else if(res.RespCode == 10000){
+	        		if(res.Data == undefined){
+		       			return [];
+		       		}else{
+		       			return res.Data;
+		       		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+	        	
+	        },
+	        onLoadError: function () {
+	            //alert("数据加载失败！");
+	        },
+		});
+	}
+
+	
+	
+		function formatter(value, row, index){
+			var html = [];
+			html.push('<a onclick="add('+row.Id+');" style="color:#3685ff;font-size:12px;padding:0 6px;">编辑</a>');
+			html.push('<a onclick="deleteMR('+row.Id+');" style="color:#3685ff;font-size:12px;padding:0 6px;">删除</a>');
+			return html.join('')
+		}
+		
+		function add(id){
+			System.openWindow({
+				id:'addMeetingRoom',
+				title:'新增会议室',
+				url:'addMeetingRoom.html?id='+id,
+				width:'800',
+				height:'800',
+				maxmin:false,
+				scrollbar:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					refresh();
+				}
+			});
+		}
+
+		//删除
+		function deleteMR(id){
+			var mymessage = confirm("确定删除该会议室吗？");
+			if(mymessage==true){
+				var apiData = {};	
+	        	apiData.id = id;
+	    		apiData.status = 1;
+	     		var param = {};
+	     		param.apiParam = Commonjs.getApiReqParams(apiData);
+	     		Commonjs.ajax('/wsgw/qyWeChat/UpdateMeetingRoom/callApi.do',param,function(dd){
+	     			if(dd.RespCode == 10000){
+	     				alert("删除成功");
+	     				refresh();
+	     			}else if(dd.RespCode == -30000){
+	     				alert("删除失败请联系管理员！");
+	     			}
+	     		});
+			}else if(mymessage==false){
+				
+			}
+		}
+		
+		//查询刷新
+		function refresh(){
+			$("#queryMeetingRoom").bootstrapTable('destroy');
+			queryMeetingRoom();
+		}
+	</script>
+</html>

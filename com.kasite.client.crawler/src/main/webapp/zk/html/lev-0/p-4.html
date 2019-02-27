@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="type" content="app">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/widget.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/general.css"/>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/plugins.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style-metronic.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css"/>
+	</head>
+	<body>
+		<div class="widget-head fix">
+			<div class="widget-head-title mui-pull-left">
+				<i class="fa fa-signal"></i> 数据上报趋势
+			</div>
+		</div>
+		<div id="history-upload-holder" style="width:100%;height: 400px;"></div>
+	</body>
+	<script src="../../js/jquery-1.9.1.min.js" type="text/javascript" useBase="false" charset="utf-8"></script>
+	<script src="../../bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.pagination.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/amcharts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/serial.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var chart;
+		function draw(chartData){
+		  chart = new AmCharts.AmSerialChart();
+		  chart.dataProvider = chartData;
+		  chart.pathToImages = "/PMC/themes/common/images/";
+		  chart.categoryField = "hospital";
+		  chart.startDuration = 1;
+		  chart.precision = 1;
+		
+		  chart.addListener("dataUpdated", zoomChart);
+		  
+		  // AXES
+		  // category
+		  var categoryAxis = chart.categoryAxis;
+		  categoryAxis.labelRotation = 45;
+		  categoryAxis.gridPosition = "start";
+		
+		  // value
+		  // in case you don't want to change default settings of value axis,
+		  // you don't need to create it, as one value axis is created automatically.
+		
+		  // GRAPH
+		  var graph = new AmCharts.AmGraph();
+		  graph.valueField = "count";
+		  graph.balloonText = "[[category]]: <b>[[value]]</b>";
+		  graph.type = "column";
+		  graph.lineAlpha = 0;
+		  graph.fillAlphas = 0.8;
+		  chart.addGraph(graph);
+		   
+		  //数据少，减少柱的宽度
+		  if(chartData.length < 5) {
+		    graph.columnWidth = 0.2;
+		  } else if (chartData.length > 5 && chartData.length < 10) {
+		    graph.columnWidth = 0.5;
+		  } else if (chartData.length > 20) {
+		    // SCROLLBAR
+		    var chartScrollbar = new AmCharts.ChartScrollbar();
+		    chartScrollbar.graph = graph;
+		    chartScrollbar.scrollbarHeight = 30;
+		    chart.addChartScrollbar(chartScrollbar);
+		  }
+		
+		  // CURSOR
+		  var chartCursor = new AmCharts.ChartCursor();
+		  chartCursor.cursorAlpha = 0;
+		  chartCursor.zoomable = false;
+		  chartCursor.categoryBalloonEnabled = false;
+		  chart.addChartCursor(chartCursor);
+		  
+		  chart.creditsPosition = "top-right";
+		  chart.write("chartdiv");
+		
+		}
+		/***************/
+		function zoomChart() {
+		    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+		    chart.zoomToIndexes(0, 15);
+		}
+		
+		function drawChart(historyUploadChartData) {
+			// SERIAL CHART
+		    historyUploadChart = new AmCharts.AmSerialChart();
+		    historyUploadChart.dataProvider = historyUploadChartData;
+		    historyUploadChart.categoryField = "date";
+		    historyUploadChart.startDuration = 0.5;
+		    historyUploadChart.balloon.color = "#000000";
+		    historyUploadChart.colors = ["#00BFFF","#EDC240"];
+		
+		    // AXES
+		    // GRAPHS
+		    // total graph
+		    var historyUploadTotalGraph = new AmCharts.AmGraph();
+		    historyUploadTotalGraph.title = "上报总数";
+		    historyUploadTotalGraph.valueField = "total";
+		    historyUploadTotalGraph.balloonText = "[[title]]：[[value]]";
+		    historyUploadTotalGraph.bullet = "round";
+		    historyUploadTotalGraph.fillAlphas = 0.3;
+		    historyUploadChart.addGraph(historyUploadTotalGraph);
+		
+		    // error graph
+		    var historyUploadErrorGraph = new AmCharts.AmGraph();
+		    historyUploadErrorGraph.title = "上报失败";
+		    historyUploadErrorGraph.valueField = "error";
+		    historyUploadErrorGraph.balloonText = "[[title]]：[[value]]";
+		    historyUploadErrorGraph.bullet = "round";
+		    historyUploadErrorGraph.fillAlphas = 0.6;
+		    historyUploadChart.addGraph(historyUploadErrorGraph);
+		    
+		    // CURSOR
+		    var historyUploadChartCursor = new AmCharts.ChartCursor();
+		    historyUploadChartCursor.cursorPosition = "mouse";
+		    historyUploadChartCursor.zoomable = false;
+		    historyUploadChartCursor.cursorAlpha = 0;
+		    historyUploadChart.addChartCursor(historyUploadChartCursor);   
+		
+		    // AXES
+		    // category
+		    var categoryAxis = historyUploadChart.categoryAxis;
+		  //  categoryAxis.dateFormats = [{period:'DD',format:'MM-DD'}]
+		  //  categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+		  //  categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+		    categoryAxis.tickLength = 0;
+		    categoryAxis.axisAlpha = 0;
+		
+		    // LEGEND
+		    var historyUploadLegend = new AmCharts.AmLegend();
+		    historyUploadLegend.useGraphSettings = true;
+		    historyUploadLegend.valueWidth = 100;
+		    historyUploadLegend.labelWidth = 100;
+		    historyUploadLegend.valueAlign = "left";
+		    historyUploadLegend.forceWidth = true;
+		    historyUploadChart.addLegend(historyUploadLegend);
+		    
+		    // TITLE
+		   //historyUploadChart.addTitle("最近天数据上报趋势");
+		    //historyUploadChart.addTitle("数据上报趋势");
+		
+		    // WRITE
+		    historyUploadChart.write("history-upload-holder");
+		}
+		
+		$(window).resize(function(){
+			drawChart(historyUploadChartData);
+		});
+		$(window).load(function(){
+			var historyUploadChartData = eval("(" + '[{"date":"2018-07-13","total":380881,"error":0},{"date":"2018-07-14","total":298982,"error":0},{"date":"2018-07-15","total":175014,"error":0},{"date":"2018-07-16","total":6921253,"error":0},{"date":"2018-07-17","total":12987910,"error":0},{"date":"2018-07-18","total":8478909,"error":0},{"date":"2018-07-19","total":179982,"error":0}]' + ")");
+			drawChart(historyUploadChartData);
+		});
+		
+		
+		$(document).ready(function(){
+			$("#pagination").pagination(19, {
+		        items_per_page: 10,
+		        current_page: 1-1,
+		        num_display_entries:3,
+		        num_edge_entries:2,
+		        prev_text:"前一页",
+				next_text:"下一页",
+		        callback: function(pageNo, container){
+		            if((pageNo+1)!=1) {
+						
+		            }
+		            return false;
+		        }
+			});
+		})
+	</script>
+</html>

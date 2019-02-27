@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../css/iCheck/custom.css"/>
+		<title>会议详细</title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+				font-size: 24px;
+				display: inline-block;
+				line-height: normal;
+				position: relative;
+				top: 7px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="max-width: 1000px;">
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>发起人：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="operatorname" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议主题：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="title" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议时间：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="meetingTime" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议地址：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="address" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议议题：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="content" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>参会人：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="checksName" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>记录人：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="recordName" style="padding: 8px 12px;margin-bottom: 5px;">
+						
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>会议学分：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div id="credits" style="padding: 8px 12px;margin-bottom: 5px;">
+
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>二维码签到：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;">
+						<div>
+							<img id="qr" alt="" src="" height="150px" width="150px">
+						</div>
+						<div id="downloadQR" style="width: 100px;text-align: center;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="x-row">
+				<div class="x-row-cols text-right" style="width: 140px;">
+					<label>二维码签退：</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:140px;">
+					<div style="padding: 8px 12px;margin-bottom: 5px;">
+						<div>
+							<img id="qrOut" alt="" src="" height="150px" width="150px">
+						</div>
+						<div id="downloadQROut" style="width: 100px;text-align: center;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../pc/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script src="../js/iCheck/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/webCom1.0/js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var meetingId = Commonjs.getUrlParam("meetingId");
+		var meetingUUid = '';
+		$(document).ready(function () {
+			queryMeetingInfo();
+			getPeopleList(0);
+			getPeopleList(1);
+        });
+        
+        function cc(){
+			parent.System.openWindow({
+				id:'ps',
+				title:'请选择',
+				url:'tree.html',
+				width:'600',
+				height:'600',
+				maxmin:false,
+				onload:function(){
+					
+				},
+				closed:function(){
+					
+				}
+			});
+		}
+        
+        System.addEventListener("pageEvent",function(str){
+			alert(window.location.href+'===='+str);
+		});
+        
+        //获取会议信息
+		function queryMeetingInfo(){
+			var apiData = {};	
+    		apiData.id = meetingId;
+    		apiData.status = -1;
+    		apiData.qyClientId=Commonjs.getQyWeChatClientId();
+			apiData.qyConfigKey=Commonjs.getQyWeChatConfigKey('HYGL');
+     		var param = {};
+     		param.apiParam = Commonjs.getApiReqParams(apiData);
+     		Commonjs.ajax('/wsgw/qyWeChat/QueryMeeting/callApi.do',param,function(dd){
+     			if(dd.RespCode == 10000){
+     				meetingUUid = dd.Data[0].Meetingid;
+      	       		$("#operatorname").text(dd.Data[0].Operatorname);
+      	       		$("#title").text(dd.Data[0].Title);
+      	       		var time = dd.Data[0].Meetingdate + " " + dd.Data[0].Timestart + "~" + dd.Data[0].Meetingdate + " " + dd.Data[0].Timeend; 
+      	       		$("#meetingTime").text(time);
+      	       		$("#address").text(dd.Data[0].Address);
+      	       		$("#content").html(dd.Data[0].Content);
+     	        	$("#credits").text(dd.Data[0].Credits);	
+     	        	//二维码 下载打印	
+     	        	$("#qr").attr('src',dd.Data[0].QrPicSignInUrl);
+     	        	var html ='<a href="'+dd.Data[0].QrPicSignInUrl+'" download="[签到二维码]'+dd.Data[0].Title+'.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载打印</a>';
+     	        	$('#downloadQR').append(html);
+
+     	        	$("#qrOut").attr('src',dd.Data[0].QrPicSignOutUrl);
+     	        	html ='<a href="'+dd.Data[0].QrPicSignOutUrl+'" download="[签退二维码]'+dd.Data[0].Title+'.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载打印</a>';
+     	        	$('#downloadQROut').append(html);
+
+     			}else if(dd.RespCode == -14018){
+     				alert('获取会议信息失败请联系管理员！');
+     			}
+     		},{async:false});
+        }
+        
+		//获取已有的参与人/记录人
+		function getPeopleList(memberType){
+			var apiData = {};	
+            apiData.uid = meetingUUid;
+            apiData.memberType = memberType;
+    		var param = {};
+    		param.apiParam = Commonjs.getApiReqParams(apiData);
+    		Commonjs.ajax('/wsgw/qyWeChat/QueryToMember/callApi.do',param,function(dd){
+    			if(dd.RespCode == 10000){
+					var names = '';
+					var ids = '';
+					if(dd.Data != undefined){
+						for(var i = 0;i<dd.Data.length; i++){
+							var id = dd.Data[i].Memberid;
+							if(dd.Data[i].IsDept == 1){
+								id = "d_" + id;
+							}
+							names = names + dd.Data[i].Membername + ",";
+							ids = ids + id + ",";
+						}
+						if(memberType == 1){
+				        	$("#recordName").text(names.substring(0,names.length-1));
+				        	//$("#recordId").val(ids.substring(0,ids.length-1)); 
+						}else if(memberType == 0){
+				        	$("#checksName").text(names.substring(0,names.length-1));
+				        	//$("#checksId").val(ids.substring(0,ids.length-1)); 
+						}
+					}
+    			}else{
+					if(memberType == 1){
+						console.log("暂无记录人");
+						$("#recordName").text("暂无记录人");
+					}else if(memberType == 0){
+						console.log("暂无参与人");
+						$("#checksName").text("暂无参与人");
+					}
+    				
+    			}
+    		},{async:false});		
+		}
+        
+	</script>
+</html>

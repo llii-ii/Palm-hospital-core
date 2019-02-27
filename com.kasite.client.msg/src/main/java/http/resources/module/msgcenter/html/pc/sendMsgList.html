@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../module/backstage/commons/js/common.js" ></script>
+		<title>消息发送查询</title>
+		<style type="text/css">
+			.form-inline{
+				margin-top: 10px;
+			}
+			.form-group label{
+				padding-top: 8px;
+			}
+			.form-group input,.form-group select{
+				width: 160px!important;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="form-inline">
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>场景：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;">
+						<select name="" class="form-control"  id="modeType">
+						</select>
+					</div>
+				</div>
+        	</div>
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>来源：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;">
+						<select name="" class="form-control" id="source">
+						</select>
+					</div>
+				</div>
+        	</div>
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>渠道：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;">
+						<select name="" class="form-control" id="channelId">
+							<option value="">全部</option>
+							<option value="100123">微信</option>
+							<option value="100125">支付宝</option>
+							<option value="sms">短信</option>
+						</select>
+					</div>
+				</div>
+        	</div>
+        	<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>发送类型：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;">
+						<select name="" class="form-control" id="pIdType">
+							<option value="1">单条发送</option>
+							<option value="2">批量发送</option>
+						</select>
+					</div>
+				</div>
+        	</div>
+    	</div>
+    	<div class="form-inline">
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>卡号：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;"><input class="form-control" type="text" name="" id="cardNo" value="" /></div>
+				</div>
+        	</div>
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>手机号码：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;"><input class="form-control" type="text" name="" id="mobile" value="" /></div>
+				</div>
+        	</div>
+    		<div class="form-group">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>状态：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;">
+						<select name="" class="form-control" id="sendState">
+							<option value="">全部</option>
+							<option value="0">等待发送</option>
+							<option value="2">发送失败</option>
+							<option value="1">发送成功</option>
+						</select>
+					</div>
+				</div>
+        	</div>
+        	<div class="form-group" style="display: none">
+    			<div class="x-row">
+					<div class="x-row-cols text-right" style="width: 100px;"><label>发送批次号：</label></div>
+					<div class="x-row-cols " style="margin-left:100px;"><input class="form-control" type="text" name="" id="pId" value="-1" /></div>
+				</div>
+        	</div>
+        	<div class="form-group">
+        	<div class="x-row">
+        		<div class="x-row-cols " style="margin-left:100px;">
+        			<button class="btn btn-w-m btn-primary " onclick="reload()" type="button">重置</button>
+        		</div>
+        	</div>
+        	</div>
+        	<div class="form-group">
+        	<div class="x-row">
+        		<div class="x-row-cols " style="margin-left:20px;">
+        			<button class="btn btn-w-m btn-primary " onclick="queryList()" type="button">查询</button>
+        		</div>
+        	</div>
+        	</div>
+    	</div>
+    	
+    	<table id="exampleTablePagination" >
+            <thead>
+            </thead>
+            <tbody id="msg_list"></tbody>
+        </table>
+	</body>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table.js"></script>
+	<script src="../../js/pc/webCom1.0/component/table/js/bootstrap-table-zh-CN.js"></script>
+	<script>
+	function reload(){
+		$("#pId").val("-1");
+		$("#channelId").val("");
+		$("#modeType").val("");
+		$("#cardNo").val("");
+		$("#source").val("");
+		$("#mobile").val("");
+		$("#sendState").val("");
+		queryList();
+	}
+	function queryList(pId){
+		var type = $("#pIdType").val();
+		if(pId==''||pId==undefined){
+			pId = $("#pId").val();
+			if(pId==''){
+				$("#pId").val("-1");
+				pId="-1";
+			}
+		}
+		if(type==1){
+			queryListSing(pId);
+		}
+		if(type==2){
+			queryListMore(pId);
+		}
+	}
+	function queryListMore(pId){
+		if(pId!='-1'){
+			$("#pId").val(pId);
+			queryListSing(pId);
+			return;
+		}
+		$("#exampleTablePagination").bootstrapTable('destroy');
+		$('#exampleTablePagination').bootstrapTable({
+			url: '/wsgw/msg/MsgQueueListPage/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 25,                     //每页的记录行数（*）
+	        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+	        queryParams : function (params) {
+	        	var param = {};
+				var apiData = {};
+				apiData.pId = $("#pId").val();
+				apiData.ChannelId = $("#channelId").val();
+				apiData.ModeType = $("#modeType").val();
+				apiData.CardNo = $("#cardNo").val();
+				apiData.OperatorId = $("#source").val();
+				apiData.OrgId = Commonjs.hospitalId();
+				apiData.Mobile = $("#mobile").val();
+				apiData.State = 3;
+				param.api = '';
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				var Page={};
+				Page.PSize = params.limit;
+				Page.PIndex = (params.offset / params.limit) + 1;
+				apiData.Page=Page;
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	                  {
+	            field: 'ChannelName', 	    
+	            title: '发送渠道',
+	        }, {
+	            field: 'SceneName',
+	            title: '场景'
+	        }, {
+	            field: 'TotalNum',
+	            title: '总条数',
+	        }, {
+	            field: 'UnSendNum',
+	            title: '待发送',
+	            sortable: true,
+	        }, {
+	            field: 'SuccessNum',
+	            title: '发送成功',
+	            sortable: true,
+	        },
+	        {
+	            field: 'FailNum',
+	            title: '发送失败',
+	            sortable: true,
+	        },
+	        {
+	            field: 'CreateTime',
+	            title: '创建时间',
+	            sortable: true,
+	        }
+	        ,
+	        {
+	            field: '',
+	            title: '操作',
+	            sortable: true,
+	            formatter : function(value, item, index){
+	            	return "<a href=\"javascript:;\" onclick=\"queryList(\'"+item.MsgId+"\')\" style=\"color:#3685ff;font-size:12px;\">详情</a>";
+	            }
+	        }
+	        ],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        	}else{
+	        		if(res.Data == undefined){
+	        			return [];
+	        		}else{
+	        			var o ={};
+	        			var data = 
+	        			o.total = res.Data[0].Total;
+	        			o.rows = res.Data[0].Rows;
+	        			return o;
+	        		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+	        	console.log(result);
+	        },
+	        onLoadError: function () {
+	            alert("数据加载失败！");
+	        },
+		});
+	}
+	function queryListSing(pId){
+		if(pId!='-1'){
+			$("#pId").val(pId);
+		}
+		$("#exampleTablePagination").bootstrapTable('destroy');
+		$('#exampleTablePagination').bootstrapTable({
+			url: '/wsgw/msg/MsgQueueListPage/callApi.do',  //请求后台的URL（*）
+	        method: 'POST',                      //请求方式（*）
+	        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+	        sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+	        pagination: true,                   //是否显示分页（*）
+	        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	        pageSize: 25,                     //每页的记录行数（*）
+	        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+	        queryParams : function (params) {
+	        	var param = {};
+				var apiData = {};
+				apiData.pId = $("#pId").val();
+				apiData.ChannelId = $("#channelId").val();
+				apiData.OrgId = Commonjs.hospitalId();
+				apiData.ModeType = $("#modeType").val();
+				apiData.CardNo = $("#cardNo").val();
+				apiData.OperatorId = $("#source").val()
+				apiData.Mobile = $("#mobile").val();
+				apiData.State = $("#sendState").val();
+				param.api = '';
+				param.apiParam = Commonjs.getApiReqParams(apiData);
+				var Page={};
+				Page.PSize = params.limit;
+				Page.PIndex = (params.offset / params.limit) + 1;
+				apiData.Page=Page;
+	        	var temp = {   
+	                     rows: params.limit,                         //页面大小
+	                     page: (params.offset / params.limit) + 1,   //页码
+	                     sort: params.sort,      //排序列名  
+	                     sortOrder: params.order, //排位命令（desc，asc） 
+	                     token : Commonjs.getToken(),
+	                     apiParam : Commonjs.getApiReqParams(apiData)
+	                 };
+	            return temp;
+	        },
+	        columns: [
+	                  {
+	            field: 'ChannelName', 	    
+	            title: '发送渠道',
+	        }, {
+	            field: 'SceneName',
+	            title: '场景'
+	        }, {
+	            field: 'CardNo',
+	            title: '卡号',
+	        }, {
+	            field: 'Mobile',
+	            title: '电话',
+	            sortable: true,
+	        }, {
+	            field: 'SendTime',
+	            title: '发送时间',
+	            sortable: true,
+	        },
+	        {
+	            field: 'State',
+	            title: '状态',
+	            sortable: true,
+	            formatter : function(value, item, index){
+	            	if(value==0){
+	            		return "等待发送";
+	    			}
+	    			else if(value==1){
+	    				if(item.IsRead==1){
+	    					return "发送成功(已读)";
+	    				}
+	    				return "发送成功";
+	    			}
+	    			else if(value==3){
+	    				return "<span style=\"color:green\">批量发送</span>";
+	    			}
+	    			else{
+	    				return "<span style=\"color:red\">发送失败</span>";
+	    			}
+	            }
+	        },
+	        {
+	            field: 'CreateTime',
+	            title: '创建时间',
+	            sortable: true,
+	        }
+	        ,
+	        {
+	            field: '',
+	            title: '操作',
+	            sortable: true,
+	            formatter : function(value, item, index){
+	            	return "<a href=\"javascript:;\" onclick=\"openWindow(\'"+item.MsgId+"\')\" style=\"color:#3685ff;font-size:12px;\">详情</a>";
+	            }
+	        }
+	        ],
+	        responseHandler: function(res) {
+	        	if(res.RespCode == 401){
+	        		alert(res.RespMessage);
+	        	}else{
+	        		if(res.Data == undefined){
+	        			return [];
+	        		}else{
+	        			var o ={};
+	        			var data = 
+	        			o.total = res.Data[0].Total;
+	        			o.rows = res.Data[0].Rows;
+	        			return o;
+	        		}
+	        	}
+	        },
+	        onLoadSuccess: function (result) {
+	        	console.log(result);
+	        },
+	        onLoadError: function () {
+	            alert("数据加载失败！");
+	        },
+		});
+	}
+	
+	function querySceneList(){
+		var param = {};
+		var apiData = {};
+		apiData.state = 1;
+		param.api = '';
+		apiData.OrgId = Commonjs.hospitalId();
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/MsgSceneList/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				var html = '<option value="">全部</option>';
+				Commonjs.BaseForeach(d.Data, function(i,item){
+					html+='<option value="'+item.ModeType+'">'+item.SceneName+'</option>';
+				})
+				$("#modeType").html(html);
+			} else {
+				alert('获取场景失败');// 错误提示
+			}
+		});
+	}
+	function querySourceList(){
+		var param = {};
+		var apiData = {};
+		param.api = '';
+		apiData.state = 1;
+		apiData.orgId = Commonjs.hospitalId();
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '/wsgw/msg/MsgSourceList/callApi.do';
+		Commonjs.ajax(url, param, function(d) {
+			if (d.RespCode == 10000) {
+				var html = '<option value="">全部</option>';
+				Commonjs.BaseForeach(d.Data, function(i,item){
+					html+='<option value="'+item.SourceId+'">'+item.SourceName+'</option>';
+				})
+				$("#source").html(html);
+			} else {
+				alert('获取场景失败');// 错误提示
+			}
+		});
+	}
+		
+		function openWindow(msgId){
+			
+			System.openWindow('sendMsgInfo.html?msgId='+msgId);
+		}
+		$(function(){
+			querySceneList();
+			querySourceList();
+			queryList();
+			$("#pIdType").change(function(){
+				$("#pId").val("-1");
+			})
+		})
+		
+	</script>
+</html>

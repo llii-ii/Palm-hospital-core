@@ -1,0 +1,180 @@
+kasite:
+    appConfig:
+        #是否开启中心连接
+        isConnectionKastieCenter: true
+        #配置中心地址 如果不开启连接中心的时候可以注释 中心的url地址 http://verification2.kasitesoft.com
+        centerUrl: https://verification.kasitesoft.com,http://verification2.kasitesoft.com
+        #配置中心申请的appId（必须）
+        appId: KASTIE-CLIENT-BALANCEOFACCOUNT.734
+        #配置中心申请的密码（必须）
+        appSecret: d15e6623b4
+        #组织机构代码（必须）
+        orgCode: 734
+        #本地保存配置文件的目录（必须）
+        configPath: /usr/local/Client/KasiteConfig
+        #中心获取的配置 公钥 （必须）
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsO2PkNlBU83PtQ3EJrc0Hnr95164WfFuc7lyNywKyAcnLBI9+wUgjAaGEzuQW12YMLwKWVbp+2h+FuV7tbSSFOpPeqEzsKfGBcIEDga/UatbQMIOMZKddr+rpGANy8V2o5Ulsx766SYqhauBFE6YTch9Vtvdzz+jn8+xQyQqSC2OgO4qhPzHZ/j1/Dc5V0uqR20f/Kt6nByZs8EK1HUX5Ordtvt7SAsQqVKYnMbB9FByHhnt76MV0zLP5AnEQqhS6/HKmQ79L64OTl5hEv1duFDIxnfpNJKfbH7rv80s36i/IFp8Zsu99l8VdvZ7tvhVwHpwG1OGNhV2CdEbR+/oQwIDAQAB
+
+    #定时任务是否启动（默认都为true）
+    jobStartStateMap:
+        #每日凌晨3点下载HIS账单
+        DownloadHisBills: true
+        #每日10.40分开始生成每日汇总账单
+        GenerateEveryDayBills: true
+        #由于全流程汇总时使用到了P_BILL表的数据进行校准,所以全流程汇总的作业应该晚于微信账单的下载
+        #目前暂定10.20分
+        GenerateQlcBills: true
+        #每日10.35分开始生成三方汇总账单明细数据
+        GenerateThreePartyBills: true
+
+#请填写医院hosId
+info:
+    orgCode: 734
+
+spring:
+    #SpringAdmin 的配置
+    boot:
+      admin:
+        client:
+          read-timeout: 30000
+          connect-timeout: 30000
+          instance:
+            #客户端要显示的工程名 医院全称+统一对账系统
+            name: 湖北武汉亚信医院(病案复印)统一对账系统
+            #客户端的工程部署地址
+            service-url: http://blfy.kasitesoft.com/balanceofaccount/bill/twoParty/everyDayBill.html
+            # http://外网ip或域名/项目名/actuator
+            management-url: http://blfy.kasitesoft.com/balanceofaccount/actuator
+            # http://外网ip或域名/项目名/actuator/health
+            health-url: http://blfy.kasitesoft.com/balanceofaccount/actuator/health
+            #正式线URL地址 https://springadmin.kasitesoft.com 默认配置开发线，记得修改
+            # 开发线线URL地址 http://119.23.210.15:9999
+          url: https://springadmin.kasitesoft.com #向服务端注册的地址
+          username: admin # 登录服务端的用户名、密码
+          password: kst.2018
+
+    #双数据源的配置，如果不需要删除slave段代码即可
+    datasource:
+        master:
+            saveSqlLog: true
+            showSql: true
+            alias: hos
+            ip: rm-wz901304hqkgt7ou935910.mysql.rds.aliyuncs.com
+            databaseName: hos
+            url: jdbc:mysql://rm-wz901304hqkgt7ou935910.mysql.rds.aliyuncs.com:3306/hos?allowMultiQueries=true&useOldAliasMetadataBehavior=true&useUnicode=true&characterEncoding=UTF-8&useLOBs=false
+            username: medical
+            password: eEd8_81Fc6
+            driver-Class-Name: com.mysql.jdbc.Driver
+        #连接池的配置信息
+        initialSize: 10
+        minIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=50000
+        loginUsername: kasite
+        loginPassword: kasite_0
+    devtools: 
+      restart:
+        enabled: true
+dataBase:
+    dbType: MYSQL
+
+#HIS相关配置信息
+HisConfig:
+    #His账单接口地址
+    url: http://192.168.0.7/crds3/weixinduizhangservice.asmx
+    #HIS账单接口实现类名,通过此值动态配置调用的实现类
+    instance: HisService_FJQZAEYKYY
+    #HIS接口调用具体实现方法 SOAP或HL7 如需拓展请callMe
+    type: SOAP
+    
+#mybatis xml和mapper读取
+mybatis:
+  mapper-locations: classpath:mapper/hbwhyxyy/mysql/*.xml
+  type-aliases-package: com.kasite.client.hospay.module.bill.dao
+
+#配置分页插件pageHelper
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count = countSql
+
+#认证的配置
+AuthenticatorConfig:
+    userName: wuhanyaxinyiyuan
+    hostName: wuhanyaxinyiyuan
+    #生成秘钥后填在这边即可
+    secret: FEBUOTOH3OZVN4YY
+    #谷歌验证码，如果医院不想使用谷歌验证软件，可以在这边填写默认值（不建议使用默认值的方式）
+    passWord:
+    #是否限制前端汇总时间的 0否 1是 默认1
+    isDefault: 1
+
+#operationButton页面操作按钮展示参数 0展示所有 1不展示冲正 2不展示退费 3不展示财务调账
+#默认 1 不展示冲正
+#后面四个参数为页面展示  1展示 0隐藏
+Page:
+    operationButton: 1
+    everyDayBillIsShow: 1
+    everyDayBillDetailIsShow: 1
+    classifySummaryBillIsShow: 1
+    alwaysRefundIsShow: 0
+
+#几方汇总的判断参数 3三方汇总 2两方汇总
+#默认使用 3三方汇总
+several:
+    parties: 2
+
+#Excel文件保存路径
+file:
+    path: //usr//local//BillExcel
+
+#统一对账平台配置参数
+balanceConfig:
+    #账单列表的操作人是否已json展示 0不 1是 默认0
+    operationJson: 0
+
+
+#微信配置
+ChannelWXConfig:
+        # 查询订单URL
+        queryOrderUrl: https://api.mch.weixin.qq.com/pay/orderquery
+        # 退款URL
+        refundUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
+        # 公众号AppId
+        subAppId: wx474c4a73fc0452b9
+        # 子商户ID
+        subMerchantId: 1248246801
+        # 父商户秘钥
+        parentMerchantKey: 12345678123456781234567812345678
+        # 父商户AppId
+        parentAppId: wxd6507cf4c191b6a9
+        # 父商户Id
+        parentMerchantId: 1235595402
+        # 退款证书
+        certPath: E://cert//apiclient_cert.p12
+        notifyUrl:
+
+#支付宝配置
+ChannelZFBConfig:
+        # 支付宝网关
+        alipayGateWay: https://openapi.alipay.com/gateway.do
+        # 支付宝AppId
+        appId: 2018040902523629
+        # 应用私钥
+        privateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCGQg47Vs3FFcwTxDnGRQyBid1aytcemaDofzdre/7GKzul+Ymvz3lQHRLMPN/Cd+1OmzYZX+3JNlGUT921pgoBmE2oEXKPjw4pUyDvee/BvYR+gj3KcL2BT/TuIKYVYY2xdBtdJnBrSPolw/37wMb+mtO7JjQT/kOxIt3exRGb9x0ycZwWZkt9Ydb1Ds0mB1ImtDRfYUYAmSlpm9OWsQeSjqDW9j/m6zfYKZZwaOOLaLBAaPoyWTmMRQiqHzlDVoomdATLQNab9mRrbRgk8ottPAqA+a0TdvhOZjMi8qXDRB5jXw/9rIN7R3YZMk5jRRkQ7mR41MGQCVwGbZCzAyBjAgMBAAECggEAb1rYXQU5NE9I7dgiJz3cCpEjhIua8ylvGYdymvbEMO9o0NfxCF4n+3exwK541N4NeNYpf9Bd9DbWYRIBDQnDYOFG/7BA+asojsQBHD9hyap7+0XhJEhwFZIQz3VK6473LAjmLVOViJaFy88MmMOjCUe3d5FPPon08TW/GmcPnPCcwJQK2QuVWZR8nwHZnwmfcDOjjE2fxuDettYZDWcw9AnwK1e6I6bhZyKG5ysOC4OGZA27SGpXsnypr9pmm+YEaFrla9qvYg0bPs7387D3/ePm+IuGZ2AbjYfadJf8ys9vHrxPJMP21+NY6Z0Nv5LrNj2RlW1tT7+Kn3rC6hI6kQKBgQC5tbXE/NMKtg+qCeDM2FdqnzRGWhIrXxnOpnxiOBkxyNGbaZxrSOAYcMTOdFYOO9KxTa3ECVTJDkaBO0XevksYFOV3iFTHllNPtL3Gg1GtH4h1jzu0HKkPnsOh6NSCTBRG0py2iwktdonyZAg37yAekVPq0a0nDqUCPmaoMX4QCwKBgQC5EvFfT4ksMTBg3jUMasb3ES4Rj0fhDbY0W1QnPOsUlbdxrRTuc9THPXDbP5YBEK1SsQ9bQwVVbnvcN7QwG7m/IoKOt8WIckCaB1+dWWqYrDR195WY6YLsRZPYWqUXJ9ag2mpWPX6NFrAM+CPNqyKnKUcDLZq9kBsBm6futsewCQKBgAxLloxDPOnBognc+5A0Zp09iyV5Qyix9DB1X1jVY/2i0RXcCSolOgkENlOA6k2o8ksg3HdVMtLY6hwWQ4r6yFgA0ix2zz4jmsJ1MfdZrGes5cj6wbYsC5loJoWqt58k0FbcDNodHG9xILL2ooCpiVPcxVSPq0ohsxUR8pQCKtl/AoGAO4083c5Z9T5esszNhRFWtGlyyXOxTVl8J5y7l2SiwBzsykdHVPMwpGvAxMvRGMak/ta6ekM2lCbY9CN4d4J0YmxYVlQL27vnzahRu+/pvPasaskf+fQpjJ1W1WdVd/35sgiV7uoarot+Wq3911AZ9m/xybQC9rxH9FyBzO5DkwECgYAeZXmLHtiQZugFd8Mbn670qS8mrevSkffpCP2/kbGInuEFEtrCZ/uAxZxNYOp/l60M/fNnCCRVBfq+mpK88fQ4nGs48apOWY1R9gtfUGVqrRtTv+MVVZJuY++B0T5+YVaBtdWoAcWqctepPEs3bNdIzyasgTv1+OROxLEUk9Priw==
+        # 应用公钥
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhkIOO1bNxRXME8Q5xkUMgYndWsrXHpmg6H83a3v+xis7pfmJr895UB0SzDzfwnftTps2GV/tyTZRlE/dtaYKAZhNqBFyj48OKVMg73nvwb2EfoI9ynC9gU/07iCmFWGNsXQbXSZwa0j6JcP9+8DG/prTuyY0E/5DsSLd3sURm/cdMnGcFmZLfWHW9Q7NJgdSJrQ0X2FGAJkpaZvTlrEHko6g1vY/5us32CmWcGjji2iwQGj6Mlk5jEUIqh85Q1aKJnQEy0DWm/Zka20YJPKLbTwKgPmtE3b4TmYzIvKlw0QeY18P/ayDe0d2GTJOY0UZEO5keNTBkAlcBm2QswMgYwIDAQAB
+        # 支付宝公钥
+        alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyyKAB54ipC+MH0ukup7peYZ7gfKk689ugLELqEpGUgPxKCPBRzhM9koNTX4WytnzYMqKU6xgn2cANmYou8FHNTgJCkv68cJ2nccxgdVecF0xCIJOvVmvjVSsc+sOuC4414plA2W+gsrrbJMDvzhZFDR9s0WMdnhC9b5W519lgAciVSHNqq3G3WgBZ1Qf1584bsRvtSGMSMMMoWkJAs8QIrJnr/mxf1CnAS07N7pIQvUqI6cVuTCahtVMtVpcGOu5LWv4WxpcCc09KPFqaO+9OvkA27QQ4byG8O9sIiLnK/5BkBoX0wGCq7OdqlWzEUvydgxzZhnbglDm4Y6o6rBTvQIDAQAB
+        # 签名类型 默认RSA2 请根据支付宝生活窗的实际进行修改
+        signType: RSA2

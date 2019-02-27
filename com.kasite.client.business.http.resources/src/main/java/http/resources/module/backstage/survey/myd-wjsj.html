@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>收集设置</title>
+        <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+    	<script type="text/javascript" src="./js/myd-wjsj.js"></script>
+     	<script type="text/javascript" src="../commons/js/My97DatePicker/WdatePicker.js"></script>
+    </head>
+    <body>
+     
+      <div class="main-tit"><h2>收集设置</h2><div class="absolute myd-step-2" style="right:20px; top:20px;"></div></div>
+      <div class="p30">
+          <div class="pb35" style="border-bottom:1px dashed #e1e1e1;">
+          	  <input type="hidden" id="Overtype"  />
+          	  <input type="hidden" id="Replytype" />
+              <h4>何时结束</h4>
+              <div class="mt20">
+                  <div class="valign-m-chk f12">
+                  	<input type="radio" key="endTime1" name="endtime" onclick="checkit(this,1)" /><span>收集</span>
+                  	<input type="text" id="endTime1" class="input-text input-text-s ml5 mr5" 
+                  		style="IME-MODE: disabled; WIDTH: 60px; HEIGHT: 15px" 
+                  		onkeyup="this.value=this.value.replace(/\D/g,'')"  
+                  		onafterpaste="this.value=this.value.replace(/\D/g,'')" 
+                  		maxlength="5" size="14"
+                  	/><span>份答卷时结束</span>
+                  </div>
+              </div><!-- minDate:'%y-%M-#{%d+1} %H:%m',dateFmt:'yyyy-MM-dd HH:mm' maxDate:'#F{$dp.$D(\'endTime\')}' -->
+              <div class="mt25">
+                  <div class="valign-m-chk f12">
+                      <input type="radio" key="endTime2"  name="endtime" onclick="checkit(this,2)" /><span>截止</span>
+                      <input type="text"  class="ml5 date" id="endTime2" 
+                      	onClick="WdatePicker({minDate:'%y-%M-#{%d+1} 00:00',dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,el:'endTime2',readOnly:true})" />
+                  </div>
+              </div>
+              <div class="mt25">
+                  <div class="valign-m-chk f12">
+                      <input type="radio" key="endTime3" name="endtime" id="endTime3" onclick="checkit(this,3)"/><span>无限制</span>
+                  </div>
+              </div>
+          </div>
+          <div class="mt35" style="display: block;">
+              <h4>回复设置</h4>
+              <div class="mt20">
+                  <div class="valign-m-chk f12">
+                      <input type="radio" onclick="checkit2(1)" id="Replytype1" name="replysetting"  /><span>一个手机或电脑只能回复一次</span>
+                  </div>
+              </div>
+              <div class="mt25">
+                  <div class="valign-m-chk f12">
+                      <input type="radio" onclick="checkit2(2)" id="Replytype2" name="replysetting" /><span>每个IP只能回复一次</span>
+                  </div>
+              </div>
+              <div class="mt25">
+                  <div class="valign-m-chk f12">
+                      <input type="radio" onclick="checkit2(3)" checked id="Replytype3" name="replysetting"  /><span>无限制</span>
+                    
+                  </div>
+              </div>
+          </div>
+          <div class="mt50">
+              <input type="button" class="btn btn-w100" value="保存" onclick="_submitWJ()"/>
+<!--               <a href="javascript:;" class="btn btn-w-auto btn-gray" id="backBtn" onclick="window.history.back(-1)" style="margin: 10px;"><i class="icon icon-back"></i>返回</a>-->
+              
+          </div>
+      </div>
+ 	</body>
+</html>

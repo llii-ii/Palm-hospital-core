@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico"> 
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>病历复印申请单</title>
+		<style type="text/css">
+			/* 清除浮 动*/
+			.fix { *zoom: 1; }
+			.fix:after { display: table; content: ''; clear: both; }
+			.x-row{
+			    overflow: hidden;
+			}
+			.x-row-cols{
+			    display: block;
+			    float: left;
+			    height: 100%;
+			}
+			.dr .x-row-cols{
+			    display: block;
+			    float: right;
+			    height: 100%;
+			}
+			.x-row-cols:last-child{
+			    float: none;
+			}
+			.x-row-cols.last-child{
+			    float: none;
+			}
+			.x-row.boxflex{
+			    display: -webkit-box;
+			    display: -moz-box;
+			    display: -o-box;
+			    display: box;
+			    float: none;
+			    width: 100%;
+			}
+			.boxflex .x-row-cols{
+			    display: block;
+			    -webkit-box-flex: 1;
+			    -moz-box-flex: 1;
+			    box-flex: 1;
+			    float: none;
+			    width:100%;
+			}
+			.tit{
+				font-size:34px;
+				font-weight:bold;
+				color:#333;
+				text-align:center;
+				margin-bottom:74px;
+			}
+			.fl div{
+				float:left;
+				font-size:16px;
+				color:#333;
+				height:68px;
+			}
+			@page {
+		      size: auto;  /* auto is the initial value */
+		      margin: 0mm; /* this affects the margin in the printer settings */
+		    }
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="wrapper-content">
+			<div class="stip-top">
+				<!--病例复印申请单-->
+				<div>
+					<p class="tit">病例复印申请单</p>
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 33.3%;">
+							<div class="fix fl">
+								<div>患者姓名：</div>
+								<div id = "name"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="width: 33.400000000000006%;">
+							<div class="fix fl">
+								<div>病案号：</div>
+								<div id = "patientId"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="margin-left:66.7%;">
+							<div class="fix fl">
+								<div>出院科室：</div>
+								<div id="outDept"></div>
+							</div>
+						</div>
+					</div>
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 33.3%;">
+							<div class="fix fl">
+								<div>住院天数：</div>
+								<div id="dayNum"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="width: 33.400000000000006%;">
+							<div class="fix fl">
+								<div>是否手术：</div>
+								<div id="isOper"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="margin-left:66.7%;">
+							<div class="fix fl">
+								<div>手术方式：</div>
+								<div id="operName"></div>
+							</div>
+						</div>
+					</div>
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 33.3%;">
+							<div class="fix fl">
+								<div>出院日期：</div>
+								<div id="outDate"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="width: 33.400000000000006%;">
+							<div class="fix fl">
+								<div>费用金额：</div>
+								<div id="cost"></div>
+							</div>
+						</div>
+						<div class="x-row-cols " style="margin-left:66.7%;">
+							<div class="fix fl">
+								<div>复印份数：</div>
+								<div id="printNum"></div>
+							</div>
+						</div>
+					</div>
+<!-- 					<div class="x-row">
+						<div class="x-row-cols " style="width: 33.3%;">
+							<div class="fix fl">
+								<div>打印日期：</div>
+								<div id="nowDay"></div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+				<div style="text-align: center;padding-top: 15px;">
+	        		<button id="pbtn" style="display: none;" class="btn" type="button" onclick="p()">打印</button>
+        		    <button id="return" style="display: none;" class="btn" type="button" onclick="r()">返回</button>
+        		</div>
+        	</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script>
+	$(document).ready(function(){
+		var name = parseNone(decodeURI(Commonjs.getUrlParam("name")));
+		var id = Commonjs.getUrlParam("id");
+		var outDept = parseNone(decodeURI(Commonjs.getUrlParam("outDept")));
+		var dayNum = Commonjs.getUrlParam("dayNum");
+		var isOper = Commonjs.getUrlParam("isOper");
+		var operName = parseNone(decodeURI(Commonjs.getUrlParam("operName")));
+		var outDate = Commonjs.getUrlParam("outDate");
+		var cost = Commonjs.getUrlParam("cost");
+		var printNum = Commonjs.getUrlParam("printNum");
+		
+		$("#patientId").text(id);
+		
+		//var start = outDept.indexOf("科");
+		//var end = outDept.indexOf("楼");
+		//$("#outDept").text(outDept.substring(start+1,end+1));
+		$("#outDept").text(outDept);
+		$("#name").text(name);
+		$("#dayNum").text(dayNum);
+		if(operName != '' || operName != null){
+			$("#isOper").text("是");
+			$("#operName").text(operName);
+		}else{
+			$("#isOper").text("否");
+			$("#operName").text("暂无");
+		}
+		$("#outDate").text(outDate.substring(0,10));
+		$("#cost").text(cost+"元");
+		$("#printNum").text(printNum+"份");
+/* 		var nowDay = new Date();
+		$("#nowDay").text(nowDay.getFullYear() +"-"+ nowDay.getMonth() +"-"+ nowDay.getDate()); */
+		setTimeout(function(){
+			window.print();
+			setTimeout(function(){
+				$('#pbtn').show();
+				$('#return').show();
+			},300)
+		},1000)
+	})
+	
+	function p(){
+		$('#pbtn').hide();
+		$('#return').hide();
+		window.print();
+		setTimeout(function(){
+			$('#pbtn').show();
+			$('#return').show();
+		},300)
+	}
+	
+	function r(){
+		window.location.href = 'copy.html';
+	}	
+	
+	//将需要的值由null undefined 转成''
+	function parseNone(value){
+		if(value == null || value == undefined || value == "null"){
+			return '';
+		}else{
+			return value;
+		}
+	}
+</script>

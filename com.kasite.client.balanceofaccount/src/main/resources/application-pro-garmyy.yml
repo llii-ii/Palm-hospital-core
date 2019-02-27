@@ -1,0 +1,141 @@
+kasite:
+    appConfig:
+        #是否开启中心连接
+        isConnectionKastieCenter: false
+        #配置中心地址 如果不开启连接中心的时候可以注释 中心的url地址
+        centerUrl: https://verification.kasitesoft.com,http://verification2.kasitesoft.com
+        #配置中心申请的appId（必须）
+        appId: KASITE-CLIENT-BALANCEOFACCOUNT.22456
+        #配置中心申请的密码（必须）
+        appSecret: ce102ex9bx
+        #组织机构代码（必须）
+        orgCode: 22456
+        #本地保存配置文件的目录（必须）
+        configPath: D:/Application/KasiteConfig
+        #中心获取的配置 公钥 （必须）
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn908kQDeqrx3HOLMhXy0vS/a9VGdwlWMVJ5QOHZdCqKvIkGfaeoTEFsqb6SxnbzMmuOdOPseI4YnTF5DQTogH92BM1X8SYlwTolbJ/sKYn6A70NlNsyRuUt5dO8Ki3hbJEUrVBCdEbBXk7EN2mHglNWa3BlipbtG62troIlHpEh0l47Zp9lFPVPS1jzF8XV2Bljx/zja3QMNmrrqLnzuo9diTbHbZau1AeQJVU6DzVrxdG79sl2ozCtVHrw6Dn3f5/ux3YhSnegD1DiM43DFeAgR6rTUPkjmugIZHGHIWzI+CYZDIne/kn2BN40QfQlvzt6AZyhABtFviVTRup4ciQIDAQAB
+info:
+    orgCode: 22456
+spring:
+    #SpringAdmin 的配置
+    boot:
+      admin:
+        client:
+          read-timeout: 30000
+          connect-timeout: 30000
+          instance:
+        #客户端要显示的工程名 医院全称+统一对账系统
+            name: 达州市中心医院统一对账系统
+        #客户端的工程部署地址 http://外网ip+端口或域名/项目名/bill/[threeParty] or [twoParty]/everyDayBill.html
+            service-url: http://yihugz.dzcch.cn:7777/balance/bill/threeParty/everyDayBill.html
+        # http://外网ip+端口或域名/项目名/actuator
+            management-url: http://yihugz.dzcch.cn:7777/balance/actuator
+        # http://外网ip+端口或域名/项目名/actuator/health
+            health-url: http://yihugz.dzcch.cn:7777/balance/actuator/health
+        #正式线URL地址 地址 https://springadmin.kasitesoft.com 默认配 默认配置开发线，记得修改
+        # 开发线线URL地址 地址 http://119.23.210.15:9999
+          url:  https://springadmin.kasitesoft.com #向服 #向服务端注册的地址
+          username: admin # 登录服务端的用户名、密码
+          password: kst.2018
+    datasource:
+        master:
+          saveSqlLog: true
+          showSql: true
+          alias: hos
+          ip: 127.0.0.1
+          databaseName: orcl
+          driver-class-name: oracle.jdbc.driver.OracleDriver
+          url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+          username: hosbs
+          password: 123456
+        #连接池的配置信息
+        initialSize: 10
+        minIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        loginUsername: kasite
+        loginPassword: kasite_0
+    devtools:
+      restart:
+        enabled: true
+dataBase:
+    dbType: ORACLE
+
+HisConfig:
+    url: http://192.168.0.65:8033/HisService.asmx
+
+mybatis:
+  mapper-locations: classpath:mapper/garmyy/*.xml
+  type-aliases-package: com.kasite.client.hospay.module.bill.dao
+
+#配置分页插件pageHelper
+pagehelper:
+    helperDialect: oracle
+    reasonable: true
+    supportMethodsArguments: true
+    params: count = countSql
+
+#认证的配置
+AuthenticatorConfig:
+    userName: dzszxyy
+    hostName: dzszxyy
+    #生成秘钥后填在这边即可
+    secret: DBXCY64ZHQ3QOPRD
+    #谷歌验证码，如果医院不想使用谷歌验证软件，可以在这边填写默认值（不建议使用默认值的方式）
+    passWord:
+    #是否限制前端汇总时间的 0否 1是 默认1
+    isDefault: 1
+
+#页面操作按钮展示参数 0展示所有 1不展示冲正 2不展示退费 3不展示财务调账
+#默认 1 不展示冲正
+Page:
+    operationButton: 1
+
+#几方汇总的判断参数 3三方汇总 2两方汇总
+#默认使用 3三方汇总
+several:
+    parties: 3
+
+#Excel文件保存路径（暂未使用）
+file:
+    path: E://BillExcel
+
+ChannelWXConfig:
+        # 退款URL
+        refundUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
+        # 公众号AppId
+        subAppId: wx7a3b905d2ba91ec1
+        # 子商户ID
+        subMerchantId: 1310478001
+        # 父商户秘钥
+        parentMerchantKey: 12345678123456781234567812345678
+        # 父商户AppId
+        parentAppId: wxd6507cf4c191b6a9
+        # 父商户Id
+        parentMerchantId: 1235595402
+        # 退款证书
+        certPath: c:\apiclient_cert.p12
+        notifyUrl:
+
+ChannelZFBConfig:
+        # 支付宝网关
+        alipayGateWay: https://openapi.alipay.com/gateway.do
+        # 支付宝AppId
+        appId: 2016062001535498
+        # 应用私钥
+        privateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpermH5b59VJ5lYlTFH4eQ4b35Kbpja4ACrHK1k63BGdNESs1DLvWk04LVWU00QjG3JgSG86Ttma+NLrdQ5CejJuTSlyDvjZxP2oxENAXSK3V5cqDIaloShy6WEpDDX1IOC38gqM3h45poVh3a8QtLqOLTedEWCrheTE7lFe2UtWmClI10fZZetHCLCz061SjUwGk0tKww79TOUBv6RwnHike6dE8lElRME1GHQiXRZHQdG5XEdcJeYjTY1mp2sEt5LJUfLi51/EhGE33t6Fwd7NNT1GtWlkTmqwKOaqBNABvGbsjj/fBDtkzth8DkbFPgXSzYb/QdBLap/IRHDnP7AgMBAAECggEAWD1nn9QEjCikl9DMph22bb67NKF/RAhSjBHRX6zWSLXzg5kWqiYnC3x8oCxwwAa+78bBkKoGcxcTigSKuXkxEgdMGEFLiq5GdmUpptEXPsgVz/fYssB8ySzNGqHr8W0NwfZGaHC7USM5350Gylm6Mdhq0QSZ0koemCpO4YO7QTMgsYLL31bioazGfFDsE7QLmfQXPCUFYZbsM3Me7Jzqs1FL0jWF8ZiyRLMFxIP8hrA3SUZARxdGwAQn2YOM8P7izlqZ6FkkkJ6yYbj/bJPHRHxKYheo9pPGHZVKKqkTAopJkCdODc1u2/H6fBpOTFhoUho2CeTliQ4ABKf3XTZGIQKBgQDp6Ls7rAxo7vNxDkPKClp7V6BjgFUAJIn3D2uE3k8BASUD7B/zRC6wWQCp4UyKfNGi1+asDWvFdEUha6qwLAUmATvYkRp74vyNDLv/S42KamX0EdnvZONQoJL6T+7wKDIVnUEwxmCS6eb1BHHj5zLRVexBeU3iqn+jbtTQWtriQwKBgQC5fENN5Up+ry81WNyS80IKAm6BIkDXI15GdnBftn3LOQidlaFwN4IYE900IN33UiMbBg3fk5nAetCYtAOKe1Dkk+JUbaSvEJif5ZLYhGkqQjpACXgocIuuU01/MF6BfwUfIDavh7gCL2ohro9e3g3TTwwhQPN3iqa8/hW94IuX6QKBgEcWCJjY76iQPgG00Rs8zETB26eBn9N8R0WDNSzbFu16OJKZlxgqN3o2gkIei1FnH5q6vIq7RW5rqHrAqs4BgssLAvINHxxZXmFLZnLutiRDs5paNn5Pjdm6AxD5a+cmgBobgW1eTIk5dowt/qLBZ6tAzp0TTX0+Ta4Qh7KOegjbAoGAMWs3L2jY2TnplQgQ9KIVRT9ym7s5lVhaBOIHfKjNiTiv3/R+57wSUEHynLHpEbzzl36ccaYMv+i47QaBLwM+ATiZg68WwoHkeC2dW0ykDFtK08byGawquw58xldnxo7GGY3mpAu/7e0eFM1Ca580Bcm4zJ9WftIVLKNxvX43EwkCgYBDsaBfNVqQsAtsqYDAtZZBIXpE6XkzYqbyY5LmFxqDu1lGbRYVhH2Yufjoks2fEMUCwvj089gq5mBsMFTJu7I0gReC9mHKREdx9JCZQcveOPyAurDu0HFFhUYC1qLHMxH8fH8Sj5eBwqMKNdpXFd7Ls4HxQ4cQmviyK89wBKJqRw==
+        # 应用公钥
+        publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk0MzD16JwwE50m7xbf3PW7GDMQ2t26GkKcIF23jI/8o/jPdELV8KLxVzjN32VFIP/ZoVafs2CAnuBoQ7BSYI878W9ISy4/WgfF4uBALZDQKdW6vamo0/rXybpBi2cPXC2BFClhMV2dYEdX6CutH2qy5ZK3OkDoVXvGmPgVmt6TaniJpjnEklPTL3anCHZtJYr+7GA34Aqs6hSe2xPcNMOmQzWNnmQn7rJ8kye3TLlFUuer6hQ1M9qNIG0g5WWOwgrDJXNaA1z+QDCrVYwFWUE8GxLm/gJYgaOFGNV9wieg2AraYS31m/gyzY9XHwBmbjXOzGSo6lpODj3X7KH0dRBwIDAQAB
+        # 支付宝公钥
+        alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAliAeBqVxouFCOBiEeGnaE9cuYxFCskrZyQkuFqOJjc2I56pEXq8QTBP8VRa2qqNnJp06GF38p28QbsRtql7Tt1BfJhHd+2KjfT41bt5+dxme1L1goZGxqz0p5wHZmP0PHJXH+7TaB+odUoE6oCW8l0hgj5QPr1aQGFa09ekpD1lgO2a6TFzPAwgnH9kGELK3lbsb0e1qadmu5zYIa4Ronir+8HRQVRaUpHtuUFr1Khp0BkDnSrrDNnV50eI2ECK0exrRwTSmXYmtkLjAYhMsG03EABKw3u/g1Jv1+eTVcdD4osa+9bsDd8piIwsXO9V0YalpGPqPGtE7GVNU2bIiKQIDAQAB
+        # 签名类型 默认RSA2 请根据支付宝生活窗的实际进行修改
+        signType: RSA2

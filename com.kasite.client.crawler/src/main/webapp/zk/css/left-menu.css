@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+/* left-menu.css created by zhaoboy 2014-1-20 */
+#sidebar {float:left;width:215px;background:#F5F5F5;overflow:auto;position:relative;/*margin-right:10px;*/}
+#sep-bar {width:2px;border-left:1px solid #DDD;border-right:1px solid #DDD;cursor:pointer;position:absolute;right:0;top:0;background:#FFF;}
+#sep-bar:hover {background:#EEE;}
+#switch {position:absolute;left:-1px;height:4px;width:4px;padding:23px 0;background:#36AAF8;text-align:center;}
+#switch span.left {display:block;width:4px;height:4px;background:url(../images/bar-switch-left.png) center center no-repeat;}
+#switch span.right {display:block;width:4px;height:4px;background:url(../images/bar-switch-right.png) center center no-repeat;}
+
+ul.left-nav li.first-level {margin:0;padding:10px 0;border-bottom:1px solid #DDD;word-break:break-all;}
+ul.left-nav li.first-level.selected ,ul.left-nav li.first-level:hover {background:#EEE;}
+ul.left-nav li.first-level span {padding-left:15px;font-size:14px !important;padding-right:20px;display:block;}
+ul.left-nav li.first-level span a {color:#000;text-decoration:none;font-size:14px !important;display:block;}
+ul.left-nav li.first-level span.open-list {background:url(../images/left_menu_down.png) 178px 7px no-repeat;cursor:pointer;}
+ul.left-nav li.first-level span.close-list {background:url(../images/left_menu_left.png) 180px 5px no-repeat;cursor:pointer;}
+ul.left-sub-nav {margin:18px 0 0 0;display:none;} 
+ul.left-sub-nav li {height:30px;line-height:30px;padding-left:30px;padding-right:20px;}
+ul.left-sub-nav li:hover,ul.left-sub-nav li.selected  {background:#DDD;} 
+ul.left-sub-nav li a {color:#333;text-decoration:none;}
+ul.left-sub-nav li:hover a ,ul.left-sub-nav li.selected a  {color:#333;} 

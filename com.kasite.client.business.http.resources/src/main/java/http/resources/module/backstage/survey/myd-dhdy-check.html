@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>我的问卷</title>
+        <script type="text/javascript" src="../commons/js/survey-all.js"></script>
+        <script type="text/javascript" src="./js/myd-dhdy-check.js"></script>	 
+	</head>
+    </head>
+    <body>
+    <div class=" clearfix">
+            <div class="main-tit"><h2>选择问卷</h2></div>
+            <div class="p20">
+<!--                <div class="pl20 f12 c-org"><i class="icon icon-light"></i>电话调研的问卷，在提交后至调研结束前，都不可修改、删除</div>-->
+                <div class="mt15">
+                    <table class="tb tb-hover" width="100%" id="tableShow">
+                        <tr>
+                            <th width="33%">问卷标题</th>
+                            <th width="33%">创建时间</th>
+                            <th width="33%">操作</th>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td><label class="valign-m-chk"><input type="radio" name="dhdy" value="1" /><span>测试问题问题问题</span></label></td>-->
+<!--                            <td>2015-01-01 10:10</td>-->
+<!--                            <td class="td-act"><a href="javascript:;"><i class="icon icon-preview"></i>预览</a></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td><label class="valign-m-chk"><input type="radio" name="dhdy"  value="2"/><span>测试问题问题问题</span></label></td>-->
+<!--                            <td>2015-01-01 10:10</td>-->
+<!--                            <td class="td-act"><a href="javascript:;"><i class="icon icon-preview"></i>预览</a></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td><label class="valign-m-chk"><input type="radio" name="dhdy" value="3" /><span>测试问题问题问题</span></label></td>-->
+<!--                            <td>2015-01-01 10:10</td>-->
+<!--                            <td class="td-act"><a href="javascript:;"><i class="icon icon-preview"></i>预览</a></td>-->
+<!--                        </tr>-->
+                        <td colspan="3">
+								<div class="pager_container">
+									<input id="pagenumber" name="pagenumber" type="hidden"
+										value="1" />
+									<input id="pagesize" name="pagesize" value="10" type="hidden" />
+									<input id="defaultsize" name="defaultsize" value="10"
+										type="hidden" />
+									<div id="pager" class='pager'></div>
+								</div>
+							</td>
+            </tr>
+                    </table>
+                </div>
+                <div class="t-center mt30"><input type="button" class="btn mr20" onclick="judgeCheckVal();" value="下一步" /><input type="button" class="btn btn-gray" onclick="window.history.back(-1);" value="取消" /></div>
+            </div>
+    </div>
+<script type="text/javascript">
+</script>
+    </body>
+</html>

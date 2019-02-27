@@ -1,0 +1,419 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">  
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta content="always" name="referrer">
+		<title>区域医疗集中监管系统</title>
+		<link rel="stylesheet" href="../css/layout-popup.css" type="text/css"/>
+		<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="../js/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.busy.min.js"></script>
+		<script type="text/javascript" src="../js/realesoft.js"></script> 
+		<script type="text/javascript" src="../js/general.js"></script>
+		<script type="text/javascript" src="../js/Validform_v5.0.js"></script>
+		<script type="text/javascript" src="../js/jquery-ui-1.9m7.js"></script>
+		<script type="text/javascript" src="../js/jquery.uniform.js"></script>
+		<script type="text/javascript" src="../js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.mCustomScrollbar.js"></script>
+		<script type="text/javascript" src="../js/jquery.pagination.js"></script>
+		<script type="text/javascript" src="../js/jquery.spin.js"></script>
+		<script type="text/javascript" src="../js/jquery.bottomTipbar.js"></script>
+		
+		<link rel="stylesheet" href="../css/general.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/pagination.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/common.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/jquery-ui.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/Validform.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/jquery.mCustomScrollbar.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/widget.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/uniform.default.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/plugins.css" type="text/css"/>
+	</head>
+	<style>
+	#mask {display:none;z-index:9999;position:absolute;left:0;top:0;background:#666;opacity:0.7;filter:Alpha(opacity=70)}
+	</style>
+	<script type="text/javascript">
+	// 百度富文本编辑器上传根目录
+    window.UEDITOR_HOME_URL = "/PMC/ueditor/";
+	    $(document).ready(function(){
+	    	//$( "button").button();
+	    	//$("input, textarea, select, button").uniform();
+	    	$("input, textarea, select").uniform();
+	    	//$( "#body" ).tooltip();
+	    	wh = $(window).height();
+			ww = $(window).width();
+			dh = $(document).height();
+			if(wh > dh) hh = wh;
+			if(wh <= dh) hh = dh;
+		  	$('#mask').width(ww).height(hh).spin({color: '#fff'});
+	    });
+	    $(window).load(function(){
+	    	$("#container").css("visibility","visible");
+	    });
+	</script>
+	<body>
+<div id="container" style="visibility: visible;">
+		   <table width="100%" height="100%" cellspacing="0" cellpadding="0" style="padding: 0px;word-break:break-all">
+				<tbody><tr id="containerLayoutUl">
+					
+					<td valign="top" style="padding: 0px;" class="main-column"><div id="mainContainer" class="divContainer">
+
+
+
+
+
+	
+<div id="f8474f62-08fc-4752-9036-82dc39b7634a" class="widget" style="height: 600px;">
+	<div class="widget-head">
+		<span class="icon-edit"></span>
+		<h2>添加/更新设备</h2>
+	</div>
+
+	<form id="organizationHospitalForm" name="organizationHospitalForm" class="form-horizontal" action="/PMC/deviceManage/form-action" method="post">
+		<div class="widget">
+			<div class="widget row-fluid">
+				<div class="well">
+					<div class="control-group">
+						<label class="control-label" for="hospitalCode">
+						所属机构
+						<span class="required">*</span>
+						</label>
+						<div class="controls">
+							 <div class="uniSelector" style=""><input type="hidden" name="organizationId" value="8730931" id="organizationId"><input type="text" class="textfield text" readonly="true" datatype="*" nullmsg="所属机构不能为空" name="organizationName" value="上饶市" title="上饶市" id="organizationName" style="width:160.0px;margin-right:43px;"><a class="uniSelectorIcon" onclick="callJquerySelector('/PMC/app/plugins/platform/pages/organization/single-selector',document.organizationHospitalForm, '400', '500',
+					 		selectOrganization,'机构选择器');" style="left:142.0px;*left:142.0px;"></a><div style="float:left;display:block"><a class="uniSelectorIcon" onclick="callJquerySelector('/PMC/app/plugins/platform/pages/organization/single-selector',document.organizationHospitalForm, '400', '500',
+					 		selectOrganization,'机构选择器');" style="left:142.0px;*left:142.0px;"></a><a class="uniSelectorIcon_delete_img" onclick="clearOrganization(document.organizationHospitalForm)" style="left:170.0px;"></a><a class="uniSelectorIcon_delete" style="left:183.0px" onclick="clearOrganization(document.organizationHospitalForm)">清除</a></div></div>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="name">
+						设备名称
+						<span class="required">*</span>
+						</label>
+						<div class="controls">
+						    <!-- mod by wangn  2015-08-25 去掉对长度和类型的限制。
+						    <input id="name" name="name" readonly="readonly" type="text" value="上饶市" dataType="allowminundlimt3-32" errormsg="请输入3~32个字符，允许下划线和减号，不允许有空格，不能包含^./^&lt;&gt;!@#$%&amp;*()=+|\{}[]" nullmsg="设备名称不能为空"/>-->
+							<input id="name" name="name" type="text" value="上饶市" datatype="allowminundlimt2-32" errormsg="请输入2~32个字符，不能包含空格^./^<>!@#$%&amp;*()=+|\{}[]" nullmsg="设备名称不能为空" class="text">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="dataNodeId">
+						设备标识
+						<span class="required">*</span>
+						</label>
+						<div class="controls">
+							<input id="dataNodeId" name="dataNodeId" type="text" value="" datatype="allowminundlimt1-32" errormsg="请输入1~32个字符，允许下划线和减号，不允许有空格，不能包含^./^<>!@#$%&amp;*()=+|\{}[]" nullmsg="设备标识不能为空" class="text">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="dataNodeId">
+						坐标
+						<span class="required">*</span>
+						</label>
+						<div class="row-fluid" style="margin-left: 20%;">
+							<div class="span3">
+								<div class="controls" style="margin-left: 0px;">
+							 		<input id="lon" name="lon" placeholder="经度" type="text" value="" datatype="float" errormsg="经度只能为浮点类型数字" nullmsg="经度不能为空" class="text">
+								</div>
+							</div>
+							
+							<div class="span3">
+								<div class="controls" style="margin-left: 0px;">
+									<input id="lat" name="lat" placeholder="纬度 " type="text" value="" datatype="float" errormsg="纬度只能为浮点类型数字" nullmsg="纬度不能为空" class="text">
+									</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">
+				保存
+			</button>
+			<a class="btn" href="./p-0-equipmentmanager-1.html">
+				返回
+			</a>
+			<input id="encryptId" name="encryptId" type="hidden" value="">
+			<input type="hidden" id="searchOrganizationId" name="searchOrganizationId" value="8730931">
+		</div>
+	</form>
+</div>
+
+<script>
+
+function clearOrganization(form){
+	form.organizationId.value='';
+	form.organizationName.value='';
+}
+
+function selectOrganization(form,ra)
+{
+	//alert(ra);
+	if(typeof(ra) == 'object'){		
+
+		var organizationName = form.organizationName;
+		var organizationId = form.organizationId;
+
+		organizationId.value=ra[0];	
+		organizationName.value=ra[1];	
+		$('#name').val(ra[1]);
+		//form.name = ra[1];
+	}
+}
+
+var isCheck = false;
+
+$(document).ready(function(){
+	
+	$( "#check-hospitalCode-error-dialog-confirmf8474f62-08fc-4752-9036-82dc39b7634a" ).dialog({
+		resizable: false,
+		height:160,
+		autoOpen: false,
+		modal: true,
+		show: "blind",
+		hide: "explode",
+		buttons: {
+			"确定": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+
+	$("#organizationHospitalForm").Validform({
+		tiptype:2,
+		showAllError:true,
+		beforeCheck:function(form){
+			var dataNodeId = $("input#dataNodeId").val();
+			if(dataNodeId != null && dataNodeId != ""){
+			  $.ajax({
+					 async : false,
+					 cache:false,
+					 type: 'POST',
+					 dataType : "json",
+					 data:"hospitalCode=" + $("input#dataNodeId").val() +"&id=",
+					 url: "/PMC/deviceManage/check-action",
+					 error: function () {
+						 requestError();
+						 return false;
+					 },
+					 success:function(data){ 
+						 var result = eval("(" + data + ")");
+						 if(result.result == "ERROR")
+						{
+							 isCheck =  false;
+							 $( "#check-hospitalCode-error-dialog-confirmf8474f62-08fc-4752-9036-82dc39b7634a" ).dialog( "open" );
+						}
+						 else{
+							
+							 isCheck = true;
+							 
+						}
+					 	
+					 }
+				});
+			  
+			  return isCheck;
+		}
+	}});
+	
+});
+
+</script></div></td>
+					
+				</tr>
+			</tbody></table>
+		</div>
+<script>
+
+function clearOrganization(form){
+	form.organizationId.value='';
+	form.organizationName.value='';
+}
+
+function selectOrganization(form,ra)
+{
+	//alert(ra);
+	if(typeof(ra) == 'object'){		
+
+		var organizationName = form.organizationName;
+		var organizationId = form.organizationId;
+
+		organizationId.value=ra[0];	
+		organizationName.value=ra[1];	
+		$('#name').val(ra[1]);
+		//form.name = ra[1];
+	}
+}
+
+var isCheck = false;
+
+$(document).ready(function(){
+	
+	$( "#check-hospitalCode-error-dialog-confirmf8474f62-08fc-4752-9036-82dc39b7634a" ).dialog({
+		resizable: false,
+		height:160,
+		autoOpen: false,
+		modal: true,
+		show: "blind",
+		hide: "explode",
+		buttons: {
+			"确定": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+
+	$("#organizationHospitalForm").Validform({
+		tiptype:2,
+		showAllError:true,
+		beforeCheck:function(form){
+			var dataNodeId = $("input#dataNodeId").val();
+			if(dataNodeId != null && dataNodeId != ""){
+			  $.ajax({
+					 async : false,
+					 cache:false,
+					 type: 'POST',
+					 dataType : "json",
+					 data:"hospitalCode=" + $("input#dataNodeId").val() +"&id=23",
+					 url: "/PMC/deviceManage/check-action",
+					 error: function () {
+						 requestError();
+						 return false;
+					 },
+					 success:function(data){ 
+						 var result = eval("(" + data + ")");
+						 if(result.result == "ERROR")
+						{
+							 isCheck =  false;
+							 $( "#check-hospitalCode-error-dialog-confirmf8474f62-08fc-4752-9036-82dc39b7634a" ).dialog( "open" );
+						}
+						 else{
+							
+							 isCheck = true;
+							 
+						}
+					 	
+					 }
+				});
+			  
+			  return isCheck;
+		}
+	}});
+	
+});
+
+</script></div></td>
+					
+				</tr>
+			</tbody></table>
+		</div>
+<script type="text/javascript">
+
+var deleteDeviceId = -1;
+
+function addDevice()
+{
+	document.location.href = '/PMC/app/plugins/deviceManage/pages/form?searchOrganizationId=8730931';
+}
+
+function deleteDevice(id)
+{
+	deleteDeviceId = id;
+	$( "#deleteDevice-dialog-confirm4be3265b-3457-452f-b9ae-ae55bb39a43b" ).dialog( "open" );
+	return false;
+}
+
+$(document).ready(function(){
+	
+	$( "#deleteDevice-dialog-confirm4be3265b-3457-452f-b9ae-ae55bb39a43b" ).dialog({
+		resizable: false,
+		height:160,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"删除": function() {
+				document.location.href = '/PMC/deviceManage/delete-action?deviceId='+ deleteDeviceId + '&searchOrganizationId=8730931';
+				$( this ).dialog( "close" );
+			},
+			"取消": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	
+	$("#pagination4be3265b-3457-452f-b9ae-ae55bb39a43b").pagination(19, {
+        items_per_page: 10,
+        current_page: 1-1,
+        num_display_entries:3,
+        num_edge_entries:2,
+        prev_text:"前一页",
+		next_text:"下一页",
+        callback: function(pageNo, container){
+            if((pageNo+1)!=1) {
+				document.location.href='/PMC/app/plugins/deviceManage/pages/deviceList?searchOrganizationId=8730931&pageNo=' + (pageNo+1);
+            }
+            return false;
+        }
+	});
+});
+</script></div></td>
+					
+				</tr>
+			</table>
+		</div>
+		
+		<div id="request-error-dialog-confirm" title="请求失败" style="display: none;">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>向服务器请求数据失败,请重试一次.</p>
+		</div>
+		<div id="request-success-dialog-confirm" title="成功" style="display: none;">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>数据更新成功.</p>
+		</div>
+		<div id="mask"></div>
+	</body>
+</html>
+
+<script language="javascript">
+		
+	$(document).ready(function(){
+		$( "#request-error-dialog-confirm" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		$( "#request-success-dialog-confirm" ).dialog({
+			resizable: false,
+			height:160,
+			autoOpen: false,
+			modal: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {
+				"确定": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		
+	});
+	
+</script>

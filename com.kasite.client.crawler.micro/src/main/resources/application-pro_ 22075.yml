@@ -1,0 +1,20 @@
+#卡斯特配置中心连接配置。默认是不开启，读取本地配置文件 数据采集子系统
+kasite:
+     #是否开启中心连接
+    isConnectionKastieCenter: true
+    #配置中心地址 如果不开启连接中心的时候可以注释 中心的url地址
+    centerUrl:  https://verification.kasitesoft.com,http://verification2.kasitesoft.com
+    #配置中心申请的appId（必须）:仙桃市第一人民医院
+    appId: KASTIE-CLIENT-CRAWLER.MICRO.22075
+    #配置中心申请的密码（必须）
+    appSecret: 0faeab895b
+    #组织机构代码（必须）
+    orgCode:  22075
+    #本地保存配置文件的目录（必须）
+    configPath: /Users/daiyanshui/Desktop/Config
+    #中心获取的配置 公钥 （必须）
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnuUqkmErY3uNrD/jQLYIO3IomJPr2SMLaFxmBg6ZU5xkr7Qo1dkve26UlGCJ4tBp/aW6Lla3cBzyf5GU7zyLECzVgZRNzPFH/FtNz2/NVgl7FsbO+GX2dO7wFkGId3U5tACdYJ9H3kEYTWHlDiyQMndSeBTD96LLxmCYmHaTF9KqhKvPTSnHAQO1COmm3bpi0eQ1jvsiazkX/Jrdw0ggPv7WfuReAX8unpAI7W8haPg5bLDcvSmqxli8otPd3FRBVEhrzDt4Wi3Id0cf3KmYioApks6sTzXEn7hE9irmJXvcCAZx4/uXZD1hOZ/m6qrd6xiUsQ8OSjL8skyfVvE5gQIDAQAB
+    logfilezip:
+        - dirs: E:\wxEventLog
+          url: https://wechatcenter.kasitesoft.com/api/weixin/scan/wx53cf738a20d74bb5/upload.do
+          isupdate: true

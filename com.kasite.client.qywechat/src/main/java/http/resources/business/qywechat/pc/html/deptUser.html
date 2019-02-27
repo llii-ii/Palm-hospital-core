@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../js/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="../js/webCom1.0/component/treeView/css/zTreeStyle/zTreeStyle.css"/>
+		<title>人员选择</title>
+		<style type="text/css">
+			.tab-pane{
+				overflow: auto;
+				height: 380px;
+			}
+			.feed-element{
+				padding-bottom: 0!important;
+			}
+			.media-body{
+				padding-top:10px;
+			}
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="form-inline" style="min-width: auto;">
+			<div class="x-row">
+				<div class="x-row-cols " style="width: 60px;">
+					<label>搜索:</label>
+				</div>
+				<div class="x-row-cols " style="margin-left:60px;">
+					<input type="text" class="form-control" name="deptname" id="deptname" value="" onchange="getDeptUserList()"/>
+				</div>
+			</div>
+		</div>
+		
+		<p>
+			<div class="tabs-container">
+	            <!-- <ul class="nav nav-tabs">
+	                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"></a></li>
+	            </ul> -->
+	            <div class="tab-content">
+	                <div id="tab-1" class="tab-pane active">
+							<div class="x-row-cols " style="width: 50%;overflow: auto;">
+			                       		 <ul id="tree" class="ztree"></ul>
+							</div>
+							<div class="x-row-cols " style="margin-left:50%;overflow: auto;">
+								<table id="checkName" class="table table-hover table-mail">
+			                        <tbody>
+			                        
+			                        </tbody>
+			                    </table>
+							</div>
+	                </div>
+	            </div>
+	        </div>
+        </p>
+		
+		<p class="text-right">
+			<button type="button" onclick="cancel()" class="btn btn-default">取消</button>
+			<button type="button" onclick="ok()" class="btn btn-primary">确认</button>
+		</p>
+	</body>
+	<script src="../js/webCom1.0/component/dropDownTree/js/jquery.ztree.all.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="../../pc/js/jquery-1.9.1.min.js"></script> -->
+	<script type="text/javascript" src="../../common/js/base.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<script>
+	var arrIdList = [];        
+	var arrNameList = [];   
+	
+ 	$(function(){
+		getDeptUserList();
+	}); 
+		
+	 var zNodes;
+	 //获取部门、成员	
+	 function getDeptUserList(){
+		var apiData = {};	
+		apiData.id = "1";//根部门ID
+		apiData.wxkey = "1000002";//应用ID
+		apiData.deptName = $("#deptname").val()||'';
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryDepartment/callApi.do',param,function(jsons){
+			if (Commonjs.ListIsNotNull(jsons)) {
+            if (jsons.RespCode == 10000) {
+                if (Commonjs.ListIsNotNull(jsons.RespMessage)) {
+               		zNodes = JSON.parse(jsons.RespMessage);
+               		//初始化
+               		zTreeObj =$.fn.zTree.init($("#tree"), setting, zNodes);
+               		
+               		//勾选 之前已选中的部门、成员
+               		arrIdList.forEach(function(item,index){
+						//以d_开头的是部门 
+						if(item.length>2 && item.substring(0, 2) == "d_"){
+						    item=item.substring(2, item.length);
+						}
+						checkNode(item,true,false);
+					})
+                } else {
+                	myLayer.alert("无数据",3000);
+                }
+            } else {
+            	myLayer.alert('网络繁忙,请刷新后重试',3000);
+            }
+        } else {
+            //通信失败
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+        }
+		},{async:false});
+	} 
+	
+	//定义ztree的节点类--无用了
+	function ZtreeNode(id, pId, name,icon) {
+		this.id = id;
+		this.pId = pId;
+		this.name = name;
+		this.icon = icon
+	}
+			
+	//获取部门成员 --无用了
+	function getUserList(department){
+		var apiData = {};	
+		apiData.department = department;
+		apiData.wxkey = "1000002"
+		var param = {};
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		Commonjs.ajax('/wsgw/qyWeChat/QueryUser/callApi.do',param,function(jsons){
+			if (Commonjs.ListIsNotNull(jsons)) {
+            if (jsons.RespCode == 10000) {
+                if (Commonjs.ListIsNotNull(jsons.RespMessage)) {
+               		json = JSON.parse(jsons.RespMessage);
+               		if(json!=null){
+               			for(var i=0,l=json.length;i<l;i++){
+               				for(var j=0,k=json[i].department.length;j<k;j++){
+               					var childZNode = new ZtreeNode(json[i].userid, json[i].department[j], json[i].name,json[i].avatar); //构造子节点
+								var treeObj = $.fn.zTree.getZTreeObj("tree");//获取ztree对象
+								var parentZNode = treeObj.getNodeByParam("id", json[i].department[j], null); //获取父节点
+								//是否存在
+								//console.log(json[i].name);
+								var nodes = treeObj.getNodesByParam("id", json[i].userid, parentZNode);
+								if(nodes==null || nodes=="" || nodes==undefined){
+									//console.log("不存在，添加");
+									treeObj.addNodes(parentZNode, childZNode, true);
+								}
+								
+               				}
+						}
+               		}
+                } else {
+                	myLayer.alert("无数据",3000);
+                }
+            } else {
+            	myLayer.alert(jsons.RespMessage,3000);
+            }
+        } else {
+            //通信失败
+        	myLayer.alert('网络繁忙,请刷新后重试',3000);
+        }
+		},{async:false});
+	} 
+	
+	//配置数据	
+	var setting = {
+		check: {
+			enable: true,
+			//父子节点的关联关系
+			chkboxType:{ "Y" : "", "N" : "" }
+		},
+	    data: {
+	        simpleData: {
+	            enable: true,
+	            idKey: "id",
+	            pIdKey: "pId",
+	            rootPId: 0
+	        }
+	    },
+	    callback: {
+	    	//onCheck  事件回调函数
+			onCheck: zTreeOnCheck
+		}
+	};
+		
+	//onCheck  事件回调函数
+	function zTreeOnCheck(event, treeId, treeNode) {
+		checkNode(treeNode.id,treeNode.checked,false);
+		var tag = "";
+		if(treeNode.order!='undefined' && treeNode.order!=undefined){
+			tag="d_";
+		}
+	    if(treeNode.checked){
+		    var icon ="";
+		    if(treeNode.icon==undefined){
+		    	icon="../js/webCom1.0/img/dept.jpg";
+		    }else{
+		    	icon = treeNode.icon;
+		    }
+		    var $tr =
+			        '<tr id="tr_'+treeNode.id+'" class="read" onclick="removeTr(\''+treeNode.id+'\',\''+treeNode.name+'\',\''+treeNode.order+'\',this)">'
+	                     +'<td >'
+	                     	+'<div class="feed-element">'
+	                          +'<a href="#" class="pull-left">'
+	                              +'<img alt="image" style="width:28px;height:28px" src="'+icon+'">'
+	                          +'</a>'
+	                          +'<div class="media-body" id="name_'+treeNode.id+'" value="1111">'+treeNode.name+'</div>'
+	                      +'</div>'
+	                     +'</td>'
+	                 +'</tr>'
+			$("#checkName").append($tr);
+			//不存在 push
+			if($.inArray(tag+treeNode.id+"", arrIdList)<0){
+				arrIdList.push(tag+treeNode.id+"");
+				arrNameList.push(treeNode.name);
+			}
+		}else{
+			$("#tr_"+treeNode.id).remove();
+			arrIdList.splice($.inArray(tag+treeNode.id+"",arrIdList),1);
+			arrNameList.splice($.inArray(treeNode.name,arrNameList),1);
+		}
+		
+	};
+		
+	//删除TR
+	function removeTr(id,name,order,o){
+		o.remove();
+		//部门加d_前缀
+		var tag = "";
+		if(order!=undefined && order!='undefined'){
+			tag="d_";
+		}
+		//删除
+		arrIdList.splice($.inArray(tag+id+"",arrIdList),1);
+		arrNameList.splice($.inArray(name,arrNameList),1);
+		
+		checkNode(id,false,false);
+	}
+		
+	//勾选部门、成员  checked=是否勾选  callbackFlag=是否勾选回调
+	function checkNode(id,checked,callbackFlag){
+		var treeObj = $.fn.zTree.getZTreeObj("tree");
+		var nodes = treeObj.getNodesByParam("id", id, null);
+		//勾选
+		for(var k in nodes){
+			//无任何勾选联动操作
+			if(k==0){
+				treeObj.checkNode(nodes[k], checked, false,callbackFlag);
+			}else{
+				treeObj.checkNode(nodes[k], checked, false,false);
+			}	
+		}
+	}
+	
+	System.ready(function(){
+		//获取父级的值
+		var checksId = window.localStorage.getItem('checksId')||'';
+		var checksName = window.localStorage.getItem('checksName')||'';
+		//回显选中的值
+		var nameArray = checksName.split(',');
+		checksId.split(',').forEach(function(item,index){
+			//保存已选中 到数组
+			if($.inArray(item, arrIdList)<0){
+				arrIdList.push(item+"");
+				arrNameList.push(nameArray[index]);
+			}
+			//部门 去前缀
+			if(item.substring(0, 2) == "d_"){
+			    item=item.substring(2, item.length);
+			}
+			checkNode(item,true,true);
+		})
+		
+		//清空
+		$(document).on('click','.search-choice',function(){
+			var _this = $(this);
+			_this.remove();
+		})
+	}) 
+	
+	function cancel(){
+		System.closeThisWindow();
+	}
+		
+	//确认 从数组中返回值
+	function ok(){
+		var checksId="";
+		var checksName="";
+		//遍历数组
+		for(var k in arrIdList){
+			//去重
+			if(checksId.indexOf(arrIdList[k]+",")==-1 && arrIdList[k]!=''){
+				checksId += arrIdList[k]+",";
+           			checksName += arrNameList[k]+",";
+			}
+           } 
+           checksId=checksId.substr(0, checksId.length - 1);
+           checksName=checksName.substr(0, checksName.length - 1); 
+		parent.ccResult(checksId,checksName,window.localStorage.getItem('checksType'));
+		cancel();
+	}
+</script>
+</html>

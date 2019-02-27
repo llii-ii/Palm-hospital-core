@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>kasite</groupId>
+		<artifactId>com.kasite.core</artifactId>
+		<version>1.0.0-RELEASES</version>
+	</parent>
+	<artifactId>com.kasite.client.crawler.micro</artifactId>
+	<name>com.kasite.client.crawler.micro</name>
+	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+	<build>
+		<!-- spring boot 打成可运行jar包必要配置 打包命令 clean package spring-boot:repackage
+			-Dmaven.test.skip=true -->
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.kasite.KasiteApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/**</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<dependencies>
+		<!--压缩 、解压工具包 -->
+		<dependency>
+			<groupId>net.lingala.zip4j</groupId>
+			<artifactId>zip4j</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>kasite</groupId>
+			<artifactId>com.kasite.core.log</artifactId>
+			<version>1.0.0-RELEASES</version>
+		</dependency>
+		<dependency>
+			<groupId>kasite</groupId>
+			<artifactId>com.kasite.core.db</artifactId>
+			<version>1.0.0-RELEASES</version>
+		</dependency>
+
+		<!-- json 依赖jar-->
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>ca.orchard-labs</groupId>
+			<artifactId>morph</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>com.springsource.org.apache.commons.httpclient</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.lispcast</groupId>
+			<artifactId>org.apache.commons.lang</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<!-- springBoot Admin-->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-client</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+	</dependencies>
+</project>

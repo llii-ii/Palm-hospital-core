@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+	    <!-- <link rel="shortcut icon" href="../../../../js/pc/webCom1.0/css/skin/zhengxie/favicon.ico">  -->
+    	<link href="../../js/pc/webCom1.0/component/table/css/bootstrap-table.css" rel="stylesheet">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+		<title>打印邮寄信息</title>
+		<style type="text/css">
+			/* 清除浮 动*/
+			.fix { *zoom: 1; }
+			.fix:after { display: table; content: ''; clear: both; }
+			.x-row{
+			    overflow: hidden;
+			}
+			.x-row-cols{
+			    display: block;
+			    float: left;
+			    height: 100%;
+			}
+			.dr .x-row-cols{
+			    display: block;
+			    float: right;
+			    height: 100%;
+			}
+			.x-row-cols:last-child{
+			    float: none;
+			}
+			.x-row-cols.last-child{
+			    float: none;
+			}
+			.x-row.boxflex{
+			    display: -webkit-box;
+			    display: -moz-box;
+			    display: -o-box;
+			    display: box;
+			    float: none;
+			    width: 100%;
+			}
+			.boxflex .x-row-cols{
+			    display: block;
+			    -webkit-box-flex: 1;
+			    -moz-box-flex: 1;
+			    box-flex: 1;
+			    float: none;
+			    width:100%;
+			}
+			.cons{
+				width:490px;
+				margin:0 auto;
+			}
+			.tit{
+				font-size:34px;
+				font-weight:bold;
+				color:#333;
+				text-align:center;
+				margin-bottom:74px;
+			}
+			.fl{
+				border-bottom:1px solid #333;
+				border-left:1px solid #333;
+				border-right:1px solid #333;
+			}
+			.fl div{
+				float:left;
+				font-size:16px;
+				color:#333;
+				height:32px;
+				line-height:32px;
+			}
+			.hh{
+				font-size:16px;
+				color:#333;
+				padding-top:20px;
+				padding-bottom:20px;
+				border-bottom:1px solid #333;
+				border-left:1px solid #333;
+				border-right:1px solid #333;
+			}
+			.hh div{
+				float:left;
+			}
+			.fix div:first-child{
+				margin-left:6px;
+			}
+			@page {
+		      size: auto;  /* auto is the initial value */
+		      margin: 0mm; /* this affects the margin in the printer settings */
+		    }
+		</style>
+	</head>
+	<body class="children-page">
+		<div class="wrapper-content">
+			<div class="stip-top">
+				<!--打印邮寄信息-->
+				<div class="cons" >
+					<p class="tit">病例复印邮寄信息单</p>
+					<div class="fix fl" style="border-top:1px solid #333;">
+						<div>邮寄单号：</div>
+						<div id="CN"></div>
+					</div>
+					<div class="fix fl">
+						<div>邮寄公司：</div>
+						<div id="CC"></div>
+					</div>
+					<div class="fix fl">
+						<div>收件人姓名：</div>
+						<div id="name"></div>
+					</div>
+					<div class="fix fl">
+						<div>联系电话：</div>
+						<div id="telephone"></div>
+					</div>
+					<div class="fix hh">
+						<div>收件地址：</div>
+						<div id="address"></div>
+					</div>
+				</div>
+				<div style="text-align: center;padding-top: 15px;">
+	        		<button id="pbtn" style="display: none;" class="btn" type="button" onclick="p()">打印</button>
+	        		<button id="return" style="display: none;" class="btn" type="button" onclick="r()">返回</button>
+        		</div>
+        	</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../../../common/js/base.js"></script>
+<script type="text/javascript" src="../../../../common/js/common.js"></script>
+<script>
+	$(document).ready(function(){
+		var name = parseNone(decodeURI(Commonjs.getUrlParam("name")));
+		var address = parseNone(decodeURI(Commonjs.getUrlParam("address")));
+		var CC = parseNone(decodeURI(Commonjs.getUrlParam("CC")));
+		var CN = Commonjs.getUrlParam("CN");
+		var telephone = Commonjs.getUrlParam("telephone");
+		
+		$("#CN").text(CN);
+		$("#CC").text(CC);
+		$("#name").text(name);
+		$("#address").text(address);
+		$("#telephone").text(telephone);
+		
+		setTimeout(function(){
+			window.print();
+			setTimeout(function(){
+				$('#pbtn').show();
+				$('#return').show();
+			},300)
+		},1000)
+	})
+	
+	function p(){
+		$('#pbtn').hide();
+		$('#return').hide();
+		window.print();
+		setTimeout(function(){
+			$('#pbtn').show();
+			$('#return').show();
+		},300)
+	}
+	
+	function r(){
+		window.location.href = 'copy.html';
+	}	
+	
+	//将需要的值由null undefined 转成''
+	function parseNone(value){
+		if(value == null || value == undefined || value == "null"){
+			return '';
+		}else{
+			return value;
+		}
+	}
+</script>

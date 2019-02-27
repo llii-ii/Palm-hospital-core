@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>单笔账单查询</title>
+    <link rel="stylesheet" href="../../commons/bill/cross/css/cross.css" type="text/css" />
+    <link rel="stylesheet" href="../../commons/bill/cross/css/cross.ui.css" type="text/css" />
+    <link rel="stylesheet" href="../../commons/bill/css/page.css" type="text/css" />
+    <link rel="stylesheet" href="../../commons/bill/widget/artDialog/4.1.7/css/artDialog.min.css" type="text/css" />
+    <script type="text/javascript" src="../../commons/bill/widget/artDialog/4.1.7/js/artDialog.min.js"></script>
+    <script type="text/javascript" src="../../commons/bill/widget/echarts/js/echarts.min.js"></script>    
+	<script type="text/javascript" src="../../commons/js/business-all.js"></script>	
+    <script type="text/javascript" src="../../commons/bill/cross/js/cross.ui.js"></script>
+    <script type="text/javascript" src="../js/singleBill.js"></script>
+</head>
+<body>
+<div class="container-wrap"><div class="comtop"><i class="cicon icon-duizhang"></i>对账管理</div>
+<div class="scroll-pane jspScrollable" style="top: 0px;">
+    <div class="ptb20 plr25">
+        <div class="tabs tabs-four">
+            <div class="tabs-hd clearfix">
+                 <a href="everyDayBill.html" ><span>每日账单</span></a>
+                 <a href="dailyBillDetail.html" ><span>账单明细</span></a>
+                 <!-- <a href="singleBill.html" class="curr"><span>单笔查询</span></a>
+                 <a href="billBriefing.html"><span>财务简报</span></a> -->
+            </div>
+            <div class="tabs-bd p30">
+                <div class="form-layout form-inline">
+                    <div class="control-group">
+                        <label class="control-label mr10">订单类型</label>
+                        <div class="control-form">
+                            <div class="form-select">
+                                <select class="select select-w125" id="selOrderType">
+                                    <option value="">-请选择-</option>
+                                    <option value="1">His</option>
+                                    <option value="2">全流程</option>
+                                    <option value="3">微信</option>
+                                </select>
+                            </div>
+                            <input type="text" id="allOrderId" placeholder="请输入订单号" class="input-text input-text-w200 ml10">
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="loadData();" class="c-btn c-btn-gray">查询</a>
+                </div>
+                <div class="mt20">
+                    <table id="billDateTable" class="cell-border hover c-t-center c-f14" cellspacing="0" width="100%">
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+</div>
+<link rel="stylesheet" href="../../commons/bill/widget/datatables/1.10.10/css/jquery.dataTables.min.css" type="text/css" />
+<script type="text/javascript" src="../../commons/bill/widget/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../commons/bill/widget/echarts/js/echarts.min.js"></script> 
+</body>
+</html>

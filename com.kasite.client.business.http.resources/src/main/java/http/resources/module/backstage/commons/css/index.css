@@ -1,0 +1,57 @@
+.summary-num { margin-top: 4px; white-space: nowrap; overflow:hidden; text-overflow:ellipsis; font-family: arial; font-size:30px; line-height: 1.2;}
+
+.sec { margin-bottom: 20px; background-color:#fff; border:1px solid #e6e6e6; -webkit-box-shadow: 0px 0px 5px 1px rgba(100,100,100,0.1); box-shadow: 0px 0px 5px 1px rgba(100,100,100,0.1);}
+.sec-header:after { content: ""; display:table; line-height: 0; clear:both;}
+.sec-header { padding:10px 20px; height: 28px; line-height: 28px; color:#222; *zoom:1;}
+.sec-header h5 { display: inline; float: left; font-size:16px;}
+.sec-con {}
+
+.summary-sec .sec-header { background-color:#fafafa; border-bottom:1px solid #e1e1e1;}
+.summary-sec .summary-tab { display: inline; float: left; margin-top: 7px;}
+.summary-sec .summary-tab li { display: inline; float: left; padding:0 8px; border-right:1px solid #e1e1e1; line-height: 1.2; font-size:12px;}
+.summary-sec .summary-tab li.last { border-right:none;}
+.summary-sec .summary-tab li a:link, .summary-sec .summary-tab li a:visited { color:#555;}
+.summary-sec .summary-tab li.current a:link, .summary-sec .summary-tab li.current a:visited { color:#2a68bf;}
+.table-summary td { padding:0; border-right:1px solid #e1e1e1;}
+.table-summary td.last { border-right:none;}
+.tdbg { background:url(../images/index/tdbg.jpg) repeat-x;}
+
+.circlebg { display:inline-block; width:28px; height: 28px; background:url(../images/index/circlebg.jpg) no-repeat; line-height: 28px; text-align: center; font-size:12px; color:#fff; cursor: pointer; *display:inline; *zoom:1;}
+.circlebg-blue { background-position: 0 0;}
+.circlebg-blue.t-sortby { background-position: -28px 0;}
+.circlebg-red { background-position: -56px 0;}
+
+.trend-tab-wrap {padding:10px 20px;}
+.trend-tab { display:inline; float: left;}
+.trend-tab li { display:inline; float: left; margin-right: 5px;}
+.trend-tab li a { display:inline; float: left; min-width: 74px; height: 20px; padding:7px; background-color:#fafafa; line-height: 20px; border:1px dashed #cbcbcb; white-space: nowrap; text-align: center; _width: 74px;}
+.trend-tab li a:link, .trend-tab li a:visited { color:#222;}
+.trend-tab li.current a, .trend-tab li a:hover { background-color:#2a68bf; border:1px solid #2a68bf; color:#fff;}
+.trend-tab li.current a:link, .trend-tab li.current a:visited { color:#fff;}
+.trend-tab-con { display:none; padding:20px; min-height: 350px; _height:350px;}
+
+.trend-detail { left: 100%; top:0; width: 100%; height: 100%; background-color:#fff; z-index: 100;}
+.btn-showdetail, .btn-hidedetail { position: absolute; top:188px; display:block; width:40px; height: 96px; background:url(../images/index/data-ctrl.png) no-repeat; text-indent: -100%; overflow: hidden; opacity:.9;}
+.btn-showdetail:hover, .btn-hidedetail:hover { opacity:1;}
+.btn-showdetail { right:0; background-position: 0 0; z-index: 99;}
+.btn-hidedetail { left:0; background-position: -40px 0; z-index: 101;}
+
+.date-range { display:inline; float: right; text-align: right; position: relative; top:-55px;}
+.date-range li { display: inline; float: left; padding:0 8px; border-right:1px solid #e1e1e1; line-height: 1.2; font-size:12px;}
+.date-range li.last { border-right:none;}
+.date-range li a:link, .date-range li a:visited { color:#555;}
+.date-range li.current a:link, .date-range li.current a:visited { color:#2a68bf;}
+
+/*小提示窗*/
+.pop-info { position:absolute; padding:10px; background-color: #fff; border:1px solid #e5e5e5; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+.pop-info .pop-info-arr, .pop-info .pop-info-arr1 { position:absolute; display:block; width:0; height:0; border-width: 6px; line-height: 0;}
+.btn-closepopinfo { position: absolute; right:5px; top:3px; line-height: 1; font-size:12px;}
+.btn-closepopinfo:link, .btn-closepopinfo:visited { color:#aeaa89;}
+
+.pop-info-t { left:0; bottom:100%; margin-top:-12px;}
+.pop-info-t .pop-info-arr { left:35px; bottom:-12px; margin-left: -6px; border-style: solid dashed dashed; border-color: #e5e5e5 transparent transparent;}
+.pop-info-t .pop-info-arr1 { left:-6px; bottom:-5px; border-style: solid dashed dashed; border-color: #fff transparent transparent;}
+
+.pop-info-b { left:0; top:100%; margin-top:12px;}
+.pop-info-b .pop-info-arr { left:35px; top:-12px; margin-left: -6px; border-style: dashed dashed solid; border-color: transparent transparent #e5e5e5;}
+.pop-info-b .pop-info-arr1 { left:-6px; top:-5px; border-style: dashed dashed solid; border-color: transparent transparent #fff;}

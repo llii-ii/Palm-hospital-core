@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="renderer" content="webkit">
+    	<meta name="skin" content="mes">
+	    <script src="../../js/pc/webCom1.0/base.js" type="text/javascript" charset="utf-8"></script>
+	    <script type="text/javascript" src="../../../../common/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../common/js/base.js"></script>
+		<script type="text/javascript"   src="../../../../common/js/common.js" ></script>
+		<title>模版详情</title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body class="children-page">
+		<div component="breadcrumb"></div>
+		<div class="row">
+		  	<div class="col-sm-4">
+		  		<div class="ibox-title">
+	                <h5>&nbsp; <small class="m-l-sm"></small></h5>
+	                <div class="ibox-tools">
+	                	<a class="close-link">详情</a>
+	                </div>
+	            </div>
+	            <div class="ibox-content" style="line-height: 24px;" id="example">
+	            </div>
+		  	</div>
+		  	<div class="col-sm-8">
+	            <div class="ibox-content" style="line-height: 24px;">
+                	<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							模版ID
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;" id="modeId">
+						</div>
+					</div>
+                	<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							标题
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;" id="modeTitle">
+						</div>
+					</div>
+                	<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							一级行业
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;" id="primary_industry">
+						</div>
+					</div>
+					<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							二级行业
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;" id="deputy_industry">
+						</div>
+					</div>
+                	<div class="x-row">
+						<div class="x-row-cols " style="width: 100px;">
+							详细内容
+						</div>
+						<div class="x-row-cols " style="margin-left:100px;" id="content">
+						</div>
+					</div>
+	            </div>
+		  	</div>
+		</div>
+	</body>
+	<script>
+	$(function(){
+		var param = {};
+		var apiData = {};
+		var modeId = Commonjs.getUrlParam("modeId");
+		param.apiParam = Commonjs.getApiReqParams(apiData);
+		var url = '../../js/pc/data/zfb_2017102309469075.json';
+		Commonjs.ajax(url, param, function(d) {
+			$.each(d,function(index,val){
+				var t = val.template_id;
+				if(t == modeId){
+					initHtml(val)
+				}
+			});
+		});
+	})
+	
+	function initHtml(item){
+			$("#modeId").html(item.template_id);
+			$("#modeTitle").html(item.title);
+			$("#primary_industry").html(item.primary_industry);
+			$("#deputy_industry").html(item.deputy_industry);
+			$("#content").html(item.content);
+			$("#example").html(item.example);
+		}
+	</script>
+</html>
